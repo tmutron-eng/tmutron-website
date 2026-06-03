@@ -220,12 +220,108 @@ em { font-style: italic; color: var(--red); }
   flex-shrink: 0;
 }
 
+.nav-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 2px;
+}
+
+.nav-wordmark-top {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1;
+  /* Outlined style matching the brand */
+  -webkit-text-stroke: 0px;
+}
+
+.nav-wordmark-bot {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--steel);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-wordmark-tmu {
+  color: var(--red);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  border: 1px solid var(--red);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
 .logo-text {
   font-family: var(--font-display);
   font-size: 28px;
   letter-spacing: 0.05em;
   color: var(--white);
   line-height: 1;
+}
+
+/* Footer wordmark */
+.footer-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 3px;
+}
+
+.footer-wordmark-top {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+
+.footer-wordmark-bot {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--steel);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-wordmark-tmu {
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 9px;
+}
+
+/* Mascot */
+.mascot-wrap {
+  width: 160px !important;
+  height: 160px !important;
+  background: transparent !important;
+  filter: none !important;
+  overflow: visible !important;
+}
+
+.mascot-svg {
+  width: 160px;
+  height: 192px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  filter: drop-shadow(0 0 20px rgba(91, 200, 232, 0.25)) drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  animation: mascot-bob 3s ease-in-out infinite;
+}
+
+@keyframes mascot-bob {
+  0%, 100% { transform: translate(-50%, -52%) translateY(0px); }
+  50%       { transform: translate(-50%, -52%) translateY(-10px); }
 }
 
 .nav-links {
@@ -718,14 +814,12 @@ em { font-style: italic; color: var(--red); }
 .ring-center {
   position: relative;
   z-index: 2;
-  width: 120px; height: 120px;
+  width: 160px; height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 0 20px rgba(227,27,35,0.4));
+  overflow: visible;
 }
-
-.ring-center svg { width: 100%; height: auto; }
 
 /* Orbiting dots */
 .orbit {
@@ -1261,23 +1355,6 @@ em { font-style: italic; color: var(--red); }
   gap: 14px;
   text-decoration: none;
   margin-bottom: 20px;
-}
-
-.footer-logo-name {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 28px;
-  color: var(--white);
-  line-height: 1;
-}
-
-.footer-logo-sub {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--steel);
-  text-transform: uppercase;
 }
 
 .footer-tagline {
