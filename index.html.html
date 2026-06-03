@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCU — Mechatronics Course Union | TMU</title>
+  <meta name="description" content="The Mechatronics Course Union at Toronto Metropolitan University — engineering excellence, innovation, and community." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ LOADER ═══════════════════ -->
+  <div id="loader">
+    <div class="loader-inner">
+      <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
+        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
+      </svg>
+      <div class="loader-text">
+        <span class="mono">INITIALIZING</span>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <span class="loader-pct mono">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ═══════════════════ NAV ═══════════════════ -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-wordmark">
+          <div class="nav-wordmark-top">MECHATRONICS</div>
+          <div class="nav-wordmark-bot">COURSE UNION <span class="nav-wordmark-tmu">TMU</span></div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="team.html" class="nav-link">Team</a></li>
+        <li><a href="academics.html" class="nav-link">Academics</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Join Us</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section id="hero">
+    <div class="hero-scan-line"></div>
+    <div class="hero-grid-overlay"></div>
+
+    <!-- Floating mechanical elements -->
+    <div class="mech-float mf1">
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="35" stroke="#e31b23" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="40" cy="40" r="25" stroke="#e31b23" stroke-width="0.4" opacity="0.3" stroke-dasharray="4 4"/>
+        <circle cx="40" cy="40" r="5" fill="#e31b23" opacity="0.6"/>
+        <line x1="40" y1="5" x2="40" y2="75" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
+        <line x1="5" y1="40" x2="75" y2="40" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="mech-float mf2">
+      <svg viewBox="0 0 60 60" fill="none">
+        <polygon points="30,2 58,17 58,43 30,58 2,43 2,17" stroke="#e31b23" stroke-width="0.8" opacity="0.3"/>
+        <polygon points="30,12 48,22 48,38 30,48 12,38 12,22" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="mech-float mf3">
+      <svg viewBox="0 0 100 100" fill="none">
+        <rect x="10" y="10" width="80" height="80" stroke="#e31b23" stroke-width="0.6" opacity="0.25" transform="rotate(45 50 50)"/>
+        <rect x="25" y="25" width="50" height="50" stroke="#e31b23" stroke-width="0.4" opacity="0.15" transform="rotate(45 50 50)"/>
+        <circle cx="50" cy="50" r="8" stroke="#e31b23" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="mech-float mf4">
+      <svg viewBox="0 0 80 80" fill="none">
+        <path d="M 40 5 L 55 20 L 75 20 L 75 60 L 55 60 L 40 75 L 25 60 L 5 60 L 5 20 L 25 20 Z" stroke="#e31b23" stroke-width="0.6" opacity="0.2"/>
+        <circle cx="40" cy="40" r="12" stroke="#e31b23" stroke-width="0.8" opacity="0.35"/>
+        <circle cx="40" cy="40" r="4" fill="#e31b23" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- HUD corner decorations -->
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+
+    <!-- HUD labels -->
+    <div class="hud-label hud-label-top"><span class="mono">SYS://TMU.MCU.V3.0</span></div>
+    <div class="hud-label hud-label-bot"><span class="mono">LAT: 43.6577° N &nbsp;|&nbsp; LONG: 79.3788° W &nbsp;|&nbsp; STATUS: ACTIVE</span></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal-up delay-1">
+        <span class="badge-dot"></span>
+        <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
+      </div>
+
+      <h1 class="hero-headline reveal-up delay-2">
+        <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
+        <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
+        <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
+      </h1>
+
+      <p class="hero-sub reveal-up delay-3">
+        The Mechatronics Course Union unites engineers, creators, and innovators at TMU. 
+        We build community through academics, industry exposure, and relentless ambition.
+      </p>
+
+      <div class="hero-actions reveal-up delay-4">
+        <a href="events.html" class="btn-primary">
+          <span>Explore Events</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="team.html" class="btn-ghost">
+          <span>Meet the Team</span>
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator reveal-up delay-5">
+        <div class="scroll-line"></div>
+        <span class="mono">SCROLL</span>
+      </div>
+    </div>
+
+    <!-- Hero right panel — Mascot + rings -->
+    <div class="hero-visual reveal-right delay-2">
+      <div class="ring-system">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+
+        <!-- MCU Robot Mascot SVG -->
+        <div class="ring-center mascot-wrap">
+          <svg class="mascot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Antenna left -->
+            <ellipse cx="72" cy="28" rx="10" ry="16" rx="10" ry="16" fill="#5b9bd5" transform="rotate(-20 72 28)"/>
+            <!-- Antenna right -->
+            <ellipse cx="128" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(20 128 28)"/>
+
+            <!-- Head -->
+            <rect x="50" y="40" width="100" height="80" rx="18" fill="#e8e8e8"/>
+            <!-- Head shine -->
+            <rect x="54" y="44" width="100" height="80" rx="18" fill="white" opacity="0.15"/>
+
+            <!-- Screen face -->
+            <rect x="60" y="52" width="80" height="56" rx="8" fill="#0d0d0d"/>
+            <!-- Screen glow border -->
+            <rect x="60" y="52" width="80" height="56" rx="8" stroke="#5bc8e8" stroke-width="1.5" opacity="0.6"/>
+
+            <!-- Screen corner brackets -->
+            <path d="M64 56 L64 62 M64 56 L70 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M136 56 L136 62 M136 56 L130 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M64 104 L64 98 M64 104 L70 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M136 104 L136 98 M136 104 L130 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+
+            <!-- Happy eyes -->
+            <path d="M78 74 Q86 66 94 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path d="M106 74 Q114 66 122 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <!-- Eye glow circles -->
+            <circle cx="86" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
+            <circle cx="114" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
+
+            <!-- Ear left -->
+            <rect x="36" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
+            <rect x="38" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
+            <!-- Ear right -->
+            <rect x="148" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
+            <rect x="150" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
+
+            <!-- Neck -->
+            <rect x="88" y="120" width="24" height="12" rx="4" fill="#d0d0d0"/>
+
+            <!-- Body -->
+            <ellipse cx="100" cy="175" rx="52" ry="48" fill="#e8e8e8"/>
+            <ellipse cx="100" cy="172" rx="52" ry="48" fill="white" opacity="0.12"/>
+
+            <!-- Body center light -->
+            <circle cx="100" cy="168" r="14" fill="#5b9bd5" opacity="0.3"/>
+            <circle cx="100" cy="168" r="9" fill="#5bc8e8" opacity="0.5"/>
+            <circle cx="100" cy="168" r="5" fill="#5bc8e8"/>
+            <!-- Light glow -->
+            <circle cx="100" cy="168" r="18" fill="#5bc8e8" opacity="0.08"/>
+
+            <!-- Body MCU text area -->
+            <rect x="70" y="148" width="60" height="14" rx="3" fill="#d0d0d0" opacity="0.5"/>
+
+            <!-- Arm left — raised/waving -->
+            <ellipse cx="38" cy="152" rx="14" ry="30" rx="14" ry="30" fill="#e8e8e8" transform="rotate(-30 38 152)"/>
+            <ellipse cx="22" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(-30 22 138)"/>
+
+            <!-- Arm right — raised -->
+            <ellipse cx="162" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(30 162 152)"/>
+            <ellipse cx="178" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(30 178 138)"/>
+
+            <!-- Bottom body -->
+            <ellipse cx="100" cy="215" rx="36" ry="18" fill="#e8e8e8"/>
+            <ellipse cx="100" cy="212" rx="36" ry="18" fill="white" opacity="0.1"/>
+
+            <!-- Bottom accent stripe -->
+            <rect x="76" y="204" width="48" height="6" rx="3" fill="#5b9bd5" opacity="0.6"/>
+
+            <!-- Red MCU badge on chest -->
+            <rect x="78" y="149" width="44" height="13" rx="3" fill="#e31b23" opacity="0.85"/>
+            <text x="100" y="159.5" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="10" fill="white" letter-spacing="1">MCU</text>
+          </svg>
+        </div>
+
+        <!-- Orbiting dots -->
+        <div class="orbit o1"><div class="orbit-dot"></div></div>
+        <div class="orbit o2"><div class="orbit-dot od2"></div></div>
+        <div class="orbit o3"><div class="orbit-dot od3"></div></div>
+      </div>
+
+      <!-- Readout panels -->
+      <div class="readout-panels">
+        <div class="readout-panel">
+          <span class="mono rp-label">DEPT</span>
+          <span class="rp-val">MECHATRONICS</span>
+        </div>
+        <div class="readout-panel">
+          <span class="mono rp-label">YEAR</span>
+          <span class="rp-val" id="current-year">2025</span>
+        </div>
+        <div class="readout-panel">
+          <span class="mono rp-label">STATUS</span>
+          <span class="rp-val rp-active">● ACTIVE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ STATS ═══════════════════ -->
+  <section id="stats" class="section-dark">
+    <div class="container">
+      <div class="stats-label"><span class="mono">// IMPACT AT A GLANCE</span></div>
+      <div class="stats-grid">
+        <div class="stat-item" data-target="200" data-suffix="+">
+          <div class="stat-bar"></div>
+          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-name">Active Members</div>
+          <div class="stat-desc mono">Engineers & innovators</div>
+        </div>
+        <div class="stat-item" data-target="30" data-suffix="+">
+          <div class="stat-bar"></div>
+          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-name">Events Yearly</div>
+          <div class="stat-desc mono">Workshops, socials & more</div>
+        </div>
+        <div class="stat-item" data-target="10" data-suffix="+">
+          <div class="stat-bar"></div>
+          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-name">Years Active</div>
+          <div class="stat-desc mono">Building community</div>
+        </div>
+        <div class="stat-item" data-target="15" data-suffix="+">
+          <div class="stat-bar"></div>
+          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-name">Industry Partners</div>
+          <div class="stat-desc mono">Career connections</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ WHAT WE DO ═══════════════════ -->
+  <section id="what-we-do" class="section-light">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag"><span class="mono">02 — WHAT WE DO</span></div>
+        <h2 class="section-title">Built for <em>Engineers</em>,<br/>By Engineers.</h2>
+        <p class="section-desc">Three pillars drive everything we do — academic excellence, genuine community, and real-world career bridges.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card reveal-up" data-index="0">
+          <div class="pillar-num mono">01</div>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 32 L20 20 L28 26 L36 14" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="36" cy="14" r="3" fill="#e31b23"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Academic Support</h3>
+          <p class="pillar-text">Study sessions, tutoring resources, and course guides across all four years of the mechatronics program. Nobody falls behind.</p>
+          <a href="academics.html" class="pillar-link">
+            <span>Explore Resources</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="pillar-glow"></div>
+        </div>
+
+        <div class="pillar-card reveal-up" data-index="1">
+          <div class="pillar-num mono">02</div>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M16 24 L20 28 L32 18" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="24" cy="12" r="2" fill="currentColor" opacity="0.4"/>
+              <circle cx="12" cy="30" r="2" fill="currentColor" opacity="0.4"/>
+              <circle cx="36" cy="30" r="2" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Social Events</h3>
+          <p class="pillar-text">From semester kick-off bashes to laser tag and escape rooms — we work hard and celebrate harder. Engineering is a team sport.</p>
+          <a href="events.html" class="pillar-link">
+            <span>See Events</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="pillar-glow"></div>
+        </div>
+
+        <div class="pillar-card reveal-up" data-index="2">
+          <div class="pillar-num mono">03</div>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M8 36 L8 20 L24 10 L40 20 L40 36 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M18 36 L18 26 L30 26 L30 36" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="24" cy="20" r="3" fill="#e31b23"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Industry Connections</h3>
+          <p class="pillar-text">Resume workshops, company panels, site visits, and networking with engineers at Canada's top firms. Your career starts here.</p>
+          <a href="contact.html" class="pillar-link">
+            <span>Get Connected</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="pillar-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
+  <section id="events-preview" class="section-dark">
+    <div class="container">
+      <div class="section-header flex-header">
+        <div>
+          <div class="section-tag"><span class="mono">03 — UPCOMING EVENTS</span></div>
+          <h2 class="section-title">What's <em>Coming</em>.</h2>
+        </div>
+        <a href="events.html" class="btn-ghost btn-sm">View All Events</a>
+      </div>
+
+      <div class="events-grid">
+        <article class="event-card ec-featured reveal-up" data-index="0">
+          <div class="event-img-wrap">
+            <div class="event-img-placeholder">
+              <div class="ep-grid"></div>
+              <span class="ep-icon">⚙</span>
+            </div>
+            <div class="event-badge badge-workshop">Workshop</div>
+            <div class="event-date-chip">
+              <span class="edc-day">15</span>
+              <span class="edc-mon">Jul</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">PCB Design Fundamentals</h3>
+            <p class="event-meta mono">KERR HALL EAST &nbsp;|&nbsp; 6:00 PM – 9:00 PM</p>
+            <p class="event-desc">Learn industry-standard PCB layout, routing, and design rules using KiCad. Hands-on session with real-world schematics from our exec team.</p>
+            <a href="events.html" class="event-cta">Register Now →</a>
+          </div>
+        </article>
+
+        <article class="event-card reveal-up" data-index="1">
+          <div class="event-img-wrap">
+            <div class="event-img-placeholder eip-social">
+              <div class="ep-grid"></div>
+              <span class="ep-icon">🏆</span>
+            </div>
+            <div class="event-badge badge-social">Social</div>
+            <div class="event-date-chip">
+              <span class="edc-day">22</span>
+              <span class="edc-mon">Jul</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">End of Semester Bash</h3>
+            <p class="event-meta mono">TBA &nbsp;|&nbsp; 7:00 PM</p>
+            <p class="event-desc">Celebrate surviving another semester with your fellow engineers. Food, drinks, games, and good energy guaranteed.</p>
+            <a href="events.html" class="event-cta">Details →</a>
+          </div>
+        </article>
+
+        <article class="event-card reveal-up" data-index="2">
+          <div class="event-img-wrap">
+            <div class="event-img-placeholder eip-career">
+              <div class="ep-grid"></div>
+              <span class="ep-icon">💼</span>
+            </div>
+            <div class="event-badge badge-career">Career</div>
+            <div class="event-date-chip">
+              <span class="edc-day">29</span>
+              <span class="edc-mon">Jul</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">Industry Panel: Co-op Edition</h3>
+            <p class="event-meta mono">ENG 103 &nbsp;|&nbsp; 5:30 PM – 7:30 PM</p>
+            <p class="event-desc">Q&A with mechatronics alumni working at Magna, Tesla, and Canadian Space Agency. Real talk about co-op, internships, and full-time roles.</p>
+            <a href="events.html" class="event-cta">Register Now →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MARQUEE STRIP ═══════════════════ -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="mono">MECHATRONICS &nbsp;/&nbsp;</span>
+      <span class="mono">ROBOTICS &nbsp;/&nbsp;</span>
+      <span class="mono">CONTROLS &nbsp;/&nbsp;</span>
+      <span class="mono">EMBEDDED SYSTEMS &nbsp;/&nbsp;</span>
+      <span class="mono">SIGNAL PROCESSING &nbsp;/&nbsp;</span>
+      <span class="mono">MACHINE DESIGN &nbsp;/&nbsp;</span>
+      <span class="mono">PCB DESIGN &nbsp;/&nbsp;</span>
+      <span class="mono">AUTOMATION &nbsp;/&nbsp;</span>
+      <span class="mono">MECHATRONICS &nbsp;/&nbsp;</span>
+      <span class="mono">ROBOTICS &nbsp;/&nbsp;</span>
+      <span class="mono">CONTROLS &nbsp;/&nbsp;</span>
+      <span class="mono">EMBEDDED SYSTEMS &nbsp;/&nbsp;</span>
+      <span class="mono">SIGNAL PROCESSING &nbsp;/&nbsp;</span>
+      <span class="mono">MACHINE DESIGN &nbsp;/&nbsp;</span>
+      <span class="mono">PCB DESIGN &nbsp;/&nbsp;</span>
+      <span class="mono">AUTOMATION &nbsp;/&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CTA BANNER ═══════════════════ -->
+  <section id="cta-banner" class="section-red">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-content reveal-up">
+          <span class="mono cta-eyebrow">READY TO BUILD SOMETHING GREAT?</span>
+          <h2 class="cta-headline">Join <strong>MCU</strong> Today.</h2>
+          <p class="cta-sub">Whether you're a first-year finding your footing or a fourth-year levelling up — there's a place for you here.</p>
+        </div>
+        <div class="cta-actions reveal-up delay-1">
+          <a href="contact.html" class="btn-white">
+            <span>Get Involved</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="team.html" class="btn-outline-white">Meet the Team</a>
+        </div>
+        <!-- Decorative engineering lines -->
+        <div class="cta-deco">
+          <svg viewBox="0 0 400 200" fill="none" preserveAspectRatio="xMidYMid slice">
+            <circle cx="350" cy="100" r="120" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <circle cx="350" cy="100" r="80" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="8 8"/>
+            <circle cx="350" cy="100" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="230" y1="100" x2="400" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="350" y1="0" x2="350" y2="200" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <div class="footer-wordmark">
+              <div class="footer-wordmark-top">MECHATRONICS</div>
+              <div class="footer-wordmark-bot">COURSE UNION <span class="footer-wordmark-tmu">TMU</span></div>
+            </div>
+          </a>
+          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="mailto:mcu@torontomu.ca" class="social-link" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">NAVIGATE</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">RESOURCES</h4>
+          <ul class="footer-links">
+            <li><a href="academics.html">Course Guides</a></li>
+            <li><a href="academics.html">Tutoring</a></li>
+            <li><a href="events.html">Event Archive</a></li>
+            <li><a href="contact.html">Sponsorship</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-col-title mono">CONTACT</h4>
+          <a href="mailto:mcu@torontomu.ca" class="footer-email">mcu@torontomu.ca</a>
+          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-built">Built by MCU Web Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
