@@ -157,8 +157,9 @@ em { font-style: italic; color: var(--red); }
   height: 44px;
   width: auto;
   object-fit: contain;
-  /* white bg logo on dark nav — invert to make it work on dark */
-  filter: brightness(0) invert(1);
+  /* mix-blend-mode: screen removes white backgrounds on dark nav,
+     letting the real red MCU logo show through naturally */
+  mix-blend-mode: screen;
   transition: opacity 0.2s;
 }
 .nav-logo-img:hover { opacity: 0.85; }
@@ -243,6 +244,37 @@ em { font-style: italic; color: var(--red); }
     linear-gradient(90deg, rgba(227,27,35,0.04) 1px, transparent 1px);
   background-size: 60px 60px; z-index: 1;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+/* ─── HERO LOGO WATERMARK ─── */
+.hero-logo-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(480px, 60vw, 860px);
+  /* mix-blend-mode: screen lets it sit naturally on the dark bg */
+  mix-blend-mode: screen;
+  opacity: 0.12;
+  filter: drop-shadow(0 0 60px rgba(227, 27, 35, 0.5))
+          drop-shadow(0 0 120px rgba(227, 27, 35, 0.25));
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  animation: watermark-breathe 7s ease-in-out infinite;
+}
+@keyframes watermark-breathe {
+  0%, 100% {
+    opacity: 0.10;
+    filter: drop-shadow(0 0 60px rgba(227, 27, 35, 0.4))
+            drop-shadow(0 0 120px rgba(227, 27, 35, 0.2));
+  }
+  50% {
+    opacity: 0.18;
+    filter: drop-shadow(0 0 80px rgba(227, 27, 35, 0.75))
+            drop-shadow(0 0 160px rgba(227, 27, 35, 0.35))
+            drop-shadow(0 0 6px rgba(255, 80, 80, 0.3));
+  }
 }
 
 /* floating mechanical elements */
@@ -532,8 +564,8 @@ em { font-style: italic; color: var(--red); }
 .footer-logo { display:flex; align-items:center; gap:14px; text-decoration:none; margin-bottom:20px; }
 .footer-logo-img {
   height: 48px; width: auto; object-fit: contain;
-  /* invert white logo on black bg */
-  filter: brightness(0) invert(1);
+  /* mix-blend-mode: screen removes white background, shows real logo on dark footer */
+  mix-blend-mode: screen;
 }
 .footer-tagline { font-size:14px; font-weight:300; line-height:1.6; color:var(--steel); margin-bottom:24px; }
 .footer-socials { display:flex; gap:12px; }
