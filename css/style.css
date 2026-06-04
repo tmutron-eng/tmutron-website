@@ -157,9 +157,7 @@ em { font-style: italic; color: var(--red); }
   height: 44px;
   width: auto;
   object-fit: contain;
-  /* mix-blend-mode: screen removes white backgrounds on dark nav,
-     letting the real red MCU logo show through naturally */
-  mix-blend-mode: screen;
+  filter: brightness(0) invert(1);
   transition: opacity 0.2s;
 }
 .nav-logo-img:hover { opacity: 0.85; }
@@ -246,34 +244,90 @@ em { font-style: italic; color: var(--red); }
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
 }
 
-/* ─── HERO LOGO WATERMARK ─── */
+/* ─── HERO LOGO WATERMARK — CSS text, not image ─── */
 .hero-logo-watermark {
+  display: none; /* hide the broken img element */
+}
+
+/* The real watermark is a ::before pseudo on #hero */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-watermark-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(480px, 60vw, 860px);
-  /* mix-blend-mode: screen lets it sit naturally on the dark bg */
-  mix-blend-mode: screen;
-  opacity: 0.12;
-  filter: drop-shadow(0 0 60px rgba(227, 27, 35, 0.5))
-          drop-shadow(0 0 120px rgba(227, 27, 35, 0.25));
+  z-index: 2;
   pointer-events: none;
   user-select: none;
-  z-index: 2;
-  animation: watermark-breathe 7s ease-in-out infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  text-align: center;
 }
-@keyframes watermark-breathe {
+
+.hwt-mcu {
+  font-family: var(--font-display);
+  font-size: clamp(200px, 28vw, 420px);
+  line-height: 0.85;
+  letter-spacing: 0.05em;
+  /* Neon red outline — text is hollow so headline punches through */
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(227, 27, 35, 0.55);
+  text-stroke: 1.5px rgba(227, 27, 35, 0.55);
+  filter: drop-shadow(0 0 12px rgba(227, 27, 35, 0.6))
+          drop-shadow(0 0 40px rgba(227, 27, 35, 0.25))
+          drop-shadow(0 0 80px rgba(227, 27, 35, 0.12));
+  animation: wm-breathe 6s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+.hwt-tmu {
+  font-family: var(--font-mono);
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: 0.55em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(227, 27, 35, 0.35);
+  text-stroke: 1px rgba(227, 27, 35, 0.35);
+  filter: drop-shadow(0 0 8px rgba(227, 27, 35, 0.45))
+          drop-shadow(0 0 24px rgba(227, 27, 35, 0.2));
+  animation: wm-breathe 6s ease-in-out infinite 0.5s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hwt-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 1vw, 13px);
+  letter-spacing: 0.4em;
+  color: rgba(227, 27, 35, 0.22);
+  text-transform: uppercase;
+  margin-top: 8px;
+  animation: wm-breathe 6s ease-in-out infinite 1s;
+  white-space: nowrap;
+}
+
+@keyframes wm-breathe {
   0%, 100% {
-    opacity: 0.10;
-    filter: drop-shadow(0 0 60px rgba(227, 27, 35, 0.4))
-            drop-shadow(0 0 120px rgba(227, 27, 35, 0.2));
+    opacity: 0.85;
+    filter: drop-shadow(0 0 12px rgba(227, 27, 35, 0.5))
+            drop-shadow(0 0 40px rgba(227, 27, 35, 0.2))
+            drop-shadow(0 0 80px rgba(227, 27, 35, 0.1));
   }
   50% {
-    opacity: 0.18;
-    filter: drop-shadow(0 0 80px rgba(227, 27, 35, 0.75))
-            drop-shadow(0 0 160px rgba(227, 27, 35, 0.35))
-            drop-shadow(0 0 6px rgba(255, 80, 80, 0.3));
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(227, 27, 35, 0.85))
+            drop-shadow(0 0 60px rgba(227, 27, 35, 0.4))
+            drop-shadow(0 0 120px rgba(227, 27, 35, 0.2));
   }
 }
 
@@ -312,7 +366,7 @@ em { font-style: italic; color: var(--red); }
 
 /* hero content */
 .hero-content {
-  position: relative; z-index: 5;
+  position: relative; z-index: 6;
   max-width: var(--max-w); margin: 0 auto;
   padding: 80px clamp(20px, 5vw, 60px);
   flex: 1;
@@ -564,8 +618,7 @@ em { font-style: italic; color: var(--red); }
 .footer-logo { display:flex; align-items:center; gap:14px; text-decoration:none; margin-bottom:20px; }
 .footer-logo-img {
   height: 48px; width: auto; object-fit: contain;
-  /* mix-blend-mode: screen removes white background, shows real logo on dark footer */
-  mix-blend-mode: screen;
+  filter: brightness(0) invert(1);
 }
 .footer-tagline { font-size:14px; font-weight:300; line-height:1.6; color:var(--steel); margin-bottom:24px; }
 .footer-socials { display:flex; gap:12px; }
