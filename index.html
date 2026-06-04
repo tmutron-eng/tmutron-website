@@ -62,13 +62,144 @@
 
   <!-- ═══════════════════ HERO ═══════════════════ -->
   <section id="hero">
-    <!-- CSS text watermark — MCU/TMU as neon ghost behind headline -->
-    <div class="hero-watermark-text" aria-hidden="true">
-      <span class="hwt-mcu">MCU</span>
-      <span class="hwt-tmu">TMU</span>
-      <span class="hwt-sub">Mechatronics Course Union</span>
-    </div>
-    <!-- hidden broken img element -->
+
+    <!-- Hand-coded MCU/TMU logo SVG — neon ghost watermark, centered in hero -->
+    <svg class="hero-wm-svg" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Neon red glow filter -->
+        <filter id="neon-red" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8"   result="blur2"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="20"  result="blur3"/>
+          <feMerge>
+            <feMergeNode in="blur3"/>
+            <feMergeNode in="blur2"/>
+            <feMergeNode in="blur1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <!-- Softer white glow -->
+        <filter id="neon-white" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2"  result="blur1"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6"  result="blur2"/>
+          <feMerge>
+            <feMergeNode in="blur2"/>
+            <feMergeNode in="blur1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <!-- Scan line pattern -->
+        <pattern id="scan" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
+          <rect width="720" height="1" fill="rgba(227,27,35,0.06)"/>
+        </pattern>
+      </defs>
+
+      <!-- ── OUTER FRAME — MCU big rectangle outline ── -->
+      <rect x="30" y="60" width="500" height="340" rx="6"
+        stroke="rgba(227,27,35,0.55)" stroke-width="1.5" fill="none"
+        filter="url(#neon-red)"/>
+      <!-- inner inset line -->
+      <rect x="38" y="68" width="484" height="324" rx="4"
+        stroke="rgba(227,27,35,0.18)" stroke-width="0.7" fill="none"/>
+
+      <!-- scan line overlay inside main rect -->
+      <rect x="30" y="60" width="500" height="340" rx="6" fill="url(#scan)" opacity="0.6"/>
+
+      <!-- ── MCU LETTERS — outline stroke only, hollow, neon ── -->
+      <!-- M -->
+      <text x="52" y="330"
+        font-family="Bebas Neue, Impact, sans-serif"
+        font-size="260"
+        fill="none"
+        stroke="rgba(227,27,35,0.75)"
+        stroke-width="1.2"
+        letter-spacing="-4"
+        filter="url(#neon-red)">MCU</text>
+
+      <!-- White highlight stroke on top — subtle, gives depth -->
+      <text x="52" y="330"
+        font-family="Bebas Neue, Impact, sans-serif"
+        font-size="260"
+        fill="none"
+        stroke="rgba(255,255,255,0.12)"
+        stroke-width="0.5"
+        letter-spacing="-4">MCU</text>
+
+      <!-- ── TMU BADGE — top-right stacked block ── -->
+      <!-- Outer rect outline -->
+      <rect x="462" y="28" width="228" height="200" rx="5"
+        stroke="rgba(227,27,35,0.6)" stroke-width="1.5" fill="none"
+        filter="url(#neon-red)"/>
+      <!-- inner inset -->
+      <rect x="470" y="36" width="212" height="184" rx="3"
+        stroke="rgba(227,27,35,0.2)" stroke-width="0.6" fill="none"/>
+
+      <!-- TMU text — vertical stack style like the logo -->
+      <text x="494" y="118"
+        font-family="Bebas Neue, Impact, sans-serif"
+        font-size="88"
+        fill="none"
+        stroke="rgba(255,255,255,0.65)"
+        stroke-width="0.9"
+        letter-spacing="2"
+        filter="url(#neon-white)">T</text>
+      <text x="494" y="176"
+        font-family="Bebas Neue, Impact, sans-serif"
+        font-size="88"
+        fill="none"
+        stroke="rgba(255,255,255,0.65)"
+        stroke-width="0.9"
+        letter-spacing="2"
+        filter="url(#neon-white)">M</text>
+      <text x="494" y="222"
+        font-family="Bebas Neue, Impact, sans-serif"
+        font-size="88"
+        fill="none"
+        stroke="rgba(255,255,255,0.65)"
+        stroke-width="0.9"
+        letter-spacing="2"
+        filter="url(#neon-white)">U</text>
+
+      <!-- ── CORNER BRACKET DETAILS — HUD aesthetic ── -->
+      <!-- TL corner of main rect -->
+      <path d="M30 90 L30 60 L60 60" stroke="rgba(227,27,35,0.9)" stroke-width="2" fill="none" filter="url(#neon-red)"/>
+      <!-- BL corner -->
+      <path d="M30 370 L30 400 L60 400" stroke="rgba(227,27,35,0.9)" stroke-width="2" fill="none" filter="url(#neon-red)"/>
+      <!-- TR corner of main rect -->
+      <path d="M500 90 L500 60 L470 60" stroke="rgba(227,27,35,0.9)" stroke-width="2" fill="none" filter="url(#neon-red)"/>
+      <!-- BR corner -->
+      <path d="M500 370 L500 400 L470 400" stroke="rgba(227,27,35,0.9)" stroke-width="2" fill="none" filter="url(#neon-red)"/>
+
+      <!-- ── BOTTOM LABEL ── -->
+      <text x="44" y="420"
+        font-family="Share Tech Mono, monospace"
+        font-size="11"
+        fill="rgba(227,27,35,0.45)"
+        letter-spacing="3">MECHATRONICS COURSE UNION — TORONTO METROPOLITAN UNIVERSITY</text>
+
+      <!-- ── DECORATIVE CIRCUIT DOTS on corners of TMU badge ── -->
+      <circle cx="462" cy="28"  r="3" fill="rgba(227,27,35,0.8)" filter="url(#neon-red)"/>
+      <circle cx="690" cy="28"  r="3" fill="rgba(227,27,35,0.8)" filter="url(#neon-red)"/>
+      <circle cx="462" cy="228" r="3" fill="rgba(227,27,35,0.8)" filter="url(#neon-red)"/>
+      <circle cx="690" cy="228" r="3" fill="rgba(227,27,35,0.8)" filter="url(#neon-red)"/>
+
+      <!-- Dot at main rect corners -->
+      <circle cx="30"  cy="60"  r="2.5" fill="rgba(255,255,255,0.4)" filter="url(#neon-white)"/>
+      <circle cx="530" cy="60"  r="2.5" fill="rgba(255,255,255,0.4)" filter="url(#neon-white)"/>
+      <circle cx="30"  cy="400" r="2.5" fill="rgba(255,255,255,0.4)" filter="url(#neon-white)"/>
+      <circle cx="530" cy="400" r="2.5" fill="rgba(255,255,255,0.4)" filter="url(#neon-white)"/>
+
+      <!-- ── HORIZONTAL RULE LINES inside MCU box ── -->
+      <line x1="38" y1="380" x2="514" y2="380" stroke="rgba(227,27,35,0.15)" stroke-width="0.6"/>
+      <line x1="38" y1="76"  x2="514" y2="76"  stroke="rgba(227,27,35,0.15)" stroke-width="0.6"/>
+
+      <!-- ── CROSSHAIR in TMU badge center ── -->
+      <circle cx="576" cy="128" r="18" stroke="rgba(227,27,35,0.15)" stroke-width="0.6" fill="none"/>
+      <line x1="558" y1="128" x2="594" y2="128" stroke="rgba(227,27,35,0.12)" stroke-width="0.5"/>
+      <line x1="576" y1="110" x2="576" y2="146" stroke="rgba(227,27,35,0.12)" stroke-width="0.5"/>
+    </svg>
+
+    <!-- hidden broken img element kept for reference, not displayed -->
     <img src="assets/images/logo.png" alt="" class="hero-logo-watermark" aria-hidden="true" />
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
