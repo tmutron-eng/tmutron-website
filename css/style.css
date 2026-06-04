@@ -244,91 +244,26 @@ em { font-style: italic; color: var(--red); }
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
 }
 
-/* ─── HERO LOGO WATERMARK — CSS text, not image ─── */
-.hero-logo-watermark {
-  display: none; /* hide the broken img element */
-}
+/* ─── HERO LOGO WATERMARK — SVG hand-coded, neon ─── */
+.hero-logo-watermark { display: none; }
 
-/* The real watermark is a ::before pseudo on #hero */
-#hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.hero-watermark-text {
+.hero-wm-svg {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: clamp(340px, 52vw, 720px);
+  height: auto;
   z-index: 2;
   pointer-events: none;
   user-select: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  width: 100%;
-  text-align: center;
+  opacity: 0.92;
+  animation: wm-pulse 5s ease-in-out infinite;
 }
 
-.hwt-mcu {
-  font-family: var(--font-display);
-  font-size: clamp(200px, 28vw, 420px);
-  line-height: 0.85;
-  letter-spacing: 0.05em;
-  /* Neon red outline — text is hollow so headline punches through */
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(227, 27, 35, 0.55);
-  text-stroke: 1.5px rgba(227, 27, 35, 0.55);
-  filter: drop-shadow(0 0 12px rgba(227, 27, 35, 0.6))
-          drop-shadow(0 0 40px rgba(227, 27, 35, 0.25))
-          drop-shadow(0 0 80px rgba(227, 27, 35, 0.12));
-  animation: wm-breathe 6s ease-in-out infinite;
-  white-space: nowrap;
-}
-
-.hwt-tmu {
-  font-family: var(--font-mono);
-  font-size: clamp(28px, 4vw, 56px);
-  letter-spacing: 0.55em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(227, 27, 35, 0.35);
-  text-stroke: 1px rgba(227, 27, 35, 0.35);
-  filter: drop-shadow(0 0 8px rgba(227, 27, 35, 0.45))
-          drop-shadow(0 0 24px rgba(227, 27, 35, 0.2));
-  animation: wm-breathe 6s ease-in-out infinite 0.5s;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.hwt-sub {
-  font-family: var(--font-mono);
-  font-size: clamp(9px, 1vw, 13px);
-  letter-spacing: 0.4em;
-  color: rgba(227, 27, 35, 0.22);
-  text-transform: uppercase;
-  margin-top: 8px;
-  animation: wm-breathe 6s ease-in-out infinite 1s;
-  white-space: nowrap;
-}
-
-@keyframes wm-breathe {
-  0%, 100% {
-    opacity: 0.85;
-    filter: drop-shadow(0 0 12px rgba(227, 27, 35, 0.5))
-            drop-shadow(0 0 40px rgba(227, 27, 35, 0.2))
-            drop-shadow(0 0 80px rgba(227, 27, 35, 0.1));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 20px rgba(227, 27, 35, 0.85))
-            drop-shadow(0 0 60px rgba(227, 27, 35, 0.4))
-            drop-shadow(0 0 120px rgba(227, 27, 35, 0.2));
-  }
+@keyframes wm-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(227,27,35,0.7)) drop-shadow(0 0 30px rgba(227,27,35,0.35)) drop-shadow(0 0 70px rgba(227,27,35,0.15)); }
+  50%       { filter: drop-shadow(0 0 16px rgba(227,27,35,1))  drop-shadow(0 0 50px rgba(227,27,35,0.55)) drop-shadow(0 0 110px rgba(227,27,35,0.25)) drop-shadow(0 0 3px rgba(255,160,160,0.6)); }
 }
 
 /* floating mechanical elements */
