@@ -227,13 +227,13 @@ em { font-style: italic; color: var(--red); }
   display: flex;
   flex-direction: column;
 }
-/* Left red bloom */
+/* Left red bloom — smooth radial, no hard edge */
 #hero::after {
   content: '';
   position: absolute;
-  top: 10%; left: -5%;
-  width: 50%; height: 90%;
-  background: radial-gradient(ellipse, rgba(227,27,35,0.10) 0%, rgba(227,27,35,0.04) 45%, transparent 70%);
+  top: 0; left: -10%; bottom: 0;
+  width: 65%;
+  background: radial-gradient(ellipse 60% 55% at 20% 55%, rgba(227,27,35,0.09) 0%, rgba(227,27,35,0.04) 45%, transparent 80%);
   pointer-events: none;
   z-index: 0;
 }
@@ -291,13 +291,15 @@ em { font-style: italic; color: var(--red); }
   position: relative;
 }
 
-/* Red glow backdrop behind right column */
+/* Red glow backdrop behind right column — smooth dissolve, no hard edge */
 .hero-right-glow {
   position: absolute;
-  inset: -40px -60px;
-  background: radial-gradient(ellipse at 60% 40%, rgba(227,27,35,0.18) 0%, rgba(227,27,35,0.06) 50%, transparent 75%);
+  inset: -80px -100px -80px -160px;
+  background:
+    radial-gradient(ellipse 70% 60% at 65% 40%, rgba(227,27,35,0.22) 0%, rgba(227,27,35,0.10) 35%, rgba(227,27,35,0.03) 65%, transparent 100%);
   pointer-events: none;
   z-index: 0;
+  mix-blend-mode: screen;
 }
 
 /* Logo block */
@@ -573,65 +575,119 @@ em { font-style: italic; color: var(--red); }
 }
 @keyframes scroll-pulse { 0%,100%{height:48px;opacity:0.5} 50%{height:64px;opacity:1} }
 
-/* ─── SECTIONS — each gets its own personality ─── */
+/* ─── SECTIONS — lighter, animated, alive ─── */
 
-/* Stats — lifted warm dark with red warmth */
+/* Shared animated blob keyframes */
+@keyframes blob-drift-1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(40px,-30px) scale(1.08); }
+  66%      { transform: translate(-20px, 20px) scale(0.95); }
+}
+@keyframes blob-drift-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  40%      { transform: translate(-50px, 25px) scale(1.1); }
+  70%      { transform: translate(30px,-15px) scale(0.93); }
+}
+@keyframes blob-drift-3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(25px, 40px) scale(1.06); }
+}
+
+/* Shared blob element style */
+.section-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(60px);
+}
+
+/* Stats — warm off-white dark, soft blob movement */
 #stats {
   position: relative; z-index: 5;
   padding: var(--section-pad) 0;
-  background: #1c1412; /* very slightly warm dark */
-}
-#stats::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 80% at 15% 50%, rgba(227,27,35,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 85% 20%, rgba(227,27,35,0.05) 0%, transparent 70%);
-  pointer-events: none;
+  background: #222020;
+  overflow: hidden;
 }
 #stats::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(227,27,35,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(227,27,35,0.5), transparent);
+}
+#stats .section-blob.b1 {
+  width: 500px; height: 500px;
+  top: -100px; left: -80px;
+  background: radial-gradient(circle, rgba(227,27,35,0.12) 0%, transparent 70%);
+  animation: blob-drift-1 12s ease-in-out infinite;
+}
+#stats .section-blob.b2 {
+  width: 400px; height: 400px;
+  bottom: -120px; right: 5%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  animation: blob-drift-2 16s ease-in-out infinite 2s;
 }
 
-/* What We Do — noticeably lighter, energetic */
+/* What We Do — noticeably lighter, warm grey, white aurora */
 #what-we-do {
   position: relative; z-index: 5;
   padding: var(--section-pad) 0;
-  background: #252525;
-}
-#what-we-do::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 50% 70% at 100% 60%, rgba(227,27,35,0.06) 0%, transparent 65%),
-    radial-gradient(ellipse 30% 50% at 0% 30%, rgba(255,255,255,0.015) 0%, transparent 70%);
-  pointer-events: none;
+  background: #2e2c2c;
+  overflow: hidden;
 }
 #what-we-do::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+}
+#what-we-do .section-blob.b1 {
+  width: 600px; height: 600px;
+  top: -150px; right: -100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  animation: blob-drift-2 14s ease-in-out infinite;
+}
+#what-we-do .section-blob.b2 {
+  width: 350px; height: 350px;
+  bottom: -50px; left: 10%;
+  background: radial-gradient(circle, rgba(227,27,35,0.07) 0%, transparent 70%);
+  animation: blob-drift-3 18s ease-in-out infinite 3s;
+}
+#what-we-do .section-blob.b3 {
+  width: 280px; height: 280px;
+  top: 30%; left: 40%;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+  animation: blob-drift-1 20s ease-in-out infinite 1s;
 }
 
-/* Events Preview — warm charcoal, slight red atmosphere */
+/* Events Preview — warmest section, light charcoal with energy */
 #events-preview {
   position: relative; z-index: 5;
   padding: var(--section-pad) 0;
-  background: #1e1a18;
-}
-#events-preview::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 80% at 80% 50%, rgba(227,27,35,0.08) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 50% at 20% 80%, rgba(227,27,35,0.04) 0%, transparent 70%);
-  pointer-events: none;
+  background: #272422;
+  overflow: hidden;
 }
 #events-preview::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(227,27,35,0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(227,27,35,0.4), transparent);
+}
+#events-preview .section-blob.b1 {
+  width: 550px; height: 550px;
+  top: -100px; right: -60px;
+  background: radial-gradient(circle, rgba(227,27,35,0.10) 0%, transparent 70%);
+  animation: blob-drift-3 13s ease-in-out infinite;
+}
+#events-preview .section-blob.b2 {
+  width: 380px; height: 380px;
+  bottom: -100px; left: -40px;
+  background: radial-gradient(circle, rgba(255,200,100,0.04) 0%, transparent 70%);
+  animation: blob-drift-1 17s ease-in-out infinite 4s;
 }
 
 /* Keep old classes for other pages */
-.section-dark  { position:relative; z-index:5; background:#1c1412; padding:var(--section-pad) 0; }
-.section-light { position:relative; z-index:5; background:#252525;  padding:var(--section-pad) 0; }
+.section-dark  { position:relative; z-index:5; background:#222020; padding:var(--section-pad) 0; overflow:hidden; }
+.section-light { position:relative; z-index:5; background:#2e2c2c; padding:var(--section-pad) 0; overflow:hidden; }
+
+/* Ensure section content sits above canvas */
+#stats .container,
+#what-we-do .container,
+#events-preview .container { position: relative; z-index: 1; }
 
 /* Stats */
 .stats-label { font-size:11px; letter-spacing:0.2em; color:var(--steel); margin-bottom:48px; }
