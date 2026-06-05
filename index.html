@@ -34,36 +34,34 @@
   <nav id="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
-        <svg class="nav-logo-svg" viewBox="0 0 116 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <filter id="ngr" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="b1"/>
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b2"/>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
               <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
             <filter id="ngw" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="b1"/>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
               <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- MCU box: x:2 y:8 w:72 h:56 -->
-          <rect x="2" y="8" width="72" height="56" rx="2" stroke="rgba(227,27,35,0.85)" stroke-width="1.1" fill="none" filter="url(#ngr)"/>
+          <!-- MCU box — solid red fill like the real logo -->
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+          <!-- MCU box red border glow -->
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#ngr)"/>
           <!-- Corner brackets — white -->
-          <polyline points="2,18 2,8 12,8"    stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="64,8 74,8 74,18"   stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="2,54 2,64 12,64"   stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="64,64 74,64 74,54"  stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <!-- MCU text — center x=38, baseline y=58 -->
-          <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="rgba(255,255,255,0.07)" text-anchor="middle" letter-spacing="-1">MCU</text>
-          <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" text-anchor="middle" letter-spacing="-1">MCU</text>
-          <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(227,27,35,0.8)" stroke-width="0.8" text-anchor="middle" letter-spacing="-1" filter="url(#ngr)">MCU</text>
-          <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="0.3" text-anchor="middle" letter-spacing="-1" filter="url(#ngw)">MCU</text>
-          <!-- TMU box: x:68 y:2 w:46 h:40 -->
-          <rect x="68" y="2" width="46" height="40" rx="2" stroke="rgba(227,27,35,0.75)" stroke-width="1" fill="none" filter="url(#ngr)"/>
-          <!-- TMU text — center x=91, font 34, baseline ~37 -->
-          <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="rgba(255,255,255,0.06)" text-anchor="middle" letter-spacing="1">TMU</text>
-          <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2" text-anchor="middle" letter-spacing="1">TMU</text>
-          <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.5" text-anchor="middle" letter-spacing="1" filter="url(#ngw)">TMU</text>
+          <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
+          <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
+          <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
+          <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
+          <!-- MCU text — solid white, bold -->
+          <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+          <!-- TMU box — solid darker red, offset top-right -->
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#ngr)"/>
+          <!-- TMU text — solid white -->
+          <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
         </svg>
       </a>
       <ul class="nav-links">
@@ -93,164 +91,67 @@
   <!-- ═══════════════════ HERO ═══════════════════ -->
   <section id="hero">
 
-    <!-- Hand-coded MCU/TMU logo SVG — neon ghost watermark -->
-    <svg class="hero-wm-svg" viewBox="0 0 680 430" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="glow-red" x="-25%" y="-25%" width="150%" height="150%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="b1"/>
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
-          <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="glow-white" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="b1"/>
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b2"/>
-          <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <pattern id="scanlines" x="0" y="0" width="680" height="3" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="680" y2="0" stroke="rgba(227,27,35,0.04)" stroke-width="1"/>
-        </pattern>
-        <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="rgba(227,27,35,0.04)"/>
-          <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-        </radialGradient>
-      </defs>
+    <!-- Hero right panel: black→red→white gradient with solid MCU logo -->
+    <div class="hero-brand-panel" aria-hidden="true">
+      <!-- Gradient sweep: left is transparent/black, center red glow, right is bright -->
+      <div class="hbp-gradient"></div>
+      <!-- Proper solid MCU logo — matches the PNG, red fill + white text -->
+      <div class="hbp-logo-wrap">
+        <svg class="hbp-logo-svg" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="hbp-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="hbp-glow-sm" x="-15%" y="-15%" width="130%" height="130%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
 
-      <ellipse cx="310" cy="215" rx="290" ry="190" fill="url(#bgGlow)"/>
-      <rect x="0" y="0" width="680" height="430" fill="url(#scanlines)"/>
+          <!-- MCU box — solid red fill like actual logo -->
+          <rect x="4" y="36" width="224" height="176" rx="3" fill="#e31b23"/>
+          <!-- MCU subtle inner highlight edge -->
+          <rect x="4" y="36" width="224" height="176" rx="3" fill="none" stroke="rgba(255,100,100,0.3)" stroke-width="1.5"/>
 
-      <!-- ══ MCU BOX: x:20 y:60 w:390 h:300 ══ -->
-      <rect x="20" y="60" width="390" height="300" rx="3"
-        stroke="rgba(227,27,35,0.6)" stroke-width="1.2" fill="none" filter="url(#glow-red)"/>
-      <rect x="28" y="68" width="374" height="284" rx="1.5"
-        stroke="rgba(255,255,255,0.06)" stroke-width="0.5" fill="none"/>
+          <!-- MCU letters — solid white, bold, filling the box -->
+          <text x="116" y="188"
+            font-family="Bebas Neue,Impact,sans-serif" font-size="148"
+            fill="white"
+            text-anchor="middle" letter-spacing="-2">MCU</text>
 
-      <!-- MCU box corner brackets — white -->
-      <polyline points="20,82 20,60 42,60"   stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="388,60 410,60 410,82" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="20,338 20,360 42,360" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="388,360 410,360 410,338" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <!-- Corner dots -->
-      <circle cx="20"  cy="60"  r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="410" cy="60"  r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="20"  cy="360" r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="410" cy="360" r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
+          <!-- TMU box — solid red, offset top-right overlapping MCU -->
+          <rect x="210" y="4" width="126" height="112" rx="3" fill="#c01018"/>
+          <rect x="210" y="4" width="126" height="112" rx="3" fill="none" stroke="rgba(255,100,100,0.25)" stroke-width="1.5"/>
 
-      <!-- MCU LETTERS — centered: box center x=215, baseline at 320 for font 248 -->
-      <!-- White solid-ish fill for OG logo feel (low opacity filled) -->
-      <text x="215" y="320"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="248"
-        fill="rgba(255,255,255,0.06)"
-        text-anchor="middle" letter-spacing="-2">MCU</text>
-      <!-- White thick stroke — weight/thickness like OG logo -->
-      <text x="215" y="320"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="248"
-        fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="4"
-        text-anchor="middle" letter-spacing="-2">MCU</text>
-      <!-- Red neon stroke on top -->
-      <text x="215" y="320"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="248"
-        fill="none" stroke="rgba(227,27,35,0.7)" stroke-width="1.2"
-        text-anchor="middle" letter-spacing="-2"
-        filter="url(#glow-red)">MCU</text>
-      <!-- Bright white hairline core -->
-      <text x="215" y="320"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="248"
-        fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="0.45"
-        text-anchor="middle" letter-spacing="-2"
-        filter="url(#glow-white)">MCU</text>
+          <!-- TMU letters — solid white -->
+          <text x="273" y="98"
+            font-family="Bebas Neue,Impact,sans-serif" font-size="84"
+            fill="white"
+            text-anchor="middle" letter-spacing="2">TMU</text>
 
-      <!-- MCU HUD ticks -->
-      <line x1="20"  y1="210" x2="34"  y2="210" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-      <line x1="396" y1="210" x2="410" y2="210" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-      <line x1="215" y1="60"  x2="215" y2="74"  stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-      <line x1="215" y1="346" x2="215" y2="360" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-      <!-- Dashed top edge -->
-      <line x1="42" y1="60" x2="388" y2="60" stroke="rgba(227,27,35,0.2)" stroke-width="0.5" stroke-dasharray="5 9"/>
-      <!-- SYS readout -->
-      <text x="404" y="352" font-family="Share Tech Mono,monospace" font-size="7"
-        fill="rgba(255,255,255,0.25)" text-anchor="end" letter-spacing="1.5">SYS:ON · V4</text>
+          <!-- Scan line overlay for techy feel -->
+          <rect x="4" y="36" width="224" height="176" rx="3" fill="url(#hbp-scan)" opacity="0.06"/>
+          <defs>
+            <pattern id="hbp-scan" x="0" y="0" width="228" height="4" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="228" y2="0" stroke="black" stroke-width="1.5"/>
+            </pattern>
+          </defs>
+        </svg>
+        <!-- Animated corner brackets around logo -->
+        <div class="hbp-bracket hbp-tl"></div>
+        <div class="hbp-bracket hbp-tr"></div>
+        <div class="hbp-bracket hbp-bl"></div>
+        <div class="hbp-bracket hbp-br"></div>
+        <!-- HUD label -->
+        <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
+      </div>
+    </div>
 
-      <!-- ══ TMU BOX: x:400 y:22 w:256 h:210 ══
-           TMU fits at font-size ~160, baseline at y=196 (196-22=174 ~= 160*1.08) -->
-      <rect x="400" y="22" width="256" height="210" rx="3"
-        stroke="rgba(227,27,35,0.55)" stroke-width="1.2" fill="none" filter="url(#glow-red)"/>
-      <rect x="408" y="30" width="240" height="194" rx="1.5"
-        stroke="rgba(255,255,255,0.05)" stroke-width="0.5" fill="none"/>
-
-      <!-- TMU box corner brackets — white -->
-      <polyline points="400,42 400,22 422,22"   stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="634,22 656,22 656,42"   stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="400,210 400,232 422,232" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <polyline points="634,232 656,232 656,210" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" stroke-linecap="square" filter="url(#glow-white)"/>
-      <circle cx="400" cy="22"  r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="656" cy="22"  r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="400" cy="232" r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-      <circle cx="656" cy="232" r="2.5" fill="rgba(255,255,255,0.85)" filter="url(#glow-white)"/>
-
-      <!-- TMU LETTERS — center x=528, box height=210, font 154 fits with margin -->
-      <!-- White fill ghost -->
-      <text x="528" y="188"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="154"
-        fill="rgba(255,255,255,0.05)"
-        text-anchor="middle" letter-spacing="2">TMU</text>
-      <!-- White thick stroke — weight to match MCU feel -->
-      <text x="528" y="188"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="154"
-        fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="3.5"
-        text-anchor="middle" letter-spacing="2">TMU</text>
-      <!-- White neon primary -->
-      <text x="528" y="188"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="154"
-        fill="none" stroke="rgba(255,255,255,0.72)" stroke-width="0.65"
-        text-anchor="middle" letter-spacing="2"
-        filter="url(#glow-white)">TMU</text>
-      <!-- Red tint -->
-      <text x="528" y="188"
-        font-family="Bebas Neue,Impact,sans-serif" font-size="154"
-        fill="none" stroke="rgba(227,27,35,0.18)" stroke-width="0.3"
-        text-anchor="middle" letter-spacing="2">TMU</text>
-
-      <!-- TMU divider + label -->
-      <line x1="408" y1="200" x2="648" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-      <text x="528" y="218" font-family="Share Tech Mono,monospace" font-size="7.5"
-        fill="rgba(255,255,255,0.3)" text-anchor="middle" letter-spacing="2.5">TORONTO METROPOLITAN UNIV.</text>
-
-      <!-- ══ CIRCUIT CONNECTOR ══ -->
-      <polyline points="408,110 398,110 398,138 400,138"
-        stroke="rgba(227,27,35,0.4)" stroke-width="0.8" fill="none" stroke-dasharray="3 4"/>
-      <circle cx="398" cy="110" r="1.8" fill="rgba(227,27,35,0.65)" filter="url(#glow-red)"/>
-      <circle cx="398" cy="138" r="1.8" fill="rgba(227,27,35,0.65)" filter="url(#glow-red)"/>
-
-      <!-- ══ BOTTOM LABEL ══ -->
-      <text x="215" y="390" font-family="Share Tech Mono,monospace" font-size="9"
-        fill="rgba(255,255,255,0.18)" text-anchor="middle" letter-spacing="3">MECHATRONICS COURSE UNION — TORONTO METROPOLITAN UNIVERSITY</text>
-
-      <!-- ══ HUD DECOR ══ -->
-      <circle cx="56" cy="40" r="8" stroke="rgba(255,255,255,0.12)" stroke-width="0.6" fill="none"/>
-      <line x1="48" y1="40" x2="64" y2="40" stroke="rgba(255,255,255,0.12)" stroke-width="0.4"/>
-      <line x1="56" y1="32" x2="56" y2="48" stroke="rgba(255,255,255,0.12)" stroke-width="0.4"/>
-      <circle cx="56" cy="40" r="1.5" fill="rgba(227,27,35,0.7)" filter="url(#glow-red)"/>
-      <polygon points="30,30 37,26 44,30 44,38 37,42 30,38"
-        stroke="rgba(227,27,35,0.3)" stroke-width="0.7" fill="none"/>
-      <text x="658" y="395" font-family="Share Tech Mono,monospace" font-size="7"
-        fill="rgba(255,255,255,0.12)" text-anchor="end" letter-spacing="1">MCU · TMU · 4.0</text>
-    </svg>
-
-    <!-- hidden broken img element kept for reference, not displayed -->
-    <img src="assets/images/logo.png" alt="" class="hero-logo-watermark" aria-hidden="true" />
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
 
     <!-- Floating mechanical elements -->
-    <div class="mech-float mf1">
-      <svg viewBox="0 0 80 80" fill="none">
-        <circle cx="40" cy="40" r="35" stroke="#e31b23" stroke-width="0.8" opacity="0.4"/>
-        <circle cx="40" cy="40" r="25" stroke="#e31b23" stroke-width="0.4" opacity="0.3" stroke-dasharray="4 4"/>
-        <circle cx="40" cy="40" r="5" fill="#e31b23" opacity="0.6"/>
-        <line x1="40" y1="5" x2="40" y2="75" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
-        <line x1="5" y1="40" x2="75" y2="40" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
-      </svg>
-    </div>
     <div class="mech-float mf2">
       <svg viewBox="0 0 60 60" fill="none">
         <polygon points="30,2 58,17 58,43 30,58 2,43 2,17" stroke="#e31b23" stroke-width="0.8" opacity="0.3"/>
@@ -657,31 +558,28 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
-            <svg class="footer-logo-svg" viewBox="0 0 116 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="footer-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <filter id="fgr" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="b1"/>
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b2"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
                   <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
                 <filter id="fgw" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="b1"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
                   <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
-              <rect x="2" y="8" width="72" height="56" rx="2" stroke="rgba(227,27,35,0.85)" stroke-width="1.1" fill="none" filter="url(#fgr)"/>
-              <polyline points="2,18 2,8 12,8"    stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="64,8 74,8 74,18"   stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="2,54 2,64 12,64"   stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="64,64 74,64 74,54"  stroke="rgba(255,255,255,0.8)" stroke-width="1.6" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="rgba(255,255,255,0.07)" text-anchor="middle" letter-spacing="-1">MCU</text>
-              <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" text-anchor="middle" letter-spacing="-1">MCU</text>
-              <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(227,27,35,0.8)" stroke-width="0.8" text-anchor="middle" letter-spacing="-1" filter="url(#fgr)">MCU</text>
-              <text x="38" y="59" font-family="Bebas Neue,Impact,sans-serif" font-size="46" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="0.3" text-anchor="middle" letter-spacing="-1" filter="url(#fgw)">MCU</text>
-              <rect x="68" y="2" width="46" height="40" rx="2" stroke="rgba(227,27,35,0.75)" stroke-width="1" fill="none" filter="url(#fgr)"/>
-              <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="rgba(255,255,255,0.06)" text-anchor="middle" letter-spacing="1">TMU</text>
-              <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2" text-anchor="middle" letter-spacing="1">TMU</text>
-              <text x="91" y="37" font-family="Bebas Neue,Impact,sans-serif" font-size="34" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.5" text-anchor="middle" letter-spacing="1" filter="url(#fgw)">TMU</text>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#fgr)"/>
+              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
+              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
+              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
+              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
+              <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#fgr)"/>
+              <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
             </svg>
           </a>
           <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
