@@ -245,6 +245,8 @@
 
   <!-- ═══════════════════ STATS ═══════════════════ -->
   <section id="stats" class="section-dark">
+    <div class="section-blob b1"></div>
+    <div class="section-blob b2"></div>
     <div class="container">
       <div class="stats-label"><span class="mono">// IMPACT AT A GLANCE</span></div>
       <div class="stats-grid">
@@ -278,6 +280,9 @@
 
   <!-- ═══════════════════ WHAT WE DO ═══════════════════ -->
   <section id="what-we-do" class="section-light">
+    <div class="section-blob b1"></div>
+    <div class="section-blob b2"></div>
+    <div class="section-blob b3"></div>
     <div class="container">
       <div class="section-header">
         <div class="section-tag"><span class="mono">02 — WHAT WE DO</span></div>
@@ -347,6 +352,8 @@
 
   <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
   <section id="events-preview" class="section-dark">
+    <div class="section-blob b1"></div>
+    <div class="section-blob b2"></div>
     <div class="container">
       <div class="section-header flex-header">
         <div>
@@ -552,5 +559,100 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    /* ── Animated section background canvases ── */
+    (function() {
+      const sections = [
+        { id: 'stats',           color: '227,27,35',    speed: 0.18 },
+        { id: 'what-we-do',      color: '200,205,215',  speed: 0.13 },
+        { id: 'events-preview',  color: '227,27,35',    speed: 0.16 }
+      ];
+
+      sections.forEach(({ id, color, speed }) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        const canvas = document.createElement('canvas');
+        canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+        section.insertBefore(canvas, section.firstChild);
+
+        const ctx = canvas.getContext('2d');
+        let W, H, t = Math.random() * 1000;
+
+        const DOTS = 32;
+        const dots = Array.from({ length: DOTS }, () => ({
+          x: Math.random(), y: Math.random(),
+          vx: (Math.random() - 0.5) * speed * 0.003,
+          vy: (Math.random() - 0.5) * speed * 0.003,
+          r: Math.random() * 1.4 + 0.4
+        }));
+
+        function resize() {
+          W = canvas.width  = section.offsetWidth;
+          H = canvas.height = section.offsetHeight;
+        }
+        resize();
+        new ResizeObserver(resize).observe(section);
+
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          t += 0.007;
+
+          /* Drifting gradient blob 1 */
+          const cx1 = W * (0.3 + 0.25 * Math.sin(t * 0.28));
+          const cy1 = H * (0.4 + 0.22 * Math.cos(t * 0.19));
+          const g1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, Math.min(W,H) * 0.5);
+          g1.addColorStop(0,   `rgba(${color},0.10)`);
+          g1.addColorStop(0.5, `rgba(${color},0.03)`);
+          g1.addColorStop(1,   `rgba(${color},0)`);
+          ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
+
+          /* Drifting gradient blob 2 */
+          const cx2 = W * (0.7 + 0.22 * Math.cos(t * 0.22));
+          const cy2 = H * (0.6 + 0.20 * Math.sin(t * 0.31));
+          const g2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, Math.min(W,H) * 0.38);
+          g2.addColorStop(0,   `rgba(${color},0.07)`);
+          g2.addColorStop(1,   `rgba(${color},0)`);
+          ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
+
+          /* Floating dots */
+          dots.forEach(d => {
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0) d.x = 1; if (d.x > 1) d.x = 0;
+            if (d.y < 0) d.y = 1; if (d.y > 1) d.y = 0;
+          });
+
+          /* Connection lines */
+          dots.forEach((a, i) => {
+            dots.slice(i + 1).forEach(b => {
+              const dx = (a.x - b.x) * W, dy = (a.y - b.y) * H;
+              const dist = Math.sqrt(dx*dx + dy*dy);
+              if (dist < 140) {
+                ctx.beginPath();
+                ctx.moveTo(a.x*W, a.y*H);
+                ctx.lineTo(b.x*W, b.y*H);
+                ctx.strokeStyle = `rgba(${color},${0.10 * (1 - dist/140)})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+              }
+            });
+            ctx.beginPath();
+            ctx.arc(a.x*W, a.y*H, a.r, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(${color},0.30)`;
+            ctx.fill();
+          });
+
+          requestAnimationFrame(draw);
+        }
+        draw();
+      });
+    })();
+
+    /* Footer year */
+    const fy = document.getElementById('footer-year');
+    if (fy) fy.textContent = new Date().getFullYear();
+    const cy = document.getElementById('current-year');
+    if (cy) cy.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
