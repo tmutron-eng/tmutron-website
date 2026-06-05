@@ -91,236 +91,156 @@
   <!-- ═══════════════════ HERO ═══════════════════ -->
   <section id="hero">
 
-    <!-- Hero right panel: black→red→white gradient with solid MCU logo -->
-    <div class="hero-brand-panel" aria-hidden="true">
-      <!-- Gradient sweep: left is transparent/black, center red glow, right is bright -->
-      <div class="hbp-gradient"></div>
-      <!-- Proper solid MCU logo — matches the PNG, red fill + white text -->
-      <div class="hbp-logo-wrap">
-        <svg class="hbp-logo-svg" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="hbp-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="hbp-glow-sm" x="-15%" y="-15%" width="130%" height="130%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-
-          <!-- MCU box — solid red fill like actual logo -->
-          <rect x="4" y="36" width="224" height="176" rx="3" fill="#e31b23"/>
-          <!-- MCU subtle inner highlight edge -->
-          <rect x="4" y="36" width="224" height="176" rx="3" fill="none" stroke="rgba(255,100,100,0.3)" stroke-width="1.5"/>
-
-          <!-- MCU letters — solid white, bold, filling the box -->
-          <text x="116" y="188"
-            font-family="Bebas Neue,Impact,sans-serif" font-size="148"
-            fill="white"
-            text-anchor="middle" letter-spacing="-2">MCU</text>
-
-          <!-- TMU box — solid red, offset top-right overlapping MCU -->
-          <rect x="210" y="4" width="126" height="112" rx="3" fill="#c01018"/>
-          <rect x="210" y="4" width="126" height="112" rx="3" fill="none" stroke="rgba(255,100,100,0.25)" stroke-width="1.5"/>
-
-          <!-- TMU letters — solid white -->
-          <text x="273" y="98"
-            font-family="Bebas Neue,Impact,sans-serif" font-size="84"
-            fill="white"
-            text-anchor="middle" letter-spacing="2">TMU</text>
-
-          <!-- Scan line overlay for techy feel -->
-          <rect x="4" y="36" width="224" height="176" rx="3" fill="url(#hbp-scan)" opacity="0.06"/>
-          <defs>
-            <pattern id="hbp-scan" x="0" y="0" width="228" height="4" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="228" y2="0" stroke="black" stroke-width="1.5"/>
-            </pattern>
-          </defs>
-        </svg>
-        <!-- Animated corner brackets around logo -->
-        <div class="hbp-bracket hbp-tl"></div>
-        <div class="hbp-bracket hbp-tr"></div>
-        <div class="hbp-bracket hbp-bl"></div>
-        <div class="hbp-bracket hbp-br"></div>
-        <!-- HUD label -->
-        <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
-      </div>
-    </div>
-
+    <!-- Decorative background layers (absolute, pointer-events:none) -->
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
-
-    <!-- Floating mechanical elements -->
-    <div class="mech-float mf2">
-      <svg viewBox="0 0 60 60" fill="none">
-        <polygon points="30,2 58,17 58,43 30,58 2,43 2,17" stroke="#e31b23" stroke-width="0.8" opacity="0.3"/>
-        <polygon points="30,12 48,22 48,38 30,48 12,38 12,22" stroke="#e31b23" stroke-width="0.4" opacity="0.2"/>
-      </svg>
-    </div>
-    <div class="mech-float mf3">
-      <svg viewBox="0 0 100 100" fill="none">
-        <rect x="10" y="10" width="80" height="80" stroke="#e31b23" stroke-width="0.6" opacity="0.25" transform="rotate(45 50 50)"/>
-        <rect x="25" y="25" width="50" height="50" stroke="#e31b23" stroke-width="0.4" opacity="0.15" transform="rotate(45 50 50)"/>
-        <circle cx="50" cy="50" r="8" stroke="#e31b23" stroke-width="0.8" opacity="0.4"/>
-      </svg>
-    </div>
-    <div class="mech-float mf4">
-      <svg viewBox="0 0 80 80" fill="none">
-        <path d="M 40 5 L 55 20 L 75 20 L 75 60 L 55 60 L 40 75 L 25 60 L 5 60 L 5 20 L 25 20 Z" stroke="#e31b23" stroke-width="0.6" opacity="0.2"/>
-        <circle cx="40" cy="40" r="12" stroke="#e31b23" stroke-width="0.8" opacity="0.35"/>
-        <circle cx="40" cy="40" r="4" fill="#e31b23" opacity="0.5"/>
-      </svg>
-    </div>
-
-    <!-- HUD corner decorations -->
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div>
     <div class="hud-corner hud-br"></div>
-
-    <!-- HUD labels -->
     <div class="hud-label hud-label-bot"><span class="mono">LAT: 43.6577° N &nbsp;|&nbsp; LONG: 79.3788° W &nbsp;|&nbsp; STATUS: ACTIVE</span></div>
 
-    <div class="hero-content">
-      <div class="hero-badge reveal-up delay-1">
-        <span class="badge-dot"></span>
-        <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
+    <!-- Two-column grid layout -->
+    <div class="hero-inner">
+
+      <!-- LEFT COLUMN — text content -->
+      <div class="hero-left">
+        <div class="hero-badge reveal-up delay-1">
+          <span class="badge-dot"></span>
+          <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
+        </div>
+
+        <h1 class="hero-headline reveal-up delay-2">
+          <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
+          <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
+          <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
+        </h1>
+
+        <p class="hero-sub reveal-up delay-3">
+          The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
+          We build community through academics, industry exposure, and relentless ambition.
+        </p>
+
+        <div class="hero-actions reveal-up delay-4">
+          <a href="events.html" class="btn-primary">
+            <span>Explore Events</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="team.html" class="btn-ghost">
+            <span>Meet the Team</span>
+          </a>
+        </div>
+
+        <div class="scroll-indicator reveal-up delay-5">
+          <div class="scroll-line"></div>
+          <span class="mono">SCROLL</span>
+        </div>
       </div>
 
-      <h1 class="hero-headline reveal-up delay-2">
-        <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
-        <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
-        <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
-      </h1>
+      <!-- RIGHT COLUMN — logo + mascot stacked -->
+      <div class="hero-right reveal-right delay-2">
 
-      <p class="hero-sub reveal-up delay-3">
-        The Mechatronics Course Union unites engineers, creators, and innovators at TMU. 
-        We build community through academics, industry exposure, and relentless ambition.
-      </p>
+        <!-- Red gradient backdrop for right column -->
+        <div class="hero-right-glow"></div>
 
-      <div class="hero-actions reveal-up delay-4">
-        <a href="events.html" class="btn-primary">
-          <span>Explore Events</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="team.html" class="btn-ghost">
-          <span>Meet the Team</span>
-        </a>
-      </div>
-
-      <!-- Scroll indicator -->
-      <div class="scroll-indicator reveal-up delay-5">
-        <div class="scroll-line"></div>
-        <span class="mono">SCROLL</span>
-      </div>
-    </div>
-
-    <!-- Hero right panel — Mascot + rings -->
-    <div class="hero-visual reveal-right delay-2">
-      <div class="ring-system">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-
-        <!-- MCU Robot Mascot SVG -->
-        <div class="ring-center mascot-wrap">
-          <svg class="mascot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Antenna left -->
-            <ellipse cx="72" cy="28" rx="10" ry="16" rx="10" ry="16" fill="#5b9bd5" transform="rotate(-20 72 28)"/>
-            <!-- Antenna right -->
-            <ellipse cx="128" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(20 128 28)"/>
-
-            <!-- Head -->
-            <rect x="50" y="40" width="100" height="80" rx="18" fill="#e8e8e8"/>
-            <!-- Head shine -->
-            <rect x="54" y="44" width="100" height="80" rx="18" fill="white" opacity="0.15"/>
-
-            <!-- Screen face -->
-            <rect x="60" y="52" width="80" height="56" rx="8" fill="#0d0d0d"/>
-            <!-- Screen glow border -->
-            <rect x="60" y="52" width="80" height="56" rx="8" stroke="#5bc8e8" stroke-width="1.5" opacity="0.6"/>
-
-            <!-- Screen corner brackets -->
-            <path d="M64 56 L64 62 M64 56 L70 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M136 56 L136 62 M136 56 L130 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M64 104 L64 98 M64 104 L70 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M136 104 L136 98 M136 104 L130 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-
-            <!-- Happy eyes -->
-            <path d="M78 74 Q86 66 94 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
-            <path d="M106 74 Q114 66 122 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
-            <!-- Eye glow circles -->
-            <circle cx="86" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
-            <circle cx="114" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
-
-            <!-- Ear left -->
-            <rect x="36" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
-            <rect x="38" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
-            <!-- Ear right -->
-            <rect x="148" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
-            <rect x="150" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
-
-            <!-- Neck -->
-            <rect x="88" y="120" width="24" height="12" rx="4" fill="#d0d0d0"/>
-
-            <!-- Body -->
-            <ellipse cx="100" cy="175" rx="52" ry="48" fill="#e8e8e8"/>
-            <ellipse cx="100" cy="172" rx="52" ry="48" fill="white" opacity="0.12"/>
-
-            <!-- Body center light -->
-            <circle cx="100" cy="168" r="14" fill="#5b9bd5" opacity="0.3"/>
-            <circle cx="100" cy="168" r="9" fill="#5bc8e8" opacity="0.5"/>
-            <circle cx="100" cy="168" r="5" fill="#5bc8e8"/>
-            <!-- Light glow -->
-            <circle cx="100" cy="168" r="18" fill="#5bc8e8" opacity="0.08"/>
-
-            <!-- Body MCU text area -->
-            <rect x="70" y="148" width="60" height="14" rx="3" fill="#d0d0d0" opacity="0.5"/>
-
-            <!-- Arm left — raised/waving -->
-            <ellipse cx="38" cy="152" rx="14" ry="30" rx="14" ry="30" fill="#e8e8e8" transform="rotate(-30 38 152)"/>
-            <ellipse cx="22" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(-30 22 138)"/>
-
-            <!-- Arm right — raised -->
-            <ellipse cx="162" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(30 162 152)"/>
-            <ellipse cx="178" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(30 178 138)"/>
-
-            <!-- Bottom body -->
-            <ellipse cx="100" cy="215" rx="36" ry="18" fill="#e8e8e8"/>
-            <ellipse cx="100" cy="212" rx="36" ry="18" fill="white" opacity="0.1"/>
-
-            <!-- Bottom accent stripe -->
-            <rect x="76" y="204" width="48" height="6" rx="3" fill="#5b9bd5" opacity="0.6"/>
-
-            <!-- Red MCU badge on chest -->
-            <rect x="78" y="149" width="44" height="13" rx="3" fill="#e31b23" opacity="0.85"/>
-            <text x="100" y="159.5" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="10" fill="white" letter-spacing="1">MCU</text>
+        <!-- MCU Logo — solid fill, proper -->
+        <div class="hero-logo-block">
+          <svg class="hbp-logo-svg" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hbp-scan" x="0" y="0" width="228" height="4" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="228" y2="0" stroke="black" stroke-width="1.5"/>
+              </pattern>
+            </defs>
+            <!-- MCU box — solid red fill -->
+            <rect x="4" y="36" width="224" height="176" rx="3" fill="#e31b23"/>
+            <rect x="4" y="36" width="224" height="176" rx="3" fill="none" stroke="rgba(255,120,120,0.35)" stroke-width="1.5"/>
+            <!-- MCU text — solid white -->
+            <text x="116" y="188" font-family="Bebas Neue,Impact,sans-serif" font-size="148" fill="white" text-anchor="middle" letter-spacing="-2">MCU</text>
+            <!-- scanline texture -->
+            <rect x="4" y="36" width="224" height="176" rx="3" fill="url(#hbp-scan)" opacity="0.05"/>
+            <!-- TMU box — darker red, overlapping top-right -->
+            <rect x="210" y="4" width="126" height="112" rx="3" fill="#b8101a"/>
+            <rect x="210" y="4" width="126" height="112" rx="3" fill="none" stroke="rgba(255,120,120,0.25)" stroke-width="1.5"/>
+            <!-- TMU text — solid white -->
+            <text x="273" y="98" font-family="Bebas Neue,Impact,sans-serif" font-size="84" fill="white" text-anchor="middle" letter-spacing="2">TMU</text>
           </svg>
+          <!-- HUD corner brackets -->
+          <div class="hbp-bracket hbp-tl"></div>
+          <div class="hbp-bracket hbp-tr"></div>
+          <div class="hbp-bracket hbp-bl"></div>
+          <div class="hbp-bracket hbp-br"></div>
+          <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
         </div>
 
-        <!-- Orbiting dots -->
-        <div class="orbit o1"><div class="orbit-dot"></div></div>
-        <div class="orbit o2"><div class="orbit-dot od2"></div></div>
-        <div class="orbit o3"><div class="orbit-dot od3"></div></div>
-      </div>
+        <!-- Mascot + ring system below logo -->
+        <div class="hero-mascot-block">
+          <div class="ring-system">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="ring-center mascot-wrap">
+              <svg class="mascot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="72" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(-20 72 28)"/>
+                <ellipse cx="128" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(20 128 28)"/>
+                <rect x="50" y="40" width="100" height="80" rx="18" fill="#e8e8e8"/>
+                <rect x="54" y="44" width="100" height="80" rx="18" fill="white" opacity="0.15"/>
+                <rect x="60" y="52" width="80" height="56" rx="8" fill="#0d0d0d"/>
+                <rect x="60" y="52" width="80" height="56" rx="8" stroke="#5bc8e8" stroke-width="1.5" opacity="0.6"/>
+                <path d="M64 56 L64 62 M64 56 L70 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M136 56 L136 62 M136 56 L130 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M64 104 L64 98 M64 104 L70 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M136 104 L136 98 M136 104 L130 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M78 74 Q86 66 94 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <path d="M106 74 Q114 66 122 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <circle cx="86" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
+                <circle cx="114" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
+                <rect x="36" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
+                <rect x="38" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
+                <rect x="148" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
+                <rect x="150" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
+                <rect x="88" y="120" width="24" height="12" rx="4" fill="#d0d0d0"/>
+                <ellipse cx="100" cy="175" rx="52" ry="48" fill="#e8e8e8"/>
+                <ellipse cx="100" cy="172" rx="52" ry="48" fill="white" opacity="0.12"/>
+                <circle cx="100" cy="168" r="14" fill="#5b9bd5" opacity="0.3"/>
+                <circle cx="100" cy="168" r="9" fill="#5bc8e8" opacity="0.5"/>
+                <circle cx="100" cy="168" r="5" fill="#5bc8e8"/>
+                <circle cx="100" cy="168" r="18" fill="#5bc8e8" opacity="0.08"/>
+                <rect x="70" y="148" width="60" height="14" rx="3" fill="#d0d0d0" opacity="0.5"/>
+                <ellipse cx="38" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(-30 38 152)"/>
+                <ellipse cx="22" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(-30 22 138)"/>
+                <ellipse cx="162" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(30 162 152)"/>
+                <ellipse cx="178" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(30 178 138)"/>
+                <ellipse cx="100" cy="215" rx="36" ry="18" fill="#e8e8e8"/>
+                <ellipse cx="100" cy="212" rx="36" ry="18" fill="white" opacity="0.1"/>
+                <rect x="76" y="204" width="48" height="6" rx="3" fill="#5b9bd5" opacity="0.6"/>
+                <rect x="78" y="149" width="44" height="13" rx="3" fill="#e31b23" opacity="0.85"/>
+                <text x="100" y="159.5" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="10" fill="white" letter-spacing="1">MCU</text>
+              </svg>
+            </div>
+            <div class="orbit o1"><div class="orbit-dot"></div></div>
+            <div class="orbit o2"><div class="orbit-dot od2"></div></div>
+            <div class="orbit o3"><div class="orbit-dot od3"></div></div>
+          </div>
 
-      <!-- Readout panels -->
-      <div class="readout-panels">
-        <div class="readout-panel">
-          <span class="mono rp-label">DEPT</span>
-          <span class="rp-val">MECHATRONICS</span>
+          <!-- Readout panels -->
+          <div class="readout-panels">
+            <div class="readout-panel">
+              <span class="mono rp-label">DEPT</span>
+              <span class="rp-val">MECHATRONICS</span>
+            </div>
+            <div class="readout-panel">
+              <span class="mono rp-label">YEAR</span>
+              <span class="rp-val" id="current-year">2025</span>
+            </div>
+            <div class="readout-panel">
+              <span class="mono rp-label">STATUS</span>
+              <span class="rp-val rp-active">● ACTIVE</span>
+            </div>
+          </div>
         </div>
-        <div class="readout-panel">
-          <span class="mono rp-label">YEAR</span>
-          <span class="rp-val" id="current-year">2025</span>
-        </div>
-        <div class="readout-panel">
-          <span class="mono rp-label">STATUS</span>
-          <span class="rp-val rp-active">● ACTIVE</span>
-        </div>
-      </div>
-    </div>
+
+      </div><!-- /hero-right -->
+    </div><!-- /hero-inner -->
   </section>
 
   <!-- ═══════════════════ STATS ═══════════════════ -->
