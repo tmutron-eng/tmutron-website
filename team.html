@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team — MCU | Mechatronics Course Union · TMU</title>
+  <meta name="description" content="Meet the people behind the Mechatronics Course Union at Toronto Metropolitan University." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ LOADER ═══════════════════ -->
+  <div id="loader">
+    <div class="loader-inner">
+      <svg class="loader-hex" viewBox="0 0 100 116" fill="none">
+        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
+        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
+      </svg>
+      <div class="loader-text">
+        <span class="mono">LOADING TEAM</span>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <span class="loader-pct mono">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ═══════════════════ NAV ═══════════════════ -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
+        <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="tmngr" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
+              <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="tmngw" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
+              <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#tmngr)"/>
+          <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmngw)"/>
+          <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmngw)"/>
+          <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmngw)"/>
+          <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmngw)"/>
+          <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#tmngr)"/>
+          <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
+        </svg>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="team.html" class="nav-link active">Team</a></li>
+        <li><a href="academics.html" class="nav-link">Academics</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Join Us</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section id="team-hero">
+    <div class="tm-hero-scan"></div>
+    <div class="tm-hero-grid"></div>
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+
+    <div class="container tm-hero-inner">
+      <!-- Left: title -->
+      <div class="tm-hero-left">
+        <div class="hero-badge reveal-up delay-1">
+          <span class="badge-dot"></span>
+          <span class="mono">04 — THE TEAM</span>
+        </div>
+        <h1 class="tm-hero-title reveal-up delay-2">
+          <span class="line-wrap"><span class="hero-line">THE PEOPLE</span></span>
+          <span class="line-wrap"><span class="hero-line tm-title-accent">BEHIND MCU.</span></span>
+        </h1>
+        <p class="tm-hero-sub reveal-up delay-3">
+          Engineers, leaders, and community builders. Every one of us is a student first — we just happen to run one of TMU's most active course unions too.
+        </p>
+      </div>
+
+      <!-- Right: HUD stats panel -->
+      <div class="tm-hud-panel reveal-right delay-2">
+        <div class="tm-hud-header mono">
+          <span class="ev-hud-dot"></span>
+          TEAM ROSTER · ACTIVE
+        </div>
+        <div class="tm-hud-stats">
+          <div class="tm-hud-stat">
+            <span class="tm-hud-num">14</span>
+            <span class="tm-hud-label mono">TEAM MEMBERS</span>
+          </div>
+          <div class="tm-hud-divider"></div>
+          <div class="tm-hud-stat">
+            <span class="tm-hud-num">4</span>
+            <span class="tm-hud-label mono">DEPARTMENTS</span>
+          </div>
+          <div class="tm-hud-divider"></div>
+          <div class="tm-hud-stat">
+            <span class="tm-hud-num-sm mono">2024–25</span>
+            <span class="tm-hud-label mono">CURRENT TERM</span>
+          </div>
+        </div>
+        <div class="tm-hud-footer mono">MECHATRONICS COURSE UNION · TMU</div>
+        <div class="hbp-bracket hbp-tl"></div>
+        <div class="hbp-bracket hbp-tr"></div>
+        <div class="hbp-bracket hbp-bl"></div>
+        <div class="hbp-bracket hbp-br"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TEAM SECTIONS ═══════════════════ -->
+  <section id="team-main" class="section-dark">
+    <div class="section-blob b1"></div>
+    <div class="section-blob b2"></div>
+    <div class="container tm-container">
+
+      <!-- ── EXECUTIVE LEADERSHIP ── -->
+      <div class="tm-tier-label reveal-up">
+        <div class="tm-tier-left">
+          <span class="mono tm-tier-tag">01</span>
+          <h2 class="tm-tier-title">Executive Leadership</h2>
+        </div>
+        <div class="tm-tier-line"></div>
+      </div>
+
+      <div class="tm-grid tm-grid-exec reveal-up delay-1">
+
+        <div class="tm-card tilt-card" data-initials="JS" data-color="#e31b23">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#e31b23">JS</div>
+            <div class="tm-photo-glow" style="--tm-color:#e31b23"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#e31b23">
+            <span class="mono">PRESIDENT</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Jamie S.</h3>
+            <p class="tm-meta mono">3RD YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Leading MCU's vision, partnerships, and day-to-day operations. Making sure everything runs smoothly.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card" data-initials="AK" data-color="#c41a21">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#c41a21">AK</div>
+            <div class="tm-photo-glow" style="--tm-color:#c41a21"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#c41a21">
+            <span class="mono">VP INTERNAL</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Alex K.</h3>
+            <p class="tm-meta mono">3RD YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Overseeing internal operations, team coordination, and making sure everyone has what they need.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card" data-initials="MR" data-color="#c41a21">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#c41a21">MR</div>
+            <div class="tm-photo-glow" style="--tm-color:#c41a21"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#c41a21">
+            <span class="mono">VP EXTERNAL</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Morgan R.</h3>
+            <p class="tm-meta mono">3RD YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Managing external partnerships, sponsorships, and industry relationships on behalf of MCU.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /exec grid -->
+
+      <!-- ── DIRECTORS ── -->
+      <div class="tm-tier-label reveal-up" style="margin-top: 80px;">
+        <div class="tm-tier-left">
+          <span class="mono tm-tier-tag">02</span>
+          <h2 class="tm-tier-title">Directors</h2>
+        </div>
+        <div class="tm-tier-line"></div>
+      </div>
+
+      <div class="tm-grid tm-grid-directors reveal-up delay-1">
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#9b1219">SP</div>
+            <div class="tm-photo-glow" style="--tm-color:#9b1219"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#9b1219">
+            <span class="mono">ACADEMIC DIRECTOR</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Sam P.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Curating course resources, organizing tutoring, and keeping students academically supported.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#9b1219">TN</div>
+            <div class="tm-photo-glow" style="--tm-color:#9b1219"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#9b1219">
+            <span class="mono">EVENTS DIRECTOR</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Taylor N.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Planning and executing every event — from logistics and vendors to making the night unforgettable.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#9b1219">CL</div>
+            <div class="tm-photo-glow" style="--tm-color:#9b1219"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#9b1219">
+            <span class="mono">MARKETING DIRECTOR</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Casey L.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Running MCU's brand, social media, design, and making sure students actually know what's happening.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#9b1219">RB</div>
+            <div class="tm-photo-glow" style="--tm-color:#9b1219"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#9b1219">
+            <span class="mono">FINANCE DIRECTOR</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Riley B.</h3>
+            <p class="tm-meta mono">3RD YEAR · MECHATRONICS</p>
+            <p class="tm-bio">Managing MCU's budget, sponsorship funds, and making sure every dollar goes toward the community.</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /directors grid -->
+
+      <!-- ── GENERAL EXECUTIVES ── -->
+      <div class="tm-tier-label reveal-up" style="margin-top: 80px;">
+        <div class="tm-tier-left">
+          <span class="mono tm-tier-tag">03</span>
+          <h2 class="tm-tier-title">General Executives</h2>
+        </div>
+        <div class="tm-tier-line"></div>
+      </div>
+
+      <div class="tm-grid tm-grid-general reveal-up delay-1">
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">DW</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">ACADEMICS EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Dana W.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">JH</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">EVENTS EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Jordan H.</h3>
+            <p class="tm-meta mono">1ST YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">PV</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">MARKETING EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Priya V.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">OA</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">SPONSORSHIP EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Omar A.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">EF</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">SOCIAL MEDIA EXEC</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Elena F.</h3>
+            <p class="tm-meta mono">1ST YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">KC</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">GENERAL EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Kai C.</h3>
+            <p class="tm-meta mono">2ND YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="tm-card tilt-card">
+          <div class="tm-photo">
+            <div class="tm-initials" style="--tm-color:#6b0e13">NM</div>
+            <div class="tm-photo-glow" style="--tm-color:#6b0e13"></div>
+          </div>
+          <div class="tm-role-bar" style="--tm-color:#6b0e13">
+            <span class="mono">GENERAL EXECUTIVE</span>
+          </div>
+          <div class="tm-info">
+            <h3 class="tm-name">Nia M.</h3>
+            <p class="tm-meta mono">1ST YEAR · MECHATRONICS</p>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="tm-linkedin" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /general grid -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════ OPEN ROLES ═══════════════════ -->
+  <section id="open-roles" class="section-light">
+    <div class="section-blob b1"></div>
+    <div class="section-blob b3"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="section-header reveal-up">
+        <div class="section-tag"><span class="mono">JOIN THE TEAM</span></div>
+        <h2 class="section-title">We're <em>Recruiting.</em></h2>
+        <p class="section-desc">Want to be part of the team that runs MCU? We have openings for motivated Mechatronics students.</p>
+      </div>
+
+      <div class="roles-grid reveal-up delay-1">
+
+        <div class="role-card tilt-card">
+          <div class="role-card-top">
+            <span class="role-badge mono">OPEN</span>
+            <h3 class="role-title">Sponsorship Executive</h3>
+          </div>
+          <ul class="role-duties">
+            <li>Reach out to companies and manage sponsorship packages</li>
+            <li>Coordinate sponsor presence at MCU events</li>
+            <li>Track and report sponsorship revenue to Finance Director</li>
+          </ul>
+          <a href="contact.html" class="btn-primary role-btn">
+            <span>Apply Now</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="role-card tilt-card">
+          <div class="role-card-top">
+            <span class="role-badge mono">OPEN</span>
+            <h3 class="role-title">Marketing Executive</h3>
+          </div>
+          <ul class="role-duties">
+            <li>Create graphics and content for Instagram and LinkedIn</li>
+            <li>Help promote events and MCU initiatives</li>
+            <li>Collaborate with the Marketing Director on campaigns</li>
+          </ul>
+          <a href="contact.html" class="btn-primary role-btn">
+            <span>Apply Now</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="role-card tilt-card">
+          <div class="role-card-top">
+            <span class="role-badge mono">OPEN</span>
+            <h3 class="role-title">Academics Executive</h3>
+          </div>
+          <ul class="role-duties">
+            <li>Help curate and organize course resources and video guides</li>
+            <li>Support tutoring coordination and scheduling</li>
+            <li>Gather feedback from students on academic needs</li>
+          </ul>
+          <a href="contact.html" class="btn-primary role-btn">
+            <span>Apply Now</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MARQUEE ═══════════════════ -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>ENGINEERING ·</span><span>LEADERSHIP ·</span><span>COMMUNITY ·</span>
+      <span>INNOVATION ·</span><span>MECHATRONICS ·</span><span>TMU ·</span>
+      <span>ACADEMICS ·</span><span>INDUSTRY ·</span><span>TEAMWORK ·</span>
+      <span>EXCELLENCE ·</span><span>ROBOTICS ·</span><span>AUTOMATION ·</span>
+      <span>ENGINEERING ·</span><span>LEADERSHIP ·</span><span>COMMUNITY ·</span>
+      <span>INNOVATION ·</span><span>MECHATRONICS ·</span><span>TMU ·</span>
+      <span>ACADEMICS ·</span><span>INDUSTRY ·</span><span>TEAMWORK ·</span>
+      <span>EXCELLENCE ·</span><span>ROBOTICS ·</span><span>AUTOMATION ·</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
+            <svg class="footer-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="tmfgr" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
+                  <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="tmfgw" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
+                  <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#tmfgr)"/>
+              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmfgw)"/>
+              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmfgw)"/>
+              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmfgw)"/>
+              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#tmfgw)"/>
+              <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#tmfgr)"/>
+              <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">NAVIGATE</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">RESOURCES</h4>
+          <ul class="footer-links">
+            <li><a href="academics.html">Course Guides</a></li>
+            <li><a href="academics.html">Tutoring</a></li>
+            <li><a href="events.html">Event Archive</a></li>
+            <li><a href="contact.html">Sponsorship</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact-col">
+          <h4 class="footer-col-title mono">CONTACT</h4>
+          <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
+          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-built">Built by MCU Web Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Footer year
+    const fy = document.getElementById('footer-year');
+    if (fy) fy.textContent = new Date().getFullYear();
+
+    // Animated canvas background
+    (function() {
+      const section = document.getElementById('team-main');
+      if (!section) return;
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+      section.insertBefore(canvas, section.firstChild);
+      const ctx = canvas.getContext('2d');
+      let W, H, t = Math.random() * 1000;
+      const dots = Array.from({ length: 30 }, () => ({
+        x: Math.random(), y: Math.random(),
+        vx: (Math.random() - 0.5) * 0.0004,
+        vy: (Math.random() - 0.5) * 0.0004,
+        r: Math.random() * 1.3 + 0.4
+      }));
+      function resize() { W = canvas.width = section.offsetWidth; H = canvas.height = section.offsetHeight; }
+      resize();
+      new ResizeObserver(resize).observe(section);
+      function draw() {
+        ctx.clearRect(0, 0, W, H); t += 0.006;
+        const cx1 = W*(0.2+0.18*Math.sin(t*0.22)), cy1 = H*(0.35+0.2*Math.cos(t*0.17));
+        const g1 = ctx.createRadialGradient(cx1,cy1,0,cx1,cy1,Math.min(W,H)*0.45);
+        g1.addColorStop(0,'rgba(227,27,35,0.08)'); g1.addColorStop(1,'rgba(227,27,35,0)');
+        ctx.fillStyle=g1; ctx.fillRect(0,0,W,H);
+        const cx2 = W*(0.78+0.15*Math.cos(t*0.19)), cy2 = H*(0.65+0.18*Math.sin(t*0.28));
+        const g2 = ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,Math.min(W,H)*0.35);
+        g2.addColorStop(0,'rgba(227,27,35,0.06)'); g2.addColorStop(1,'rgba(227,27,35,0)');
+        ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
+        dots.forEach(d => {
+          d.x+=d.vx; d.y+=d.vy;
+          if(d.x<0)d.x=1; if(d.x>1)d.x=0; if(d.y<0)d.y=1; if(d.y>1)d.y=0;
+        });
+        dots.forEach((a,i) => {
+          dots.slice(i+1).forEach(b => {
+            const dx=(a.x-b.x)*W,dy=(a.y-b.y)*H,dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<130){
+              ctx.beginPath(); ctx.moveTo(a.x*W,a.y*H); ctx.lineTo(b.x*W,b.y*H);
+              ctx.strokeStyle=`rgba(227,27,35,${0.08*(1-dist/130)})`; ctx.lineWidth=0.5; ctx.stroke();
+            }
+          });
+          ctx.beginPath(); ctx.arc(a.x*W,a.y*H,a.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(227,27,35,0.25)'; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
