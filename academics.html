@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academics — MCU | Mechatronics Course Union · TMU</title>
+  <meta name="description" content="Course guides, student reviews, video resources, and tutoring support — curated by MCU students who've been there." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ─── ACADEMICS PAGE STYLES ─── */
+
+    /* Hero */
+    #academics-hero {
+      min-height: 60vh;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    #academics-hero canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .ac-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      padding: clamp(60px,8vw,120px) 0;
+    }
+    .ac-hero-left { flex: 1; min-width: 0; }
+    .ac-hero-right { flex-shrink: 0; }
+
+    /* HUD stats panel */
+    .ac-hud-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(227,27,35,0.3);
+      padding: 28px 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--steel);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+    .ac-hud-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), transparent);
+    }
+    .ac-hud-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ac-hud-row:last-child { border-bottom: none; }
+    .ac-hud-num {
+      font-size: 28px;
+      color: var(--red);
+      font-family: var(--font-display);
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .ac-hud-label { font-size: 10px; color: var(--steel); }
+
+    /* Year Tab Bar */
+    .year-tab-bar {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 50;
+      background: #161412;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .year-tab-bar::-webkit-scrollbar { display: none; }
+    .year-tab-bar-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 clamp(16px,4vw,64px);
+      min-width: max-content;
+    }
+    .yr-tab {
+      font-family: var(--font-cond);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel);
+      padding: 16px 24px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .yr-tab:hover { color: var(--white); }
+    .yr-tab.active { color: var(--white); border-bottom-color: var(--red); }
+
+    /* Year Sections */
+    .year-section {
+      padding: var(--section-pad) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .year-section:nth-child(odd) { background: #222020; }
+    .year-section:nth-child(even) { background: #1a1818; }
+
+    .year-section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+    .year-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      background: rgba(227,27,35,0.1);
+      border: 1px solid rgba(227,27,35,0.3);
+      padding: 6px 12px;
+      text-transform: uppercase;
+    }
+    .year-title-block { flex: 1; }
+    .year-title-block h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px,5vw,56px);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .year-title-block p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--steel);
+      font-weight: 300;
+    }
+
+    /* Semester sub-header */
+    .semester-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .semester-label span { color: var(--red); margin-right: 8px; }
+
+    /* Course Cards Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px,1fr));
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+
+    /* Course Accordion Card */
+    .course-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .course-card:hover { border-color: rgba(227,27,35,0.25); }
+    .course-card.has-content { cursor: pointer; }
+
+    .course-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+    .course-header::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--red);
+      transform: scaleY(0);
+      transition: transform 0.25s var(--ease-out-expo);
+      transform-origin: bottom;
+    }
+    .course-card:hover .course-header::before,
+    .course-card.open .course-header::before { transform: scaleY(1); }
+
+    .course-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .course-name {
+      font-family: var(--font-cond);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+    .course-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--steel);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+    .course-chevron {
+      color: var(--steel);
+      transition: transform 0.3s var(--ease-out-expo), color 0.2s;
+      flex-shrink: 0;
+    }
+    .course-card.open .course-chevron {
+      transform: rotate(180deg);
+      color: var(--red);
+    }
+    .course-coming-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--steel);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 3px 8px;
+      text-transform: uppercase;
+    }
+
+    /* Course Body */
+    .course-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .course-body.open { max-height: 4000px; }
+    .course-body-inner { padding: 0 24px 28px; }
+
+    /* Overview block */
+    .course-overview {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--steel-light);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border-left: 2px solid rgba(227,27,35,0.3);
+    }
+
+    /* Review sections */
+    .review-section { margin-bottom: 20px; }
+    .review-section-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .review-text {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--steel-light);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .review-text ul {
+      margin: 8px 0 8px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .review-text li::marker { color: var(--red); }
+
+    /* Links */
+    .course-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .course-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-cond);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid rgba(227,27,35,0.4);
+      padding: 6px 12px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .course-link-btn:hover {
+      background: var(--red);
+      color: var(--white);
+    }
+    .course-link-btn svg { width: 10px; height: 10px; }
+
+    /* Week Rows (for MTE401 style) */
+    .weeks-table { margin-top: 16px; }
+    .weeks-table-header {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--steel);
+      text-transform: uppercase;
+    }
+    .week-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: start;
+    }
+    .week-row:last-child { border-bottom: none; }
+    .week-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      letter-spacing: 0.1em;
+    }
+    .week-topic {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--steel-light);
+      font-weight: 300;
+    }
+
+    /* Professor chip */
+    .prof-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--steel);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 4px 10px;
+      margin-bottom: 14px;
+    }
+    .prof-chip span { color: var(--steel-light); }
+
+    /* Coming Soon Card */
+    .coming-soon-card {
+      background: rgba(255,255,255,0.015);
+      border: 1px dashed rgba(255,255,255,0.1);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .coming-soon-card .cs-icon {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      color: rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+    .coming-soon-card p {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--steel);
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    /* ─── RESOURCES SECTION ─── */
+    #ac-resources {
+      background: #272422;
+      padding: var(--section-pad) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .resource-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.25s, transform 0.25s var(--ease-out-expo);
+      text-decoration: none;
+    }
+    .resource-card:hover {
+      border-color: rgba(227,27,35,0.35);
+      transform: translateY(-4px);
+    }
+    .resource-icon {
+      width: 36px;
+      height: 36px;
+      color: var(--red);
+    }
+    .resource-card h4 {
+      font-family: var(--font-cond);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .resource-card p {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--steel);
+      font-weight: 300;
+      line-height: 1.5;
+      flex: 1;
+    }
+    .resource-cta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ─── TUTORING SECTION ─── */
+    #ac-tutoring {
+      background: #1e1c1a;
+      padding: var(--section-pad) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .tutoring-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .tutoring-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tutoring-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), transparent);
+    }
+    .tutoring-card h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .tutoring-card .tc-detail {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .tutoring-card p {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--steel);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Contribute CTA */
+    .contribute-strip {
+      background: rgba(227,27,35,0.08);
+      border: 1px solid rgba(227,27,35,0.2);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .contribute-strip p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--steel-light);
+      font-weight: 300;
+    }
+    .contribute-strip p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .ac-hero-inner { flex-direction: column; }
+      .ac-hero-right { width: 100%; }
+      .ac-hud-panel { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
+      .ac-hud-row { border-bottom: none; border-right: 1px solid rgba(255,255,255,0.06); flex-direction: column; gap: 4px; padding: 12px 16px; }
+      .ac-hud-row:last-child { border-right: none; }
+      .courses-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .year-tab-bar-inner { gap: 0; padding: 0 16px; }
+      .yr-tab { padding: 14px 16px; font-size: 12px; }
+      .contribute-strip { flex-direction: column; align-items: flex-start; }
+      .ac-hud-panel { grid-template-columns: 1fr; }
+      .ac-hud-row { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER (handled by main.js) -->
+  <div id="loader">
+    <div class="loader-inner">
+      <svg class="loader-hex" viewBox="0 0 100 100">
+        <polygon class="hex-stroke" points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"/>
+      </svg>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+      <div class="loader-label mono">INITIALIZING</div>
+    </div>
+  </div>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- CANVAS BG -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
+        <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="acngr" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
+              <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="acngw" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
+              <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+          <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#acngr)"/>
+          <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acngw)"/>
+          <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acngw)"/>
+          <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acngw)"/>
+          <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acngw)"/>
+          <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+          <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#acngr)"/>
+          <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
+        </svg>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="team.html" class="nav-link">Team</a></li>
+        <li><a href="academics.html" class="nav-link active">Academics</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta">Join Us</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════ -->
+  <section id="academics-hero">
+    <canvas class="section-canvas" id="hero-canvas"></canvas>
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="ac-hero-inner">
+        <div class="ac-hero-left">
+          <div class="hero-badge reveal-up">
+            <span class="badge-dot"></span>
+            <span class="mono" style="font-size:11px;letter-spacing:0.15em;">05 — ACADEMICS</span>
+          </div>
+          <div class="line-wrap" style="overflow:hidden;margin-top:24px;">
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--white);line-height:0.95;margin:0;">STUDY</h1>
+          </div>
+          <div class="line-wrap" style="overflow:hidden;">
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--red);line-height:0.95;margin:0;">SMARTER.</h1>
+          </div>
+          <p class="reveal-up delay-2" style="font-family:var(--font-body);font-size:clamp(15px,2vw,18px);color:var(--steel-light);font-weight:300;max-width:480px;line-height:1.6;margin-top:24px;">
+            Week-by-week guides, student reviews, and curated resources — for every year of Mechatronics at TMU.
+          </p>
+        </div>
+        <div class="ac-hero-right reveal-up delay-3">
+          <div class="ac-hud-panel">
+            <div class="ac-hud-row">
+              <div class="ac-hud-num">4</div>
+              <div class="ac-hud-label">Years Covered</div>
+            </div>
+            <div class="ac-hud-row">
+              <div class="ac-hud-num">13+</div>
+              <div class="ac-hud-label">Course Guides</div>
+            </div>
+            <div class="ac-hud-row">
+              <div class="ac-hud-num">100%</div>
+              <div class="ac-hud-label">Student-Written</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       YEAR TAB BAR
+  ═══════════════════════════════════════════════════════ -->
+  <div class="year-tab-bar" id="year-tab-bar">
+    <div class="year-tab-bar-inner">
+      <button class="yr-tab active" data-year="1" onclick="scrollToYear(1)">Year 1</button>
+      <button class="yr-tab" data-year="2" onclick="scrollToYear(2)">Year 2</button>
+      <button class="yr-tab" data-year="3" onclick="scrollToYear(3)">Year 3</button>
+      <button class="yr-tab" data-year="4" onclick="scrollToYear(4)">Year 4</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       YEAR 1
+  ═══════════════════════════════════════════════════════ -->
+  <section class="year-section" id="year-1" data-year="1">
+    <canvas class="section-canvas" id="y1-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="year-section-header reveal-up">
+        <div class="year-badge">Year 01</div>
+        <div class="year-title-block">
+          <h2>FIRST YEAR</h2>
+          <p>Building the foundations — math, physics, chemistry, and your first taste of engineering</p>
+        </div>
+      </div>
+
+      <!-- SEM 1 -->
+      <div class="semester-label reveal-up"><span>►</span> Semester 1</div>
+      <div class="courses-grid">
+
+        <!-- MTH140 -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTH140</div>
+              <div class="course-name">Calculus I</div>
+              <div class="course-meta">Math · Semester 1</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                MTH140 builds directly on Grade 12 calculus, covering limits, derivatives, applications of differentiation, and integrals. It sets the foundation for MTH240 and every engineering course that follows. The course moves fast — staying on top of weekly practice is essential.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ Student Advice — General</div>
+                <div class="review-text">
+                  Calculus I can be overwhelming if you fall behind even a couple of lessons — concepts build on each other rapidly. Prioritize in-class recommended problems over textbook recommendations. Move on once you have a decent understanding; don't get stuck on one topic for too long. The course is fairly easy to pass with consistent practice (about 2 hours a week). It's not a "read the slides" course — you have to solve problems to actually understand it.
+                  <br><br>
+                  <strong style="color:var(--white)">Best professor:</strong> Francis Duah — highly recommended. He explains concepts clearly, keeps the class engaged, and makes the course manageable for incoming students.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📋 Labs</div>
+                <div class="review-text">
+                  Labs review course questions taken up by a TA — not mandatory, but recommended. The smaller setting is great for asking questions and the format mimics exam questions closely.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📝 Midterm & Final</div>
+                <div class="review-text">
+                  Past midterms are significantly more representative than textbook problems — study those first. The midterm is usually harder than the final. For the final, past exams are again your best prep. Attend study halls. Master <strong style="color:var(--white)">limits, derivatives, Riemann sums, chain rule, and trig derivatives</strong> — they always show up on finals.
+                </div>
+              </div>
+              <div class="course-links">
+                <a href="https://www.youtube.com/watch?v=YNstP0ESndU&list=PLQzO27oXvPfosPFf5edw4TzpDpG01n1qb" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Organic Chem Tutor
+                </a>
+                <a href="https://www.youtube.com/watch?v=fYyARMqiaag&list=PLF797E961509B4EB5" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Professor Leonard
+                </a>
+                <a href="https://www.khanacademy.org/math/calculus-1" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Khan Academy
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MTH141 -->
+        <div class="course-card reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTH141</div>
+              <div class="course-name">Linear Algebra</div>
+              <div class="course-meta">Math · Semester 1</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon. Want to contribute your experience?</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CEN100 -->
+        <div class="course-card reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">CEN100</div>
+              <div class="course-name">Introduction to Engineering</div>
+              <div class="course-meta">Engineering · Semester 1</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon. Want to contribute your experience?</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHY102 -->
+        <div class="course-card reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">CHY102</div>
+              <div class="course-name">Chemistry for Engineers</div>
+              <div class="course-meta">Chemistry · Semester 1</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PCS211 -->
+        <div class="course-card reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">PCS211</div>
+              <div class="course-name">Physics: Mechanics</div>
+              <div class="course-meta">Physics · Semester 1</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEM 2 -->
+      <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
+      <div class="courses-grid">
+
+        <!-- MTH240 -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTH240</div>
+              <div class="course-name">Calculus II</div>
+              <div class="course-meta">Math · Semester 2</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="prof-chip">Recommended prof: <span>Dr. Saeid Samiezadeh</span></div>
+              <div class="course-overview">
+                MTH240 builds directly off Calc I — integration techniques, L'Hôpital's Rule, sequences and series, power series, first-order differential equations, and an intro to multivariable calculus. This is where math starts to feel genuinely useful for engineering.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ Student Advice</div>
+                <div class="review-text">
+                  If you struggled in Calc I, that's fine. Calc II focuses on specific areas in depth — especially integration and sequences and series — and with practice they become very manageable and even enjoyable. The course mainly focuses on: <strong style="color:var(--white)">integrals, sequences and series, first-order differential equations, and partial derivatives</strong>. There's a lot of natural repetition that helps things click.
+                  <br><br>
+                  For integrals (the bulk of the course) — do reps whenever you're bored. You should be able to look at an integral and instantly know what method to use. If you can't, you need more reps. Dr. Samiezadeh's slides alone are enough prep — no textbook required.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📋 Labs</div>
+                <div class="review-text">
+                  Labs are easy if you're caught up on the material. Lab quizzes are straightforward if you understand the content — just stay on top of lectures.
+                </div>
+              </div>
+              <div class="course-links">
+                <a href="https://youtube.com/playlist?list=PLDesaqWTN6EQ2J4vgsN1HyBeRADEh4Cw-&si=Fae64d3jbFbToin-" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Calc II Playlist
+                </a>
+                <a href="https://drive.google.com/drive/u/0/folders/1w3EmkLP9SQHthvBlJ3jqcDAPKAMynlKm" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  Google Drive Resources
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC222 -->
+        <div class="course-card has-content reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC222</div>
+              <div class="course-name">Engineering Graphics</div>
+              <div class="course-meta">Engineering · Semester 2</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                MEC222 covers engineering graphical communication — technical drawing and 3D CAD using SolidWorks. Labs are split between manual studio (hand-drawn) and CAD sections.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📋 Labs</div>
+                <div class="review-text">
+                  Labs are mandatory. TAs are helpful if you're stuck. Manual studio labs have a take-home component, and the big sketching project at the end is very time-consuming — <strong style="color:var(--white)">start it as early as possible</strong>. Important: rulers and compasses are not allowed in manual labs — all lines must be freehand.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📝 Midterm & Final</div>
+                <div class="review-text">
+                  There are 2 midterms — one for CAD and one for manual studio. If you're keeping up with labs, midterms should be manageable. The final is a mix of sketching and MCQ on knowledge and terminology.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CPS188 -->
+        <div class="course-card has-content reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">CPS188</div>
+              <div class="course-name">Computer Programming (C)</div>
+              <div class="course-meta">Computing · Semester 2</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="prof-chip">Recommended prof: <span>Professor Hamlin</span></div>
+              <div class="course-overview">
+                Your gateway into programming with C. Covers fundamentals that feed directly into MTE301 and later computing courses.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ General</div>
+                <div class="review-text">
+                  Go to lectures — Professor Hamlin is great at explaining fundamentals, especially if you're starting from zero. Labs aren't mandatory, but if you struggle with coding, attend them and use TA time for debugging assignments.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📝 Midterm & Exam</div>
+                <div class="review-text">
+                  The midterm is a hands-on technical exam — similar to lab assignments but harder. <strong style="color:var(--white)">Don't rely on ChatGPT for assignments or you'll struggle here.</strong> Memorize syntax — code that doesn't compile earns a 0. The final is MCQ — know your syntax, binary conversions, and number bases. It's honestly easier than the midterm.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC323 -->
+        <div class="course-card has-content reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC323</div>
+              <div class="course-name">Statics & Mechanics of Materials</div>
+              <div class="course-meta">Mechanics · Semester 2</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                Covers equilibrium of rigid bodies, trusses, frames, and machines (Statics), then stress/strain, Hooke's Law, axial/torsional loading, and statically indeterminate problems (Mechanics of Materials).
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ General</div>
+                <div class="review-text">
+                  This is a critical foundation for MEC311 (Dynamics) — understanding Statics thoroughly will make everything in 2nd year much smoother. There's no final project, but there is a computer assignment worth 2.5% due in Week 11.
+                </div>
+              </div>
+              <div class="course-links">
+                <a href="https://www.youtube.com/playlist?list=PLXePpKFSUW2ZxGn6VdAPY9d7l7HowWVYL" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Statics Playlist
+                </a>
+                <a href="https://www.youtube.com/playlist?list=PLRqDfxcafc23LXGoItpkYMKtUdHaQwSDC" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Mechanics Playlist
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC325 -->
+        <div class="course-card has-content reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC325</div>
+              <div class="course-name">Engineering Design & Human Factors</div>
+              <div class="course-meta">Design · Semester 2</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                Covers ergonomics and human factors in design. Labs include 3 in-person quizzes and a semester-long group project. No midterm — quizzes and final are all multiple choice. A 50% weighted average is required for both the exam component and the project component independently.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ Group Project</div>
+                <div class="review-text">
+                  MEC325 often has one of the lower course averages, and the project is marked harshly. Groups are assigned by personality quiz. <strong style="color:var(--white)">Meet outside of lab time</strong> to make real progress. For the final report, have 2–3 people dedicated to CAD only — it's too slow for one person. Remaining members can handle the written portions based on previous milestones.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📝 Quizzes & Final</div>
+                <div class="review-text">
+                  Quizzes use randomized questions from a cumulative pool — attend lectures and study the materials. Knowledge of the ear and eye anatomy <strong style="color:var(--white)">will</strong> be tested. Start studying early and ace the quizzes — the final overlaps heavily with quiz content.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contribute CTA -->
+      <div class="contribute-strip reveal-up">
+        <p><strong>Missing a Year 1 course?</strong> Help us build the most complete guide for incoming Mechatronics students at TMU.</p>
+        <a href="contact.html" class="btn-ghost">Contribute a Review →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       YEAR 2
+  ═══════════════════════════════════════════════════════ -->
+  <section class="year-section" id="year-2" data-year="2">
+    <canvas class="section-canvas" id="y2-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="year-section-header reveal-up">
+        <div class="year-badge">Year 02</div>
+        <div class="year-title-block">
+          <h2>SECOND YEAR</h2>
+          <p>Core mechatronics — dynamics, circuits, programming, and your first real engineering courses</p>
+        </div>
+      </div>
+
+      <!-- SEM 1 -->
+      <div class="semester-label reveal-up"><span>►</span> Semester 1</div>
+      <div class="courses-grid">
+
+        <!-- MTE301 -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTE301</div>
+              <div class="course-name">Programming for Mechatronics</div>
+              <div class="course-meta">Computing · Semester 3</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="prof-chip">Professor: <span>Prof. Chhabra</span></div>
+              <div class="course-overview">
+                C++ from the ground up, building on CPS188. Covers OOP fundamentals (abstraction, encapsulation, inheritance, polymorphism), data structures, pointers, and operator overloading. Labs involve programming a virtual robot to navigate spaces. A brief Python intro appears at the end.
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">⚡ General</div>
+                <div class="review-text">
+                  This course makes you proficient in C++ through genuinely challenging labs you can't copy from YouTube or Reddit — they're uncheatable by design. Ask questions often; Prof. Chhabra moves fast but always clarifies when asked. Reading the textbook is actually recommended — it adds important context to OOP concepts like inheritance and multithreading.
+                  <br><br>
+                  <strong style="color:var(--white)">Don't cheat on labs.</strong> Understanding here directly affects your performance in MTE502 (Microprocessors) later.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📋 Labs</div>
+                <div class="review-text">
+                  Extremely challenging — intentionally. The best approach: find an upper-year Mechatronics student who's taken the course and ask for their guidance on strategy.
+                </div>
+              </div>
+              <div class="review-section">
+                <div class="review-section-title">📝 Exams & Final Project</div>
+                <div class="review-text">
+                  A cheat sheet is usually allowed on the final — fill it with both theory (the 4 OOP pillars, what inheritance means) and code examples. The final project allows a lot of customization — choose something ambitious and physical if possible. It's a significant portion of your grade and a great résumé piece for co-op.
+                </div>
+              </div>
+              <div class="course-links">
+                <a href="https://www.youtube.com/watch?v=S3nx34WFXjI&list=PLZPZq0r_RZOMHoXIcxze_lP97j2Ase2on" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  C++ Bro Code
+                </a>
+                <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  W3Schools C++
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CMN432 -->
+        <div class="course-card reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">CMN432</div>
+              <div class="course-name">Communication for Engineers</div>
+              <div class="course-meta">Communications · Semester 3</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MTH425 -->
+        <div class="course-card reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTH425</div>
+              <div class="course-name">Probability & Statistics</div>
+              <div class="course-meta">Math · Semester 3</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEM 2 -->
+      <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
+      <div class="courses-grid">
+
+        <!-- MTE401 -->
+        <div class="course-card has-content reveal-up" style="grid-column: 1 / -1;">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTE401</div>
+              <div class="course-name">Analysis of Electric Circuits</div>
+              <div class="course-meta">Electrical · Semester 4 · Week-by-Week Guide</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                The core circuits course for Mechatronics — DC analysis, nodal/mesh methods, Thevenin/Norton equivalents, capacitors, inductors, transient response, AC circuits, phasors, impedance, and power analysis. Assessment is split between theory and labs, with a midterm, comprehensive final, lab reports, quizzes, and two individual lab tests — all must be passed separately.
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px;" class="review-cols">
+                <div class="review-section">
+                  <div class="review-section-title">⚡ General Advice</div>
+                  <div class="review-text">
+                    MTE401 is formula-driven, but what matters is <em>process</em>. You're always converting a circuit into equations, picking the right method (nodal vs mesh vs Thevenin), and solving efficiently. Falling behind on nodal/mesh and source transformations early makes the rest of the term much harder. Consistency beats cramming — weekly practice is everything.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📋 Labs</div>
+                  <div class="review-text">
+                    Labs cover: Ohm's Law, nodal analysis, Thevenin equivalents, RC/RL step responses, resonance, and AC behavior. Prepare ahead — labs use the full 2 hours. Simulate in LTspice beforehand. Wiring errors eat time — double-check early. Keep organized notes; they're essential for lab reports. Labs build directly toward lab tests near the end of semester.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Midterm</div>
+                  <div class="review-text">
+                    Focuses on DC analysis and early energy-storage concepts. Practice volume matters. Build a routine: identify nodes → pick a method → write equations → solve → sanity-check. Once the structure clicks, most problems become manageable.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Final Exam</div>
+                  <div class="review-text">
+                    Comprehensive — emphasizes AC analysis, phasors, impedance, power calculations, resonance, and RC/RL transients. Drill phasor conversions and power-factor questions until automatic. Redo lab tests and tutorial problems. Conceptual mastery first — recognizing what a circuit needs makes the algebra far easier.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Week by Week -->
+              <div class="review-section-title" style="margin-bottom:12px;">📅 Week-by-Week Topics</div>
+              <div class="weeks-table">
+                <div class="weeks-table-header">
+                  <div>Week</div>
+                  <div>Topic</div>
+                </div>
+                <div class="week-row"><div class="week-num">WK 02</div><div class="week-topic">Ohm's Law, KVL, KCL, Series/Parallel Circuits</div></div>
+                <div class="week-row"><div class="week-num">WK 03</div><div class="week-topic">Resistor Reduction, Voltage & Current Division, Nodal Analysis</div></div>
+                <div class="week-row"><div class="week-num">WK 04</div><div class="week-topic">Mesh Analysis, Superposition</div></div>
+                <div class="week-row"><div class="week-num">WK 05</div><div class="week-topic">Source Transformation</div></div>
+                <div class="week-row"><div class="week-num">WK 06</div><div class="week-topic">Thevenin's & Norton's Analysis</div></div>
+                <div class="week-row"><div class="week-num">WK 07</div><div class="week-topic">Capacitors & Inductors</div></div>
+                <div class="week-row"><div class="week-num">WK 08</div><div class="week-topic">RC Circuits</div></div>
+                <div class="week-row"><div class="week-num">WK 09</div><div class="week-topic">RL Circuits</div></div>
+                <div class="week-row"><div class="week-num">WK 10</div><div class="week-topic">AC Generators, Complex Numbers</div></div>
+                <div class="week-row"><div class="week-num">WK 11</div><div class="week-topic">Phasors, Impedance, AC Mesh/Nodal/Superposition, Power</div></div>
+                <div class="week-row"><div class="week-num">WK 12</div><div class="week-topic">Average/RMS/Apparent Power, Power Factor</div></div>
+              </div>
+
+              <div class="course-links" style="margin-top:20px;">
+                <a href="https://youtube.com/playlist?list=PLGbSiamfWIH8ZZ6bvcqEyVOA6euTFWCB7" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  EES 512 Circuit Analysis Playlist
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC311 -->
+        <div class="course-card reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC311</div>
+              <div class="course-name">Dynamics</div>
+              <div class="course-meta">Mechanics · Semester 4</div>
+            </div>
+            <span class="course-coming-tag">Content Coming</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Week-by-week content and student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+              <div class="course-links" style="margin-top:16px;">
+                <a href="https://youtube.com/playlist?list=PLXePpKFSUW2ZXw_D5h0TTyac-KGlFRxnS&si=Da2Wk2UMolddq7b4" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  Dynamics Playlist
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC511 -->
+        <div class="course-card reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC511</div>
+              <div class="course-name">Thermodynamics</div>
+              <div class="course-meta">Thermal · Semester 4</div>
+            </div>
+            <span class="course-coming-tag">Content Coming</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Week-by-week content and student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MTH410 -->
+        <div class="course-card reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTH410</div>
+              <div class="course-name">Differential Equations</div>
+              <div class="course-meta">Math · Semester 4</div>
+            </div>
+            <span class="course-coming-tag">Content Coming</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Week-by-week content and student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEC322 -->
+        <div class="course-card reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MEC322</div>
+              <div class="course-name">Fluid Mechanics</div>
+              <div class="course-meta">Fluids · Semester 4</div>
+            </div>
+            <span class="course-coming-tag">Coming Soon</span>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="coming-soon-card">
+                <div class="cs-icon">[ ]</div>
+                <p>Student review coming soon.</p>
+                <a href="contact.html" class="course-link-btn">Submit a Review →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contribute-strip reveal-up">
+        <p><strong>Have notes or reviews for MEC311, MEC511, or MTH410?</strong> Help us build out the Year 2 guides.</p>
+        <a href="contact.html" class="btn-ghost">Contribute →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       YEAR 3
+  ═══════════════════════════════════════════════════════ -->
+  <section class="year-section" id="year-3" data-year="3">
+    <canvas class="section-canvas" id="y3-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="year-section-header reveal-up">
+        <div class="year-badge">Year 03</div>
+        <div class="year-title-block">
+          <h2>THIRD YEAR</h2>
+          <p>Signals, microprocessors, controls — where mechatronics starts to click</p>
+        </div>
+      </div>
+
+      <div class="semester-label reveal-up"><span>►</span> Semester 1</div>
+      <div class="courses-grid">
+
+        <!-- MTE501 -->
+        <div class="course-card has-content reveal-up" style="grid-column:1/-1;">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTE501</div>
+              <div class="course-name">Signals and Systems</div>
+              <div class="course-meta">Signals · Semester 5</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                The core signals & systems course. Covers continuous-time and discrete-time signals, LTI systems, convolution, Fourier Transform, DTFS/DTFT, z-transform, stability, causality, poles/zeros, sampling, and aliasing. Essential groundwork for controls, robotics, communications, and embedded signal processing.
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="review-cols">
+                <div class="review-section">
+                  <div class="review-section-title">⚡ General Advice</div>
+                  <div class="review-text">
+                    MTE501 is concept-heavy but very rewarding. Think in question types — not chapters:
+                    <ul>
+                      <li>Difference equation → find H(z) and h[n]</li>
+                      <li>Finite-length DT signal → DTFT via geometric series</li>
+                      <li>Periodic DT signal → DTFS via Euler</li>
+                      <li>Rational X(z) + ROC → inverse z and time support</li>
+                    </ul>
+                    Build a 1-page cheat sheet of recipes. Treat complex exponentials as your best friends.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📋 Labs</div>
+                  <div class="review-text">
+                    Python experiments: plotting time-domain signals and spectra, visualizing convolution and filtering, demonstrating sampling and aliasing. Don't treat labs as throwaway marks — they make exam questions feel intuitive. Pay attention to what the math is doing visually.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Midterm</div>
+                  <div class="review-text">
+                    One-page single-sided cheat sheet allowed. Covers up to Laplace transform — CT signals/systems, LTI properties, impulse/step response, convolution, Laplace transform, and solving differential equations. Focus on going: diff eq → Laplace → H(s) → y(t) or h(t) smoothly.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Final Exam</div>
+                  <div class="review-text">
+                    One-page double-sided cheat sheet. Cumulative but heavier on later topics: sampling, Nyquist rate, DT convolution, DTFS/DTFT, z-transform and ROC, stability. Spend extra time on ROC reasoning (causal vs non-causal, stable vs unstable).
+                  </div>
+                </div>
+              </div>
+              <div class="course-links" style="margin-top:16px;">
+                <a href="https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  MIT OCW – Signals & Systems
+                </a>
+                <a href="https://www.adampanagos.org/dt-signals-and-systems" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Adam Panagos – DT Signals
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MTE502 -->
+        <div class="course-card has-content reveal-up delay-1" style="grid-column:1/-1;">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div>
+              <div class="course-code">MTE502</div>
+              <div class="course-name">Microprocessors</div>
+              <div class="course-meta">Embedded · Semester 5</div>
+            </div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body">
+            <div class="course-body-inner">
+              <div class="course-overview">
+                Where you learn how the brain of a mechatronic system works. Uses the ATmega328P (Arduino Uno chip) to cover CPU and memory, AVR assembly and C, digital I/O, timers, PWM, ADC, and interrupts. By the end, you'll understand what the microcontroller is actually doing in a robot — how it reads inputs, makes decisions, and drives outputs in real time.
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="review-cols">
+                <div class="review-section">
+                  <div class="review-section-title">⚡ General Advice</div>
+                  <div class="review-text">
+                    Think like hardware, not just like a programmer. When you see C code, ask: "What bits and registers is this touching?" Practice bit math — binary/hex conversions, masks, shifts, and flag logic appear constantly. Don't fear assembly — once you've done a handful of examples by hand, patterns start repeating. Small regular practice beats cramming.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📋 Labs</div>
+                  <div class="review-text">
+                    Labs are 1 hour — short for what needs to be done. Write and think through as much code as possible at home using the slides and datasheet. Use lab time for demos, debugging, and hardware testing. Most problems are simple: wrong pin, wrong DDR/PORT settings, missing ground, or power issues. Check those first.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Midterm & Quiz</div>
+                  <div class="review-text">
+                    MCQ, short answer, and longer written questions. Expect: CPU/registers/SREG flags, assembly tracing, digital I/O logic, basic control concepts and PWM. Practice by tracing code by hand — compute flag results, explain configurations.
+                  </div>
+                </div>
+                <div class="review-section">
+                  <div class="review-section-title">📝 Final & Maze Project</div>
+                  <div class="review-text">
+                    One double-sided cheat sheet allowed. Cumulative but leans toward later material — timers, ADC, interrupts, and control-style questions. The final project is an autonomous line-following maze-solving robot. <strong style="color:var(--white)">Start early</strong> — friction, sensor noise, battery level, and alignment issues only show up on real hardware. Get a basic version working first, then refine.
+                  </div>
+                </div>
+              </div>
+              <div class="course-links" style="margin-top:16px;">
+                <a href="https://youtube.com/playlist?list=PL09ZAP7_T_LmlX5vctZV4PFfZwMNzjX1F&si=Ze77OJ2JJR1Rwc2q" target="_blank" rel="noopener" class="course-link-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                  AVR Assembly Playlist
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contribute-strip reveal-up">
+        <p><strong>Have reviews for other Year 3 courses?</strong> Help upper-year students navigate the toughest semester.</p>
+        <a href="contact.html" class="btn-ghost">Contribute →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       YEAR 4
+  ═══════════════════════════════════════════════════════ -->
+  <section class="year-section" id="year-4" data-year="4">
+    <canvas class="section-canvas" id="y4-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="year-section-header reveal-up">
+        <div class="year-badge">Year 04</div>
+        <div class="year-title-block">
+          <h2>FOURTH YEAR</h2>
+          <p>Capstone projects and advanced specialization — your final stretch</p>
+        </div>
+      </div>
+      <div class="coming-soon-card" style="max-width:560px;">
+        <div class="cs-icon" style="font-size:32px;">[ ]</div>
+        <p style="font-size:15px;">Year 4 course guides are in progress. Upper-year students — your insights are needed here most.</p>
+        <a href="contact.html" class="btn-ghost" style="text-decoration:none;display:inline-block;">Contribute a Review →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       RESOURCES SECTION
+  ═══════════════════════════════════════════════════════ -->
+  <section id="ac-resources">
+    <canvas class="section-canvas" id="res-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="section-header reveal-up">
+        <div class="section-tag">Resources</div>
+        <h2 class="section-title">STUDY MATERIALS</h2>
+        <p class="section-desc">Quick access to past exams, formula sheets, and course documents — all in one place.</p>
+      </div>
+      <div class="resources-grid">
+        <a href="#" class="resource-card tilt-card reveal-up">
+          <svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <h4>Past Midterms</h4>
+          <p>Previous exam papers across core Mechatronics courses — the best prep tool available.</p>
+          <div class="resource-cta">Open in Drive <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+        <a href="#" class="resource-card tilt-card reveal-up delay-1">
+          <svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          <h4>Formula Sheets</h4>
+          <p>Curated formula references for circuits, dynamics, thermodynamics, and more.</p>
+          <div class="resource-cta">Open in Drive <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+        <a href="#" class="resource-card tilt-card reveal-up delay-2">
+          <svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <h4>Lab Report Templates</h4>
+          <p>Standard templates for lab reports across Mechatronics courses — save hours of formatting.</p>
+          <div class="resource-cta">Open in Drive <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+        <a href="#" class="resource-card tilt-card reveal-up delay-3">
+          <svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <h4>Course Syllabi Archive</h4>
+          <p>Historical syllabi across years so you know exactly what's ahead.</p>
+          <div class="resource-cta">Open in Drive <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+      </div>
+      <p class="reveal-up" style="font-family:var(--font-mono);font-size:10px;color:var(--steel);text-align:center;margin-top:24px;letter-spacing:0.1em;">
+        ⚠ DRIVE LINKS COMING SOON — CHECK BACK OR <a href="contact.html" style="color:var(--red);">CONTACT US</a> FOR ACCESS
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TUTORING SECTION
+  ═══════════════════════════════════════════════════════ -->
+  <section id="ac-tutoring">
+    <canvas class="section-canvas" id="tut-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="section-header reveal-up">
+        <div class="section-tag">Support</div>
+        <h2 class="section-title">NEED HELP?</h2>
+        <p class="section-desc">MCU offers free academic support run by students who've already been through these courses.</p>
+      </div>
+      <div class="tutoring-grid">
+        <div class="tutoring-card reveal-up">
+          <h4>Drop-In Tutoring</h4>
+          <div class="tc-detail">TBD · Location TBD</div>
+          <p>Walk in, get help. No booking required — bring your notes and questions and one of our tutors will work through it with you.</p>
+        </div>
+        <div class="tutoring-card reveal-up delay-1">
+          <h4>1-on-1 Sessions</h4>
+          <div class="tc-detail">Book via email</div>
+          <p>Need focused time on a specific topic? Email us to book a private session with an upper-year tutor who's taken the course.</p>
+        </div>
+        <div class="tutoring-card reveal-up delay-2">
+          <h4>Study Groups</h4>
+          <div class="tc-detail">Check Discord</div>
+          <p>Weekly study groups organized by course. Check the MCU Discord server for current schedules and meetup spots.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px;" class="reveal-up delay-3">
+        <a href="contact.html" class="btn-primary" style="text-decoration:none;">Get Academic Help →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MARQUEE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>MECHATRONICS</span><span class="mx">✦</span>
+      <span>COURSE GUIDES</span><span class="mx">✦</span>
+      <span>STUDENT REVIEWS</span><span class="mx">✦</span>
+      <span>PAST EXAMS</span><span class="mx">✦</span>
+      <span>VIDEO RESOURCES</span><span class="mx">✦</span>
+      <span>MCU ACADEMICS</span><span class="mx">✦</span>
+      <span>TMU ENGINEERING</span><span class="mx">✦</span>
+      <span>STUDY SMARTER</span><span class="mx">✦</span>
+      <span>MECHATRONICS</span><span class="mx">✦</span>
+      <span>COURSE GUIDES</span><span class="mx">✦</span>
+      <span>STUDENT REVIEWS</span><span class="mx">✦</span>
+      <span>PAST EXAMS</span><span class="mx">✦</span>
+      <span>VIDEO RESOURCES</span><span class="mx">✦</span>
+      <span>MCU ACADEMICS</span><span class="mx">✦</span>
+      <span>TMU ENGINEERING</span><span class="mx">✦</span>
+      <span>STUDY SMARTER</span><span class="mx">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
+            <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="acfgr" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
+                  <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="acfgw" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
+                  <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#acfgr)"/>
+              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
+              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
+              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
+              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
+              <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#acfgr)"/>
+              <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <div class="footer-col-title">Pages</div>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="academics.html">Academics</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Academics</div>
+            <ul>
+              <li><a href="#year-1">Year 1</a></li>
+              <li><a href="#year-2">Year 2</a></li>
+              <li><a href="#year-3">Year 3</a></li>
+              <li><a href="#year-4">Year 4</a></li>
+              <li><a href="#ac-resources">Resources</a></li>
+              <li><a href="#ac-tutoring">Tutoring</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Contact</div>
+            <ul>
+              <li><a href="mailto:tmutron@torontomu.ca">tmutron@torontomu.ca</a></li>
+              <li><a href="contact.html">Join MCU</a></li>
+              <li><a href="contact.html">Sponsorship</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 Mechatronics Course Union · Toronto Metropolitan University</div>
+        <div class="footer-legal mono" style="font-size:10px;color:var(--steel);letter-spacing:0.1em;">STUDENT-LED · NOT AFFILIATED WITH TMU ADMIN</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ─── ACCORDION ───
+    function toggleCourse(header) {
+      const card = header.closest('.course-card');
+      const body = header.nextElementSibling;
+      if (!body || !body.classList.contains('course-body')) return;
+      const isOpen = card.classList.contains('open');
+      // Close all others in the same grid
+      const grid = card.closest('.courses-grid');
+      if (grid) {
+        grid.querySelectorAll('.course-card.open').forEach(c => {
+          if (c !== card) {
+            c.classList.remove('open');
+            c.querySelector('.course-body')?.classList.remove('open');
+          }
+        });
+      }
+      card.classList.toggle('open', !isOpen);
+      body.classList.toggle('open', !isOpen);
+    }
+
+    // ─── YEAR TAB SCROLL ───
+    function scrollToYear(year) {
+      const section = document.getElementById('year-' + year);
+      if (!section) return;
+      const offset = document.getElementById('year-tab-bar').offsetHeight + document.getElementById('nav').offsetHeight;
+      const top = section.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    // ─── YEAR TAB HIGHLIGHT VIA INTERSECTION OBSERVER ───
+    const yearSections = document.querySelectorAll('.year-section');
+    const yearTabs = document.querySelectorAll('.yr-tab');
+    const tabObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          yearTabs.forEach(t => t.classList.remove('active'));
+          const tab = document.querySelector(`.yr-tab[data-year="${e.target.dataset.year}"]`);
+          if (tab) tab.classList.add('active');
+        }
+      });
+    }, { threshold: 0.25, rootMargin: '-80px 0px -40% 0px' });
+    yearSections.forEach(s => tabObs.observe(s));
+
+    // ─── SECTION CANVAS ANIMATIONS ───
+    (function() {
+      const canvases = document.querySelectorAll('.section-canvas');
+      canvases.forEach(canvas => {
+        const parent = canvas.parentElement;
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [], blobs = [], animId;
+
+        function init() {
+          w = canvas.width = parent.offsetWidth;
+          h = canvas.height = parent.offsetHeight;
+          particles = Array.from({ length: 40 }, () => ({
+            x: Math.random() * w, y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.5 + 0.5
+          }));
+          blobs = Array.from({ length: 2 }, (_, i) => ({
+            x: w * (i === 0 ? 0.2 : 0.8), y: h * 0.5,
+            t: Math.random() * Math.PI * 2
+          }));
+        }
+
+        function draw(ts) {
+          ctx.clearRect(0, 0, w, h);
+          blobs.forEach(b => {
+            b.t += 0.003;
+            b.x += Math.sin(b.t * 0.7) * 0.4;
+            b.y += Math.cos(b.t * 0.5) * 0.3;
+            const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, Math.min(w,h) * 0.35);
+            grd.addColorStop(0, 'rgba(227,27,35,0.045)');
+            grd.addColorStop(1, 'rgba(227,27,35,0)');
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, w, h);
+          });
+          particles.forEach(p => {
+            p.x = (p.x + p.vx + w) % w;
+            p.y = (p.y + p.vy + h) % h;
+          });
+          ctx.strokeStyle = 'rgba(227,27,35,0.08)';
+          ctx.lineWidth = 0.5;
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx*dx + dy*dy);
+              if (dist < 120) {
+                ctx.globalAlpha = (1 - dist/120) * 0.4;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+              }
+            }
+          }
+          ctx.globalAlpha = 1;
+          animId = requestAnimationFrame(draw);
+        }
+
+        init();
+        draw(0);
+        window.addEventListener('resize', () => { cancelAnimationFrame(animId); init(); draw(0); });
+      });
+    })();
+
+    // ─── RESPONSIVE REVIEW COLS ───
+    function fixReviewCols() {
+      document.querySelectorAll('.review-cols').forEach(el => {
+        el.style.gridTemplateColumns = window.innerWidth < 700 ? '1fr' : '1fr 1fr';
+      });
+    }
+    fixReviewCols();
+    window.addEventListener('resize', fixReviewCols);
+  </script>
+</body>
+</html>
