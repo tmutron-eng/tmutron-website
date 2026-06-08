@@ -543,20 +543,25 @@
 <body>
 
   <!-- LOADER (handled by main.js) -->
+    <!-- ═══════════════════ LOADER ═══════════════════ -->
   <div id="loader">
     <div class="loader-inner">
-      <svg class="loader-hex" viewBox="0 0 100 100">
-        <polygon class="hex-stroke" points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"/>
+      <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
+        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
       </svg>
-      <div class="loader-bar"><div class="loader-progress"></div></div>
+      <div class="loader-text">
+        <span class="mono">INITIALIZING</span>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <span class="loader-pct mono">0%</span>
+      </div>
+    </div>
+  </div>
       <div class="loader-label mono">INITIALIZING</div>
     </div>
   </div>
 
   <!-- CURSOR -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-
   <!-- CANVAS BG -->
   <canvas id="bg-canvas"></canvas>
 
@@ -616,7 +621,6 @@
        HERO
   ═══════════════════════════════════════════════════════ -->
   <section id="academics-hero">
-    <canvas class="section-canvas" id="hero-canvas"></canvas>
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div>
@@ -674,7 +678,6 @@
        YEAR 1
   ═══════════════════════════════════════════════════════ -->
   <section class="year-section" id="year-1" data-year="1">
-    <canvas class="section-canvas" id="y1-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="year-section-header reveal-up">
         <div class="year-badge">Year 01</div>
@@ -1018,7 +1021,6 @@
        YEAR 2
   ═══════════════════════════════════════════════════════ -->
   <section class="year-section" id="year-2" data-year="2">
-    <canvas class="section-canvas" id="y2-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="year-section-header reveal-up">
         <div class="year-badge">Year 02</div>
@@ -1306,7 +1308,6 @@
        YEAR 3
   ═══════════════════════════════════════════════════════ -->
   <section class="year-section" id="year-3" data-year="3">
-    <canvas class="section-canvas" id="y3-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="year-section-header reveal-up">
         <div class="year-badge">Year 03</div>
@@ -1445,7 +1446,6 @@
        YEAR 4
   ═══════════════════════════════════════════════════════ -->
   <section class="year-section" id="year-4" data-year="4">
-    <canvas class="section-canvas" id="y4-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="year-section-header reveal-up">
         <div class="year-badge">Year 04</div>
@@ -1466,7 +1466,6 @@
        RESOURCES SECTION
   ═══════════════════════════════════════════════════════ -->
   <section id="ac-resources">
-    <canvas class="section-canvas" id="res-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="section-header reveal-up">
         <div class="section-tag">Resources</div>
@@ -1509,7 +1508,6 @@
        TUTORING SECTION
   ═══════════════════════════════════════════════════════ -->
   <section id="ac-tutoring">
-    <canvas class="section-canvas" id="tut-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="section-header reveal-up">
         <div class="section-tag">Support</div>
@@ -1563,86 +1561,84 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
   <footer id="footer">
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
-            <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="footer-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <filter id="acfgr" x="-30%" y="-30%" width="160%" height="160%">
+                <filter id="fgr2" x="-30%" y="-30%" width="160%" height="160%">
                   <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
                   <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
                   <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
-                <filter id="acfgw" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="fgw2" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
                   <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
               <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
-              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#acfgr)"/>
-              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
-              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
-              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
-              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#acfgw)"/>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#fgr2)"/>
+              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
               <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
               <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
-              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#acfgr)"/>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#fgr2)"/>
               <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
             </svg>
           </a>
           <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
           <div class="footer-socials">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Discord">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.02.015.04.03.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
             </a>
             <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </a>
           </div>
         </div>
-        <div class="footer-nav">
-          <div class="footer-col">
-            <div class="footer-col-title">Pages</div>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="events.html">Events</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="academics.html">Academics</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Academics</div>
-            <ul>
-              <li><a href="#year-1">Year 1</a></li>
-              <li><a href="#year-2">Year 2</a></li>
-              <li><a href="#year-3">Year 3</a></li>
-              <li><a href="#year-4">Year 4</a></li>
-              <li><a href="#ac-resources">Resources</a></li>
-              <li><a href="#ac-tutoring">Tutoring</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Contact</div>
-            <ul>
-              <li><a href="mailto:tmutron@torontomu.ca">tmutron@torontomu.ca</a></li>
-              <li><a href="contact.html">Join MCU</a></li>
-              <li><a href="contact.html">Sponsorship</a></li>
-            </ul>
-          </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">NAVIGATE</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">RESOURCES</h4>
+          <ul class="footer-links">
+            <li><a href="academics.html">Course Guides</a></li>
+            <li><a href="academics.html">Tutoring</a></li>
+            <li><a href="events.html">Event Archive</a></li>
+            <li><a href="contact.html">Sponsorship</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-col-title mono">CONTACT</h4>
+          <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
+          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
         </div>
       </div>
+
       <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Mechatronics Course Union · Toronto Metropolitan University</div>
-        <div class="footer-legal mono" style="font-size:10px;color:var(--steel);letter-spacing:0.1em;">STUDENT-LED · NOT AFFILIATED WITH TMU ADMIN</div>
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-built">Built by MCU Web Team</span>
       </div>
     </div>
   </footer>
@@ -1692,70 +1688,6 @@
       });
     }, { threshold: 0.25, rootMargin: '-80px 0px -40% 0px' });
     yearSections.forEach(s => tabObs.observe(s));
-
-    // ─── SECTION CANVAS ANIMATIONS ───
-    (function() {
-      const canvases = document.querySelectorAll('.section-canvas');
-      canvases.forEach(canvas => {
-        const parent = canvas.parentElement;
-        const ctx = canvas.getContext('2d');
-        let w, h, particles = [], blobs = [], animId;
-
-        function init() {
-          w = canvas.width = parent.offsetWidth;
-          h = canvas.height = parent.offsetHeight;
-          particles = Array.from({ length: 40 }, () => ({
-            x: Math.random() * w, y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-            r: Math.random() * 1.5 + 0.5
-          }));
-          blobs = Array.from({ length: 2 }, (_, i) => ({
-            x: w * (i === 0 ? 0.2 : 0.8), y: h * 0.5,
-            t: Math.random() * Math.PI * 2
-          }));
-        }
-
-        function draw(ts) {
-          ctx.clearRect(0, 0, w, h);
-          blobs.forEach(b => {
-            b.t += 0.003;
-            b.x += Math.sin(b.t * 0.7) * 0.4;
-            b.y += Math.cos(b.t * 0.5) * 0.3;
-            const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, Math.min(w,h) * 0.35);
-            grd.addColorStop(0, 'rgba(227,27,35,0.045)');
-            grd.addColorStop(1, 'rgba(227,27,35,0)');
-            ctx.fillStyle = grd;
-            ctx.fillRect(0, 0, w, h);
-          });
-          particles.forEach(p => {
-            p.x = (p.x + p.vx + w) % w;
-            p.y = (p.y + p.vy + h) % h;
-          });
-          ctx.strokeStyle = 'rgba(227,27,35,0.08)';
-          ctx.lineWidth = 0.5;
-          for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const dist = Math.sqrt(dx*dx + dy*dy);
-              if (dist < 120) {
-                ctx.globalAlpha = (1 - dist/120) * 0.4;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-              }
-            }
-          }
-          ctx.globalAlpha = 1;
-          animId = requestAnimationFrame(draw);
-        }
-
-        init();
-        draw(0);
-        window.addEventListener('resize', () => { cancelAnimationFrame(animId); init(); draw(0); });
-      });
-    })();
 
     // ─── RESPONSIVE REVIEW COLS ───
     function fixReviewCols() {
