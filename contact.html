@@ -412,20 +412,25 @@
 <body>
 
   <!-- LOADER -->
+    <!-- ═══════════════════ LOADER ═══════════════════ -->
   <div id="loader">
     <div class="loader-inner">
-      <svg class="loader-hex" viewBox="0 0 100 100">
-        <polygon class="hex-stroke" points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"/>
+      <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
+        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
       </svg>
-      <div class="loader-bar"><div class="loader-progress"></div></div>
+      <div class="loader-text">
+        <span class="mono">INITIALIZING</span>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <span class="loader-pct mono">0%</span>
+      </div>
+    </div>
+  </div>
       <div class="loader-label mono">INITIALIZING</div>
     </div>
   </div>
 
   <!-- CURSOR -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-
   <!-- CANVAS BG -->
   <canvas id="bg-canvas"></canvas>
 
@@ -576,7 +581,6 @@
        JOIN + FAQ
   ═══════════════════════════════════════════════════════ -->
   <section id="ct-join">
-    <canvas class="section-canvas" id="join-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="ct-join-grid">
 
@@ -673,7 +677,6 @@
        WHAT WE DO
   ═══════════════════════════════════════════════════════ -->
   <section id="ct-what">
-    <canvas class="section-canvas" id="what-canvas"></canvas>
     <div class="container" style="position:relative;z-index:1;">
       <div class="section-header reveal-up">
         <div class="section-tag">MCU</div>
@@ -719,7 +722,6 @@
        BIG DISCORD CTA
   ═══════════════════════════════════════════════════════ -->
   <section id="ct-discord-cta">
-    <canvas class="section-canvas" id="cta-canvas"></canvas>
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div>
@@ -763,35 +765,33 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
   <footer id="footer">
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a href="index.html" class="footer-logo" aria-label="MCU">
-            <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
+            <svg class="footer-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <filter id="ctfgr" x="-30%" y="-30%" width="160%" height="160%">
+                <filter id="fgr2" x="-30%" y="-30%" width="160%" height="160%">
                   <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
                   <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
                   <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
-                <filter id="ctfgw" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="fgw2" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
                   <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
                 </filter>
               </defs>
               <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
-              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#ctfgr)"/>
-              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ctfgw)"/>
-              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ctfgw)"/>
-              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ctfgw)"/>
-              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ctfgw)"/>
+              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#fgr2)"/>
+              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
+              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw2)"/>
               <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
               <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
-              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#ctfgr)"/>
+              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#fgr2)"/>
               <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
             </svg>
           </a>
@@ -811,39 +811,38 @@
             </a>
           </div>
         </div>
-        <div class="footer-nav">
-          <div class="footer-col">
-            <div class="footer-col-title">Pages</div>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="events.html">Events</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="academics.html">Academics</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Connect</div>
-            <ul>
-              <li><a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener">Discord</a></li>
-              <li><a href="https://instagram.com/tmutron" target="_blank" rel="noopener">Instagram</a></li>
-              <li><a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener">LinkedIn</a></li>
-              <li><a href="mailto:tmutron@torontomu.ca">Email Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Contribute</div>
-            <ul>
-              <li><a href="academics.html#year-1">Course Reviews</a></li>
-              <li><a href="academics.html#ac-resources">Resources</a></li>
-              <li><a href="mailto:tmutron@torontomu.ca">Sponsorship</a></li>
-            </ul>
-          </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">NAVIGATE</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title mono">RESOURCES</h4>
+          <ul class="footer-links">
+            <li><a href="academics.html">Course Guides</a></li>
+            <li><a href="academics.html">Tutoring</a></li>
+            <li><a href="events.html">Event Archive</a></li>
+            <li><a href="contact.html">Sponsorship</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-col-title mono">CONTACT</h4>
+          <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
+          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
         </div>
       </div>
+
       <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Mechatronics Course Union · Toronto Metropolitan University</div>
-        <div class="footer-legal mono" style="font-size:10px;color:var(--steel);letter-spacing:0.1em;">STUDENT-LED · NOT AFFILIATED WITH TMU ADMIN</div>
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-built">Built by MCU Web Team</span>
       </div>
     </div>
   </footer>
@@ -858,60 +857,6 @@
       document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
       if (!isOpen) item.classList.add('open');
     }
-
-    // ─── SECTION CANVAS ANIMATIONS ───
-    (function() {
-      const canvases = document.querySelectorAll('.section-canvas');
-      canvases.forEach(canvas => {
-        const parent = canvas.parentElement;
-        if (!parent) return;
-        const ctx = canvas.getContext('2d');
-        let w, h, particles = [], blobs = [], animId;
-        function init() {
-          w = canvas.width = parent.offsetWidth;
-          h = canvas.height = parent.offsetHeight;
-          particles = Array.from({ length: 35 }, () => ({
-            x: Math.random() * w, y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-            r: Math.random() * 1.5 + 0.5
-          }));
-          blobs = [{ x: w * 0.2, y: h * 0.5, t: 0 }, { x: w * 0.8, y: h * 0.3, t: Math.PI }];
-        }
-        function draw() {
-          ctx.clearRect(0, 0, w, h);
-          blobs.forEach(b => {
-            b.t += 0.004;
-            b.x += Math.sin(b.t * 0.6) * 0.5;
-            b.y += Math.cos(b.t * 0.4) * 0.35;
-            const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, Math.min(w, h) * 0.4);
-            grd.addColorStop(0, 'rgba(227,27,35,0.04)');
-            grd.addColorStop(1, 'rgba(227,27,35,0)');
-            ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
-          });
-          particles.forEach(p => {
-            p.x = (p.x + p.vx + w) % w;
-            p.y = (p.y + p.vy + h) % h;
-          });
-          ctx.strokeStyle = 'rgba(227,27,35,0.07)'; ctx.lineWidth = 0.5;
-          for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 110) {
-                ctx.globalAlpha = (1 - dist / 110) * 0.35;
-                ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-              }
-            }
-          }
-          ctx.globalAlpha = 1;
-          animId = requestAnimationFrame(draw);
-        }
-        init(); draw();
-        window.addEventListener('resize', () => { cancelAnimationFrame(animId); init(); draw(); });
-      });
-    })();
   </script>
 </body>
 </html>
