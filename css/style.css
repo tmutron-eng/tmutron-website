@@ -1475,3 +1475,200 @@ em { font-style: italic; color: var(--red); }
   .tm-grid-directors { grid-template-columns: 1fr; }
   .tm-grid-general   { grid-template-columns: repeat(2,1fr); }
 }
+
+/* ══════════════════════════════════════════════════
+   LIGHT MODE THEME
+   Applied via [data-theme="light"] on <html>
+   ══════════════════════════════════════════════════ */
+
+[data-theme="light"] {
+  --black:       #f5f3ef;
+  --dark:        #eceae5;
+  --dark-2:      #e4e1db;
+  --dark-3:      #d8d5ce;
+  --dark-4:      #c8c4bc;
+  --white:       #1a1815;
+  --steel:       #6b6760;
+  --steel-light: #3d3a35;
+  --light:       #1a1815;
+  --light-2:     #2a2724;
+  --light-3:     #3d3a35;
+}
+
+/* Body background */
+[data-theme="light"] body {
+  background: #f5f3ef;
+  color: #1a1815;
+}
+
+/* Nav */
+[data-theme="light"] #nav.scrolled {
+  background: rgba(245,243,239,0.93);
+  border-bottom-color: rgba(227,27,35,0.2);
+}
+[data-theme="light"] .mobile-menu {
+  background: rgba(245,243,239,0.98);
+  border-bottom-color: rgba(227,27,35,0.15);
+}
+[data-theme="light"] .mobile-menu li a {
+  color: #1a1815;
+  border-bottom-color: #d8d5ce;
+}
+[data-theme="light"] .nav-hamburger span { background: #1a1815; }
+
+/* Loader */
+[data-theme="light"] #loader { background: #f5f3ef; }
+
+/* Hero sections */
+[data-theme="light"] #hero,
+[data-theme="light"] #events-hero,
+[data-theme="light"] #academics-hero,
+[data-theme="light"] #contact-hero,
+[data-theme="light"] #team-hero { background: #f5f3ef; }
+
+/* Section backgrounds */
+[data-theme="light"] #stats,
+[data-theme="light"] .section-dark,
+[data-theme="light"] .year-section:nth-child(odd),
+[data-theme="light"] #ct-join,
+[data-theme="light"] #ac-tutoring,
+[data-theme="light"] #ac-resources { background: #eceae5; }
+
+[data-theme="light"] #what-we-do,
+[data-theme="light"] .section-light,
+[data-theme="light"] #events-preview,
+[data-theme="light"] .year-section:nth-child(even),
+[data-theme="light"] #ct-what,
+[data-theme="light"] #ct-discord-cta { background: #e4e1db; }
+
+[data-theme="light"] #footer { background: #d8d5ce; border-top-color: rgba(227,27,35,0.15); }
+
+/* Cards */
+[data-theme="light"] .pillar-card { background: #eceae5; border-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .pillar-card:hover { background: #e4e1db; }
+[data-theme="light"] .event-card { background: #eceae5; border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .event-card:hover { background: #e0ddd7; }
+[data-theme="light"] .stat-item { background: rgba(0,0,0,0.03); }
+[data-theme="light"] .stat-item:hover { background: rgba(0,0,0,0.06); }
+
+/* Course cards (academics page) */
+[data-theme="light"] .course-card { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .course-card:hover { border-color: rgba(227,27,35,0.3); }
+[data-theme="light"] .course-overview { background: rgba(0,0,0,0.03); }
+[data-theme="light"] .weeks-table-header,
+[data-theme="light"] .week-row { border-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .coming-soon-card { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .contribute-strip { background: rgba(227,27,35,0.06); border-color: rgba(227,27,35,0.2); }
+[data-theme="light"] .semester-label { border-bottom-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .ac-hud-panel { background: rgba(0,0,0,0.03); border-color: rgba(227,27,35,0.25); }
+[data-theme="light"] .ac-hud-row { border-bottom-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .year-tab-bar { background: #f0ede8; border-bottom-color: rgba(0,0,0,0.07); }
+
+/* Resource & tutoring cards */
+[data-theme="light"] .resource-card,
+[data-theme="light"] .tutoring-card,
+[data-theme="light"] .what-card { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .resource-card:hover,
+[data-theme="light"] .what-card:hover { border-color: rgba(227,27,35,0.3); }
+
+/* Channel cards (contact page) */
+[data-theme="light"] .channel-card { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .channel-card--discord { background: rgba(88,101,242,0.05); }
+[data-theme="light"] .channel-card--instagram { background: rgba(225,48,108,0.04); }
+[data-theme="light"] .channel-card--linkedin { background: rgba(10,102,194,0.04); }
+
+/* FAQ & Join steps */
+[data-theme="light"] .faq-item { border-bottom-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .join-step { border-bottom-color: rgba(0,0,0,0.07); }
+
+/* Team cards */
+[data-theme="light"] .member-card { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .member-card:hover { border-color: rgba(227,27,35,0.3); }
+[data-theme="light"] .role-card { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .tm-hud-panel { background: rgba(0,0,0,0.04); border-color: rgba(227,27,35,0.25); }
+[data-theme="light"] .tm-hud-row { border-color: rgba(0,0,0,0.06); }
+
+/* Event page specific */
+[data-theme="light"] .ev-filter-bar { background: #ede9e3; border-bottom-color: rgba(0,0,0,0.07); }
+[data-theme="light"] .ev-filter-btn { color: #6b6760; }
+[data-theme="light"] .ev-filter-btn:hover { color: #1a1815; }
+[data-theme="light"] .ev-card { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .ev-card:hover { border-color: rgba(227,27,35,0.3); }
+[data-theme="light"] .ev-gallery-dot { background: rgba(0,0,0,0.15); }
+[data-theme="light"] .ev-gallery-dot.active { background: var(--red); }
+
+/* Buttons */
+[data-theme="light"] .btn-ghost {
+  color: #1a1815;
+  border-color: rgba(0,0,0,0.25);
+}
+[data-theme="light"] .btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+/* Social links */
+[data-theme="light"] .social-link {
+  border-color: rgba(0,0,0,0.12);
+  color: #6b6760;
+}
+[data-theme="light"] .social-link:hover { border-color: var(--red); color: var(--red); }
+
+/* Footer links */
+[data-theme="light"] .footer-links a { color: #6b6760; }
+[data-theme="light"] .footer-links a:hover { color: #1a1815; }
+[data-theme="light"] .footer-bottom { border-top-color: rgba(0,0,0,0.08); }
+[data-theme="light"] .footer-copy { color: #6b6760; }
+
+/* ─── THEME TOGGLE BUTTON ─── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  cursor: none;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  color: var(--steel-light);
+  position: relative;
+  overflow: hidden;
+}
+.theme-toggle:hover {
+  background: rgba(227,27,35,0.1);
+  border-color: rgba(227,27,35,0.3);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+.theme-toggle svg {
+  width: 16px; height: 16px;
+  position: absolute;
+  transition: opacity 0.25s, transform 0.35s var(--ease-out-expo);
+}
+.theme-toggle .icon-sun  { opacity: 0; transform: rotate(90deg) scale(0.6); }
+.theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.12);
+  color: #3d3a35;
+}
+[data-theme="light"] .theme-toggle:hover {
+  background: rgba(227,27,35,0.08);
+  border-color: rgba(227,27,35,0.3);
+  color: #1a1815;
+}
+[data-theme="light"] .theme-toggle .icon-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+[data-theme="light"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+
+/* Smooth global transition on theme switch */
+body, body * {
+  transition:
+    background-color 0.35s var(--ease-in-out),
+    border-color 0.35s var(--ease-in-out),
+    color 0.35s var(--ease-in-out);
+}
+/* Exclude animations from the blanket transition */
+.marquee-track, .hero-line, .loader-progress,
+.badge-dot, .scroll-line, .stat-bar,
+canvas, svg { transition: none !important; }
