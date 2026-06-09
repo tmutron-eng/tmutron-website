@@ -46,21 +46,15 @@
               <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- MCU box — solid red fill like the real logo -->
           <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
-          <!-- MCU box red border glow -->
           <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#ngr)"/>
-          <!-- Corner brackets — white -->
           <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
           <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
           <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
           <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <!-- MCU text — solid white, bold -->
           <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
-          <!-- TMU box — solid darker red, offset top-right -->
           <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
           <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#ngr)"/>
-          <!-- TMU text — solid white -->
           <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
         </svg>
       </a>
@@ -91,7 +85,6 @@
   <!-- ═══════════════════ HERO ═══════════════════ -->
   <section id="hero">
 
-    <!-- Decorative background layers (absolute, pointer-events:none) -->
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
     <div class="hud-corner hud-tl"></div>
@@ -100,10 +93,9 @@
     <div class="hud-corner hud-br"></div>
     <div class="hud-label hud-label-bot"><span class="mono">LAT: 43.6577° N &nbsp;|&nbsp; LONG: 79.3788° W &nbsp;|&nbsp; STATUS: ACTIVE</span></div>
 
-    <!-- Two-column grid layout -->
     <div class="hero-inner">
 
-      <!-- LEFT COLUMN — text content -->
+      <!-- LEFT COLUMN -->
       <div class="hero-left">
         <div class="hero-badge reveal-up delay-1">
           <span class="badge-dot"></span>
@@ -118,7 +110,7 @@
 
         <p class="hero-sub reveal-up delay-3">
           The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
-          We build community through academics, industry exposure, and relentless ambition.
+          We build community through academics, hands-on workshops, and relentless ambition.
         </p>
 
         <div class="hero-actions reveal-up delay-4">
@@ -137,13 +129,11 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN — logo + mascot stacked -->
+      <!-- RIGHT COLUMN -->
       <div class="hero-right reveal-right delay-2">
 
-        <!-- Red gradient backdrop for right column -->
         <div class="hero-right-glow"></div>
 
-        <!-- MCU Logo — solid fill, proper -->
         <div class="hero-logo-block">
           <svg class="hbp-logo-svg" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -151,20 +141,14 @@
                 <line x1="0" y1="0" x2="228" y2="0" stroke="black" stroke-width="1.5"/>
               </pattern>
             </defs>
-            <!-- MCU box — solid red fill -->
             <rect x="4" y="36" width="224" height="176" rx="3" fill="#e31b23"/>
             <rect x="4" y="36" width="224" height="176" rx="3" fill="none" stroke="rgba(255,120,120,0.35)" stroke-width="1.5"/>
-            <!-- MCU text — solid white -->
             <text x="116" y="188" font-family="Bebas Neue,Impact,sans-serif" font-size="148" fill="white" text-anchor="middle" letter-spacing="-2">MCU</text>
-            <!-- scanline texture -->
             <rect x="4" y="36" width="224" height="176" rx="3" fill="url(#hbp-scan)" opacity="0.05"/>
-            <!-- TMU box — darker red, overlapping top-right -->
             <rect x="210" y="4" width="126" height="112" rx="3" fill="#b8101a"/>
             <rect x="210" y="4" width="126" height="112" rx="3" fill="none" stroke="rgba(255,120,120,0.25)" stroke-width="1.5"/>
-            <!-- TMU text — solid white -->
             <text x="273" y="98" font-family="Bebas Neue,Impact,sans-serif" font-size="84" fill="white" text-anchor="middle" letter-spacing="2">TMU</text>
           </svg>
-          <!-- HUD corner brackets -->
           <div class="hbp-bracket hbp-tl"></div>
           <div class="hbp-bracket hbp-tr"></div>
           <div class="hbp-bracket hbp-bl"></div>
@@ -172,7 +156,6 @@
           <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
         </div>
 
-        <!-- Mascot + ring system below logo -->
         <div class="hero-mascot-block">
           <div class="ring-system">
             <div class="ring r1"></div>
@@ -222,7 +205,6 @@
             <div class="orbit o3"><div class="orbit-dot od3"></div></div>
           </div>
 
-          <!-- Readout panels -->
           <div class="readout-panels">
             <div class="readout-panel">
               <span class="mono rp-label">DEPT</span>
@@ -249,30 +231,24 @@
     <div class="section-blob b2"></div>
     <div class="container">
       <div class="stats-label"><span class="mono">// IMPACT AT A GLANCE</span></div>
-      <div class="stats-grid">
-        <div class="stat-item" data-target="200" data-suffix="+">
+      <div class="stats-grid stats-grid-3">
+        <div class="stat-item" data-target="300" data-suffix="+">
           <div class="stat-bar"></div>
           <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
           <div class="stat-name">Active Members</div>
           <div class="stat-desc mono">Engineers & innovators</div>
         </div>
-        <div class="stat-item" data-target="30" data-suffix="+">
-          <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-name">Events Yearly</div>
-          <div class="stat-desc mono">Workshops, socials & more</div>
-        </div>
         <div class="stat-item" data-target="10" data-suffix="+">
           <div class="stat-bar"></div>
           <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-name">Years Active</div>
-          <div class="stat-desc mono">Building community</div>
+          <div class="stat-name">Events Per Year</div>
+          <div class="stat-desc mono">Workshops, socials & more</div>
         </div>
-        <div class="stat-item" data-target="15" data-suffix="+">
+        <div class="stat-item" data-target="1" data-suffix="">
           <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-name">Industry Partners</div>
-          <div class="stat-desc mono">Career connections</div>
+          <div class="stat-number"><span class="count">0</span><span class="stat-suffix"></span></div>
+          <div class="stat-name">Year Active</div>
+          <div class="stat-desc mono">Founded April 2025</div>
         </div>
       </div>
     </div>
@@ -287,7 +263,7 @@
       <div class="section-header">
         <div class="section-tag"><span class="mono">02 — WHAT WE DO</span></div>
         <h2 class="section-title">Built for <em>Engineers</em>,<br/>By Engineers.</h2>
-        <p class="section-desc">Three pillars drive everything we do — academic excellence, genuine community, and real-world career bridges.</p>
+        <p class="section-desc">Three pillars drive everything we do — academic excellence, genuine community, and hands-on technical growth.</p>
       </div>
 
       <div class="pillars-grid">
@@ -321,7 +297,7 @@
             </svg>
           </div>
           <h3 class="pillar-title">Social Events</h3>
-          <p class="pillar-text">From semester kick-off bashes to laser tag and escape rooms — we work hard and celebrate harder. Engineering is a team sport.</p>
+          <p class="pillar-text">From Marvel Rivals tournaments to movie nights and mech bull riding — we work hard and celebrate harder. Engineering is a team sport.</p>
           <a href="events.html" class="pillar-link">
             <span>See Events</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -329,26 +305,44 @@
           <div class="pillar-glow"></div>
         </div>
 
-        <div class="pillar-card reveal-up" data-index="2">
+        <div class="pillar-card reveal-up" data-index="2" style="position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:url('assets/images/jarvis-wiring.jpg');background-size:cover;background-position:center;opacity:0.12;z-index:0;transition:opacity 0.4s;"></div>
+          <div class="pillar-card-hover-photo" style="position:absolute;inset:0;background-image:url('assets/images/jarvis-wiring.jpg');background-size:cover;background-position:center;opacity:0;z-index:0;transition:opacity 0.4s;"></div>
+          <div style="position:relative;z-index:1;">
           <div class="pillar-num mono">03</div>
           <div class="pillar-icon">
             <svg viewBox="0 0 48 48" fill="none">
-              <path d="M8 36 L8 20 L24 10 L40 20 L40 36 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M18 36 L18 26 L30 26 L30 36" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="24" cy="20" r="3" fill="#e31b23"/>
+              <!-- Circuit/hands-on icon -->
+              <rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/>
+              <line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <line x1="26" y1="28" x2="32" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <circle cx="24" cy="22" r="3" fill="#e31b23"/>
+              <line x1="24" y1="8" x2="24" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <circle cx="24" cy="7" r="2" fill="currentColor" opacity="0.4"/>
+              <line x1="24" y1="34" x2="24" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <circle cx="24" cy="41" r="2" fill="currentColor" opacity="0.4"/>
             </svg>
           </div>
-          <h3 class="pillar-title">Industry Connections</h3>
-          <p class="pillar-text">Resume workshops, company panels, site visits, and networking with engineers at Canada's top firms. Your career starts here.</p>
-          <a href="contact.html" class="pillar-link">
-            <span>Get Connected</span>
+          <h3 class="pillar-title">Technical Workshops</h3>
+          <p class="pillar-text">PCB soldering, SolidWorks, ROS2, Raspberry Pi, and more — hands-on skill-building sessions designed by engineers, for engineers.</p>
+          <a href="events.html" class="pillar-link">
+            <span>View Workshops</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
+          </div><!-- /pillar content -->
           <div class="pillar-glow"></div>
         </div>
       </div>
     </div>
   </section>
+
+  <style>
+    /* Workshops pillar photo hover */
+    .pillar-card:hover .pillar-card-hover-photo { opacity: 0.2 !important; }
+  </style>
 
   <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
   <section id="events-preview" class="section-dark">
@@ -357,8 +351,8 @@
     <div class="container">
       <div class="section-header flex-header">
         <div>
-          <div class="section-tag"><span class="mono">03 — UPCOMING EVENTS</span></div>
-          <h2 class="section-title">What's <em>Coming</em>.</h2>
+          <div class="section-tag"><span class="mono">03 — PAST HIGHLIGHTS</span></div>
+          <h2 class="section-title">What We've <em>Built</em>.</h2>
         </div>
         <a href="events.html" class="btn-ghost btn-sm">View All Events</a>
       </div>
@@ -368,19 +362,19 @@
           <div class="event-img-wrap">
             <div class="event-img-placeholder">
               <div class="ep-grid"></div>
-              <span class="ep-icon">⚙</span>
+              <span class="ep-icon">🤖</span>
             </div>
             <div class="event-badge badge-workshop">Workshop</div>
             <div class="event-date-chip">
-              <span class="edc-day">15</span>
-              <span class="edc-mon">Jul</span>
+              <span class="edc-day">APR</span>
+              <span class="edc-mon">2025</span>
             </div>
           </div>
           <div class="event-body">
-            <h3 class="event-title">PCB Design Fundamentals</h3>
-            <p class="event-meta mono">KERR HALL EAST &nbsp;|&nbsp; 6:00 PM – 9:00 PM</p>
-            <p class="event-desc">Learn industry-standard PCB layout, routing, and design rules using KiCad. Hands-on session with real-world schematics from our exec team.</p>
-            <a href="events.html" class="event-cta">Register Now →</a>
+            <h3 class="event-title">Sumobot Competition</h3>
+            <p class="event-meta mono">TMU ENGINEERING LAB</p>
+            <p class="event-desc">Students designed and programmed autonomous sumo robots to compete head-to-head. Pure engineering chaos — in the best way.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
           </div>
         </article>
 
@@ -388,19 +382,19 @@
           <div class="event-img-wrap">
             <div class="event-img-placeholder eip-social">
               <div class="ep-grid"></div>
-              <span class="ep-icon">🏆</span>
+              <span class="ep-icon">🎮</span>
             </div>
             <div class="event-badge badge-social">Social</div>
             <div class="event-date-chip">
-              <span class="edc-day">22</span>
-              <span class="edc-mon">Jul</span>
+              <span class="edc-day">FEB</span>
+              <span class="edc-mon">2025</span>
             </div>
           </div>
           <div class="event-body">
-            <h3 class="event-title">End of Semester Bash</h3>
-            <p class="event-meta mono">TBA &nbsp;|&nbsp; 7:00 PM</p>
-            <p class="event-desc">Celebrate surviving another semester with your fellow engineers. Food, drinks, games, and good energy guaranteed.</p>
-            <a href="events.html" class="event-cta">Details →</a>
+            <h3 class="event-title">Marvel Rivals Tournament</h3>
+            <p class="event-meta mono">TMU · ONLINE</p>
+            <p class="event-desc">MCU's first gaming tournament brought the community together. Mechatronics engineers — turns out — are also very competitive gamers.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
           </div>
         </article>
 
@@ -408,21 +402,35 @@
           <div class="event-img-wrap">
             <div class="event-img-placeholder eip-career">
               <div class="ep-grid"></div>
-              <span class="ep-icon">💼</span>
+              <span class="ep-icon">🔧</span>
             </div>
-            <div class="event-badge badge-career">Career</div>
+            <div class="event-badge badge-workshop">Workshop</div>
             <div class="event-date-chip">
-              <span class="edc-day">29</span>
-              <span class="edc-mon">Jul</span>
+              <span class="edc-day">MAR</span>
+              <span class="edc-mon">2025</span>
             </div>
           </div>
           <div class="event-body">
-            <h3 class="event-title">Industry Panel: Co-op Edition</h3>
-            <p class="event-meta mono">ENG 103 &nbsp;|&nbsp; 5:30 PM – 7:30 PM</p>
-            <p class="event-desc">Q&A with mechatronics alumni working at Magna, Tesla, and Canadian Space Agency. Real talk about co-op, internships, and full-time roles.</p>
-            <a href="events.html" class="event-cta">Register Now →</a>
+            <h3 class="event-title">PCB Soldering Workshop</h3>
+            <p class="event-meta mono">KERR HALL · ENG LAB</p>
+            <p class="event-desc">Hands-on soldering fundamentals — from component placement to iron technique. Students left with a working board they built themselves.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
           </div>
         </article>
+      </div>
+
+      <!-- Past events ticker -->
+      <div class="events-also-ran reveal-up">
+        <span class="mono events-also-label">ALSO THIS YEAR:</span>
+        <div class="events-also-list">
+          <span class="events-also-chip">ROS2 Tutorial</span>
+          <span class="events-also-chip">Big Hero 6 Movie Night</span>
+          <span class="events-also-chip">SolidWorks CSWA &amp; CSWP</span>
+          <span class="events-also-chip">Mech Bull Night</span>
+          <span class="events-also-chip">Valentine's Day w/ MECU</span>
+          <span class="events-also-chip">Jarvis Workshop</span>
+          <span class="events-also-chip">Raspberry Pi Workshop</span>
+        </div>
       </div>
     </div>
   </section>
@@ -465,7 +473,6 @@
           </a>
           <a href="team.html" class="btn-outline-white">Meet the Team</a>
         </div>
-        <!-- Decorative engineering lines -->
         <div class="cta-deco">
           <svg viewBox="0 0 400 200" fill="none" preserveAspectRatio="xMidYMid slice">
             <circle cx="350" cy="100" r="120" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
@@ -511,11 +518,14 @@
           </a>
           <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
           <div class="footer-socials">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Discord">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
             </a>
             <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -538,9 +548,7 @@
           <h4 class="footer-col-title mono">RESOURCES</h4>
           <ul class="footer-links">
             <li><a href="academics.html">Course Guides</a></li>
-            <li><a href="academics.html">Tutoring</a></li>
             <li><a href="events.html">Event Archive</a></li>
-            <li><a href="contact.html">Sponsorship</a></li>
           </ul>
         </div>
 
@@ -598,7 +606,6 @@
           ctx.clearRect(0, 0, W, H);
           t += 0.007;
 
-          /* Drifting gradient blob 1 */
           const cx1 = W * (0.3 + 0.25 * Math.sin(t * 0.28));
           const cy1 = H * (0.4 + 0.22 * Math.cos(t * 0.19));
           const g1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, Math.min(W,H) * 0.5);
@@ -607,7 +614,6 @@
           g1.addColorStop(1,   `rgba(${color},0)`);
           ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
 
-          /* Drifting gradient blob 2 */
           const cx2 = W * (0.7 + 0.22 * Math.cos(t * 0.22));
           const cy2 = H * (0.6 + 0.20 * Math.sin(t * 0.31));
           const g2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, Math.min(W,H) * 0.38);
@@ -615,14 +621,12 @@
           g2.addColorStop(1,   `rgba(${color},0)`);
           ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
 
-          /* Floating dots */
           dots.forEach(d => {
             d.x += d.vx; d.y += d.vy;
             if (d.x < 0) d.x = 1; if (d.x > 1) d.x = 0;
             if (d.y < 0) d.y = 1; if (d.y > 1) d.y = 0;
           });
 
-          /* Connection lines */
           dots.forEach((a, i) => {
             dots.slice(i + 1).forEach(b => {
               const dx = (a.x - b.x) * W, dy = (a.y - b.y) * H;
@@ -648,12 +652,64 @@
       });
     })();
 
-    /* Footer year */
+    /* Footer & hero year */
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
     const cy = document.getElementById('current-year');
     if (cy) cy.textContent = new Date().getFullYear();
   </script>
-<script src="js/theme-toggle.js"></script>
+
+  <!-- ═══════════════════ STATS GRID 3 + EVENT CHIPS CSS ═══════════════════ -->
+  <style>
+    /* 3-column stat grid */
+    .stats-grid-3 {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    @media (max-width: 640px) {
+      .stats-grid-3 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Event "also ran" chips below the cards */
+    .events-also-ran {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .events-also-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .events-also-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .events-also-chip {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+      padding: 3px 10px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .events-also-chip:hover {
+      color: rgba(255,255,255,0.85);
+      border-color: rgba(227,27,35,0.5);
+    }
+  </style>
+
+  <script src="js/theme-toggle.js"></script>
 </body>
 </html>
