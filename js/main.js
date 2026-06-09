@@ -5,26 +5,6 @@
 
 'use strict';
 
-/* ─── CUSTOM CURSOR ─── */
-(function initCursor() {
-  document.addEventListener('mousemove', (e) => {
-    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-    document.documentElement.style.setProperty('--my', e.clientY + 'px');
-  });
-
-  const hoverables = 'a, button, .pillar-card, .event-card, .stat-item';
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(hoverables)) {
-      document.body.style.setProperty('--cursor-scale', '1.5');
-    }
-  });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(hoverables)) {
-      document.body.style.setProperty('--cursor-scale', '1');
-    }
-  });
-})();
-
 /* ─── LOADER ─── */
 (function initLoader() {
   const loader   = document.getElementById('loader');
