@@ -44,38 +44,7 @@ body {
   background: var(--black);
   color: var(--white);
   overflow-x: hidden;
-  cursor: none;
 }
-
-/* ─── CUSTOM CURSOR — mix-blend-mode so it's visible on ANY bg ─── */
-body::after {
-  content: '';
-  position: fixed;
-  width: 10px; height: 10px;
-  background: var(--white);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  left: var(--mx, -100px);
-  top: var(--my, -100px);
-  mix-blend-mode: difference;
-}
-body::before {
-  content: '';
-  position: fixed;
-  width: 32px; height: 32px;
-  border: 1.5px solid var(--white);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: left 0.08s, top 0.08s, width 0.2s, height 0.2s;
-  left: var(--mx, -100px);
-  top: var(--my, -100px);
-  mix-blend-mode: difference;
-}
-a, button { cursor: none; }
 
 /* ─── CANVAS ─── */
 #bg-canvas {
@@ -1627,7 +1596,7 @@ em { font-style: italic; color: var(--red); }
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 4px;
-  cursor: none;
+  cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
   color: var(--steel-light);
