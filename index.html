@@ -10,34 +10,69 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 <style>
-.mcu-carousel-wrap{position:relative;padding-bottom:56px;-webkit-user-select:none;user-select:none}
-.mcu-hint{text-align:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--steel);margin-bottom:36px;opacity:.5;transition:opacity .3s;pointer-events:none}
-.mcu-carousel-wrap.interacted .mcu-hint{opacity:0}
-.mcu-track-outer{overflow:hidden;position:relative}
-.mcu-track-outer::before,.mcu-track-outer::after{content:"";position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
-.mcu-track-outer::before{left:0;background:linear-gradient(to right,var(--bg-fade,#2e2c2c),transparent)}
-.mcu-track-outer::after{right:0;background:linear-gradient(to left,var(--bg-fade,#2e2c2c),transparent)}
-.mcu-track{display:flex;gap:20px;padding:24px 10px 32px;will-change:transform;cursor:grab}
-.mcu-track:active{cursor:grabbing}
-.mcu-slide{flex:0 0 300px;background:#272424;border:1px solid rgba(255,255,255,.07);padding:32px 28px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,opacity .35s,transform .35s}
-.mcu-slide::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.mcu-slide.is-active{border-color:rgba(227,27,35,.3);box-shadow:0 0 28px rgba(227,27,35,.1),0 16px 48px rgba(0,0,0,.4)}
-.mcu-slide.is-active::before{transform:scaleX(1)}
-.mcu-slide-num{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--red)}
-.mcu-slide-icon{width:40px;height:40px;color:var(--steel-light)}
-.mcu-slide-icon svg{width:100%;height:100%}
-.mcu-slide-title{font-family:var(--font-cond);font-size:18px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white);line-height:1.1}
-.mcu-slide-desc{font-size:13px;font-weight:300;line-height:1.65;color:var(--steel-light);flex:1}
-.mcu-slide-link{font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--red);margin-top:auto;transition:letter-spacing .2s}
-.mcu-slide-link:hover{letter-spacing:.2em}
-.mcu-arrows{display:flex;justify-content:center;gap:12px;margin-top:20px}
-.mcu-arrow{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);background:none;color:var(--steel-light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s,transform .15s}
-.mcu-arrow:hover{border-color:var(--red);color:var(--white);transform:scale(1.1)}
-.mcu-arrow svg{width:15px;height:15px;pointer-events:none}
-.mcu-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
-.mcu-dot{height:5px;border-radius:3px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:background .3s,width .3s;width:5px}
-.mcu-dot.active{background:var(--red);width:22px}
-@media(max-width:600px){.mcu-slide{flex:0 0 260px;padding:24px 20px}.mcu-track-outer::before,.mcu-track-outer::after{width:40px}}
+/* ═══ GLOBE CAROUSEL ═══ */
+.globe-wrap{position:relative;outline:none;-webkit-user-select:none;user-select:none;cursor:grab;padding:0 0 60px}
+.globe-wrap:active{cursor:grabbing}
+.globe-stage{
+  height:360px;
+  position:relative;
+  perspective:1100px;
+  perspective-origin:50% 50%;
+  overflow:visible;
+}
+.globe-ring{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  /* JS drives rotation via style.transform */
+  will-change:transform;
+}
+/* Cards: positioned by JS using translateX/Y/Z — face always forward */
+.globe-card{
+  position:absolute;
+  width:280px;
+  top:50%;
+  left:50%;
+  /* JS sets transform */
+  background:#272424;
+  border:1px solid rgba(255,255,255,.07);
+  padding:28px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  box-sizing:border-box;
+  /* no rotateY — cards always face viewer so text is never blurry */
+  transition:border-color .4s,box-shadow .4s,opacity .4s;
+  pointer-events:none; /* only active card is clickable */
+}
+.globe-card.gc-active{
+  border-color:rgba(227,27,35,.35);
+  box-shadow:0 0 32px rgba(227,27,35,.12),0 20px 60px rgba(0,0,0,.5);
+  pointer-events:all;
+}
+.globe-card.gc-active::before{transform:scaleX(1)}
+.globe-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;
+  height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .45s cubic-bezier(.16,1,.3,1);
+}
+.gc-num{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--red)}
+.gc-icon{width:38px;height:38px;color:var(--steel-light)}
+.gc-icon svg{width:100%;height:100%}
+.gc-title{font-family:var(--font-cond);font-size:17px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white);line-height:1.1}
+.gc-desc{font-size:12px;font-weight:300;line-height:1.65;color:var(--steel-light);flex:1}
+.gc-link{font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--red);margin-top:auto;transition:letter-spacing .2s}
+.gc-link:hover{letter-spacing:.2em}
+/* Nav row */
+.globe-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:28px}
+.globe-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);background:none;color:var(--steel-light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s,transform .15s;flex-shrink:0}
+.globe-btn:hover{border-color:var(--red);color:var(--white);transform:scale(1.08)}
+.globe-btn svg{width:14px;height:14px;pointer-events:none}
+.globe-dots{display:flex;gap:7px;align-items:center}
+.globe-dot{height:5px;border-radius:3px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:background .3s,width .3s;width:5px}
+.globe-dot.active{background:var(--red);width:20px}
+@media(max-width:600px){.globe-stage{height:300px}.globe-card{width:240px;padding:20px 18px}}
 </style>
 </head>
 <body>
@@ -288,28 +323,72 @@
 
   <!-- ═══════════════════ WHAT WE DO ═══════════════════ -->
   <section id="what-we-do" class="section-light">
-    <div class="section-blob b1"></div><div class="section-blob b2"></div><div class="section-blob b3"></div>
+    <div class="section-blob b1"></div>
+    <div class="section-blob b2"></div>
+    <div class="section-blob b3"></div>
     <div class="container">
       <div class="section-header reveal-up">
         <div class="section-tag"><span class="mono">02 — WHAT WE DO</span></div>
         <h2 class="section-title">Built for <em>Engineers</em>,<br/>By Engineers.</h2>
-        <p class="section-desc">Drag or swipe to explore what MCU is built on.</p>
+        <p class="section-desc">Drag to spin through everything MCU is built on.</p>
       </div>
-      <div class="mcu-carousel-wrap" style="--bg-fade:#2e2c2c">
-        <p class="mcu-hint">← DRAG TO EXPLORE →</p>
-        <div class="mcu-track-outer"><div class="mcu-track">
-            <div class="mcu-slide" data-idx="0"><div class="mcu-slide-num mono">01</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32 L20 20 L28 26 L36 14" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div><h3 class="mcu-slide-title">Academic Support</h3><p class="mcu-slide-desc">Study sessions, tutoring, and course guides across all four years. Nobody falls behind.</p><a href="academics.html" class="mcu-slide-link">Explore Resources →</a></div>
-            <div class="mcu-slide" data-idx="1"><div class="mcu-slide-num mono">02</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24 L20 28 L32 18" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="mcu-slide-title">Social Events</h3><p class="mcu-slide-desc">From Marvel Rivals tournaments to movie nights and mech bull — we work hard and celebrate harder.</p><a href="events.html" class="mcu-slide-link">See Events →</a></div>
-            <div class="mcu-slide" data-idx="2"><div class="mcu-slide-num mono">03</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div><h3 class="mcu-slide-title">Technical Workshops</h3><p class="mcu-slide-desc">PCB soldering, SolidWorks, ROS2, Raspberry Pi — hands-on skill building designed by engineers for engineers.</p><a href="events.html" class="mcu-slide-link">View Workshops →</a></div>
-            <div class="mcu-slide" data-idx="3"><div class="mcu-slide-num mono">04</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div><h3 class="mcu-slide-title">Gaming &amp; Socials</h3><p class="mcu-slide-desc">Mechatronics students are competitive in everything — not just circuits. Come find out.</p><a href="events.html" class="mcu-slide-link">See What's On →</a></div>
-            <div class="mcu-slide" data-idx="4"><div class="mcu-slide-num mono">05</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div><h3 class="mcu-slide-title">Course Resources</h3><p class="mcu-slide-desc">Past midterms, formula sheets, lab templates, syllabi — all in one centralized Drive.</p><a href="academics.html" class="mcu-slide-link">Open Resources →</a></div>
-            <div class="mcu-slide" data-idx="5"><div class="mcu-slide-num mono">06</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40 C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36 C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3 class="mcu-slide-title">Community</h3><p class="mcu-slide-desc">A tight-knit Discord and social community where Mechatronics students at every level look out for each other.</p><a href="contact.html" class="mcu-slide-link">Get Involved →</a></div>
-          </div></div>
-        <div class="mcu-arrows">
-          <button class="mcu-arrow mcu-arrow-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="mcu-arrow mcu-arrow-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+
+      <div class="globe-wrap" id="globe-wrap" tabindex="0">
+        <div class="globe-stage" id="globe-stage">
+          <div class="globe-ring" id="globe-ring">
+        <div class="globe-card" data-idx="0">
+          <div class="gc-num mono">01</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32L20 20l8 6 8-12" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div>
+          <h3 class="gc-title">Academic Support</h3>
+          <p class="gc-desc">Study sessions, tutoring, and course guides across all four years — built by students who've been through it.</p>
+          <a href="academics.html" class="gc-link">Explore Resources →</a>
         </div>
-        <div class="mcu-dots"><button class="mcu-dot active" data-idx="0"></button><button class="mcu-dot" data-idx="1"></button><button class="mcu-dot" data-idx="2"></button><button class="mcu-dot" data-idx="3"></button><button class="mcu-dot" data-idx="4"></button><button class="mcu-dot" data-idx="5"></button></div>
+        <div class="globe-card" data-idx="1">
+          <div class="gc-num mono">02</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24l4 4 12-10" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="gc-title">Social Events</h3>
+          <p class="gc-desc">Marvel Rivals tournaments, movie nights, mech bull — we work hard and celebrate even harder.</p>
+          <a href="events.html" class="gc-link">See Events →</a>
+        </div>
+        <div class="globe-card" data-idx="2">
+          <div class="gc-num mono">03</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div>
+          <h3 class="gc-title">Workshops</h3>
+          <p class="gc-desc">PCB soldering, SolidWorks, ROS2, Raspberry Pi — hands-on skill building for real engineers.</p>
+          <a href="events.html" class="gc-link">View Workshops →</a>
+        </div>
+        <div class="globe-card" data-idx="3">
+          <div class="gc-num mono">04</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div>
+          <h3 class="gc-title">Gaming & Socials</h3>
+          <p class="gc-desc">Mechatronics students are competitive in everything — not just circuits. Come find out.</p>
+          <a href="events.html" class="gc-link">See What's On →</a>
+        </div>
+        <div class="globe-card" data-idx="4">
+          <div class="gc-num mono">05</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div>
+          <h3 class="gc-title">Course Resources</h3>
+          <p class="gc-desc">Past midterms, formula sheets, lab templates, syllabi — all in one centralized Drive.</p>
+          <a href="academics.html" class="gc-link">Open Resources →</a>
+        </div>
+        <div class="globe-card" data-idx="5">
+          <div class="gc-num mono">06</div>
+          <div class="gc-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <h3 class="gc-title">Community</h3>
+          <p class="gc-desc">A tight-knit Discord community where every Mechatronics student at TMU looks out for each other.</p>
+          <a href="contact.html" class="gc-link">Get Involved →</a>
+        </div>
+          </div>
+        </div>
+        <div class="globe-nav">
+          <button class="globe-btn globe-prev" id="globe-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="globe-dots" id="globe-dots"><button class="globe-dot  active" data-i="0"></button><button class="globe-dot" data-i="1"></button><button class="globe-dot" data-i="2"></button><button class="globe-dot" data-i="3"></button><button class="globe-dot" data-i="4"></button><button class="globe-dot" data-i="5"></button></div>
+          <button class="globe-btn globe-next" id="globe-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -675,53 +754,162 @@
   <script src="js/theme-toggle.js"></script>
 <script>
 (function(){
-  document.querySelectorAll('.mcu-carousel-wrap').forEach(function(wrap){
-    var track=wrap.querySelector('.mcu-track');
-    var slides=Array.from(wrap.querySelectorAll('.mcu-slide'));
-    var dots=Array.from(wrap.querySelectorAll('.mcu-dot'));
-    var btnP=wrap.querySelector('.mcu-arrow-prev');
-    var btnN=wrap.querySelector('.mcu-arrow-next');
-    if(!track||!slides.length)return;
-    var GAP=20,COUNT=slides.length,CARD_W=slides[0].offsetWidth+GAP;
-    var cur=0,tX=0,cX=0,drag=false,sx=0,stX=0,vx=0,lx=0,lt=0,raf;
-    function ow(){return wrap.querySelector('.mcu-track-outer')}
-    function off(i){var tw=ow().offsetWidth;return -(i*CARD_W)+(tw/2)-(CARD_W/2)+10}
-    function cl(v,a,b){return Math.max(a,Math.min(b,v))}
-    function draw(x){
-      var tw=ow().offsetWidth,ct=tw/2;
-      track.style.transform='translateX('+x+'px)';
-      slides.forEach(function(s,i){
-        var sc=x+i*CARD_W+CARD_W/2-10;
-        var d=Math.abs(ct-sc);
-        var t=cl(1-d/(CARD_W*2.2),0,1);
-        s.style.transform='scale('+(0.88+t*0.12)+')';
-        s.style.opacity=''+(0.38+t*0.62);
-        s.classList.toggle('is-active',i===cur);
-      });
-      dots.forEach(function(d,i){d.classList.toggle('active',i===cur)});
+  var wrap   = document.getElementById('globe-wrap');
+  var ring   = document.getElementById('globe-ring');
+  var cards  = Array.from(document.querySelectorAll('#globe-wrap .globe-card'));
+  var dots   = Array.from(document.querySelectorAll('#globe-dots .globe-dot'));
+  var btnP   = document.getElementById('globe-prev');
+  var btnN   = document.getElementById('globe-next');
+  if(!wrap||!ring||!cards.length)return;
+
+  var N      = cards.length;        // 6
+  var STEP   = 360/N;               // 60 deg per card
+  var R      = 420;                 // orbit radius px — feels like a globe
+  var H      = 160;                 // card height offset from center
+
+  // ── lay cards out in a circle, but DON'T rotate the cards themselves ──
+  // Each card sits at angle A around the ring.
+  // We push it out with translateZ then shift X so it orbits correctly.
+  // The ring itself is what rotates in JS — cards just ride along, always facing front.
+  function placeCards(){
+    cards.forEach(function(card,i){
+      var a = (i * STEP) * Math.PI/180; // convert to radians
+      var x = Math.sin(a) * R;
+      var z = Math.cos(a) * R;
+      card.style.transform = 'translate(-50%,-50%) translateX('+x+'px) translateZ('+z+'px)';
+    });
+  }
+
+  var targetAngle = 0;   // degrees — what we're spinning to
+  var currentAngle = 0;  // smoothed current
+  var activeIdx = 0;
+  var raf;
+
+  function lerp(a,b,t){return a+(b-a)*t}
+
+  function angleDiff(a,b){
+    // shortest path
+    var d = ((b-a)%360+360)%360;
+    return d>180?d-360:d;
+  }
+
+  function updateRing(angle){
+    ring.style.transform = 'rotateY('+angle+'deg)';
+
+    // figure out which card is at front (angle=0 on the ring)
+    var front = (Math.round(-angle/STEP)%N+N)%N;
+    if(front!==activeIdx){
+      activeIdx = front;
+      cards.forEach(function(c,i){c.classList.toggle('gc-active',i===activeIdx)});
+      dots.forEach(function(d,i){d.classList.toggle('active',i===activeIdx)});
     }
-    function snap(i){cur=cl(i,0,COUNT-1);tX=off(cur)}
-    function tick(){cX+=(tX-cX)*0.09;draw(cX);if(Math.abs(tX-cX)>0.2)raf=requestAnimationFrame(tick);else{cX=tX;draw(cX)}}
-    function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
-    function dn(e){drag=true;wrap.classList.add('interacted');sx=e.touches?e.touches[0].clientX:e.clientX;stX=cX;lx=sx;lt=Date.now();vx=0;cancelAnimationFrame(raf);e.preventDefault()}
-    function mv(e){if(!drag)return;var x=e.touches?e.touches[0].clientX:e.clientX,now=Date.now();vx=(x-lx)/Math.max(1,now-lt)*14;lx=x;lt=now;cX=stX+(x-sx);draw(cX)}
-    function up(){if(!drag)return;drag=false;var tw=ow().offsetWidth,approx=Math.round(((tw/2)-(cX+vx*5)-CARD_W/2+10)/CARD_W);snap(approx);go()}
-    track.addEventListener('mousedown',dn,{passive:false});
-    track.addEventListener('touchstart',dn,{passive:false});
-    window.addEventListener('mousemove',mv);
-    window.addEventListener('touchmove',mv,{passive:false});
-    window.addEventListener('mouseup',up);
-    window.addEventListener('touchend',up);
-    if(btnP)btnP.addEventListener('click',function(){wrap.classList.add('interacted');snap(cur-1);go()});
-    if(btnN)btnN.addEventListener('click',function(){wrap.classList.add('interacted');snap(cur+1);go()});
-    dots.forEach(function(d,i){d.addEventListener('click',function(){wrap.classList.add('interacted');snap(i);go()})});
-    var wt;
-    wrap.addEventListener('wheel',function(e){if(Math.abs(e.deltaX)<Math.abs(e.deltaY)&&Math.abs(e.deltaY)>8)return;e.preventDefault();wrap.classList.add('interacted');clearTimeout(wt);wt=setTimeout(function(){snap(cur+(e.deltaX>0?1:-1));go()},80)},{passive:false});
-    wrap.setAttribute('tabindex','0');
-    wrap.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){snap(cur-1);go()}if(e.key==='ArrowRight'){snap(cur+1);go()}});
-    window.addEventListener('resize',function(){CARD_W=slides[0].offsetWidth+GAP;snap(cur);cX=tX;draw(cX)});
-    snap(0);cX=tX;draw(cX);
+
+    // fade + scale based on z-depth without any blurriness
+    // z = cos(cardAngle - (-ringAngle)) — front card has z=R
+    cards.forEach(function(card,i){
+      var cardWorldAngle = (i*STEP + angle + 360*10) % 360;
+      if(cardWorldAngle>180) cardWorldAngle = 360-cardWorldAngle;
+      // cardWorldAngle: 0=front, 180=back
+      var t = 1 - cardWorldAngle/180;  // 1 at front, 0 at back
+      var s = 0.78 + t*0.22;
+      var o = 0.25 + t*0.75;
+      card.style.opacity = ''+o;
+      // scale applied on top of the placement transform
+      var a = (i*STEP)*Math.PI/180;
+      var x = Math.sin(a)*R, z2 = Math.cos(a)*R;
+      card.style.transform = 'translate(-50%,-50%) translateX('+x+'px) translateZ('+z2+'px) scale('+s+')';
+    });
+  }
+
+  function tick(){
+    currentAngle = lerp(currentAngle, targetAngle, 0.08);
+    updateRing(currentAngle);
+    if(Math.abs(targetAngle-currentAngle)>0.04){
+      raf = requestAnimationFrame(tick);
+    } else {
+      currentAngle = targetAngle;
+      updateRing(currentAngle);
+    }
+  }
+  function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
+
+  function goTo(i){
+    var dest = -(i*STEP);
+    // always take shortest arc
+    var diff = angleDiff(currentAngle, dest);
+    targetAngle = currentAngle + diff;
+    go();
+  }
+
+  // ── drag ──
+  var drag=false,sx=0,sa=0,vx=0,lx=0,lt=0;
+  function dn(e){
+    drag=true;
+    sx=e.touches?e.touches[0].clientX:e.clientX;
+    sa=currentAngle;lx=sx;lt=Date.now();vx=0;
+    cancelAnimationFrame(raf);
+    e.preventDefault();
+  }
+  function mv(e){
+    if(!drag)return;
+    var x=e.touches?e.touches[0].clientX:e.clientX;
+    var now=Date.now();
+    vx=(x-lx)/Math.max(1,now-lt)*16;
+    lx=x;lt=now;
+    currentAngle=sa+(x-sx)*0.25;
+    updateRing(currentAngle);
+  }
+  function up(){
+    if(!drag)return;drag=false;
+    // fling then snap to nearest
+    var flung=currentAngle+vx*4;
+    var nearest=Math.round(-flung/STEP)*(-STEP);
+    // shortest arc from flung
+    var diff=angleDiff(flung,nearest);
+    targetAngle=flung+diff;
+    go();
+  }
+  wrap.addEventListener('mousedown',dn,{passive:false});
+  wrap.addEventListener('touchstart',dn,{passive:false});
+  window.addEventListener('mousemove',mv);
+  window.addEventListener('touchmove',mv,{passive:false});
+  window.addEventListener('mouseup',up);
+  window.addEventListener('touchend',up);
+
+  // ── wheel ──
+  var wt;
+  wrap.addEventListener('wheel',function(e){
+    if(Math.abs(e.deltaX)<Math.abs(e.deltaY)&&Math.abs(e.deltaY)>10)return;
+    e.preventDefault();
+    clearTimeout(wt);
+    currentAngle+=-(e.deltaX||e.deltaY)*0.3;
+    updateRing(currentAngle);
+    wt=setTimeout(function(){
+      var nearest=Math.round(-currentAngle/STEP)*(-STEP);
+      var diff=angleDiff(currentAngle,nearest);
+      targetAngle=currentAngle+diff;
+      go();
+    },140);
+  },{passive:false});
+
+  // ── buttons ──
+  if(btnP)btnP.addEventListener('click',function(){goTo(((activeIdx-1)%N+N)%N)});
+  if(btnN)btnN.addEventListener('click',function(){goTo((activeIdx+1)%N)});
+
+  // ── dots ──
+  dots.forEach(function(d,i){d.addEventListener('click',function(){goTo(i)})});
+
+  // ── keyboard ──
+  wrap.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){goTo(((activeIdx-1)%N+N)%N)}
+    if(e.key==='ArrowRight'){goTo((activeIdx+1)%N)}
   });
+
+  // ── init ──
+  placeCards();
+  cards[0].classList.add('gc-active');
+  dots[0].classList.add('active');
+  updateRing(0);
 })();
 </script>
 </body>
