@@ -1641,3 +1641,187 @@ body, body * {
 .marquee-track, .hero-line, .loader-progress,
 .badge-dot, .scroll-line, .stat-bar,
 canvas, svg { transition: none !important; }
+
+/* ══════════════════════════════════════════════════
+   MCU — VFX ADDITIONS
+   APPEND these rules to the bottom of css/style.css
+   Do NOT replace anything — append only.
+   ══════════════════════════════════════════════════ */
+
+
+/* ─── SCROLL PROGRESS BAR ─── */
+#scroll-progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999;
+  height: 2px;
+  width: 0%;
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red), 0 0 4px rgba(255,100,100,0.5);
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+
+/* ─── CUSTOM CURSOR ─── */
+#cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px; height: 28px;
+  border: 1px solid rgba(227, 27, 35, 0.5);
+  transition:
+    width 0.2s cubic-bezier(0.16,1,0.3,1),
+    height 0.2s cubic-bezier(0.16,1,0.3,1),
+    opacity 0.2s,
+    border-color 0.2s;
+  will-change: left, top;
+}
+#cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px; height: 4px;
+  background: var(--red);
+  transition: width 0.15s, height 0.15s;
+  will-change: left, top;
+}
+
+
+/* ─── HERO HEADLINE — glitch clone transitions ─── */
+.hero-headline {
+  transition: clip-path 0.04s steps(1);
+}
+
+
+/* ─── FILTER BUTTON — animated active underline ─── */
+.filter-btn {
+  position: relative;
+  transition: color 0.25s var(--ease-out-expo), border-color 0.25s var(--ease-out-expo) !important;
+}
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.filter-btn.active::after  { transform: scaleX(1); }
+.filter-btn.active         { border-bottom-color: transparent !important; }
+
+
+/* ─── ROLE BADGE PULSE ─── */
+.role-badge {
+  animation: role-pulse 2.4s ease-in-out infinite;
+}
+@keyframes role-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  50%       { box-shadow: 0 0 0 5px rgba(74,222,128,0.12); }
+}
+
+
+/* ─── STAT ITEM — sweep div approach (JS injects .stat-sweep div) ─── */
+.stat-sweep {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.stat-item.counted .stat-sweep {
+  animation: stat-sweep-anim 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes stat-sweep-anim {
+  from { left: -100%; }
+  to   { left: 150%; }
+}
+
+
+/* ─── TEXT SELECTION ─── */
+::selection       { background: rgba(227, 27, 35, 0.35); color: #fff; }
+::-moz-selection  { background: rgba(227, 27, 35, 0.35); color: #fff; }
+
+
+/* ─── TEAM CARD avatar hover ring ─── */
+.tm-card:hover .tm-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(227, 27, 35, 0.5);
+  border-radius: 0;
+  animation: ring-trace 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+  pointer-events: none;
+}
+@keyframes ring-trace {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ─── SOCIAL LINK — lift on hover ─── */
+.social-link {
+  transition: border-color 0.2s, color 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s !important;
+}
+.social-link:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 4px 16px rgba(227,27,35,0.2);
+}
+
+
+/* ─── CHANNEL CARDS (contact.html) — stronger hover ─── */
+.channel-card {
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s !important;
+}
+.channel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(227,27,35,0.2);
+}
+
+
+/* ─── NAV LINK — active indicator dot above ─── */
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%; transform: translateX(-50%);
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
+}
+
+
+/* ─── FOCUS VISIBLE — keyboard nav highlight ─── */
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+
+/* ─── REDUCED MOTION — safety net ─── */
+@media (prefers-reduced-motion: reduce) {
+  #scroll-progress-bar,
+  #cursor-ring,
+  #cursor-dot,
+  .stat-sweep,
+  .role-badge,
+  .hbp-logo-svg,
+  .mascot-svg,
+  .orbit,
+  .badge-dot { animation: none !important; transition: none !important; }
+}
+
+
+/* ─── LIGHT MODE adjustments for new elements ─── */
+[data-theme="light"] #scroll-progress-bar { box-shadow: 0 0 8px var(--red); }
+[data-theme="light"] #cursor-ring  { border-color: rgba(227,27,35,0.6); }
+[data-theme="light"] #cursor-dot   { background: var(--red); }
+[data-theme="light"] .social-link:hover { box-shadow: 0 4px 16px rgba(227,27,35,0.15); }
