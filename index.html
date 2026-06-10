@@ -9,6 +9,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+<style>
+.mcu-carousel-wrap{position:relative;padding-bottom:56px;-webkit-user-select:none;user-select:none}
+.mcu-hint{text-align:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--steel);margin-bottom:36px;opacity:.5;transition:opacity .3s;pointer-events:none}
+.mcu-carousel-wrap.interacted .mcu-hint{opacity:0}
+.mcu-track-outer{overflow:hidden;position:relative}
+.mcu-track-outer::before,.mcu-track-outer::after{content:"";position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
+.mcu-track-outer::before{left:0;background:linear-gradient(to right,var(--bg-fade,#2e2c2c),transparent)}
+.mcu-track-outer::after{right:0;background:linear-gradient(to left,var(--bg-fade,#2e2c2c),transparent)}
+.mcu-track{display:flex;gap:20px;padding:24px 10px 32px;will-change:transform;cursor:grab}
+.mcu-track:active{cursor:grabbing}
+.mcu-slide{flex:0 0 300px;background:#272424;border:1px solid rgba(255,255,255,.07);padding:32px 28px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,opacity .35s,transform .35s}
+.mcu-slide::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.mcu-slide.is-active{border-color:rgba(227,27,35,.3);box-shadow:0 0 28px rgba(227,27,35,.1),0 16px 48px rgba(0,0,0,.4)}
+.mcu-slide.is-active::before{transform:scaleX(1)}
+.mcu-slide-num{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--red)}
+.mcu-slide-icon{width:40px;height:40px;color:var(--steel-light)}
+.mcu-slide-icon svg{width:100%;height:100%}
+.mcu-slide-title{font-family:var(--font-cond);font-size:18px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white);line-height:1.1}
+.mcu-slide-desc{font-size:13px;font-weight:300;line-height:1.65;color:var(--steel-light);flex:1}
+.mcu-slide-link{font-family:var(--font-cond);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--red);margin-top:auto;transition:letter-spacing .2s}
+.mcu-slide-link:hover{letter-spacing:.2em}
+.mcu-arrows{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.mcu-arrow{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);background:none;color:var(--steel-light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s,transform .15s}
+.mcu-arrow:hover{border-color:var(--red);color:var(--white);transform:scale(1.1)}
+.mcu-arrow svg{width:15px;height:15px;pointer-events:none}
+.mcu-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+.mcu-dot{height:5px;border-radius:3px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:background .3s,width .3s;width:5px}
+.mcu-dot.active{background:var(--red);width:22px}
+@media(max-width:600px){.mcu-slide{flex:0 0 260px;padding:24px 20px}.mcu-track-outer::before,.mcu-track-outer::after{width:40px}}
+</style>
 </head>
 <body>
 
@@ -258,419 +288,31 @@
 
   <!-- ═══════════════════ WHAT WE DO ═══════════════════ -->
   <section id="what-we-do" class="section-light">
-    <div class="section-blob b1"></div>
-    <div class="section-blob b2"></div>
-    <div class="section-blob b3"></div>
+    <div class="section-blob b1"></div><div class="section-blob b2"></div><div class="section-blob b3"></div>
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal-up">
         <div class="section-tag"><span class="mono">02 — WHAT WE DO</span></div>
         <h2 class="section-title">Built for <em>Engineers</em>,<br/>By Engineers.</h2>
-        <p class="section-desc">Drag or scroll to explore what MCU is built on.</p>
+        <p class="section-desc">Drag or swipe to explore what MCU is built on.</p>
       </div>
-
-      <!-- 3D CYLINDER CAROUSEL -->
-      <div class="drum-scene" id="drum-scene" aria-label="What we do carousel">
-        <div class="drum-hint mono">DRAG TO ROTATE</div>
-        <div class="drum-viewport">
-          <div class="drum" id="drum">
-
-            <div class="drum-card" data-idx="0">
-              <div class="drum-card-num mono">01</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M12 32 L20 20 L28 26 L36 14" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="36" cy="14" r="3" fill="#e31b23"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Academic Support</h3>
-              <p class="drum-card-text">Study sessions, tutoring, and course guides across all four years. Nobody falls behind.</p>
-              <a href="academics.html" class="drum-card-link">Explore Resources →</a>
-            </div>
-
-            <div class="drum-card" data-idx="1">
-              <div class="drum-card-num mono">02</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M16 24 L20 28 L32 18" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="24" cy="12" r="2" fill="currentColor" opacity="0.4"/>
-                  <circle cx="12" cy="30" r="2" fill="currentColor" opacity="0.4"/>
-                  <circle cx="36" cy="30" r="2" fill="currentColor" opacity="0.4"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Social Events</h3>
-              <p class="drum-card-text">Marvel Rivals tournaments, movie nights, mech bull — we work hard and celebrate harder.</p>
-              <a href="events.html" class="drum-card-link">See Events →</a>
-            </div>
-
-            <div class="drum-card" data-idx="2">
-              <div class="drum-card-num mono">03</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                  <rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                  <line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/>
-                  <line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="24" cy="22" r="3" fill="#e31b23"/>
-                  <line x1="24" y1="8" x2="24" y2="14" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="24" y1="34" x2="24" y2="40" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Technical Workshops</h3>
-              <p class="drum-card-text">PCB soldering, SolidWorks, ROS2, Raspberry Pi — hands-on skill building for real engineers.</p>
-              <a href="events.html" class="drum-card-link">View Workshops →</a>
-            </div>
-
-            <div class="drum-card" data-idx="3">
-              <div class="drum-card-num mono">04</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <path d="M24 6 L28 18 L40 18 L30 26 L34 38 L24 30 L14 38 L18 26 L8 18 L20 18 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <circle cx="24" cy="24" r="4" fill="#e31b23"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Gaming & Socials</h3>
-              <p class="drum-card-text">Mechatronics students are competitive in everything — not just circuits. Come find out.</p>
-              <a href="events.html" class="drum-card-link">See What's On →</a>
-            </div>
-
-            <div class="drum-card" data-idx="4">
-              <div class="drum-card-num mono">05</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <rect x="8" y="14" width="32" height="22" rx="3" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M16 36 L16 42 M32 36 L32 42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <line x1="12" y1="42" x2="36" y2="42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M18 23 L22 27 L30 19" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Course Resources</h3>
-              <p class="drum-card-text">Past midterms, formula sheets, lab templates, syllabi — all in one centralized Drive.</p>
-              <a href="academics.html" class="drum-card-link">Open Resources →</a>
-            </div>
-
-            <div class="drum-card" data-idx="5">
-              <div class="drum-card-num mono">06</div>
-              <div class="drum-card-icon">
-                <svg viewBox="0 0 48 48" fill="none">
-                  <circle cx="24" cy="16" r="8" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M8 42 C8 32 40 32 40 42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <circle cx="36" cy="14" r="5" stroke="#e31b23" stroke-width="1.5"/>
-                  <path d="M34 14 L35.5 15.5 L38 12" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h3 class="drum-card-title">Community</h3>
-              <p class="drum-card-text">A tight-knit Discord and social community where Mechatronics students at every level look out for each other.</p>
-              <a href="contact.html" class="drum-card-link">Get Involved →</a>
-            </div>
-
-          </div><!-- /drum -->
-        </div><!-- /drum-viewport -->
-
-        <!-- Dot indicators -->
-        <div class="drum-dots" id="drum-dots">
-          <button class="drum-dot active" data-goto="0"></button>
-          <button class="drum-dot" data-goto="1"></button>
-          <button class="drum-dot" data-goto="2"></button>
-          <button class="drum-dot" data-goto="3"></button>
-          <button class="drum-dot" data-goto="4"></button>
-          <button class="drum-dot" data-goto="5"></button>
+      <div class="mcu-carousel-wrap" style="--bg-fade:#2e2c2c">
+        <p class="mcu-hint">← DRAG TO EXPLORE →</p>
+        <div class="mcu-track-outer"><div class="mcu-track">
+            <div class="mcu-slide" data-idx="0"><div class="mcu-slide-num mono">01</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32 L20 20 L28 26 L36 14" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div><h3 class="mcu-slide-title">Academic Support</h3><p class="mcu-slide-desc">Study sessions, tutoring, and course guides across all four years. Nobody falls behind.</p><a href="academics.html" class="mcu-slide-link">Explore Resources →</a></div>
+            <div class="mcu-slide" data-idx="1"><div class="mcu-slide-num mono">02</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24 L20 28 L32 18" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="mcu-slide-title">Social Events</h3><p class="mcu-slide-desc">From Marvel Rivals tournaments to movie nights and mech bull — we work hard and celebrate harder.</p><a href="events.html" class="mcu-slide-link">See Events →</a></div>
+            <div class="mcu-slide" data-idx="2"><div class="mcu-slide-num mono">03</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div><h3 class="mcu-slide-title">Technical Workshops</h3><p class="mcu-slide-desc">PCB soldering, SolidWorks, ROS2, Raspberry Pi — hands-on skill building designed by engineers for engineers.</p><a href="events.html" class="mcu-slide-link">View Workshops →</a></div>
+            <div class="mcu-slide" data-idx="3"><div class="mcu-slide-num mono">04</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div><h3 class="mcu-slide-title">Gaming &amp; Socials</h3><p class="mcu-slide-desc">Mechatronics students are competitive in everything — not just circuits. Come find out.</p><a href="events.html" class="mcu-slide-link">See What's On →</a></div>
+            <div class="mcu-slide" data-idx="4"><div class="mcu-slide-num mono">05</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div><h3 class="mcu-slide-title">Course Resources</h3><p class="mcu-slide-desc">Past midterms, formula sheets, lab templates, syllabi — all in one centralized Drive.</p><a href="academics.html" class="mcu-slide-link">Open Resources →</a></div>
+            <div class="mcu-slide" data-idx="5"><div class="mcu-slide-num mono">06</div><div class="mcu-slide-icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40 C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36 C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3 class="mcu-slide-title">Community</h3><p class="mcu-slide-desc">A tight-knit Discord and social community where Mechatronics students at every level look out for each other.</p><a href="contact.html" class="mcu-slide-link">Get Involved →</a></div>
+          </div></div>
+        <div class="mcu-arrows">
+          <button class="mcu-arrow mcu-arrow-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="mcu-arrow mcu-arrow-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
         </div>
+        <div class="mcu-dots"><button class="mcu-dot active" data-idx="0"></button><button class="mcu-dot" data-idx="1"></button><button class="mcu-dot" data-idx="2"></button><button class="mcu-dot" data-idx="3"></button><button class="mcu-dot" data-idx="4"></button><button class="mcu-dot" data-idx="5"></button></div>
       </div>
     </div>
   </section>
-
-  <style>
-    /* ── DRUM / CYLINDER CAROUSEL ── */
-    .drum-scene {
-      position: relative;
-      user-select: none;
-      padding-bottom: 48px;
-    }
-    .drum-hint {
-      text-align: center;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--steel);
-      margin-bottom: 32px;
-      opacity: 0.6;
-      transition: opacity 0.4s;
-    }
-    .drum-scene.dragging .drum-hint { opacity: 0; }
-
-    .drum-viewport {
-      width: 100%;
-      height: 420px;
-      perspective: 1200px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .drum {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
-    }
-    .drum.no-transition { transition: none; }
-
-    .drum-card {
-      position: absolute;
-      width: clamp(260px, 28vw, 340px);
-      top: 50%;
-      left: 50%;
-      margin-left: calc(clamp(260px, 28vw, 340px) / -2);
-      margin-top: -180px;
-      height: 360px;
-      background: #2c2a2a;
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 36px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transition: box-shadow 0.4s, border-color 0.4s;
-      cursor: grab;
-    }
-    .drum-card:active { cursor: grabbing; }
-    .drum-card.active-card {
-      border-color: rgba(227,27,35,0.35);
-      box-shadow: 0 0 40px rgba(227,27,35,0.12), 0 20px 60px rgba(0,0,0,0.5);
-    }
-    .drum-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--red);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
-    .drum-card.active-card::before { transform: scaleX(1); }
-
-    .drum-card-num {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--red);
-    }
-    .drum-card-icon {
-      width: 44px; height: 44px;
-      color: var(--steel-light);
-    }
-    .drum-card-icon svg { width: 100%; height: 100%; }
-    .drum-card-title {
-      font-family: var(--font-cond);
-      font-size: 20px; font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--white);
-      line-height: 1.1;
-    }
-    .drum-card-text {
-      font-size: 13px; font-weight: 300;
-      line-height: 1.65;
-      color: var(--steel-light);
-      flex: 1;
-    }
-    .drum-card-link {
-      font-family: var(--font-cond);
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--red);
-      transition: letter-spacing 0.2s;
-      margin-top: auto;
-    }
-    .drum-card-link:hover { letter-spacing: 0.18em; }
-
-    /* Dot nav */
-    .drum-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 28px;
-    }
-    .drum-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      padding: 0;
-    }
-    .drum-dot.active {
-      background: var(--red);
-      transform: scale(1.4);
-    }
-
-    @media (max-width: 700px) {
-      .drum-viewport { height: 340px; }
-      .drum-card { height: 300px; padding: 24px 20px; }
-    }
-  </style>
-
-  <script>
-  (function initDrum() {
-    const CARDS = 6;
-    const RADIUS = 520; // cylinder radius in px — tune for tightness
-    const drum   = document.getElementById('drum');
-    const scene  = document.getElementById('drum-scene');
-    const dots   = document.querySelectorAll('.drum-dot');
-    const cards  = document.querySelectorAll('.drum-card');
-    if (!drum) return;
-
-    let currentAngle = 0;   // degrees
-    let targetAngle  = 0;
-    let activeIdx    = 0;
-    let isDragging   = false;
-    let startX       = 0;
-    let startAngle   = 0;
-    let velocity     = 0;
-    let lastX        = 0;
-    let lastT        = 0;
-    let raf;
-
-    const STEP = 360 / CARDS; // 60deg per card
-
-    // Place cards around the cylinder
-    cards.forEach((card, i) => {
-      const angle = i * STEP;
-      card.style.transform = `rotateY(${angle}deg) translateZ(${RADIUS}px)`;
-    });
-
-    function getClosestIdx(angle) {
-      // normalize angle to positive
-      let a = ((-angle % 360) + 360) % 360;
-      return Math.round(a / STEP) % CARDS;
-    }
-
-    function setAngle(angle, snap) {
-      if (snap) {
-        // snap to nearest card
-        const nearest = Math.round(angle / STEP) * STEP;
-        targetAngle = nearest;
-      } else {
-        targetAngle = angle;
-      }
-    }
-
-    function updateDrum(angle) {
-      drum.style.transform = `rotateY(${angle}deg)`;
-
-      // which card faces front?
-      const idx = (((Math.round(-angle / STEP) % CARDS) + CARDS) % CARDS);
-      if (idx !== activeIdx) {
-        activeIdx = idx;
-        cards.forEach((c, i) => c.classList.toggle('active-card', i === activeIdx));
-        dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
-      }
-    }
-
-    // animation loop
-    function tick() {
-      if (!isDragging) {
-        currentAngle += (targetAngle - currentAngle) * 0.1;
-      }
-      updateDrum(currentAngle);
-
-      if (!isDragging && Math.abs(targetAngle - currentAngle) > 0.05) {
-        raf = requestAnimationFrame(tick);
-      } else if (!isDragging) {
-        currentAngle = targetAngle;
-        updateDrum(currentAngle);
-      }
-    }
-
-    function startTick() {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(tick);
-    }
-
-    // ── DRAG ──
-    function onDragStart(e) {
-      isDragging = true;
-      scene.classList.add('dragging');
-      startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-      startAngle = currentAngle;
-      lastX = startX;
-      lastT = Date.now();
-      velocity = 0;
-      cancelAnimationFrame(raf);
-      e.preventDefault();
-    }
-
-    function onDragMove(e) {
-      if (!isDragging) return;
-      const x  = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-      const dx = x - startX;
-      const now = Date.now();
-      velocity = (x - lastX) / Math.max(1, now - lastT) * 16;
-      lastX = x; lastT = now;
-      currentAngle = startAngle + dx * 0.3;
-      updateDrum(currentAngle);
-    }
-
-    function onDragEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      scene.classList.remove('dragging');
-      // fling with velocity then snap
-      targetAngle = currentAngle + velocity * 4;
-      const nearest = Math.round(targetAngle / STEP) * STEP;
-      targetAngle = nearest;
-      startTick();
-    }
-
-    // ── WHEEL ──
-    let wheelTimer;
-    scene.addEventListener('wheel', e => {
-      e.preventDefault();
-      targetAngle -= e.deltaX * 0.4 + e.deltaY * 0.4;
-      const nearest = Math.round(targetAngle / STEP) * STEP;
-      clearTimeout(wheelTimer);
-      wheelTimer = setTimeout(() => { targetAngle = nearest; startTick(); }, 120);
-      startTick();
-    }, { passive: false });
-
-    // ── MOUSE ──
-    scene.addEventListener('mousedown',  onDragStart);
-    window.addEventListener('mousemove', onDragMove);
-    window.addEventListener('mouseup',   onDragEnd);
-
-    // ── TOUCH ──
-    scene.addEventListener('touchstart', onDragStart, { passive: false });
-    window.addEventListener('touchmove', onDragMove,  { passive: false });
-    window.addEventListener('touchend',  onDragEnd);
-
-    // ── DOTS ──
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        targetAngle = -(i * STEP);
-        currentAngle = targetAngle; // jump directly for dot clicks
-        updateDrum(currentAngle);
-      });
-    });
-
-    // ── KEYBOARD ──
-    scene.setAttribute('tabindex', '0');
-    scene.addEventListener('keydown', e => {
-      if (e.key === 'ArrowLeft')  { targetAngle += STEP; startTick(); }
-      if (e.key === 'ArrowRight') { targetAngle -= STEP; startTick(); }
-    });
-
-    // init
-    cards[0].classList.add('active-card');
-    dots[0].classList.add('active');
-    updateDrum(0);
-  })();
-  </script>
 
     <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
   <section id="events-preview" class="section-dark">
@@ -1031,5 +673,56 @@
   </style>
 
   <script src="js/theme-toggle.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.mcu-carousel-wrap').forEach(function(wrap){
+    var track=wrap.querySelector('.mcu-track');
+    var slides=Array.from(wrap.querySelectorAll('.mcu-slide'));
+    var dots=Array.from(wrap.querySelectorAll('.mcu-dot'));
+    var btnP=wrap.querySelector('.mcu-arrow-prev');
+    var btnN=wrap.querySelector('.mcu-arrow-next');
+    if(!track||!slides.length)return;
+    var GAP=20,COUNT=slides.length,CARD_W=slides[0].offsetWidth+GAP;
+    var cur=0,tX=0,cX=0,drag=false,sx=0,stX=0,vx=0,lx=0,lt=0,raf;
+    function ow(){return wrap.querySelector('.mcu-track-outer')}
+    function off(i){var tw=ow().offsetWidth;return -(i*CARD_W)+(tw/2)-(CARD_W/2)+10}
+    function cl(v,a,b){return Math.max(a,Math.min(b,v))}
+    function draw(x){
+      var tw=ow().offsetWidth,ct=tw/2;
+      track.style.transform='translateX('+x+'px)';
+      slides.forEach(function(s,i){
+        var sc=x+i*CARD_W+CARD_W/2-10;
+        var d=Math.abs(ct-sc);
+        var t=cl(1-d/(CARD_W*2.2),0,1);
+        s.style.transform='scale('+(0.88+t*0.12)+')';
+        s.style.opacity=''+(0.38+t*0.62);
+        s.classList.toggle('is-active',i===cur);
+      });
+      dots.forEach(function(d,i){d.classList.toggle('active',i===cur)});
+    }
+    function snap(i){cur=cl(i,0,COUNT-1);tX=off(cur)}
+    function tick(){cX+=(tX-cX)*0.09;draw(cX);if(Math.abs(tX-cX)>0.2)raf=requestAnimationFrame(tick);else{cX=tX;draw(cX)}}
+    function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
+    function dn(e){drag=true;wrap.classList.add('interacted');sx=e.touches?e.touches[0].clientX:e.clientX;stX=cX;lx=sx;lt=Date.now();vx=0;cancelAnimationFrame(raf);e.preventDefault()}
+    function mv(e){if(!drag)return;var x=e.touches?e.touches[0].clientX:e.clientX,now=Date.now();vx=(x-lx)/Math.max(1,now-lt)*14;lx=x;lt=now;cX=stX+(x-sx);draw(cX)}
+    function up(){if(!drag)return;drag=false;var tw=ow().offsetWidth,approx=Math.round(((tw/2)-(cX+vx*5)-CARD_W/2+10)/CARD_W);snap(approx);go()}
+    track.addEventListener('mousedown',dn,{passive:false});
+    track.addEventListener('touchstart',dn,{passive:false});
+    window.addEventListener('mousemove',mv);
+    window.addEventListener('touchmove',mv,{passive:false});
+    window.addEventListener('mouseup',up);
+    window.addEventListener('touchend',up);
+    if(btnP)btnP.addEventListener('click',function(){wrap.classList.add('interacted');snap(cur-1);go()});
+    if(btnN)btnN.addEventListener('click',function(){wrap.classList.add('interacted');snap(cur+1);go()});
+    dots.forEach(function(d,i){d.addEventListener('click',function(){wrap.classList.add('interacted');snap(i);go()})});
+    var wt;
+    wrap.addEventListener('wheel',function(e){if(Math.abs(e.deltaX)<Math.abs(e.deltaY)&&Math.abs(e.deltaY)>8)return;e.preventDefault();wrap.classList.add('interacted');clearTimeout(wt);wt=setTimeout(function(){snap(cur+(e.deltaX>0?1:-1));go()},80)},{passive:false});
+    wrap.setAttribute('tabindex','0');
+    wrap.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){snap(cur-1);go()}if(e.key==='ArrowRight'){snap(cur+1);go()}});
+    window.addEventListener('resize',function(){CARD_W=slides[0].offsetWidth+GAP;snap(cur);cX=tX;draw(cX)});
+    snap(0);cX=tX;draw(cX);
+  });
+})();
+</script>
 </body>
 </html>
