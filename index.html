@@ -10,43 +10,132 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 <style>
-/* ═══ GLOBE CAROUSEL ═══ */
-.gr-wrap{outline:none;-webkit-user-select:none;user-select:none;cursor:grab;padding-bottom:48px;touch-action:none}
-.gr-wrap:active{cursor:grabbing}
-.gr-stage{height:300px;position:relative;perspective:900px;perspective-origin:50% 50%;overflow:visible}
-.gr-ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-/* Cards never rotate — only the ring does, so text stays crisp */
-.gc{
-  position:absolute;width:240px;
-  top:50%;left:50%;
-  /* JS sets transform for orbit position */
-  background:#272424;border:1px solid rgba(255,255,255,.07);
-  padding:24px 22px;box-sizing:border-box;
-  display:flex;flex-direction:column;gap:10px;
-  transition:border-color .4s,box-shadow .4s;
-  /* hide cards behind the viewer entirely — no side/back showing */
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+/* ══════════════════════════════════════════════════
+   MCU CAROUSEL — replaces the existing carousel
+   <style> block in index.html
+   ══════════════════════════════════════════════════ */
+
+.gr-wrap {
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: grab;
+  touch-action: pan-y;
+  padding-bottom: 52px;
 }
-.gc::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
-.gc.gca{border-color:rgba(227,27,35,.35);box-shadow:0 0 24px rgba(227,27,35,.1),0 12px 40px rgba(0,0,0,.45);pointer-events:all}
-.gc.gca::before{transform:scaleX(1)}
-.gc:not(.gca){pointer-events:none}
-.gc-n{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--red)}
-.gc-ico{width:34px;height:34px;color:var(--steel-light)}
-.gc-ico svg{width:100%;height:100%}
-.gc-t{font-family:var(--font-cond);font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--white);line-height:1.1}
-.gc-d{font-size:12px;font-weight:300;line-height:1.6;color:var(--steel-light);flex:1}
-.gc-l{font-family:var(--font-cond);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--red);margin-top:auto;transition:letter-spacing .2s}
-.gc-l:hover{letter-spacing:.2em}
-/* Nav */
-.gr-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px}
-.gr-btn{width:34px;height:34px;border:1px solid rgba(255,255,255,.12);background:none;color:var(--steel-light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s,transform .15s;flex-shrink:0}
-.gr-btn:hover{border-color:var(--red);color:var(--white);transform:scale(1.08)}
-.gr-btn svg{width:13px;height:13px;pointer-events:none}
-.gr-dots{display:flex;gap:6px;align-items:center}
-.gd{height:4px;border-radius:2px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:background .3s,width .3s;width:4px}
-.gd.ga{background:var(--red);width:18px}
-@media(max-width:600px){.gr-stage{height:260px}.gc{width:210px;padding:18px 16px}}
+.gr-wrap:active { cursor: grabbing; }
+
+.gr-stage {
+  position: relative;
+  height: 320px;
+  overflow: visible;
+  perspective: 1000px;
+  perspective-origin: 50% 40%;
+}
+
+/* Cards always face forward — no rotateY ever */
+.gc {
+  position: absolute;
+  width: 260px;
+  top: 0; left: 50%;
+  box-sizing: border-box;
+  background: #272424;
+  border: 1px solid rgba(255,255,255,.07);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  will-change: transform, opacity;
+  pointer-events: none;
+  user-select: none;
+  transition:
+    opacity 0.38s cubic-bezier(0.16,1,0.3,1),
+    transform 0.38s cubic-bezier(0.16,1,0.3,1);
+}
+.gc::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.gc.gca {
+  border-color: rgba(227,27,35,.35);
+  box-shadow: 0 0 32px rgba(227,27,35,.12), 0 16px 48px rgba(0,0,0,.5);
+  pointer-events: all;
+}
+.gc.gca::before { transform: scaleX(1); }
+
+.gc-n {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: .2em;
+  color: var(--red);
+}
+.gc-ico { width: 36px; height: 36px; color: var(--steel-light); }
+.gc-ico svg { width: 100%; height: 100%; }
+.gc-t {
+  font-family: var(--font-cond);
+  font-size: 16px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--white); line-height: 1.1;
+}
+.gc-d {
+  font-size: 13px; font-weight: 300;
+  line-height: 1.6; color: var(--steel-light); flex: 1;
+}
+.gc-l {
+  font-family: var(--font-cond);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; color: var(--red);
+  margin-top: auto;
+  transition: letter-spacing .2s;
+}
+.gc-l:hover { letter-spacing: .22em; }
+
+/* Nav controls */
+.gr-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.gr-btn {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: none;
+  color: var(--steel-light);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color .2s, color .2s, transform .15s;
+  flex-shrink: 0;
+}
+.gr-btn:hover { border-color: var(--red); color: var(--white); transform: scale(1.08); }
+.gr-btn svg { width: 14px; height: 14px; pointer-events: none; }
+
+.gr-dots { display: flex; gap: 8px; align-items: center; }
+.gd {
+  height: 4px; border-radius: 2px;
+  background: rgba(255,255,255,.15);
+  border: none; padding: 0; cursor: pointer;
+  transition: background .3s, width .35s cubic-bezier(.34,1.56,.64,1);
+  width: 6px;
+}
+.gd.ga { background: var(--red); width: 22px; }
+
+@media (max-width: 700px) {
+  .gr-stage { height: 300px; }
+  .gc { width: 230px; padding: 22px 18px; }
+}
+@media (max-width: 480px) {
+  .gr-stage { height: 320px; }
+  .gc { width: 200px; padding: 18px 16px; }
+}
 </style>
 </head>
 <body>
@@ -684,152 +773,193 @@
 
   <script src="js/theme-toggle.js"></script>
 <script>
-(function(){
-  var N=6, STEP=360/N;
-  /* Orbit radius — tune so adjacent cards peek in nicely but back cards are hidden */
-  var R=360;
-  var wrap=document.getElementById('grw');
-  var ring=document.getElementById('grr');
-  if(!wrap||!ring)return;
-  var cards=Array.from(ring.querySelectorAll('.gc'));
-  var dots =Array.from(document.querySelectorAll('#grd .gd'));
-  var btnP =document.getElementById('grp');
-  var btnN =document.getElementById('grn');
+(function () {
+  'use strict';
 
-  var cur=0, tA=0, cA=0, raf, active=0;
+  var wrap  = document.getElementById('grw');
+  var stage = document.getElementById('grs');
+  var ring  = document.getElementById('grr');
+  if (!wrap || !stage || !ring) return;
 
-  /* Place each card in its orbit slot.
-     Key: we DO NOT rotateY the card — we only translate it.
-     The ring's rotateY is what spins. Cards face forward always. */
-  function place(){
-    cards.forEach(function(c,i){
-      var rad=(i*STEP)*Math.PI/180;
-      var x=Math.sin(rad)*R;
-      var z=Math.cos(rad)*R;
-      /* store base position; JS will add scale on top */
-      c._bx=x; c._bz=z;
-      c.style.transform='translate(-50%,-50%) translateX('+x+'px) translateZ('+z+'px)';
-    });
+  var cards = Array.from(ring.querySelectorAll('.gc'));
+  var dots  = Array.from(document.querySelectorAll('#grd .gd'));
+  var btnP  = document.getElementById('grp');
+  var btnN  = document.getElementById('grn');
+  var N     = cards.length;
+
+  /* ── Layout config ── */
+  var SPREAD  = 290;   /* px between card centres */
+  var Z_SIDE  = -140;  /* z-depth of adjacent cards */
+  var Z_FAR   = -220;  /* z-depth of far cards */
+
+  /* ── State ── */
+  var target = 0;
+  var pos    = 0.0;
+  var active = 0;
+  var raf    = null;
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function wi(i) { return ((i % N) + N) % N; }
+
+  /* shortest signed arc between two fractional positions */
+  function shortArc(from, to) {
+    var d = ((to - from) % N + N) % N;
+    return d > N / 2 ? d - N : d;
   }
 
-  function lerp(a,b,t){return a+(b-a)*t}
+  /* visual params for a card at fractional offset from centre */
+  function params(offset) {
+    var a = Math.abs(offset);
+    var scale, opacity, z;
 
-  /* Which card faces front given ring angle a? */
-  function frontIdx(a){return(Math.round(-a/STEP)%N+N)%N}
-
-  function render(a){
-    ring.style.transform='rotateY('+a+'deg)';
-    var front=frontIdx(a);
-    if(front!==active){
-      active=front;
-      cards.forEach(function(c,i){c.classList.toggle('gca',i===active)});
-      dots.forEach(function(d,i){d.classList.toggle('ga',i===active)});
+    if (a < 1) {
+      scale   = lerp(1.00, 0.80, a);
+      opacity = lerp(1.00, 0.52, a);
+      z       = lerp(0,    Z_SIDE, a);
+    } else if (a < 2) {
+      var t = a - 1;
+      scale   = lerp(0.80, 0.64, t);
+      opacity = lerp(0.52, 0.22, t);
+      z       = lerp(Z_SIDE, Z_FAR, t);
+    } else {
+      scale   = 0.64;
+      opacity = Math.max(0, 0.22 - (a - 2) * 0.18);
+      z       = Z_FAR;
     }
-    /* Scale + opacity by angular distance from front — no rotateY on cards */
-    cards.forEach(function(c,i){
-      /* card's world angle relative to viewer */
-      var worldA=((i*STEP)+a%360+360*10)%360;
-      if(worldA>180)worldA=360-worldA;
-      /* worldA: 0=facing viewer, 90=side, 180=back */
-      /* Hide cards past 90deg (side/back) — this kills the ugly side view */
-      if(worldA>88){
-        c.style.opacity='0';
-        c.style.visibility='hidden';
-      } else {
-        c.style.visibility='visible';
-        var t=1-(worldA/88);          /* 1 at front, 0 at 88deg */
-        var sc=0.72+t*0.28;
-        var op=0.15+t*0.85;
-        c.style.opacity=''+op;
-        c.style.transform='translate(-50%,-50%) translateX('+c._bx+'px) translateZ('+c._bz+'px) scale('+sc+')';
-      }
+
+    return {
+      x:  offset * SPREAD,
+      z:  z,
+      sc: scale,
+      op: opacity
+    };
+  }
+
+  function render() {
+    var front = wi(Math.round(pos));
+    if (front !== active) {
+      active = front;
+      cards.forEach(function (c, i) { c.classList.toggle('gca', i === active); });
+      dots.forEach(function (d, i)  { d.classList.toggle('ga',  i === active); });
+    }
+
+    cards.forEach(function (card, i) {
+      /* offset = shortest arc from current float pos to this card index */
+      var off = i - pos;
+      /* wrap to [-N/2, N/2] */
+      while (off >  N / 2) off -= N;
+      while (off < -N / 2) off += N;
+
+      var p  = params(off);
+      var zi = Math.round(50 - Math.abs(off) * 8);
+
+      card.style.zIndex     = String(zi);
+      card.style.visibility = p.op < 0.02 ? 'hidden' : 'visible';
+      card.style.opacity    = String(p.op);
+      /* cards only move on X and Z — never rotate, never skew */
+      card.style.transform  =
+        'translateX(calc(-50% + ' + p.x.toFixed(2) + 'px))' +
+        ' translateZ(' + p.z.toFixed(2) + 'px)' +
+        ' scale(' + p.sc.toFixed(4) + ')';
     });
   }
 
-  function tick(){
-    cA=lerp(cA,tA,.09);
-    render(cA);
-    if(Math.abs(tA-cA)>.03)raf=requestAnimationFrame(tick);
-    else{cA=tA;render(cA)}
-  }
-  function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
-
-  function shortArc(from,to){
-    var d=((to-from)%360+360)%360;
-    return d>180?d-360:d;
-  }
-  function goTo(i){
-    var dest=-(i*STEP);
-    tA=cA+shortArc(cA,dest);
-    go();
+  function animate() {
+    /* lerp pos toward target via shortest arc */
+    var arc = shortArc(pos, target);
+    pos += arc * 0.1;
+    render();
+    if (Math.abs(arc) > 0.005) {
+      raf = requestAnimationFrame(animate);
+    } else {
+      pos = target % N;
+      if (pos < 0) pos += N;
+      render();
+    }
   }
 
-  /* ── drag ── */
-  var drag=false,sx=0,sa=0,vx=0,lx=0,lt=0;
-  function dn(e){
-    drag=true;
-    var cx=e.touches?e.touches[0].clientX:e.clientX;
-    sx=cx;sa=cA;lx=cx;lt=Date.now();vx=0;
+  function go(to) {
+    /* keep pos and target in sync via shortest arc so we never spin the long way */
+    var arc = shortArc(wi(Math.round(pos)), wi(to));
+    target  = pos + arc;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(animate);
+  }
+
+  /* ── Drag ── */
+  var dragging = false, sx = 0, sp = 0, lx = 0, lt = 0, vx = 0;
+
+  function dn(e) {
+    dragging = true;
+    var cx = e.touches ? e.touches[0].clientX : e.clientX;
+    sx = cx; sp = pos; lx = cx; lt = Date.now(); vx = 0;
     cancelAnimationFrame(raf);
     e.preventDefault();
   }
-  function mv(e){
-    if(!drag)return;
-    var x=e.touches?e.touches[0].clientX:e.clientX;
-    var now=Date.now(),dt=Math.max(1,now-lt);
-    vx=(x-lx)/dt*14;lx=x;lt=now;
-    cA=sa+(x-sx)*0.28;
-    render(cA);
+  function mv(e) {
+    if (!dragging) return;
+    var cx  = e.touches ? e.touches[0].clientX : e.clientX;
+    var now = Date.now();
+    var dt  = Math.max(1, now - lt);
+    vx = (cx - lx) / dt * 14;
+    lx = cx; lt = now;
+    pos = sp - (cx - sx) / SPREAD;
+    render();
     e.preventDefault();
   }
-  function up(e){
-    if(!drag)return;drag=false;
-    var flung=cA+vx*3.5;
-    var nearest=Math.round(-flung/STEP)*(-STEP);
-    tA=flung+shortArc(flung,nearest);
-    go();
+  function up() {
+    if (!dragging) return;
+    dragging = false;
+    var flung   = pos - vx * 0.28;
+    var nearest = Math.round(flung);
+    pos    = flung;
+    target = nearest;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(animate);
   }
-  wrap.addEventListener('mousedown',dn,{passive:false});
-  wrap.addEventListener('touchstart',dn,{passive:false});
-  window.addEventListener('mousemove',mv,{passive:false});
-  window.addEventListener('touchmove',mv,{passive:false});
-  window.addEventListener('mouseup',up);
-  window.addEventListener('touchend',up);
 
-  /* ── wheel — horizontal scroll rotates ── */
+  wrap.addEventListener('mousedown',  dn, { passive: false });
+  wrap.addEventListener('touchstart', dn, { passive: false });
+  window.addEventListener('mousemove',  mv, { passive: false });
+  window.addEventListener('touchmove',  mv, { passive: false });
+  window.addEventListener('mouseup',  up);
+  window.addEventListener('touchend', up);
+
+  /* ── Mouse wheel ── */
   var wt;
-  wrap.addEventListener('wheel',function(e){
-    /* allow vertical page scroll when user scrolls vertically */
-    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&Math.abs(e.deltaX)<5)return;
+  wrap.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaX) < 8) return;
     e.preventDefault();
-    cA+=-(e.deltaX||e.deltaY)*0.35;
-    render(cA);
+    pos -= (e.deltaX || e.deltaY) * 0.007;
+    render();
     clearTimeout(wt);
-    wt=setTimeout(function(){
-      var nearest=Math.round(-cA/STEP)*(-STEP);
-      tA=cA+shortArc(cA,nearest);
-      go();
-    },150);
-  },{passive:false});
+    wt = setTimeout(function () {
+      target = Math.round(pos);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(animate);
+    }, 130);
+  }, { passive: false });
 
-  /* ── buttons ── */
-  if(btnP)btnP.addEventListener('click',function(){goTo(((active-1)%N+N)%N)});
-  if(btnN)btnN.addEventListener('click',function(){goTo((active+1)%N)});
+  /* ── Buttons ── */
+  if (btnP) btnP.addEventListener('click', function () { go(wi(Math.round(pos)) - 1); });
+  if (btnN) btnN.addEventListener('click', function () { go(wi(Math.round(pos)) + 1); });
 
-  /* ── dots ── */
-  dots.forEach(function(d,i){d.addEventListener('click',function(){goTo(i)})});
-
-  /* ── keyboard ── */
-  wrap.addEventListener('keydown',function(e){
-    if(e.key==='ArrowLeft'){e.preventDefault();goTo(((active-1)%N+N)%N)}
-    if(e.key==='ArrowRight'){e.preventDefault();goTo((active+1)%N)}
+  /* ── Dots ── */
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { go(i); });
   });
 
-  /* ── init ── */
-  place();
+  /* ── Keyboard ── */
+  wrap.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); go(wi(Math.round(pos)) - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(wi(Math.round(pos)) + 1); }
+  });
+
+  /* ── Init ── */
+  pos = 0; target = 0;
   cards[0].classList.add('gca');
-  dots[0].classList.add('ga');
-  render(0);
+  if (dots[0]) dots[0].classList.add('ga');
+  render();
 })();
 </script>
 </body>
