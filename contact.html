@@ -257,26 +257,6 @@
     .faq-a-inner a:hover { text-decoration: underline; }
 
     /* ─── WHAT WE DO STRIP ─── */
-    #ct-what {
-      background: #272422;
-      padding: var(--section-pad) 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .what-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
-      gap: 2px;
-      margin-top: 48px;
-    }
-    .what-card {
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 28px 24px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s;
-    }
     .what-card:hover { border-color: rgba(227,27,35,0.3); }
     .what-card::before {
       content: '';
@@ -289,28 +269,6 @@
       transition: transform 0.35s var(--ease-out-expo);
     }
     .what-card:hover::before { transform: scaleX(1); }
-    .what-icon {
-      font-family: var(--font-mono);
-      font-size: 20px;
-      color: rgba(227,27,35,0.5);
-      margin-bottom: 16px;
-    }
-    .what-title {
-      font-family: var(--font-cond);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .what-desc {
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--steel);
-      font-weight: 300;
-      line-height: 1.6;
-    }
 
     /* ─── BIG DISCORD CTA ─── */
     #ct-discord-cta {
@@ -671,51 +629,6 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════
-       WHAT WE DO
-  ═══════════════════════════════════════════════════════ -->
-  <section id="ct-what">
-    <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header reveal-up">
-        <div class="section-tag">MCU</div>
-        <h2 class="section-title">WHAT WE DO</h2>
-        <p class="section-desc">A student-led organization covering every part of the university experience.</p>
-      </div>
-      <div class="what-grid">
-        <div class="what-card tilt-card reveal-up">
-          <div class="what-icon">[ A ]</div>
-          <div class="what-title">Academic Support</div>
-          <div class="what-desc">Course guides, mock exams, study halls, and tutoring — built by students who've been through it.</div>
-        </div>
-        <div class="what-card tilt-card reveal-up delay-1">
-          <div class="what-icon">[ W ]</div>
-          <div class="what-title">Technical Workshops</div>
-          <div class="what-desc">SolidWorks, Arduino, ROS2 — hands-on workshops designed to build real engineering skills.</div>
-        </div>
-        <div class="what-card tilt-card reveal-up delay-2">
-          <div class="what-icon">[ G ]</div>
-          <div class="what-title">Gaming &amp; Socials</div>
-          <div class="what-desc">Marvel Rivals tournaments, movie nights, mech bull — because Mechatronics students are competitive in everything.</div>
-        </div>
-        <div class="what-card tilt-card reveal-up delay-3">
-          <div class="what-icon">[ S ]</div>
-          <div class="what-title">Social Events</div>
-          <div class="what-desc">Gaming tournaments, movie nights, charity events — because university is more than coursework.</div>
-        </div>
-        <div class="what-card tilt-card reveal-up delay-4">
-          <div class="what-icon">[ C ]</div>
-          <div class="what-title">Community</div>
-          <div class="what-desc">A tight-knit Discord and social community where Mechatronics students at every level look out for each other.</div>
-        </div>
-        <div class="what-card tilt-card reveal-up" style="animation-delay:0.5s;">
-          <div class="what-icon">[ R ]</div>
-          <div class="what-title">Course Resources</div>
-          <div class="what-desc">Past midterms, formula sheets, lab templates, syllabi — all in one centralized Drive.</div>
-        </div>
       </div>
     </div>
   </section>
