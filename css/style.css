@@ -1825,3 +1825,15 @@ canvas, svg { transition: none !important; }
 [data-theme="light"] #cursor-ring  { border-color: rgba(227,27,35,0.6); }
 [data-theme="light"] #cursor-dot   { background: var(--red); }
 [data-theme="light"] .social-link:hover { box-shadow: 0 4px 16px rgba(227,27,35,0.15); }
+
+/* Shop button — ghost outline to distinguish from Join Us */
+.nav-shop {
+  background: transparent;
+  border: 1px solid rgba(227,27,35,0.5);
+  color: var(--red) !important;
+}
+.nav-shop:hover {
+  background: rgba(227,27,35,0.1);
+  border-color: var(--red);
+  color: var(--white) !important;
+}
