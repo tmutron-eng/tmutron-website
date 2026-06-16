@@ -16,16 +16,21 @@
       display: grid;
       gap: 16px;
     }
-    .tm-grid-exec      { grid-template-columns: repeat(3, 1fr); }
-    .tm-grid-directors { grid-template-columns: repeat(4, 1fr); }
-    .tm-grid-general   { grid-template-columns: repeat(4, 1fr); }
+    .tm-grid-solo      { grid-template-columns: repeat(3, 1fr); }
+    .tm-grid-three     { grid-template-columns: repeat(3, 1fr); }
+
+    /* Solo card centered in a 3-col grid */
+    .flip-card-solo-center {
+      grid-column: 2 / 3;
+    }
 
     .flip-card {
       perspective: 1000px;
       height: 280px;
       cursor: pointer;
+      position: relative;
     }
-    .tm-grid-exec .flip-card { height: 320px; }
+    .tm-grid-solo .flip-card { height: 340px; }
 
     .flip-card-inner {
       position: relative;
@@ -163,6 +168,99 @@
     .flip-back-li:hover { color: var(--white); }
     .flip-back-li.tbd { opacity: 0.3; pointer-events: none; cursor: default; }
 
+    /* ── LIGHTNING AURA ── */
+    /* Keyframe for flicker */
+    @keyframes lightning-pink {
+      0%   { opacity: 0.18; filter: blur(8px); }
+      15%  { opacity: 0.55; filter: blur(4px); }
+      20%  { opacity: 0.10; filter: blur(12px);}
+      35%  { opacity: 0.60; filter: blur(3px); }
+      50%  { opacity: 0.20; filter: blur(9px); }
+      65%  { opacity: 0.50; filter: blur(5px); }
+      80%  { opacity: 0.12; filter: blur(11px);}
+      100% { opacity: 0.18; filter: blur(8px); }
+    }
+    @keyframes lightning-green {
+      0%   { opacity: 0.15; filter: blur(9px); }
+      20%  { opacity: 0.50; filter: blur(4px); }
+      30%  { opacity: 0.08; filter: blur(13px);}
+      45%  { opacity: 0.55; filter: blur(3px); }
+      60%  { opacity: 0.18; filter: blur(8px); }
+      75%  { opacity: 0.45; filter: blur(5px); }
+      90%  { opacity: 0.10; filter: blur(12px);}
+      100% { opacity: 0.15; filter: blur(9px); }
+    }
+    @keyframes lightning-orange {
+      0%   { opacity: 0.16; filter: blur(8px); }
+      25%  { opacity: 0.52; filter: blur(4px); }
+      35%  { opacity: 0.09; filter: blur(12px);}
+      50%  { opacity: 0.58; filter: blur(3px); }
+      65%  { opacity: 0.15; filter: blur(9px); }
+      80%  { opacity: 0.48; filter: blur(5px); }
+      100% { opacity: 0.16; filter: blur(8px); }
+    }
+    @keyframes lightning-red {
+      0%   { opacity: 0.20; filter: blur(7px); }
+      18%  { opacity: 0.58; filter: blur(3px); }
+      28%  { opacity: 0.08; filter: blur(13px);}
+      42%  { opacity: 0.62; filter: blur(2px); }
+      58%  { opacity: 0.18; filter: blur(8px); }
+      72%  { opacity: 0.50; filter: blur(4px); }
+      88%  { opacity: 0.10; filter: blur(11px);}
+      100% { opacity: 0.20; filter: blur(7px); }
+    }
+
+    /* Aura pseudo-element — sits outside the card via the wrapper */
+    .aura-wrap {
+      position: relative;
+    }
+    .aura-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .aura-wrap > * { position: relative; z-index: 1; }
+
+    /* Pink — President */
+    .aura-pink::before {
+      background: transparent;
+      box-shadow:
+        0 0 12px 4px rgba(255,130,200,0.30),
+        0 0 28px 8px rgba(255,100,180,0.18),
+        0 0 50px 16px rgba(220,60,150,0.10);
+      animation: lightning-pink 2.8s ease-in-out infinite;
+    }
+
+    /* Green — VPs */
+    .aura-green::before {
+      box-shadow:
+        0 0 12px 4px rgba(80,255,140,0.28),
+        0 0 28px 8px rgba(50,220,100,0.16),
+        0 0 50px 16px rgba(20,180,70,0.09);
+      animation: lightning-green 3.2s ease-in-out infinite;
+    }
+
+    /* Orange — Directors */
+    .aura-orange::before {
+      box-shadow:
+        0 0 12px 4px rgba(255,160,40,0.28),
+        0 0 28px 8px rgba(230,120,20,0.16),
+        0 0 50px 16px rgba(200,80,10,0.09);
+      animation: lightning-orange 3.0s ease-in-out infinite;
+    }
+
+    /* Red — Webmaster */
+    .aura-red::before {
+      box-shadow:
+        0 0 12px 4px rgba(255,60,60,0.32),
+        0 0 28px 8px rgba(230,30,30,0.18),
+        0 0 50px 16px rgba(200,10,10,0.10);
+      animation: lightning-red 2.6s ease-in-out infinite;
+    }
+
     /* Staggered entrance */
     .flip-card {
       opacity: 0;
@@ -177,24 +275,18 @@
     }
 
     /* Responsive */
-    @media (max-width: 1100px) {
-      .tm-grid-directors { grid-template-columns: repeat(2, 1fr); }
-      .tm-grid-general   { grid-template-columns: repeat(3, 1fr); }
-    }
     @media (max-width: 900px) {
-      .tm-grid-exec      { grid-template-columns: repeat(2, 1fr); }
-      .tm-grid-directors { grid-template-columns: repeat(2, 1fr); }
-      .tm-grid-general   { grid-template-columns: repeat(2, 1fr); }
+      .tm-grid-solo  { grid-template-columns: 1fr; }
+      .flip-card-solo-center { grid-column: 1; }
+      .tm-grid-three { grid-template-columns: repeat(2, 1fr); }
       .flip-card { height: 260px; }
-      .tm-grid-exec .flip-card { height: 290px; }
+      .tm-grid-solo .flip-card { height: 290px; }
     }
     @media (max-width: 600px) {
-      .tm-grid-exec      { grid-template-columns: 1fr 1fr; }
-      .tm-grid-general   { grid-template-columns: 1fr 1fr; }
+      .tm-grid-three { grid-template-columns: 1fr 1fr; }
       .flip-card { height: 240px; }
     }
 
-    /* Hide old tm-card styles interference */
     .flip-card .tm-card { display: none; }
   </style>
 </head>
@@ -284,7 +376,6 @@
     <div class="hud-corner hud-br"></div>
 
     <div class="container tm-hero-inner">
-      <!-- Left: title -->
       <div class="tm-hero-left">
         <div class="hero-badge reveal-up delay-1">
           <span class="badge-dot"></span>
@@ -299,7 +390,6 @@
         </p>
       </div>
 
-      <!-- Right: HUD stats panel -->
       <div class="tm-hud-panel reveal-right delay-2">
         <div class="tm-hud-header mono">
           <span class="ev-hud-dot"></span>
@@ -336,367 +426,379 @@
     <div class="section-blob b2"></div>
     <div class="container tm-container">
 
-      <!-- ── EXECUTIVE LEADERSHIP ── -->
+      <!-- ══ 01 PRESIDENT ══ -->
       <div class="tm-tier-label reveal-up">
         <div class="tm-tier-left">
           <span class="mono tm-tier-tag">01</span>
-          <h2 class="tm-tier-title">Executive Leadership</h2>
+          <h2 class="tm-tier-title">President</h2>
         </div>
         <div class="tm-tier-line"></div>
       </div>
 
-            <div class="tm-grid tm-grid-exec">
-
-        <div class="flip-card">
+      <!-- Solo card centred in a 3-col grid -->
+      <div class="tm-grid tm-grid-solo">
+        <div class="flip-card flip-card-solo-center aura-wrap aura-pink">
           <div class="flip-card-inner">
             <div class="flip-front" style="--fc:#e31b23">
               <div class="flip-front-photo">
                 <div class="flip-front-glow" style="--fc:#e31b23"></div>
-                <div class="flip-front-initials" style="color:#e31b23">JS</div>
+                <div class="flip-front-initials" style="color:#e31b23">WE</div>
               </div>
               <div class="flip-front-bar" style="background:#e31b23">President</div>
-              <div class="flip-front-name">Jamie S.</div>
+              <div class="flip-front-name">Wyatt Ewart</div>
             </div>
             <div class="flip-back" style="--fc:#e31b23">
               <div>
                 <div class="flip-back-role">President</div>
-                <div class="flip-back-name">Jamie S.</div>
-                <p class="flip-back-bio">Leading MCU's vision, partnerships, and day-to-day operations. Making sure everything runs smoothly.</p>
+                <div class="flip-back-name">Wyatt Ewart</div>
+                <p class="flip-back-bio">Leading MCU's vision, partnerships, and day-to-day operations. Making sure everything runs smoothly for the Mechatronics community.</p>
               </div>
               <div class="flip-back-footer">
                 <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c41a21">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#c41a21"></div>
-                <div class="flip-front-initials" style="color:#c41a21">AK</div>
-              </div>
-              <div class="flip-front-bar" style="background:#c41a21">VP Internal</div>
-              <div class="flip-front-name">Alex K.</div>
-            </div>
-            <div class="flip-back" style="--fc:#c41a21">
-              <div>
-                <div class="flip-back-role">VP Internal</div>
-                <div class="flip-back-name">Alex K.</div>
-                <p class="flip-back-bio">Overseeing internal operations, team coordination, and making sure everyone has what they need.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c41a21">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#c41a21"></div>
-                <div class="flip-front-initials" style="color:#c41a21">MR</div>
-              </div>
-              <div class="flip-front-bar" style="background:#c41a21">VP External</div>
-              <div class="flip-front-name">Morgan R.</div>
-            </div>
-            <div class="flip-back" style="--fc:#c41a21">
-              <div>
-                <div class="flip-back-role">VP External</div>
-                <div class="flip-back-name">Morgan R.</div>
-                <p class="flip-back-bio">Managing external partnerships, sponsorships, and industry relationships on behalf of MCU.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── DIRECTORS ── -->
-      <div class="tm-tier-label reveal-up" style="margin-top: 80px;">
+      <!-- ══ 02 VPs ══ -->
+      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
         <div class="tm-tier-left">
           <span class="mono tm-tier-tag">02</span>
+          <h2 class="tm-tier-title">Vice Presidents</h2>
+        </div>
+        <div class="tm-tier-line"></div>
+      </div>
+
+      <!-- Row 1: VP Finance, VP Operations, VP Events -->
+      <div class="tm-grid tm-grid-three" style="margin-bottom:16px;">
+
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">HI</div>
+              </div>
+              <div class="flip-front-bar" style="background:#1a8f4a">VP Finance</div>
+              <div class="flip-front-name">Hassan Iqbal</div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Finance</div>
+                <div class="flip-back-name">Hassan Iqbal</div>
+                <p class="flip-back-bio">Managing MCU's budget, sponsorship funds, and ensuring every dollar goes toward the community.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">QR</div>
+              </div>
+              <div class="flip-front-bar" style="background:#1a8f4a">VP Operations</div>
+              <div class="flip-front-name">Qamber Rizvi</div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Operations</div>
+                <div class="flip-back-name">Qamber Rizvi</div>
+                <p class="flip-back-bio">Overseeing internal operations, team coordination, and making sure everything runs like clockwork.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">AK</div>
+              </div>
+              <div class="flip-front-bar" style="background:#1a8f4a">VP Events</div>
+              <div class="flip-front-name">Angelo Koukopoulos</div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Events</div>
+                <div class="flip-back-name">Angelo Koukopoulos</div>
+                <p class="flip-back-bio">Planning and executing every MCU event — from logistics to making the night unforgettable.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: VP Comms, VP Academics -->
+      <div class="tm-grid tm-grid-three">
+
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">MP</div>
+              </div>
+              <div class="flip-front-bar" style="background:#1a8f4a">VP Comms</div>
+              <div class="flip-front-name">Muhammad Prince</div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Communications</div>
+                <div class="flip-back-name">Muhammad Prince</div>
+                <p class="flip-back-bio">Managing MCU's brand voice, communications strategy, and keeping the community informed.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">MG</div>
+              </div>
+              <div class="flip-front-bar" style="background:#1a8f4a">VP Academics</div>
+              <div class="flip-front-name">Muadh Ghori</div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Academics</div>
+                <div class="flip-back-name">Muadh Ghori</div>
+                <p class="flip-back-bio">Curating course resources, organizing tutoring sessions, and keeping students academically supported.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty placeholder to keep grid balanced -->
+        <div></div>
+      </div>
+
+      <!-- ══ 03 DIRECTORS ══ -->
+      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
+        <div class="tm-tier-left">
+          <span class="mono tm-tier-tag">03</span>
           <h2 class="tm-tier-title">Directors</h2>
         </div>
         <div class="tm-tier-line"></div>
       </div>
 
-      <div class="tm-grid tm-grid-directors">
+      <!-- Row 1: Ahesha, Aryan, Yasir -->
+      <div class="tm-grid tm-grid-three" style="margin-bottom:16px;">
 
-        <div class="flip-card">
+        <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#9b1219">
+            <div class="flip-front" style="--fc:#c46200">
               <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#9b1219"></div>
-                <div class="flip-front-initials" style="color:#9b1219">SP</div>
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">AS</div>
               </div>
-              <div class="flip-front-bar" style="background:#9b1219">Director of Academics</div>
-              <div class="flip-front-name">Sam P.</div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Media / Comms</div>
+              <div class="flip-front-name">Ahesha Saseenthiran</div>
             </div>
-            <div class="flip-back" style="--fc:#9b1219">
+            <div class="flip-back" style="--fc:#c46200">
               <div>
-                <div class="flip-back-role">Director of Academics</div>
-                <div class="flip-back-name">Sam P.</div>
-                <p class="flip-back-bio">Curating course resources, organizing tutoring, and keeping students academically supported.</p>
+                <div class="flip-back-role">Director of Media / Comms Engagement</div>
+                <div class="flip-back-name">Ahesha Saseenthiran</div>
+                <p class="flip-back-bio">Driving MCU's media presence and community engagement across all channels.</p>
               </div>
               <div class="flip-back-footer">
                 <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="flip-card">
+
+        <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#9b1219">
+            <div class="flip-front" style="--fc:#c46200">
               <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#9b1219"></div>
-                <div class="flip-front-initials" style="color:#9b1219">TN</div>
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">AB</div>
               </div>
-              <div class="flip-front-bar" style="background:#9b1219">Director of Events</div>
-              <div class="flip-front-name">Taylor N.</div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Logistics</div>
+              <div class="flip-front-name">Aryan Billava</div>
             </div>
-            <div class="flip-back" style="--fc:#9b1219">
+            <div class="flip-back" style="--fc:#c46200">
               <div>
-                <div class="flip-back-role">Director of Events</div>
-                <div class="flip-back-name">Taylor N.</div>
-                <p class="flip-back-bio">Planning and executing every event — from logistics and vendors to making the night unforgettable.</p>
+                <div class="flip-back-role">Director of Logistics</div>
+                <div class="flip-back-name">Aryan Billava</div>
+                <p class="flip-back-bio">Coordinating the behind-the-scenes logistics that keep MCU's operations running smoothly.</p>
               </div>
               <div class="flip-back-footer">
                 <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="flip-card">
+
+        <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#9b1219">
+            <div class="flip-front" style="--fc:#c46200">
               <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#9b1219"></div>
-                <div class="flip-front-initials" style="color:#9b1219">CL</div>
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">YS</div>
               </div>
-              <div class="flip-front-bar" style="background:#9b1219">Director of Marketing</div>
-              <div class="flip-front-name">Casey L.</div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Sponsors</div>
+              <div class="flip-front-name">Yasir Saeed</div>
             </div>
-            <div class="flip-back" style="--fc:#9b1219">
+            <div class="flip-back" style="--fc:#c46200">
               <div>
-                <div class="flip-back-role">Director of Marketing</div>
-                <div class="flip-back-name">Casey L.</div>
-                <p class="flip-back-bio">Running MCU's brand, social media, design, and making sure students actually know what's happening.</p>
+                <div class="flip-back-role">Director of Sponsors</div>
+                <div class="flip-back-name">Yasir Saeed</div>
+                <p class="flip-back-bio">Building relationships with industry partners and securing the support that powers MCU.</p>
               </div>
               <div class="flip-back-footer">
                 <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#9b1219">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#9b1219"></div>
-                <div class="flip-front-initials" style="color:#9b1219">RB</div>
-              </div>
-              <div class="flip-front-bar" style="background:#9b1219">Director of Finance</div>
-              <div class="flip-front-name">Riley B.</div>
-            </div>
-            <div class="flip-back" style="--fc:#9b1219">
-              <div>
-                <div class="flip-back-role">Director of Finance</div>
-                <div class="flip-back-name">Riley B.</div>
-                <p class="flip-back-bio">Managing MCU's budget, sponsorship funds, and making sure every dollar goes toward the community.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">Mechatronics Engineering</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── GENERAL EXECUTIVES ── -->
-      <div class="tm-tier-label reveal-up" style="margin-top: 80px;">
+      <!-- Row 2: Suling, Brandon, Avishan -->
+      <div class="tm-grid tm-grid-three">
+
+        <div class="flip-card aura-wrap aura-orange">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#c46200">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">SH</div>
+              </div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Logistics</div>
+              <div class="flip-front-name">Suling He</div>
+            </div>
+            <div class="flip-back" style="--fc:#c46200">
+              <div>
+                <div class="flip-back-role">Director of Logistics</div>
+                <div class="flip-back-name">Suling He</div>
+                <p class="flip-back-bio">Handling the operational details that make every MCU initiative a success.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-orange">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#c46200">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">BP</div>
+              </div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Academics</div>
+              <div class="flip-front-name">Brandon Penafiel-Velez</div>
+            </div>
+            <div class="flip-back" style="--fc:#c46200">
+              <div>
+                <div class="flip-back-role">Director of Academics</div>
+                <div class="flip-back-name">Brandon Penafiel-Velez</div>
+                <p class="flip-back-bio">Curating course resources and making sure students have the support they need to succeed.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-orange">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#c46200">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">AK</div>
+              </div>
+              <div class="flip-front-bar" style="background:#c46200">Dir. Events</div>
+              <div class="flip-front-name">Avishan Ketheswaran</div>
+            </div>
+            <div class="flip-back" style="--fc:#c46200">
+              <div>
+                <div class="flip-back-role">Director of Events</div>
+                <div class="flip-back-name">Avishan Ketheswaran</div>
+                <p class="flip-back-bio">Planning and delivering unforgettable MCU events from concept to execution.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 04 WEBMASTER ══ -->
+      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
         <div class="tm-tier-left">
-          <span class="mono tm-tier-tag">03</span>
-          <h2 class="tm-tier-title">General Executives</h2>
+          <span class="mono tm-tier-tag">04</span>
+          <h2 class="tm-tier-title">Webmaster</h2>
         </div>
         <div class="tm-tier-line"></div>
       </div>
 
-      <div class="tm-grid tm-grid-general">
-
-        <div class="flip-card">
+      <!-- Solo card centred -->
+      <div class="tm-grid tm-grid-solo">
+        <div class="flip-card flip-card-solo-center aura-wrap aura-red">
           <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
+            <div class="flip-front" style="--fc:#e31b23">
               <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">DW</div>
+                <div class="flip-front-glow" style="--fc:#e31b23"></div>
+                <div class="flip-front-initials" style="color:#e31b23">DJ</div>
               </div>
-              <div class="flip-front-bar" style="background:#6b0e13">Academics Executive</div>
-              <div class="flip-front-name">Dana W.</div>
+              <div class="flip-front-bar" style="background:#e31b23">Webmaster</div>
+              <div class="flip-front-name">Dwij Joshi</div>
             </div>
-            <div class="flip-back" style="--fc:#6b0e13">
+            <div class="flip-back" style="--fc:#e31b23">
               <div>
-                <div class="flip-back-role">Academics Executive</div>
-                <div class="flip-back-name">Dana W.</div>
-                <p class="flip-back-bio">Supporting course resources and academic initiatives for the MCU community.</p>
+                <div class="flip-back-role">Webmaster</div>
+                <div class="flip-back-name">Dwij Joshi</div>
+                <p class="flip-back-bio">Designing, building, and maintaining the MCU web presence — the person behind everything you're looking at right now.</p>
               </div>
               <div class="flip-back-footer">
-                <span class="flip-back-meta">2nd Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">JH</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">Events Executive</div>
-              <div class="flip-front-name">Jordan H.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">Events Executive</div>
-                <div class="flip-back-name">Jordan H.</div>
-                <p class="flip-back-bio">Helping plan and run MCU events from start to finish.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">1st Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">PV</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">Marketing Executive</div>
-              <div class="flip-front-name">Priya V.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">Marketing Executive</div>
-                <div class="flip-back-name">Priya V.</div>
-                <p class="flip-back-bio">Creating content and spreading the word about everything MCU does.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">2nd Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">OA</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">Sponsorship Executive</div>
-              <div class="flip-front-name">Omar A.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">Sponsorship Executive</div>
-                <div class="flip-back-name">Omar A.</div>
-                <p class="flip-back-bio">Building relationships with companies and securing support for MCU.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">2nd Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">EF</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">Social Media Exec</div>
-              <div class="flip-front-name">Elena F.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">Social Media Exec</div>
-                <div class="flip-back-name">Elena F.</div>
-                <p class="flip-back-bio">Managing MCU's social presence and keeping the community engaged online.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">1st Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">KC</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">General Executive</div>
-              <div class="flip-front-name">Kai C.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">General Executive</div>
-                <div class="flip-back-name">Kai C.</div>
-                <p class="flip-back-bio">Supporting MCU's operations and helping out wherever the team needs it.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">2nd Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#6b0e13">
-              <div class="flip-front-photo">
-                <div class="flip-front-glow" style="--fc:#6b0e13"></div>
-                <div class="flip-front-initials" style="color:#6b0e13">NM</div>
-              </div>
-              <div class="flip-front-bar" style="background:#6b0e13">General Executive</div>
-              <div class="flip-front-name">Nia M.</div>
-            </div>
-            <div class="flip-back" style="--fc:#6b0e13">
-              <div>
-                <div class="flip-back-role">General Executive</div>
-                <div class="flip-back-name">Nia M.</div>
-                <p class="flip-back-bio">Contributing to MCU events and initiatives across the board.</p>
-              </div>
-              <div class="flip-back-footer">
-                <span class="flip-back-meta">1st Year · Mechatronics</span>
-                <a href="#" class="flip-back-li tbd" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-    
+
     </div>
   </section>
 
@@ -818,11 +920,9 @@
 
   <script src="js/main.js"></script>
   <script>
-    // Footer year
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
 
-    // Animated canvas background
     (function() {
       const section = document.getElementById('team-main');
       if (!section) return;
@@ -870,11 +970,9 @@
       draw();
     })();
   </script>
-<script src="js/theme-toggle.js"></script>
-<script src="js/animations.js"></script>
-
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/animations.js"></script>
   <script>
-  // Staggered entrance for flip cards
   (function() {
     const cards = document.querySelectorAll('.flip-card');
     const obs = new IntersectionObserver((entries) => {
@@ -889,7 +987,6 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     cards.forEach(c => obs.observe(c));
 
-    // Touch support — tap to flip on mobile
     cards.forEach(card => {
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
