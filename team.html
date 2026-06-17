@@ -14,10 +14,11 @@
     /* ── FLIP CARD SYSTEM ── */
     .tm-grid {
       display: grid;
-      gap: 16px;
+      gap: 28px;
     }
     .tm-grid-solo      { grid-template-columns: repeat(3, 1fr); }
     .tm-grid-three     { grid-template-columns: repeat(3, 1fr); }
+    .tm-grid-four       { grid-template-columns: repeat(4, 1fr); }
 
     /* Solo card centered in a 3-col grid */
     .flip-card-solo-center {
@@ -29,6 +30,7 @@
       height: 280px;
       cursor: pointer;
       position: relative;
+      border-radius: 14px;
     }
     .tm-grid-solo .flip-card { height: 340px; }
 
@@ -38,6 +40,7 @@
       transform-style: preserve-3d;
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
+      border-radius: 14px;
     }
     .flip-card:hover .flip-card-inner,
     .flip-card.flipped .flip-card-inner {
@@ -50,11 +53,12 @@
       inset: 0;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border: 1px solid rgba(255,255,255,0.06);
       overflow: hidden;
+      border-radius: 14px;
     }
     .flip-front {
-      background: #1e1c1c;
+      background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.035) 0%, transparent 60%), #19171a;
+      box-shadow: 0 12px 30px -12px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
     }
     .flip-front-photo {
       position: absolute;
@@ -62,16 +66,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #1e1c1c;
       overflow: hidden;
+      border-radius: 14px;
     }
     .flip-front-glow {
       position: absolute; inset: 0;
       background: radial-gradient(circle at 50% 40%, var(--fc, #e31b23) 0%, transparent 65%);
-      opacity: 0.10;
+      opacity: 0.12;
       transition: opacity 0.4s;
     }
-    .flip-card:hover .flip-front-glow { opacity: 0.04; }
+    .flip-card:hover .flip-front-glow { opacity: 0.05; }
 
     /* Diagonal corner accent lines */
     .flip-front-photo::before,
@@ -87,10 +91,12 @@
     .flip-front-photo::before {
       top: 10px; left: 10px;
       border-width: 1.5px 0 0 1.5px;
+      border-radius: 4px 0 0 0;
     }
     .flip-front-photo::after {
       bottom: 10px; right: 10px;
       border-width: 0 1.5px 1.5px 0;
+      border-radius: 0 0 4px 0;
     }
 
     .flip-front-initials {
@@ -108,14 +114,15 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       z-index: 3;
-      padding: 28px 14px 14px;
+      padding: 28px 16px 16px;
       background: linear-gradient(to top,
-        rgba(20,18,18,0.96) 0%,
-        rgba(20,18,18,0.80) 55%,
+        rgba(14,12,13,0.97) 0%,
+        rgba(14,12,13,0.78) 55%,
         transparent 100%);
       display: flex;
       flex-direction: column;
       gap: 4px;
+      border-radius: 0 0 14px 14px;
     }
     .flip-front-bar {
       font-family: var(--font-mono);
@@ -145,14 +152,13 @@
 
     /* BACK */
     .flip-back {
-      background: #1a1818;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%), #161416;
+      box-shadow: 0 12px 30px -12px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05);
       transform: rotateY(180deg);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 20px;
-      border-color: var(--fc, #e31b23);
-      border-width: 1px;
+      padding: 22px;
     }
     .flip-back-role {
       font-family: var(--font-mono);
@@ -211,14 +217,14 @@
     /* ── LIGHTNING AURA ── */
     /* Keyframe for flicker */
     @keyframes lightning-pink {
-      0%   { opacity: 0.18; filter: blur(8px); }
+      0%   { opacity: 0.20; filter: blur(8px); }
       15%  { opacity: 0.55; filter: blur(4px); }
-      20%  { opacity: 0.10; filter: blur(12px);}
+      20%  { opacity: 0.12; filter: blur(12px);}
       35%  { opacity: 0.60; filter: blur(3px); }
-      50%  { opacity: 0.20; filter: blur(9px); }
+      50%  { opacity: 0.22; filter: blur(9px); }
       65%  { opacity: 0.50; filter: blur(5px); }
-      80%  { opacity: 0.12; filter: blur(11px);}
-      100% { opacity: 0.18; filter: blur(8px); }
+      80%  { opacity: 0.14; filter: blur(11px);}
+      100% { opacity: 0.20; filter: blur(8px); }
     }
     @keyframes lightning-green {
       0%   { opacity: 0.15; filter: blur(9px); }
@@ -250,27 +256,28 @@
       100% { opacity: 0.20; filter: blur(7px); }
     }
 
-    /* Aura pseudo-element — sits outside the card via the wrapper */
+    /* Aura pseudo-element — sits outside the card via the wrapper, blended (no hard box) */
     .aura-wrap {
       position: relative;
+      border-radius: 14px;
     }
     .aura-wrap::before {
       content: '';
       position: absolute;
-      inset: -6px;
-      border-radius: 4px;
+      inset: -10px;
+      border-radius: 20px;
       pointer-events: none;
       z-index: 0;
     }
     .aura-wrap > * { position: relative; z-index: 1; }
 
-    /* Pink — President */
-    .aura-pink::before {
+    /* White — President */
+    .aura-white::before {
       background: transparent;
       box-shadow:
-        0 0 12px 4px rgba(255,130,200,0.30),
-        0 0 28px 8px rgba(255,100,180,0.18),
-        0 0 50px 16px rgba(220,60,150,0.10);
+        0 0 14px 4px rgba(255,255,255,0.30),
+        0 0 32px 10px rgba(255,255,255,0.16),
+        0 0 56px 18px rgba(255,255,255,0.08);
       animation: lightning-pink 2.8s ease-in-out infinite;
     }
 
@@ -295,9 +302,9 @@
     /* Red — Webmaster */
     .aura-red::before {
       box-shadow:
-        0 0 12px 4px rgba(255,60,60,0.32),
-        0 0 28px 8px rgba(230,30,30,0.18),
-        0 0 50px 16px rgba(200,10,10,0.10);
+        0 0 14px 4px rgba(255,60,60,0.32),
+        0 0 32px 10px rgba(230,30,30,0.18),
+        0 0 56px 18px rgba(200,10,10,0.10);
       animation: lightning-red 2.6s ease-in-out infinite;
     }
 
@@ -315,15 +322,20 @@
     }
 
     /* Responsive */
+    @media (max-width: 1100px) {
+      .tm-grid-four { grid-template-columns: repeat(3, 1fr); }
+    }
     @media (max-width: 900px) {
       .tm-grid-solo  { grid-template-columns: 1fr; }
       .flip-card-solo-center { grid-column: 1; }
       .tm-grid-three { grid-template-columns: repeat(2, 1fr); }
+      .tm-grid-four  { grid-template-columns: repeat(2, 1fr); }
       .flip-card { height: 260px; }
       .tm-grid-solo .flip-card { height: 290px; }
     }
     @media (max-width: 600px) {
       .tm-grid-three { grid-template-columns: 1fr 1fr; }
+      .tm-grid-four  { grid-template-columns: 1fr 1fr; }
       .flip-card { height: 240px; }
     }
 
@@ -477,7 +489,7 @@
 
       <!-- Solo card centred in a 3-col grid -->
       <div class="tm-grid tm-grid-solo">
-        <div class="flip-card flip-card-solo-center aura-wrap aura-pink">
+        <div class="flip-card flip-card-solo-center aura-wrap aura-white">
           <div class="flip-card-inner">
             <div class="flip-front" style="--fc:#e31b23">
               <div class="flip-front-photo">
@@ -650,8 +662,31 @@
           </div>
         </div>
 
-        <!-- Empty placeholder to keep grid balanced -->
-        <div></div>
+        <div class="flip-card aura-wrap aura-green">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#1a8f4a">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
+                <div class="flip-front-initials" style="color:#1a8f4a">MD</div>
+                <div class="flip-front-info">
+                  <div class="flip-front-bar">VP Corps</div>
+                  <div class="flip-front-name">Mohammed Dar</div>
+                </div>
+              </div>
+            </div>
+            <div class="flip-back" style="--fc:#1a8f4a">
+              <div>
+                <div class="flip-back-role">VP Corps</div>
+                <div class="flip-back-name">Mohammed Dar</div>
+                <p class="flip-back-bio">Building corporate relationships and industry connections that open doors for MCU members.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ══ 03 DIRECTORS ══ -->
@@ -663,8 +698,8 @@
         <div class="tm-tier-line"></div>
       </div>
 
-      <!-- Row 1: Ahesha, Aryan, Yasir -->
-      <div class="tm-grid tm-grid-three" style="margin-bottom:16px;">
+      <!-- Directors: clean 4-per-row grid, 2 rows of 4 -->
+      <div class="tm-grid tm-grid-four" style="margin-bottom:16px;">
 
         <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
@@ -743,10 +778,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Row 2: Suling, Brandon, Avishan -->
-      <div class="tm-grid tm-grid-three">
 
         <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
@@ -773,6 +804,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Row 2: Brandon, Avishan, Rana, Aashir -->
+      <div class="tm-grid tm-grid-four">
 
         <div class="flip-card aura-wrap aura-orange">
           <div class="flip-card-inner">
@@ -825,7 +860,60 @@
             </div>
           </div>
         </div>
+
+        <div class="flip-card aura-wrap aura-orange">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#c46200">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">RH</div>
+                <div class="flip-front-info">
+                  <div class="flip-front-bar">Dir. Industry Relations</div>
+                  <div class="flip-front-name">Rana Husain</div>
+                </div>
+              </div>
+            </div>
+            <div class="flip-back" style="--fc:#c46200">
+              <div>
+                <div class="flip-back-role">Director of Industry Relations</div>
+                <div class="flip-back-name">Rana Husain</div>
+                <p class="flip-back-bio">Connecting MCU with industry partners and creating opportunities for students beyond the classroom.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card aura-wrap aura-orange">
+          <div class="flip-card-inner">
+            <div class="flip-front" style="--fc:#c46200">
+              <div class="flip-front-photo">
+                <div class="flip-front-glow" style="--fc:#c46200"></div>
+                <div class="flip-front-initials" style="color:#c46200">AA</div>
+                <div class="flip-front-info">
+                  <div class="flip-front-bar">Dir. Finance</div>
+                  <div class="flip-front-name">Aashir Ahmed</div>
+                </div>
+              </div>
+            </div>
+            <div class="flip-back" style="--fc:#c46200">
+              <div>
+                <div class="flip-back-role">Director of Finance</div>
+                <div class="flip-back-name">Aashir Ahmed</div>
+                <p class="flip-back-bio">Supporting MCU's financial operations and keeping the books in order.</p>
+              </div>
+              <div class="flip-back-footer">
+                <span class="flip-back-meta">Mechatronics Engineering</span>
+                <a href="#" class="flip-back-li tbd"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- ══ 04 WEBMASTER ══ -->
       <div class="tm-tier-label reveal-up" style="margin-top:80px;">
