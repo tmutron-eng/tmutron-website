@@ -282,66 +282,61 @@
     .flip-back-li:hover { color: rgba(255,255,255,0.85); }
     .flip-back-li.tbd { opacity: 0.4; pointer-events: none; cursor: default; }
 
-    /* ── AURA SYSTEM (lightning glow) ── */
-    @keyframes aura-pulse-white {
-      0%,100% { opacity: 0.22; box-shadow: 0 0 16px 4px rgba(255,255,255,0.28), 0 0 36px 12px rgba(255,255,255,0.14), 0 0 64px 22px rgba(255,255,255,0.07); }
-      35%      { opacity: 0.55; box-shadow: 0 0 22px 6px rgba(255,255,255,0.48), 0 0 48px 16px rgba(255,255,255,0.22), 0 0 80px 28px rgba(255,255,255,0.10); }
-      60%      { opacity: 0.14; box-shadow: 0 0 10px 2px rgba(255,255,255,0.18), 0 0 24px 8px rgba(255,255,255,0.09), 0 0 44px 14px rgba(255,255,255,0.04); }
+    /* ── AURA SYSTEM ── */
+    /* Use filter:drop-shadow on the card itself so glow can't be clipped by grid overflow */
+    @keyframes aura-white {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.20)) drop-shadow(0 0 24px rgba(255,255,255,0.10)) drop-shadow(0 0 48px rgba(255,255,255,0.05)); }
+      40%      { filter: drop-shadow(0 0 14px rgba(255,255,255,0.38)) drop-shadow(0 0 36px rgba(255,255,255,0.18)) drop-shadow(0 0 72px rgba(255,255,255,0.08)); }
+      70%      { filter: drop-shadow(0 0 5px rgba(255,255,255,0.12)) drop-shadow(0 0 16px rgba(255,255,255,0.06)); }
     }
-    @keyframes aura-pulse-green {
-      0%,100% { opacity: 0.20; box-shadow: 0 0 14px 4px rgba(50,220,100,0.26), 0 0 32px 10px rgba(30,180,70,0.14), 0 0 56px 18px rgba(10,140,50,0.07); }
-      40%      { opacity: 0.52; box-shadow: 0 0 20px 6px rgba(60,240,110,0.45), 0 0 44px 14px rgba(40,200,80,0.22), 0 0 72px 24px rgba(20,160,60,0.10); }
-      70%      { opacity: 0.12; box-shadow: 0 0 8px 2px rgba(30,180,70,0.16), 0 0 20px 6px rgba(20,140,50,0.08), 0 0 36px 12px rgba(10,100,35,0.04); }
+    @keyframes aura-green {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(40,210,90,0.22)) drop-shadow(0 0 24px rgba(25,170,65,0.12)) drop-shadow(0 0 48px rgba(10,130,45,0.06)); }
+      40%      { filter: drop-shadow(0 0 14px rgba(50,230,100,0.40)) drop-shadow(0 0 36px rgba(35,190,75,0.20)) drop-shadow(0 0 72px rgba(15,150,55,0.09)); }
+      70%      { filter: drop-shadow(0 0 5px rgba(30,180,70,0.14)) drop-shadow(0 0 16px rgba(20,140,50,0.07)); }
     }
-    @keyframes aura-pulse-orange {
-      0%,100% { opacity: 0.18; box-shadow: 0 0 14px 4px rgba(255,150,30,0.26), 0 0 30px 10px rgba(220,110,15,0.14), 0 0 52px 18px rgba(180,70,5,0.07); }
-      45%      { opacity: 0.50; box-shadow: 0 0 20px 6px rgba(255,170,50,0.44), 0 0 42px 14px rgba(240,130,25,0.22), 0 0 68px 22px rgba(200,90,10,0.10); }
-      72%      { opacity: 0.10; box-shadow: 0 0 8px 2px rgba(220,100,10,0.16), 0 0 18px 6px rgba(180,70,5,0.08), 0 0 34px 10px rgba(140,50,0,0.04); }
+    @keyframes aura-orange {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(255,145,25,0.22)) drop-shadow(0 0 24px rgba(220,105,12,0.12)) drop-shadow(0 0 48px rgba(175,65,5,0.06)); }
+      40%      { filter: drop-shadow(0 0 14px rgba(255,165,45,0.40)) drop-shadow(0 0 36px rgba(235,120,20,0.20)) drop-shadow(0 0 72px rgba(195,80,8,0.09)); }
+      70%      { filter: drop-shadow(0 0 5px rgba(210,95,8,0.14)) drop-shadow(0 0 16px rgba(170,55,2,0.07)); }
     }
-    @keyframes aura-pulse-red {
-      0%,100% { opacity: 0.22; box-shadow: 0 0 16px 5px rgba(240,50,50,0.30), 0 0 34px 12px rgba(220,25,25,0.17), 0 0 60px 20px rgba(190,10,10,0.09); }
-      30%      { opacity: 0.60; box-shadow: 0 0 24px 7px rgba(255,70,70,0.52), 0 0 48px 16px rgba(240,40,40,0.28), 0 0 80px 26px rgba(210,15,15,0.13); }
-      65%      { opacity: 0.12; box-shadow: 0 0 10px 3px rgba(220,20,20,0.18), 0 0 22px 8px rgba(190,10,10,0.09), 0 0 42px 14px rgba(160,5,5,0.04); }
+    @keyframes aura-red {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(227,27,35,0.28)) drop-shadow(0 0 24px rgba(200,15,22,0.15)) drop-shadow(0 0 52px rgba(170,8,14,0.07)); }
+      35%      { filter: drop-shadow(0 0 16px rgba(255,50,58,0.50)) drop-shadow(0 0 40px rgba(227,27,35,0.28)) drop-shadow(0 0 80px rgba(200,15,22,0.12)); }
+      65%      { filter: drop-shadow(0 0 5px rgba(200,15,22,0.16)) drop-shadow(0 0 18px rgba(170,8,14,0.08)); }
     }
 
+    /* Aura applied directly to the flip-card — no pseudo-element needed, no clipping */
     .aura-wrap {
       position: relative;
-      border-radius: 16px;
-    }
-    .aura-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      border-radius: 22px;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0;
+      border-radius: 20px;
+      /* overflow must NOT be hidden so filter glow bleeds out */
     }
     .aura-wrap > * { position: relative; z-index: 1; }
 
-    .aura-white::before  { animation: aura-pulse-white  3.0s ease-in-out infinite; }
-    .aura-green::before  { animation: aura-pulse-green  3.4s ease-in-out infinite; }
-    .aura-orange::before { animation: aura-pulse-orange 3.2s ease-in-out infinite; }
-    .aura-red::before    { animation: aura-pulse-red    2.8s ease-in-out infinite; }
+    /* Apply glow via filter on the wrapper — avoids conflicting with card entrance animation */
+    .aura-white  { animation: aura-white  3.2s ease-in-out infinite; }
+    .aura-green  { animation: aura-green  3.6s ease-in-out infinite; }
+    .aura-orange { animation: aura-orange 3.4s ease-in-out infinite; }
+    .aura-red    { animation: aura-red    2.9s ease-in-out infinite; }
 
     /* ── HUD STAT CARD FIXES ── */
     .tm-hud-num {
-      font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: clamp(3.2rem, 5vw, 4.4rem);
-      font-weight: 400;
-      line-height: 1;
-      color: rgba(255,255,255,0.97);
-      letter-spacing: 0.02em;
-      display: block;
+      font-family: 'Bebas Neue', Impact, sans-serif !important;
+      font-size: clamp(3.4rem, 5.5vw, 4.8rem) !important;
+      font-weight: 400 !important;
+      line-height: 1 !important;
+      color: #ffffff !important;
+      letter-spacing: 0.02em !important;
+      display: block !important;
     }
     .tm-hud-num-sm {
-      font-family: var(--font-mono, 'Share Tech Mono', monospace);
-      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-      font-weight: 400;
-      line-height: 1;
-      color: #e31b23;
-      letter-spacing: 0.06em;
-      display: block;
+      font-family: 'Bebas Neue', Impact, sans-serif !important;
+      font-size: clamp(2rem, 3.5vw, 2.8rem) !important;
+      font-weight: 400 !important;
+      line-height: 1 !important;
+      color: #e31b23 !important;
+      letter-spacing: 0.05em !important;
+      display: block !important;
     }
 
     /* ── STAGGERED ENTRANCE ── */
@@ -349,12 +344,17 @@
       opacity: 0;
       transform: translateY(28px);
       transition:
-        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .flip-card.in-view {
       opacity: 1;
       transform: translateY(0);
+    }
+    /* Glow on wrapper starts invisible until card is in view */
+    .aura-wrap:not(:has(.flip-card.in-view)) {
+      filter: none !important;
+      animation: none !important;
     }
 
     /* ── REMOVE GRAY BAND ── */
@@ -544,7 +544,7 @@
               <div>
                 <div class="flip-back-role">President</div>
                 <div class="flip-back-name">Wyatt Ewart</div>
-                <p class="flip-back-bio">Hello friends! My name is Wyatt and I'm your MCU Prez Jawn for the year. We did amazing work last year and it's time for us to expand on all of the services and events we pioneered before. My main focuses for the year will be expanding upon our academic advocacy, academic services, and community engagement. Fun facts about me: I LOVE Playing card games with my friends, (Euchre, Briscola, Cribbage, etc) and I LOVE Playing outside with my friends. #MCUonTop</p>
+                <p class="flip-back-bio">Hello friends! My name is Wyatt and I\'m your MCU Prez Jawn for the year. We did amazing work last year and it\'s time for us to expand on all of the services and events we pioneered before. My main focuses for the year will be expanding upon our academic advocacy, academic services, and community engagement. Fun facts about me: I LOVE Playing card games with my friends, (Euchre, Briscola, Cribbage, etc) and I LOVE Playing outside with my friends. #MCUonTop</p>
               </div>
               </div>
           </div>
@@ -745,7 +745,7 @@
               <div>
                 <div class="flip-back-role">Director of Logistics</div>
                 <div class="flip-back-name">Aryan Billava</div>
-                <p class="flip-back-bio">Hey everyone! I'm Aryan, and I am one of the Directors of Logistics for the MCU 2026-2027 term. As Director of Logistics, I'll be helping coordinate the behind the scenes planning that keeps MCU events and initiatives running smoothly. I'm excited to work alongside the team to create valuable opportunities and experiences for Mechatronics students throughout the year.</p>
+                <p class="flip-back-bio">Hey everyone! I\'m Aryan, and I am one of the Directors of Logistics for the MCU 2026-2027 term. As Director of Logistics, I\'ll be helping coordinate the behind the scenes planning that keeps MCU events and initiatives running smoothly. I\'m excited to work alongside the team to create valuable opportunities and experiences for Mechatronics students throughout the year.</p>
               </div>
               </div>
           </div>
@@ -938,7 +938,7 @@
               <div>
                 <div class="flip-back-role">Webmaster</div>
                 <div class="flip-back-name">Dwij Joshi</div>
-                <p class="flip-back-bio">Hola folks, I am the person behind what you're seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji.</p>
+                <p class="flip-back-bio">Hola folks, I am the person behind what you\'re seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji.</p>
               </div>
               </div>
           </div>
