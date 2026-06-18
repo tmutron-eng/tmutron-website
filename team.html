@@ -14,7 +14,7 @@
     /* ── FLIP CARD SYSTEM ── */
     .tm-grid {
       display: grid;
-      gap: 24px;
+      gap: 20px;
     }
     .tm-grid-solo      { grid-template-columns: repeat(3, 1fr); }
     .tm-grid-three     { grid-template-columns: repeat(3, 1fr); }
@@ -26,21 +26,21 @@
 
     /* ── CARD BASE ── */
     .flip-card {
-      perspective: 1200px;
+      perspective: 1400px;
       height: 300px;
       cursor: pointer;
       position: relative;
-      border-radius: 16px;
+      border-radius: 20px;
     }
-    .tm-grid-solo .flip-card { height: 360px; }
+    .tm-grid-solo .flip-card { height: 380px; }
 
     .flip-card-inner {
       position: relative;
       width: 100%; height: 100%;
       transform-style: preserve-3d;
-      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.75s cubic-bezier(0.23, 1, 0.32, 1);
       will-change: transform;
-      border-radius: 16px;
+      border-radius: 20px;
     }
     .flip-card:hover .flip-card-inner,
     .flip-card.flipped .flip-card-inner {
@@ -54,16 +54,18 @@
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 20px;
     }
 
-    /* FRONT */
+    /* FRONT — rich gradient, no harsh border */
     .flip-front {
-      background: #111013;
-      border: 1px solid rgba(255,255,255,0.06);
+      background: 
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(30,26,32,1) 0%, rgba(14,12,16,1) 100%);
       box-shadow:
-        0 0 0 1px rgba(0,0,0,0.6),
-        0 20px 40px -16px rgba(0,0,0,0.7);
+        0 2px 0 0 rgba(255,255,255,0.04) inset,
+        0 -1px 0 0 rgba(0,0,0,0.5) inset,
+        0 24px 48px -12px rgba(0,0,0,0.8),
+        0 8px 16px -4px rgba(0,0,0,0.5);
     }
 
     .flip-front-photo {
@@ -73,165 +75,181 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 20px;
     }
 
-    /* Noise texture overlay */
+    /* Vignette edges */
     .flip-front-photo::before {
       content: '';
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-      opacity: 0.5;
-      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
       z-index: 1;
+      pointer-events: none;
     }
 
-    /* Diagonal corner accents */
+    /* Thin colored border glow via outline */
     .flip-front-photo::after {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(135deg, var(--fc, #e31b23) 0%, transparent 18px) top left / 18px 18px no-repeat,
-        linear-gradient(315deg, var(--fc, #e31b23) 0%, transparent 18px) bottom right / 18px 18px no-repeat;
-      opacity: 0.5;
-      z-index: 2;
+      border-radius: 20px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+      z-index: 4;
       pointer-events: none;
     }
 
-    /* Ambient glow blob */
+    /* Ambient glow blob — bigger, softer */
     .flip-front-glow {
       position: absolute;
-      width: 200px; height: 200px;
+      width: 260px; height: 260px;
       border-radius: 50%;
-      background: radial-gradient(circle, var(--fc, #e31b23) 0%, transparent 70%);
-      opacity: 0.18;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -60%);
-      filter: blur(20px);
-      transition: opacity 0.4s, transform 0.6s;
+      background: radial-gradient(circle, var(--fc, #e31b23) 0%, transparent 65%);
+      opacity: 0.14;
+      top: 38%; left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(32px);
+      transition: opacity 0.5s, transform 0.7s;
       z-index: 0;
     }
     .flip-card:hover .flip-front-glow {
-      opacity: 0.26;
-      transform: translate(-50%, -55%) scale(1.1);
+      opacity: 0.22;
+      transform: translate(-50%, -48%) scale(1.12);
     }
 
-    /* Initials */
+    /* Initials — softer glow, cleaner */
     .flip-front-initials {
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: clamp(3rem, 5vw, 5rem);
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
       color: var(--fc, #e31b23);
       position: relative; z-index: 2;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-shadow:
-        0 0 20px var(--fc, #e31b23),
-        0 0 60px var(--fc, #e31b23),
-        0 0 100px var(--fc, #e31b23);
-      opacity: 0.92;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+        0 0 12px var(--fc, #e31b23),
+        0 0 40px var(--fc, #e31b23),
+        0 0 80px var(--fc, #e31b23);
+      opacity: 0.88;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), opacity 0.3s;
     }
     .flip-card:hover .flip-front-initials {
-      transform: scale(1.06) translateY(-4px);
+      transform: scale(1.08) translateY(-5px);
+      opacity: 1;
     }
 
-    /* Bottom info panel */
+    /* Bottom info panel — smoother fade */
     .flip-front-info {
       position: absolute;
       bottom: 0; left: 0; right: 0;
       z-index: 3;
-      padding: 36px 18px 18px;
+      padding: 52px 18px 18px;
       background: linear-gradient(to top,
-        rgba(10,8,11,0.98) 0%,
-        rgba(10,8,11,0.80) 50%,
+        rgba(8,6,10,1) 0%,
+        rgba(8,6,10,0.92) 40%,
+        rgba(8,6,10,0.5) 70%,
         transparent 100%);
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      border-radius: 0 0 16px 16px;
+      gap: 6px;
+      border-radius: 0 0 20px 20px;
       transform: translateY(0);
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
     }
     .flip-card:hover .flip-front-info {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
 
     .flip-front-bar {
       font-family: var(--font-mono, 'Share Tech Mono', monospace);
       font-size: 8px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       color: var(--fc, #e31b23);
       text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 8px;
-      opacity: 0.9;
+      opacity: 0.85;
     }
     .flip-front-bar::before {
       content: '';
       display: inline-block;
-      width: 20px; height: 1px;
+      width: 16px; height: 1px;
       background: var(--fc, #e31b23);
       flex-shrink: 0;
+      opacity: 0.8;
     }
     .flip-front-name {
       font-family: var(--font-cond, 'Barlow Condensed', sans-serif);
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 700;
       letter-spacing: 0.04em;
       color: rgba(255,255,255,0.97);
       line-height: 1.1;
     }
 
-    /* BACK */
+    /* BACK — richer, no dead space */
     .flip-back {
-      background: #0e0c0f;
-      border: 1px solid rgba(255,255,255,0.07);
+      background: 
+        radial-gradient(ellipse 100% 60% at 50% 0%, rgba(var(--fc-rgb, 180,20,20),0.08) 0%, transparent 60%),
+        #0a080c;
       box-shadow:
-        0 0 0 1px rgba(0,0,0,0.6),
-        0 20px 40px -16px rgba(0,0,0,0.7);
+        0 2px 0 0 rgba(255,255,255,0.04) inset,
+        0 -1px 0 0 rgba(0,0,0,0.5) inset,
+        0 24px 48px -12px rgba(0,0,0,0.8);
       transform: rotateY(180deg);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 22px 20px 18px;
+      justify-content: flex-start;
+      padding: 22px 20px 20px;
+      position: relative;
     }
 
-    /* Subtle top accent line on back */
+    /* Colored top edge glow */
     .flip-back::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
+      top: 0; left: 20%; right: 20%;
+      height: 1px;
       background: linear-gradient(90deg, transparent, var(--fc, #e31b23), transparent);
-      opacity: 0.6;
+      opacity: 0.7;
+    }
+
+    /* Bottom dept tag */
+    .flip-back::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%);
+      border-radius: 0 0 20px 20px;
+      pointer-events: none;
     }
 
     .flip-back-role {
       font-family: var(--font-mono, 'Share Tech Mono', monospace);
-      font-size: 8.5px;
-      letter-spacing: 0.22em;
+      font-size: 8px;
+      letter-spacing: 0.24em;
       color: var(--fc, #e31b23);
       text-transform: uppercase;
-      margin-bottom: 7px;
-      opacity: 0.9;
+      margin-bottom: 5px;
+      opacity: 0.85;
     }
     .flip-back-name {
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: 1.7rem;
+      font-size: 1.75rem;
       color: rgba(255,255,255,0.97);
       line-height: 1;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       letter-spacing: 0.03em;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .flip-back-bio {
       font-family: var(--font-body, 'Barlow', sans-serif);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 300;
-      line-height: 1.65;
-      color: rgba(200,198,204,0.85);
-      flex: 1;
+      line-height: 1.7;
+      color: rgba(210,207,215,0.82);
     }
     .flip-back-footer {
       display: flex;
@@ -481,7 +499,7 @@
           </div>
           <div class="tm-hud-divider"></div>
           <div class="tm-hud-stat">
-            <span class="tm-hud-num-sm mono">2025–26</span>
+            <span class="tm-hud-num-sm mono">2026–27</span>
             <span class="tm-hud-label mono">CURRENT TERM</span>
           </div>
         </div>
@@ -526,7 +544,7 @@
               <div>
                 <div class="flip-back-role">President</div>
                 <div class="flip-back-name">Wyatt Ewart</div>
-                <p class="flip-back-bio">Your MCU Prez for the year. Big on card games (Euchre, Briscola, Cribbage), bigger on being outside. Focused on expanding academic advocacy, services, and community engagement — because last year was just the warmup.</p>
+                <p class="flip-back-bio">Hello friends! My name is Wyatt and I'm your MCU Prez Jawn for the year. We did amazing work last year and it's time for us to expand on all of the services and events we pioneered before. My main focuses for the year will be expanding upon our academic advocacy, academic services, and community engagement. Fun facts about me: I LOVE Playing card games with my friends, (Euchre, Briscola, Cribbage, etc) and I LOVE Playing outside with my friends. #MCUonTop</p>
               </div>
               </div>
           </div>
@@ -727,7 +745,7 @@
               <div>
                 <div class="flip-back-role">Director of Logistics</div>
                 <div class="flip-back-name">Aryan Billava</div>
-                <p class="flip-back-bio">Coordinating the behind-the-scenes planning that keeps MCU events and initiatives running smoothly. Excited to create real opportunities for Mechatronics students throughout the year.</p>
+                <p class="flip-back-bio">Hey everyone! I'm Aryan, and I am one of the Directors of Logistics for the MCU 2026-2027 term. As Director of Logistics, I'll be helping coordinate the behind the scenes planning that keeps MCU events and initiatives running smoothly. I'm excited to work alongside the team to create valuable opportunities and experiences for Mechatronics students throughout the year.</p>
               </div>
               </div>
           </div>
@@ -920,7 +938,7 @@
               <div>
                 <div class="flip-back-role">Webmaster</div>
                 <div class="flip-back-name">Dwij Joshi</div>
-                <p class="flip-back-bio">The person behind what you're looking at right now. Transferred from Computer to Mechatronics Engineering, because he finally figured out what peak is. Joined MCU for two reasons: the color red, and cool things. MCU has both. #ShockEmoji</p>
+                <p class="flip-back-bio">Hola folks, I am the person behind what you're seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji.</p>
               </div>
               </div>
           </div>
