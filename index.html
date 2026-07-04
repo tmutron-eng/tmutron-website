@@ -162,29 +162,7 @@
   <nav id="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
-        <svg class="nav-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="ngr" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
-              <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="ngw" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
-              <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
-          <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#ngr)"/>
-          <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#ngw)"/>
-          <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
-          <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
-          <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#ngr)"/>
-          <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
-        </svg>
+        <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="nav-logo-img" />
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link active">Home</a></li>
@@ -267,20 +245,9 @@
         <div class="hero-right-glow"></div>
 
         <div class="hero-logo-block">
-          <svg class="hbp-logo-svg" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hbp-scan" x="0" y="0" width="228" height="4" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="228" y2="0" stroke="black" stroke-width="1.5"/>
-              </pattern>
-            </defs>
-            <rect x="4" y="36" width="224" height="176" rx="3" fill="#e31b23"/>
-            <rect x="4" y="36" width="224" height="176" rx="3" fill="none" stroke="rgba(255,120,120,0.35)" stroke-width="1.5"/>
-            <text x="116" y="188" font-family="Bebas Neue,Impact,sans-serif" font-size="148" fill="white" text-anchor="middle" letter-spacing="-2">MCU</text>
-            <rect x="4" y="36" width="224" height="176" rx="3" fill="url(#hbp-scan)" opacity="0.05"/>
-            <rect x="210" y="4" width="126" height="112" rx="3" fill="#b8101a"/>
-            <rect x="210" y="4" width="126" height="112" rx="3" fill="none" stroke="rgba(255,120,120,0.25)" stroke-width="1.5"/>
-            <text x="273" y="98" font-family="Bebas Neue,Impact,sans-serif" font-size="84" fill="white" text-anchor="middle" letter-spacing="2">TMU</text>
-          </svg>
+          <video class="hbp-logo-svg" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true">
+            <source src="assets/images/mcu-tmu-logo-glitch.webm" type="video/webm" />
+          </video>
           <div class="hbp-bracket hbp-tl"></div>
           <div class="hbp-bracket hbp-tr"></div>
           <div class="hbp-bracket hbp-bl"></div>
@@ -294,43 +261,9 @@
             <div class="ring r2"></div>
             <div class="ring r3"></div>
             <div class="ring-center mascot-wrap">
-              <svg class="mascot-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="72" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(-20 72 28)"/>
-                <ellipse cx="128" cy="28" rx="10" ry="16" fill="#5b9bd5" transform="rotate(20 128 28)"/>
-                <rect x="50" y="40" width="100" height="80" rx="18" fill="#e8e8e8"/>
-                <rect x="54" y="44" width="100" height="80" rx="18" fill="white" opacity="0.15"/>
-                <rect x="60" y="52" width="80" height="56" rx="8" fill="#0d0d0d"/>
-                <rect x="60" y="52" width="80" height="56" rx="8" stroke="#5bc8e8" stroke-width="1.5" opacity="0.6"/>
-                <path d="M64 56 L64 62 M64 56 L70 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M136 56 L136 62 M136 56 L130 56" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M64 104 L64 98 M64 104 L70 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M136 104 L136 98 M136 104 L130 104" stroke="#5bc8e8" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M78 74 Q86 66 94 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <path d="M106 74 Q114 66 122 74" stroke="#5bc8e8" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <circle cx="86" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
-                <circle cx="114" cy="76" r="10" fill="#5bc8e8" opacity="0.15"/>
-                <rect x="36" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
-                <rect x="38" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
-                <rect x="148" y="56" width="16" height="24" rx="8" fill="#5b9bd5"/>
-                <rect x="150" y="60" width="12" height="16" rx="6" fill="#4a8ac4"/>
-                <rect x="88" y="120" width="24" height="12" rx="4" fill="#d0d0d0"/>
-                <ellipse cx="100" cy="175" rx="52" ry="48" fill="#e8e8e8"/>
-                <ellipse cx="100" cy="172" rx="52" ry="48" fill="white" opacity="0.12"/>
-                <circle cx="100" cy="168" r="14" fill="#5b9bd5" opacity="0.3"/>
-                <circle cx="100" cy="168" r="9" fill="#5bc8e8" opacity="0.5"/>
-                <circle cx="100" cy="168" r="5" fill="#5bc8e8"/>
-                <circle cx="100" cy="168" r="18" fill="#5bc8e8" opacity="0.08"/>
-                <rect x="70" y="148" width="60" height="14" rx="3" fill="#d0d0d0" opacity="0.5"/>
-                <ellipse cx="38" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(-30 38 152)"/>
-                <ellipse cx="22" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(-30 22 138)"/>
-                <ellipse cx="162" cy="152" rx="14" ry="30" fill="#e8e8e8" transform="rotate(30 162 152)"/>
-                <ellipse cx="178" cy="138" rx="11" ry="14" fill="#5b9bd5" transform="rotate(30 178 138)"/>
-                <ellipse cx="100" cy="215" rx="36" ry="18" fill="#e8e8e8"/>
-                <ellipse cx="100" cy="212" rx="36" ry="18" fill="white" opacity="0.1"/>
-                <rect x="76" y="204" width="48" height="6" rx="3" fill="#5b9bd5" opacity="0.6"/>
-                <rect x="78" y="149" width="44" height="13" rx="3" fill="#e31b23" opacity="0.85"/>
-                <text x="100" y="159.5" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="10" fill="white" letter-spacing="1">MCU</text>
-              </svg>
+              <video class="mascot-svg" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true">
+                <source src="assets/images/mcu-robot-mascot.webm" type="video/webm" />
+              </video>
             </div>
             <div class="orbit o1"><div class="orbit-dot"></div></div>
             <div class="orbit o2"><div class="orbit-dot od2"></div></div>
@@ -554,29 +487,7 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
-            <svg class="footer-logo-svg" viewBox="0 0 130 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <filter id="fgr" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b1"/>
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b2"/>
-                  <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-                <filter id="fgw" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="b1"/>
-                  <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-              </defs>
-              <rect x="2" y="10" width="78" height="58" rx="2" fill="#e31b23"/>
-              <rect x="2" y="10" width="78" height="58" rx="2" fill="none" stroke="rgba(255,80,80,0.4)" stroke-width="1" filter="url(#fgr)"/>
-              <polyline points="2,20 2,10 12,10"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="68,10 80,10 80,20"  stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="2,58 2,68 12,68"   stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <polyline points="68,68 80,68 80,58" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="square" filter="url(#fgw)"/>
-              <text x="41" y="62" font-family="Bebas Neue,Impact,sans-serif" font-size="48" fill="white" text-anchor="middle" letter-spacing="-1">MCU</text>
-              <rect x="76" y="2" width="52" height="40" rx="2" fill="#b01018"/>
-              <rect x="76" y="2" width="52" height="40" rx="2" fill="none" stroke="rgba(255,80,80,0.3)" stroke-width="1" filter="url(#fgr)"/>
-              <text x="102" y="36" font-family="Bebas Neue,Impact,sans-serif" font-size="32" fill="white" text-anchor="middle" letter-spacing="1">TMU</text>
-            </svg>
+            <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="footer-logo-img" />
           </a>
           <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
           <div class="footer-socials">
@@ -772,6 +683,27 @@
       color: rgba(255,255,255,0.85);
       border-color: rgba(227,27,35,0.5);
     }
+
+    /* ══════════════════════════════════════════
+       VIDEO LOGO + MASCOT — replaces static SVGs
+       ══════════════════════════════════════════ */
+
+    /* Hero big logo — now a looping video, same box the SVG used to sit in */
+    video.hbp-logo-svg {
+      object-fit: contain;
+      background: transparent;
+      border-radius: 2px;
+    }
+
+    /* Mascot video — sits inside the fixed 130x156 slot the old SVG used */
+    video.mascot-svg {
+      object-fit: contain;
+      background: transparent;
+    }
+
+    /* Nav/footer logo images already have brightness(0) invert(1) applied
+       via .nav-logo-img / .footer-logo-img in style.css — this keeps them
+       crisp white marks consistent with the old inline SVG treatment. */
   </style>
 
   <script src="js/theme-toggle.js"></script>
