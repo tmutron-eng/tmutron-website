@@ -246,7 +246,7 @@
 
         <div class="hero-logo-block">
           <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
-          <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay style="display:none" preload="auto"></video>
+          <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
           <div class="hbp-bracket hbp-tl"></div>
           <div class="hbp-bracket hbp-tr"></div>
           <div class="hbp-bracket hbp-bl"></div>
@@ -261,7 +261,7 @@
             <div class="ring r3"></div>
             <div class="ring-center mascot-wrap">
               <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.mp4" muted loop playsinline autoplay style="display:none" preload="auto"></video>
+              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
             </div>
             <div class="orbit o1"><div class="orbit-dot"></div></div>
             <div class="orbit o2"><div class="orbit-dot od2"></div></div>
@@ -934,40 +934,43 @@
     var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
     var ctx = canvas.getContext('2d', { willReadFrequently: true });
     var w = canvas.width, h = canvas.height;
-    var playing = false;
 
     function frame() {
-      if (video.paused || video.ended) { return; }
-      ctx.drawImage(video, 0, 0, w, h);
-      try {
-        var imgData = ctx.getImageData(0, 0, w, h);
-        var d = imgData.data;
-        for (var i = 0; i < d.length; i += 4) {
-          var r = d[i], g = d[i + 1], b = d[i + 2];
-          // distance from pure white
-          var dr = 255 - r, dg = 255 - g, db = 255 - b;
-          var dist = Math.sqrt(dr * dr + dg * dg + db * db);
-          if (dist < threshold) {
-            d[i + 3] = 0;
-          } else if (dist < threshold + softness) {
-            d[i + 3] = Math.round(255 * (dist - threshold) / softness);
+      // Keep the loop alive permanently — even if the video stalls or
+      // hasn't started decoding yet, we just skip drawing this tick
+      // and try again next tick instead of giving up.
+      if (video.readyState >= 2 && !video.paused && !video.ended) {
+        ctx.drawImage(video, 0, 0, w, h);
+        try {
+          var imgData = ctx.getImageData(0, 0, w, h);
+          var d = imgData.data;
+          for (var i = 0; i < d.length; i += 4) {
+            var r = d[i], g = d[i + 1], b = d[i + 2];
+            var dr = 255 - r, dg = 255 - g, db = 255 - b;
+            var dist = Math.sqrt(dr * dr + dg * dg + db * db);
+            if (dist < threshold) {
+              d[i + 3] = 0;
+            } else if (dist < threshold + softness) {
+              d[i + 3] = Math.round(255 * (dist - threshold) / softness);
+            }
           }
-        }
-        ctx.putImageData(imgData, 0, 0);
-      } catch (e) { /* ignore a dropped frame */ }
+          ctx.putImageData(imgData, 0, 0);
+        } catch (e) { /* ignore a dropped frame */ }
+      }
       requestAnimationFrame(frame);
     }
 
-    function start() {
-      if (playing) return;
-      playing = true;
-      requestAnimationFrame(frame);
-    }
+    // Try to force playback (autoplay attribute can silently fail in some
+    // browsers/contexts) — muted video play() is allowed everywhere.
+    var tryPlay = function () {
+      var p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
+    };
+    tryPlay();
+    video.addEventListener('loadedmetadata', tryPlay);
+    document.addEventListener('click', tryPlay, { once: true });
 
-    video.addEventListener('play', start);
-    video.addEventListener('playing', start);
-    // Autoplay may already have fired before listeners attached
-    if (!video.paused) start();
+    requestAnimationFrame(frame);
   }
 
   var logoVideo  = document.getElementById('mcuLogoSrcVideo');
