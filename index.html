@@ -951,7 +951,8 @@
             if (dist < threshold) {
               d[i + 3] = 0;
             } else if (dist < threshold + softness) {
-              d[i + 3] = Math.round(255 * (dist - threshold) / softness);
+              var a = Math.round(255 * (dist - threshold) / softness);
+              d[i + 3] = a < 40 ? 0 : a; // clip faint fringe fully transparent
             }
           }
           ctx.putImageData(imgData, 0, 0);
@@ -978,8 +979,8 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  if (logoVideo && logoCanvas)     chromaKey(logoVideo, logoCanvas, { threshold: 80, softness: 40 });
-  if (mascotVideo && mascotCanvas) chromaKey(mascotVideo, mascotCanvas, { threshold: 70, softness: 35 });
+  if (logoVideo && logoCanvas)     chromaKey(logoVideo, logoCanvas, { threshold: 130, softness: 25 });
+  if (mascotVideo && mascotCanvas) chromaKey(mascotVideo, mascotCanvas, { threshold: 120, softness: 22 });
 })();
 </script>
 </body>
