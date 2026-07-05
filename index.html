@@ -245,9 +245,8 @@
         <div class="hero-right-glow"></div>
 
         <div class="hero-logo-block">
-          <video class="hbp-logo-svg" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true">
-            <source src="assets/images/mcu-tmu-logo-glitch.webm" type="video/webm" />
-          </video>
+          <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
+          <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay style="display:none" preload="auto"></video>
           <div class="hbp-bracket hbp-tl"></div>
           <div class="hbp-bracket hbp-tr"></div>
           <div class="hbp-bracket hbp-bl"></div>
@@ -261,9 +260,8 @@
             <div class="ring r2"></div>
             <div class="ring r3"></div>
             <div class="ring-center mascot-wrap">
-              <video class="mascot-svg" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true">
-                <source src="assets/images/mcu-robot-mascot.webm" type="video/webm" />
-              </video>
+              <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.mp4" muted loop playsinline autoplay style="display:none" preload="auto"></video>
             </div>
             <div class="orbit o1"><div class="orbit-dot"></div></div>
             <div class="orbit o2"><div class="orbit-dot od2"></div></div>
@@ -685,27 +683,38 @@
     }
 
     /* ══════════════════════════════════════════
-       VIDEO LOGO + MASCOT — replaces static SVGs
+       CANVAS LOGO + MASCOT — replaces static SVGs
+       Rendered via live chroma-key JS (see bottom script) because
+       <video> elements cannot show alpha transparency in any browser —
+       only <canvas> can, so the source videos play hidden and get
+       painted frame-by-frame onto these canvases with white keyed out.
        ══════════════════════════════════════════ */
 
-    /* Hero big logo — now a looping video, same box the SVG used to sit in */
-    video.hbp-logo-svg {
+    /* Hero big logo canvas — same box the SVG used to sit in */
+    canvas.hbp-logo-svg {
+      display: block;
+      width: clamp(220px, 26vw, 340px);
+      height: auto;
       object-fit: contain;
       background: transparent;
       border-radius: 2px;
     }
 
-    /* Mascot video — sits inside the fixed 130x156 slot the old SVG used */
-    video.mascot-svg {
-      object-fit: contain;
-      background: transparent;
-    }
-
-    /* Bump the mascot up in size — overrides the old fixed 130px slot */
+    /* Mascot canvas — bumped up in size from the old fixed 130px slot */
     .ring-system { width: 300px !important; height: 300px !important; }
     .ring-center { width: 160px !important; height: 160px !important; }
     .mascot-wrap { width: 160px !important; height: 160px !important; }
-    video.mascot-svg { width: 180px !important; height: 216px !important; }
+    canvas.mascot-svg {
+      display: block;
+      width: 180px !important;
+      height: 216px !important;
+      object-fit: contain;
+      background: transparent;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -52%);
+      filter: drop-shadow(0 0 16px rgba(91,200,232,0.2)) drop-shadow(0 6px 20px rgba(0,0,0,0.55));
+      animation: mascot-bob 3s ease-in-out infinite;
+    }
     @media (max-width: 1100px) {
       .ring-system { width: 250px !important; height: 250px !important; }
     }
@@ -904,6 +913,70 @@
   cards[0].classList.add('gca');
   if (dots[0]) dots[0].classList.add('ga');
   render();
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     LIVE CHROMA-KEY RENDERER
+     <video> elements can never show alpha transparency in
+     any browser — only <canvas> can. So each source video
+     plays hidden, and every frame is painted onto its
+     paired canvas with near-white pixels made transparent
+     in real time (same technique as a browser "green screen").
+     ═══════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  function chromaKey(video, canvas, opts) {
+    opts = opts || {};
+    var threshold = opts.threshold != null ? opts.threshold : 80;   // start of keying (0-441.7)
+    var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
+    var ctx = canvas.getContext('2d', { willReadFrequently: true });
+    var w = canvas.width, h = canvas.height;
+    var playing = false;
+
+    function frame() {
+      if (video.paused || video.ended) { return; }
+      ctx.drawImage(video, 0, 0, w, h);
+      try {
+        var imgData = ctx.getImageData(0, 0, w, h);
+        var d = imgData.data;
+        for (var i = 0; i < d.length; i += 4) {
+          var r = d[i], g = d[i + 1], b = d[i + 2];
+          // distance from pure white
+          var dr = 255 - r, dg = 255 - g, db = 255 - b;
+          var dist = Math.sqrt(dr * dr + dg * dg + db * db);
+          if (dist < threshold) {
+            d[i + 3] = 0;
+          } else if (dist < threshold + softness) {
+            d[i + 3] = Math.round(255 * (dist - threshold) / softness);
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      } catch (e) { /* ignore a dropped frame */ }
+      requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (playing) return;
+      playing = true;
+      requestAnimationFrame(frame);
+    }
+
+    video.addEventListener('play', start);
+    video.addEventListener('playing', start);
+    // Autoplay may already have fired before listeners attached
+    if (!video.paused) start();
+  }
+
+  var logoVideo  = document.getElementById('mcuLogoSrcVideo');
+  var logoCanvas = document.getElementById('mcuLogoCanvas');
+  var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
+  var mascotCanvas = document.getElementById('mcuMascotCanvas');
+
+  if (logoVideo && logoCanvas)     chromaKey(logoVideo, logoCanvas, { threshold: 80, softness: 40 });
+  if (mascotVideo && mascotCanvas) chromaKey(mascotVideo, mascotCanvas, { threshold: 70, softness: 35 });
 })();
 </script>
 </body>
