@@ -960,7 +960,7 @@
     opts = opts || {};
     var threshold = opts.threshold != null ? opts.threshold : 80;   // start of keying (0-441.7)
     var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
-    var scale     = opts.scale     != null ? opts.scale     : 0.5;  // internal render scale (perf)
+    var scale     = opts.scale     != null ? opts.scale     : 0.75; // internal render scale (perf)
     var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
 
     var w = Math.max(1, Math.round(canvas.width  * scale));
@@ -984,59 +984,87 @@
 
     var frameCount = 0;
 
+    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
+    // FIX: the old version force-stretched the video to fill w×h exactly.
+    // If the video's native aspect ratio doesn't match the canvas's, that
+    // squishes/stretches the subject non-uniformly — this is what was
+    // distorting and visually "cutting off" the mascot's head. Now we
+    // letterbox instead: the video is drawn at its true proportions,
+    // centered, with any leftover space left fully transparent.
+    var rect = { x: 0, y: 0, w: w, h: h };
+    function updateRect() {
+      var vw = video.videoWidth, vh = video.videoHeight;
+      if (!vw || !vh) { rect = { x: 0, y: 0, w: w, h: h }; return; }
+      var canvasAspect = w / h;
+      var vidAspect = vw / vh;
+      var dw, dh;
+      if (vidAspect > canvasAspect) { dw = w; dh = w / vidAspect; }
+      else                          { dh = h; dw = h * vidAspect; }
+      rect = {
+        x: Math.round((w - dw) / 2),
+        y: Math.round((h - dh) / 2),
+        w: Math.round(dw),
+        h: Math.round(dh)
+      };
+    }
+    video.addEventListener('loadedmetadata', updateRect);
+    updateRect();
+
     function process() {
-      wctx.drawImage(video, 0, 0, w, h);
+      // Clear first — anything outside `rect` (letterbox padding) stays
+      // fully transparent rather than being stretched video content.
+      wctx.clearRect(0, 0, w, h);
+      wctx.drawImage(video, rect.x, rect.y, rect.w, rect.h);
+
       var imgData = wctx.getImageData(0, 0, w, h);
       var d = imgData.data;
 
       visited.fill(0);
 
-      // 1) distance-from-white for every pixel
+      var rx0 = rect.x, ry0 = rect.y;
+      var rx1 = rect.x + rect.w - 1, ry1 = rect.y + rect.h - 1;
+
+      // 1) distance-from-white for every pixel (already-transparent
+      //    letterbox padding is marked as "far from white" so it's
+      //    never mistaken for keyable content)
       var idx, o;
       for (idx = 0; idx < n; idx++) {
         o = idx * 4;
+        if (d[o + 3] === 0) { distBuf[idx] = 9999; continue; }
         var dr = 255 - d[o], dg = 255 - d[o + 1], db = 255 - d[o + 2];
         distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
       }
 
-      // 2) seed the flood fill from every border pixel that's background-ish
+      // 2) seed the flood fill from the *video content rect's* own
+      //    border (not the full canvas) — this is the actual edge of
+      //    the video frame, so letterbox padding never gets treated
+      //    as part of the image.
       var sp = 0, x, y, idx0;
-      for (x = 0; x < w; x++) {
-        idx0 = x;
+      for (x = rx0; x <= rx1; x++) {
+        idx0 = ry0 * w + x;
         if (distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-        idx0 = (h - 1) * w + x;
+        idx0 = ry1 * w + x;
         if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
       }
-      for (y = 0; y < h; y++) {
-        idx0 = y * w;
+      for (y = ry0; y <= ry1; y++) {
+        idx0 = y * w + rx0;
         if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-        idx0 = y * w + (w - 1);
+        idx0 = y * w + rx1;
         if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
       }
 
-      // 3) flood fill — only spreads through connected background-ish pixels
+      // 3) flood fill — only spreads through connected background-ish
+      //    pixels, and never past the content rect's own border
       while (sp > 0) {
         var cur = stack[--sp];
         var cx = cur % w;
         var cy = (cur - cx) / w;
         var nIdx;
 
-        if (cx > 0) {
-          nIdx = cur - 1;
-          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
-        }
-        if (cx < w - 1) {
-          nIdx = cur + 1;
-          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
-        }
-        if (cy > 0) {
-          nIdx = cur - w;
-          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
-        }
-        if (cy < h - 1) {
-          nIdx = cur + w;
-          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
-        }
+        if (cx > rx0) { nIdx = cur - 1; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
+        if (cx < rx1) { nIdx = cur + 1; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
+        if (cy > ry0) { nIdx = cur - w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
+        if (cy < ry1) { nIdx = cur + w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
       }
 
       // 4) only pixels reached by the flood fill get keyed out — isolated
@@ -1055,7 +1083,7 @@
 
       wctx.putImageData(imgData, 0, 0);
 
-      // Scale the small processed buffer up into the visible canvas
+      // Scale the processed buffer up into the visible canvas
       outCtx.clearRect(0, 0, canvas.width, canvas.height);
       outCtx.drawImage(work, 0, 0, canvas.width, canvas.height);
     }
@@ -1090,8 +1118,10 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.5, skip: 1 });
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 120, softness: 22, scale: 0.5, skip: 1 });
+  // Logo is flat text/shapes — needs to stay near-full resolution or it reads as blurry.
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.95, skip: 1 });
+  // Mascot has more fine detail but is smaller on screen — 0.75 balances sharpness vs. perf.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 120, softness: 22, scale: 0.75, skip: 1 });
 })();
 </script>
 </body>
