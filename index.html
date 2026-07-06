@@ -972,7 +972,11 @@
     var wctx = work.getContext('2d', { willReadFrequently: true });
 
     var outCtx = canvas.getContext('2d');
-    outCtx.imageSmoothingEnabled = true;
+    // Flat graphics (the logo) read as crisper with a hard nearest-neighbor
+    // upscale than a blurred smooth one — costs nothing extra, just a draw
+    // setting, so we can keep internal resolution (and therefore perf) low
+    // without the logo looking soft.
+    outCtx.imageSmoothingEnabled = opts.finalSmoothing !== false;
 
     var maxDist = threshold + softness;
     var n = w * h;
@@ -1118,10 +1122,21 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  // Logo is flat text/shapes — needs to stay near-full resolution or it reads as blurry.
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.95, skip: 1 });
-  // Mascot has more fine detail but is smaller on screen — 0.75 balances sharpness vs. perf.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 120, softness: 22, scale: 0.75, skip: 1 });
+  // Logo: flat text/shapes. Kept at a modest scale for perf, but drawn back
+  // up with NO smoothing (finalSmoothing:false) — a crisp nearest-neighbor
+  // upscale reads much sharper for hard-edged text than a blurred one at
+  // the same resolution, without costing any extra processing.
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.6, skip: 1, finalSmoothing: false });
+
+  // Mascot: threshold/softness tightened way down (was 120/22 = keys out
+  // anything within ~142 of pure white). The robot's silver/white chassis
+  // highlights sit near the video's edge, so a loose tolerance let the
+  // edge-seeded flood fill eat into them — same failure mode as the logo
+  // letters, but the robot's parts aren't fully enclosed by a solid color
+  // the way the letters are, so it needs a much stricter color match: only
+  // pixels genuinely indistinguishable from pure white now qualify as
+  // background, leaving off-white/grey/silver material alone.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 45, softness: 15, scale: 0.55, skip: 1 });
 })();
 </script>
 </body>
