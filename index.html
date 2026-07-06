@@ -541,7 +541,10 @@
 
   <script src="js/main.js"></script>
   <script>
-    /* ── Animated section background canvases ── */
+    /* ── Animated section background canvases ──
+       PERF FIX: each section's animation loop now pauses via
+       IntersectionObserver when scrolled out of view, instead of
+       running requestAnimationFrame forever regardless of visibility. */
     (function() {
       const sections = [
         { id: 'stats',           color: '227,27,35',    speed: 0.18 },
@@ -559,6 +562,8 @@
 
         const ctx = canvas.getContext('2d');
         let W, H, t = Math.random() * 1000;
+        let visible = false;
+        let raf = null;
 
         const DOTS = 32;
         const dots = Array.from({ length: DOTS }, () => ({
@@ -576,6 +581,8 @@
         new ResizeObserver(resize).observe(section);
 
         function draw() {
+          if (!visible) { raf = null; return; } // stop the loop entirely when off-screen
+
           ctx.clearRect(0, 0, W, H);
           t += 0.007;
 
@@ -619,9 +626,16 @@
             ctx.fill();
           });
 
-          requestAnimationFrame(draw);
+          raf = requestAnimationFrame(draw);
         }
-        draw();
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            visible = entry.isIntersecting;
+            if (visible && raf === null) raf = requestAnimationFrame(draw);
+          });
+        }, { threshold: 0.01 });
+        io.observe(section);
       });
     })();
 
@@ -917,46 +931,143 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════
-     LIVE CHROMA-KEY RENDERER
+     LIVE CHROMA-KEY RENDERER  (perf-optimized flood-fill version)
+
      <video> elements can never show alpha transparency in
      any browser — only <canvas> can. So each source video
-     plays hidden, and every frame is painted onto its
-     paired canvas with near-white pixels made transparent
-     in real time (same technique as a browser "green screen").
+     plays hidden, and frames are painted onto a paired canvas
+     with connected-to-edge white pixels made transparent
+     (flood fill from the border), so isolated white "MCU"/"TMU"
+     lettering enclosed by red never gets keyed out.
+
+     PERF FIXES vs the naive per-pixel version:
+       1. Processing happens on a small OFFSCREEN work canvas at
+          `scale` (default 0.5 = 1/4 the pixels) instead of full
+          resolution, then the result is scaled up into the visible
+          canvas. Visual size on screen is unaffected (CSS controls
+          display size), only internal processing resolution drops.
+       2. Only every (skip+1)th video frame is actually re-keyed
+          (default skip=1 → ~30fps instead of 60fps for the effect).
+       3. Typed-array buffers (visited/distBuf/stack) are allocated
+          ONCE per canvas and reused every frame — no per-frame GC churn.
+       4. The whole loop pauses while the tab is hidden.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
   'use strict';
 
-  function chromaKey(video, canvas, opts) {
+  function chromaKeyFlood(video, canvas, opts) {
     opts = opts || {};
     var threshold = opts.threshold != null ? opts.threshold : 80;   // start of keying (0-441.7)
     var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
-    var ctx = canvas.getContext('2d', { willReadFrequently: true });
-    var w = canvas.width, h = canvas.height;
+    var scale     = opts.scale     != null ? opts.scale     : 0.5;  // internal render scale (perf)
+    var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
+
+    var w = Math.max(1, Math.round(canvas.width  * scale));
+    var h = Math.max(1, Math.round(canvas.height * scale));
+
+    // Small offscreen buffer we actually do the expensive per-pixel work on.
+    var work = document.createElement('canvas');
+    work.width = w; work.height = h;
+    var wctx = work.getContext('2d', { willReadFrequently: true });
+
+    var outCtx = canvas.getContext('2d');
+    outCtx.imageSmoothingEnabled = true;
+
+    var maxDist = threshold + softness;
+    var n = w * h;
+
+    // Reusable buffers — allocated once, reused every frame (no per-frame GC churn)
+    var visited = new Uint8Array(n);
+    var distBuf = new Float32Array(n);
+    var stack   = new Int32Array(n);
+
+    var frameCount = 0;
+
+    function process() {
+      wctx.drawImage(video, 0, 0, w, h);
+      var imgData = wctx.getImageData(0, 0, w, h);
+      var d = imgData.data;
+
+      visited.fill(0);
+
+      // 1) distance-from-white for every pixel
+      var idx, o;
+      for (idx = 0; idx < n; idx++) {
+        o = idx * 4;
+        var dr = 255 - d[o], dg = 255 - d[o + 1], db = 255 - d[o + 2];
+        distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
+      }
+
+      // 2) seed the flood fill from every border pixel that's background-ish
+      var sp = 0, x, y, idx0;
+      for (x = 0; x < w; x++) {
+        idx0 = x;
+        if (distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
+        idx0 = (h - 1) * w + x;
+        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
+      }
+      for (y = 0; y < h; y++) {
+        idx0 = y * w;
+        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
+        idx0 = y * w + (w - 1);
+        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
+      }
+
+      // 3) flood fill — only spreads through connected background-ish pixels
+      while (sp > 0) {
+        var cur = stack[--sp];
+        var cx = cur % w;
+        var cy = (cur - cx) / w;
+        var nIdx;
+
+        if (cx > 0) {
+          nIdx = cur - 1;
+          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
+        }
+        if (cx < w - 1) {
+          nIdx = cur + 1;
+          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
+        }
+        if (cy > 0) {
+          nIdx = cur - w;
+          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
+        }
+        if (cy < h - 1) {
+          nIdx = cur + w;
+          if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; }
+        }
+      }
+
+      // 4) only pixels reached by the flood fill get keyed out — isolated
+      //    white lettering surrounded by red is never visited, stays opaque
+      for (idx = 0; idx < n; idx++) {
+        if (!visited[idx]) continue;
+        o = idx * 4;
+        var dist = distBuf[idx];
+        if (dist < threshold) {
+          d[o + 3] = 0;
+        } else {
+          var a = Math.round(255 * (dist - threshold) / softness);
+          d[o + 3] = a < 40 ? 0 : a;
+        }
+      }
+
+      wctx.putImageData(imgData, 0, 0);
+
+      // Scale the small processed buffer up into the visible canvas
+      outCtx.clearRect(0, 0, canvas.width, canvas.height);
+      outCtx.drawImage(work, 0, 0, canvas.width, canvas.height);
+    }
 
     function frame() {
-      // Keep the loop alive permanently — even if the video stalls or
-      // hasn't started decoding yet, we just skip drawing this tick
-      // and try again next tick instead of giving up.
+      if (document.hidden) { requestAnimationFrame(frame); return; }
+
       if (video.readyState >= 2 && !video.paused && !video.ended) {
-        ctx.drawImage(video, 0, 0, w, h);
-        try {
-          var imgData = ctx.getImageData(0, 0, w, h);
-          var d = imgData.data;
-          for (var i = 0; i < d.length; i += 4) {
-            var r = d[i], g = d[i + 1], b = d[i + 2];
-            var dr = 255 - r, dg = 255 - g, db = 255 - b;
-            var dist = Math.sqrt(dr * dr + dg * dg + db * db);
-            if (dist < threshold) {
-              d[i + 3] = 0;
-            } else if (dist < threshold + softness) {
-              var a = Math.round(255 * (dist - threshold) / softness);
-              d[i + 3] = a < 40 ? 0 : a; // clip faint fringe fully transparent
-            }
-          }
-          ctx.putImageData(imgData, 0, 0);
-        } catch (e) { /* ignore a dropped frame */ }
+        frameCount++;
+        if (frameCount % (skip + 1) === 0) {
+          try { process(); } catch (e) { /* ignore a dropped frame */ }
+        }
       }
       requestAnimationFrame(frame);
     }
@@ -979,8 +1090,8 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  if (logoVideo && logoCanvas)     chromaKey(logoVideo, logoCanvas, { threshold: 130, softness: 25 });
-  if (mascotVideo && mascotCanvas) chromaKey(mascotVideo, mascotCanvas, { threshold: 120, softness: 22 });
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.5, skip: 1 });
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 120, softness: 22, scale: 0.5, skip: 1 });
 })();
 </script>
 </body>
