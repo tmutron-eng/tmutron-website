@@ -1136,7 +1136,7 @@
   // the way the letters are, so it needs a much stricter color match: only
   // pixels genuinely indistinguishable from pure white now qualify as
   // background, leaving off-white/grey/silver material alone.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 45, softness: 15, scale: 0.55, skip: 1 });
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 28, softness: 10, scale: 0.85, skip: 1 });
 })();
 </script>
 </body>
