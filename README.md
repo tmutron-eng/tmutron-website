@@ -9,9 +9,6 @@ HOME:
 - MoM hand
 - Laggy
 
-TEAM:
-- Team application opening sept
-
 CALENDAR:
 - Stuff shows up directly without editing code?
 - Add an upcoming event
@@ -27,6 +24,3 @@ ACADEMICS:
 - Video links kinda ugly, make it more visually appealing (fonts, color, etc)
 - General course contribution review connect to: form link.
 - Exam/content droop box
-
-CONTACT:
-- Move Join discord at top
