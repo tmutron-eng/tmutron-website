@@ -1105,6 +1105,7 @@
     var distBuf = new Float32Array(n);
     var stack   = new Int32Array(n);
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
+    var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
 
     var frameCount = 0;
 
@@ -1140,12 +1141,43 @@
       var rx0 = rect.x, ry0 = rect.y;
       var rx1 = rect.x + rect.w - 1, ry1 = rect.y + rect.h - 1;
 
-      // 1) distance-from-white for every pixel (letterbox padding marked far)
+      // 1a) smooth RGB (3x3 average) for the keying decision only — the
+      //     visible pixel colors in `d` are left completely untouched.
+      //     Reflective surfaces (the hand, the glowing orb) carry
+      //     compression noise/dither that flickers right around the
+      //     threshold pixel-by-pixel; averaging it out first means a
+      //     patch of surface reads as one consistent value instead of
+      //     scattering into speckle.
+      var bx, by, bdx, bdy, byy, bxx, oi, rs, gs, bs, cnt;
+      for (by = 0; by < h; by++) {
+        for (bx = 0; bx < w; bx++) {
+          idx = by * w + bx;
+          o = idx * 4;
+          if (d[o + 3] === 0) {
+            blurBuf[idx * 3] = 255; blurBuf[idx * 3 + 1] = 255; blurBuf[idx * 3 + 2] = 255;
+            continue;
+          }
+          rs = 0; gs = 0; bs = 0; cnt = 0;
+          for (bdy = -1; bdy <= 1; bdy++) {
+            byy = by + bdy; if (byy < 0 || byy >= h) continue;
+            for (bdx = -1; bdx <= 1; bdx++) {
+              bxx = bx + bdx; if (bxx < 0 || bxx >= w) continue;
+              oi = (byy * w + bxx) * 4;
+              rs += d[oi]; gs += d[oi + 1]; bs += d[oi + 2]; cnt++;
+            }
+          }
+          blurBuf[idx * 3] = rs / cnt;
+          blurBuf[idx * 3 + 1] = gs / cnt;
+          blurBuf[idx * 3 + 2] = bs / cnt;
+        }
+      }
+
+      // 1b) distance-from-white using the smoothed values (letterbox padding marked far)
       var idx, o;
       for (idx = 0; idx < n; idx++) {
         o = idx * 4;
         if (d[o + 3] === 0) { distBuf[idx] = 9999; continue; }
-        var dr = 255 - d[o], dg = 255 - d[o + 1], db = 255 - d[o + 2];
+        var dr = 255 - blurBuf[idx * 3], dg = 255 - blurBuf[idx * 3 + 1], db = 255 - blurBuf[idx * 3 + 2];
         distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
       }
 
