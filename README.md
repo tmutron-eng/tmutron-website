@@ -2,12 +2,7 @@
 
 AI descriptions
 Main site on tab icon
-Remove light mode
 FIX Mobile 
-
-HOME:
-- MoM hand
-- Laggy
 
 CALENDAR:
 - Stuff shows up directly without editing code?
