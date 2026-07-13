@@ -732,14 +732,18 @@
     .mascot-wrap { width: 160px !important; height: 160px !important; }
     canvas.mascot-svg {
       display: block;
-      width: 180px !important;
-      height: 216px !important;
+      width: 170px !important;
+      height: 204px !important;
       object-fit: contain;
       background: transparent;
       position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -52%);
+      transform: translate(-50%, -50%);
       filter: drop-shadow(0 0 16px rgba(91,200,232,0.2)) drop-shadow(0 6px 20px rgba(0,0,0,0.55));
-      animation: mascot-bob 3s ease-in-out infinite;
+      animation: mascot-bob-v2 3s ease-in-out infinite;
+    }
+    @keyframes mascot-bob-v2 {
+      0%,100% { transform: translate(-50%,-50%) translateY(0); }
+      50%      { transform: translate(-50%,-50%) translateY(-8px); }
     }
     @media (max-width: 1100px) {
       .ring-system { width: 250px !important; height: 250px !important; }
@@ -806,6 +810,34 @@
     }
     @media (max-width: 900px) {
       .cta-deco { display: none; }
+    }
+
+    /* ══ MOBILE FIX: bring back the logo/mascot on phones ══
+       style.css sets `.hero-right { display: none; }` under 600px —
+       that was hiding the whole logo+mascot block on mobile. Instead,
+       show it scaled down so phones get the same visual, just smaller.
+       Scoped to this breakpoint only, so nothing above 600px changes. */
+    @media (max-width: 600px) {
+      .hero-inner {
+        text-align: center;
+      }
+      .hero-left {
+        align-items: center;
+      }
+      .hero-actions { width: 100%; justify-content: center; }
+      .hero-right {
+        display: flex !important;
+        transform: scale(0.72);
+        transform-origin: top center;
+        margin-top: -12px;
+        margin-bottom: -32px;
+      }
+      .hero-right-glow { inset: -40px -60px -40px -80px; }
+      .readout-panels { gap: 6px; }
+      .readout-panel { min-width: 68px; padding: 6px 10px; }
+    }
+    @media (max-width: 400px) {
+      .hero-right { transform: scale(0.6); margin-bottom: -50px; }
     }
   </style>
 
@@ -1022,11 +1054,26 @@
           (default skip=1 → ~30fps instead of 60fps for the effect).
        3. Typed-array buffers (visited/distBuf/stack) are allocated
           ONCE per canvas and reused every frame — no per-frame GC churn.
-       4. The whole loop pauses while the tab is hidden.
+       4. The whole loop pauses while the tab is hidden, AND while the
+          hero section is scrolled off-screen (IntersectionObserver) —
+          this was the main perf/lag culprit: previously the two
+          per-pixel chroma-key loops kept running at full tilt no
+          matter where you'd scrolled to on the page.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
   'use strict';
+
+  // Shared visibility gate for both hero canvases — pauses all the
+  // expensive per-pixel work whenever the hero section isn't on screen.
+  var heroVisible = true;
+  var heroEl = document.getElementById('hero');
+  if (heroEl && 'IntersectionObserver' in window) {
+    heroVisible = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { heroVisible = entry.isIntersecting; });
+    }, { threshold: 0.01 }).observe(heroEl);
+  }
 
   function chromaKeyFlood(video, canvas, opts) {
     opts = opts || {};
@@ -1057,16 +1104,11 @@
     var visited = new Uint8Array(n);
     var distBuf = new Float32Array(n);
     var stack   = new Int32Array(n);
+    var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
 
     var frameCount = 0;
 
     // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
-    // FIX: the old version force-stretched the video to fill w×h exactly.
-    // If the video's native aspect ratio doesn't match the canvas's, that
-    // squishes/stretches the subject non-uniformly — this is what was
-    // distorting and visually "cutting off" the mascot's head. Now we
-    // letterbox instead: the video is drawn at its true proportions,
-    // centered, with any leftover space left fully transparent.
     var rect = { x: 0, y: 0, w: w, h: h };
     function updateRect() {
       var vw = video.videoWidth, vh = video.videoHeight;
@@ -1087,8 +1129,6 @@
     updateRect();
 
     function process() {
-      // Clear first — anything outside `rect` (letterbox padding) stays
-      // fully transparent rather than being stretched video content.
       wctx.clearRect(0, 0, w, h);
       wctx.drawImage(video, rect.x, rect.y, rect.w, rect.h);
 
@@ -1100,9 +1140,7 @@
       var rx0 = rect.x, ry0 = rect.y;
       var rx1 = rect.x + rect.w - 1, ry1 = rect.y + rect.h - 1;
 
-      // 1) distance-from-white for every pixel (already-transparent
-      //    letterbox padding is marked as "far from white" so it's
-      //    never mistaken for keyable content)
+      // 1) distance-from-white for every pixel (letterbox padding marked far)
       var idx, o;
       for (idx = 0; idx < n; idx++) {
         o = idx * 4;
@@ -1111,10 +1149,7 @@
         distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
       }
 
-      // 2) seed the flood fill from the *video content rect's* own
-      //    border (not the full canvas) — this is the actual edge of
-      //    the video frame, so letterbox padding never gets treated
-      //    as part of the image.
+      // 2) seed the flood fill from the video content rect's own border
       var sp = 0, x, y, idx0;
       for (x = rx0; x <= rx1; x++) {
         idx0 = ry0 * w + x;
@@ -1129,8 +1164,7 @@
         if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
       }
 
-      // 3) flood fill — only spreads through connected background-ish
-      //    pixels, and never past the content rect's own border
+      // 3) flood fill through connected background-ish pixels
       while (sp > 0) {
         var cur = stack[--sp];
         var cx = cur % w;
@@ -1143,29 +1177,58 @@
         if (cy < ry1) { nIdx = cur + w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
       }
 
-      // 4) only pixels reached by the flood fill get keyed out — isolated
-      //    white lettering surrounded by red is never visited, stays opaque
+      // 4) compute alpha for visited pixels into alphaBuf (keep everything
+      //    else at its current opaque alpha so we have a full buffer to
+      //    despeckle against in step 5)
       for (idx = 0; idx < n; idx++) {
-        if (!visited[idx]) continue;
         o = idx * 4;
+        if (!visited[idx]) { alphaBuf[idx] = d[o + 3]; continue; }
         var dist = distBuf[idx];
         if (dist < threshold) {
-          d[o + 3] = 0;
+          alphaBuf[idx] = 0;
         } else {
           var a = Math.round(255 * (dist - threshold) / softness);
-          d[o + 3] = a < 40 ? 0 : a;
+          alphaBuf[idx] = a < 40 ? 0 : a;
         }
       }
 
+      // 5) DESPECKLE PASS — fixes the white sparkle/noise artifacts around
+      //    reflective parts (robot hand, glowing orb): compression noise
+      //    and specular highlights on those surfaces sometimes land just
+      //    outside the flood-fill's connected path and stay opaque, which
+      //    shows up as stray white flecks in what should be transparent
+      //    background. Any pixel that's mostly surrounded by
+      //    already-transparent neighbors gets treated as background too,
+      //    regardless of whether the flood fill technically reached it.
+      for (y = ry0 + 1; y < ry1; y++) {
+        for (x = rx0 + 1; x < rx1; x++) {
+          idx = y * w + x;
+          if (alphaBuf[idx] < 60) continue; // already background/near-background
+          var tn = 0;
+          if (alphaBuf[idx - 1]     < 40) tn++;
+          if (alphaBuf[idx + 1]     < 40) tn++;
+          if (alphaBuf[idx - w]     < 40) tn++;
+          if (alphaBuf[idx + w]     < 40) tn++;
+          if (alphaBuf[idx - w - 1] < 40) tn++;
+          if (alphaBuf[idx - w + 1] < 40) tn++;
+          if (alphaBuf[idx + w - 1] < 40) tn++;
+          if (alphaBuf[idx + w + 1] < 40) tn++;
+          if (tn >= 6) alphaBuf[idx] = 0;
+        }
+      }
+
+      for (idx = 0; idx < n; idx++) d[idx * 4 + 3] = alphaBuf[idx];
+
       wctx.putImageData(imgData, 0, 0);
 
-      // Scale the processed buffer up into the visible canvas
       outCtx.clearRect(0, 0, canvas.width, canvas.height);
       outCtx.drawImage(work, 0, 0, canvas.width, canvas.height);
     }
 
     function frame() {
-      if (document.hidden) { requestAnimationFrame(frame); return; }
+      // Pause entirely when tab is hidden OR hero is scrolled off-screen —
+      // this is the main fix for site-wide lag from this effect.
+      if (document.hidden || !heroVisible) { requestAnimationFrame(frame); return; }
 
       if (video.readyState >= 2 && !video.paused && !video.ended) {
         frameCount++;
@@ -1176,8 +1239,6 @@
       requestAnimationFrame(frame);
     }
 
-    // Try to force playback (autoplay attribute can silently fail in some
-    // browsers/contexts) — muted video play() is allowed everywhere.
     var tryPlay = function () {
       var p = video.play();
       if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
@@ -1194,21 +1255,13 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  // Logo: flat text/shapes. Kept at a modest scale for perf, but drawn back
-  // up with NO smoothing (finalSmoothing:false) — a crisp nearest-neighbor
-  // upscale reads much sharper for hard-edged text than a blurred one at
-  // the same resolution, without costing any extra processing.
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.6, skip: 2, finalSmoothing: false });
+  // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
+  // skip bumped 2→3 (was ~20fps effective, now ~15fps) for extra headroom.
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
 
-  // Mascot: threshold/softness tightened way down (was 120/22 = keys out
-  // anything within ~142 of pure white). The robot's silver/white chassis
-  // highlights sit near the video's edge, so a loose tolerance let the
-  // edge-seeded flood fill eat into them — same failure mode as the logo
-  // letters, but the robot's parts aren't fully enclosed by a solid color
-  // the way the letters are, so it needs a much stricter color match: only
-  // pixels genuinely indistinguishable from pure white now qualify as
-  // background, leaving off-white/grey/silver material alone.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 2 });
+  // Mascot: tight threshold/softness so only genuinely near-white pixels
+  // key out, plus the despeckle pass above cleans up the hand/orb sparkle.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3 });
 })();
 </script>
 </body>
