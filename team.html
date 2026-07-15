@@ -47,7 +47,11 @@
       will-change: transform;
       border-radius: 20px;
     }
-    .flip-card:hover .flip-card-inner,
+    @media (hover: hover) {
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+    }
     .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
