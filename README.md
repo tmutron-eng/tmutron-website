@@ -1,11 +1,8 @@
 # tmutron-website
 
 AI descriptions
-Main site on tab icon
-FIX Mobile 
 
 CALENDAR:
-- Stuff shows up directly without editing code?
 - Add an upcoming event
 
 EVENT:
