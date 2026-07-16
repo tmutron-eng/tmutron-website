@@ -1064,6 +1064,17 @@
           this was the main perf/lag culprit: previously the two
           per-pixel chroma-key loops kept running at full tilt no
           matter where you'd scrolled to on the page.
+       5. TEMPORAL ALPHA SMOOTHING (new): compression noise on
+          reflective surfaces (the robot's hand, the glowing orb)
+          makes individual pixels flicker just across the keying
+          threshold from frame to frame, even though nothing is
+          actually moving there. Each pixel's alpha is now blended
+          with its own value from the previous processed frame
+          instead of being trusted in isolation, so a one-frame
+          noise spike gets averaged out instead of visibly flashing
+          the hand grey. Real background/foreground transitions
+          still read as instant since they persist across many
+          frames instead of just one.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
@@ -1086,6 +1097,11 @@
     var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
     var scale     = opts.scale     != null ? opts.scale     : 0.75; // internal render scale (perf)
     var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
+    // NEW: temporal smoothing factor for the alpha channel.
+    // 0 = no smoothing (old behavior, prone to single-frame flicker).
+    // Higher = more resistant to noise, but slightly slower to react
+    // to a genuinely fast transition. 0.3–0.5 is a good range.
+    var temporal  = opts.temporal  != null ? opts.temporal : 0.35;
 
     var w = Math.max(1, Math.round(canvas.width  * scale));
     var h = Math.max(1, Math.round(canvas.height * scale));
@@ -1111,6 +1127,9 @@
     var stack   = new Int32Array(n);
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
     var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
+    // NEW: remembers each pixel's smoothed alpha from the previous
+    // processed frame, so noise doesn't get to flip a pixel on its own.
+    var prevAlpha = new Float32Array(n).fill(255);
 
     var frameCount = 0;
 
@@ -1254,7 +1273,22 @@
         }
       }
 
-      for (idx = 0; idx < n; idx++) d[idx * 4 + 3] = alphaBuf[idx];
+      // 6) TEMPORAL SMOOTHING PASS (new) — this is the fix for the
+      //    intermittently-grey hand. A single frame's alpha decision can
+      //    be wrong due to compression noise even after despeckling
+      //    (a whole small patch can drift across the threshold together,
+      //    which despeckle alone won't catch since despeckle only looks
+      //    at spatial neighbors within one frame). Blending with the
+      //    previous frame's smoothed value means a pixel has to be
+      //    "wrong" for several frames in a row to actually change much,
+      //    which noise essentially never does, while a real, sustained
+      //    transition still reaches full effect within a couple of frames.
+      for (idx = 0; idx < n; idx++) {
+        var raw = alphaBuf[idx];
+        var smoothed = prevAlpha[idx] * temporal + raw * (1 - temporal);
+        prevAlpha[idx] = smoothed;
+        d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
+      }
 
       wctx.putImageData(imgData, 0, 0);
 
@@ -1293,12 +1327,15 @@
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
   // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
-  // skip bumped 2→3 (was ~20fps effective, now ~15fps) for extra headroom.
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
+  // Low temporal smoothing since flat graphics are already stable frame
+  // to frame and we want the glitch-style transitions to stay snappy.
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false, temporal: 0.2 });
 
   // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out, plus the despeckle pass above cleans up the hand/orb sparkle.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3 });
+  // key out. Higher temporal smoothing here specifically — the hand and
+  // glowing orb are the reflective/noisy areas that were flickering
+  // grey, and this is what stabilizes them.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3, temporal: 0.45 });
 })();
 </script>
 </body>
