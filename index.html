@@ -1122,13 +1122,16 @@
     var stack   = new Int32Array(n);
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
     var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
-    // MEDIAN-OF-3 TEMPORAL FILTER: h0 = last processed frame's raw alpha,
-    // h1 = the one before that. A single bad frame (compression noise
-    // flipping a hand-highlight pixel across the threshold) gets thrown
-    // out entirely by the median instead of blended in — a real,
-    // sustained transition still shows within 2 frames.
+    // MEDIAN-OF-5 TEMPORAL FILTER: h0..h3 hold the last 4 processed
+    // frames' raw alpha per pixel. Taking the median of the current
+    // sample + these 4 tolerates short RUNS of bad frames (compression
+    // artifacts on the hand rarely last more than 1-2 samples once
+    // combined with the wider `skip` spacing below), not just single
+    // isolated outliers like a median-of-3 does.
     var h0 = new Uint8Array(n).fill(255);
     var h1 = new Uint8Array(n).fill(255);
+    var h2 = new Uint8Array(n).fill(255);
+    var h3 = new Uint8Array(n).fill(255);
 
     var frameCount = 0;
 
@@ -1272,23 +1275,33 @@
         }
       }
 
-      // 6) MEDIAN-OF-3 TEMPORAL FILTER — this is the actual fix for the
+      // 6) MEDIAN-OF-5 TEMPORAL FILTER — the actual fix for the
       //    intermittently-grey hand. A single frame's alpha decision can
       //    be wrong (compression noise flips a borderline highlight
       //    pixel across the threshold) even after despeckling, since
       //    despeckle only looks at spatial neighbors within one frame,
       //    not across time. Taking the median of this frame + the last
-      //    two throws out a one-frame outlier completely instead of
-      //    blending it in, so an isolated bad frame can't show through
-      //    at all — while a real, sustained transition still reaches
-      //    full effect within 2 frames since it's no longer an outlier.
+      //    4 processed samples throws out short runs of bad frames
+      //    entirely instead of blending them in, so a multi-frame
+      //    compression artifact can't show through — while a real,
+      //    sustained transition still reaches full effect within a
+      //    handful of samples since it stops being an outlier.
       for (idx = 0; idx < n; idx++) {
         var raw = alphaBuf[idx];
-        var a0 = h1[idx], a1 = h0[idx], a2 = raw;
-        // branchless median of 3
-        var med = Math.max(Math.min(a0, a1), Math.min(Math.max(a0, a1), a2));
-        h1[idx] = h0[idx];
-        h0[idx] = raw;
+        var v0 = h3[idx], v1 = h2[idx], v2 = h1[idx], v3 = h0[idx], v4 = raw;
+        // insertion-sort 5 values, take the middle (index 2) — cheap and
+        // branch-predictable for such a small fixed-size set
+        var t;
+        if (v0 > v1) { t = v0; v0 = v1; v1 = t; }
+        if (v2 > v3) { t = v2; v2 = v3; v3 = t; }
+        if (v0 > v2) { t = v0; v0 = v2; v2 = t; }
+        if (v1 > v3) { t = v1; v1 = v3; v3 = t; }
+        if (v1 > v4) { t = v1; v1 = v4; v4 = t; }
+        if (v1 > v2) { t = v1; v1 = v2; v2 = t; }
+        if (v3 > v4) { t = v3; v3 = v4; v4 = t; }
+        if (v2 > v3) { t = v2; v2 = v3; v3 = t; }
+        var med = v2; // middle value after the network above
+        h3[idx] = h2[idx]; h2[idx] = h1[idx]; h1[idx] = h0[idx]; h0[idx] = raw;
         d[idx * 4 + 3] = med < 20 ? 0 : med;
       }
 
@@ -1332,11 +1345,14 @@
   if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
 
   // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out. Bumped processing scale up (0.5 → 0.65) so the hand's
-  // highlight/shadow shading is sampled more precisely before the
-  // median filter runs on it — less raw noise in means less chance any
-  // single frame is a true outlier to begin with.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.65, skip: 3 });
+  // key out. skip bumped 3→5: samples are now spaced further apart in
+  // real time, so consecutive processed frames rarely land inside the
+  // same short compression-artifact run on the hand — this is what
+  // stops the grey flicker. It also means fewer expensive per-pixel
+  // passes per second, so it's a perf win too, not a tradeoff.
+  // softness widened 12→18 so a pixel right on the edge fades instead
+  // of hard-snapping between opaque and transparent.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 18, scale: 0.65, skip: 5 });
 })();
 </script>
 </body>
