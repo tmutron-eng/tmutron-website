@@ -7,7 +7,6 @@ CALENDAR:
 
 EVENT:
 - Suggestion form
-- Remove Academic section from events
 - Add an upcoming event
 
 ACADEMICS:
