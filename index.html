@@ -1097,11 +1097,6 @@
     var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
     var scale     = opts.scale     != null ? opts.scale     : 0.75; // internal render scale (perf)
     var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
-    // NEW: temporal smoothing factor for the alpha channel.
-    // 0 = no smoothing (old behavior, prone to single-frame flicker).
-    // Higher = more resistant to noise, but slightly slower to react
-    // to a genuinely fast transition. 0.3–0.5 is a good range.
-    var temporal  = opts.temporal  != null ? opts.temporal : 0.35;
 
     var w = Math.max(1, Math.round(canvas.width  * scale));
     var h = Math.max(1, Math.round(canvas.height * scale));
@@ -1127,9 +1122,13 @@
     var stack   = new Int32Array(n);
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
     var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
-    // NEW: remembers each pixel's smoothed alpha from the previous
-    // processed frame, so noise doesn't get to flip a pixel on its own.
-    var prevAlpha = new Float32Array(n).fill(255);
+    // MEDIAN-OF-3 TEMPORAL FILTER: h0 = last processed frame's raw alpha,
+    // h1 = the one before that. A single bad frame (compression noise
+    // flipping a hand-highlight pixel across the threshold) gets thrown
+    // out entirely by the median instead of blended in — a real,
+    // sustained transition still shows within 2 frames.
+    var h0 = new Uint8Array(n).fill(255);
+    var h1 = new Uint8Array(n).fill(255);
 
     var frameCount = 0;
 
@@ -1273,21 +1272,24 @@
         }
       }
 
-      // 6) TEMPORAL SMOOTHING PASS (new) — this is the fix for the
+      // 6) MEDIAN-OF-3 TEMPORAL FILTER — this is the actual fix for the
       //    intermittently-grey hand. A single frame's alpha decision can
-      //    be wrong due to compression noise even after despeckling
-      //    (a whole small patch can drift across the threshold together,
-      //    which despeckle alone won't catch since despeckle only looks
-      //    at spatial neighbors within one frame). Blending with the
-      //    previous frame's smoothed value means a pixel has to be
-      //    "wrong" for several frames in a row to actually change much,
-      //    which noise essentially never does, while a real, sustained
-      //    transition still reaches full effect within a couple of frames.
+      //    be wrong (compression noise flips a borderline highlight
+      //    pixel across the threshold) even after despeckling, since
+      //    despeckle only looks at spatial neighbors within one frame,
+      //    not across time. Taking the median of this frame + the last
+      //    two throws out a one-frame outlier completely instead of
+      //    blending it in, so an isolated bad frame can't show through
+      //    at all — while a real, sustained transition still reaches
+      //    full effect within 2 frames since it's no longer an outlier.
       for (idx = 0; idx < n; idx++) {
         var raw = alphaBuf[idx];
-        var smoothed = prevAlpha[idx] * temporal + raw * (1 - temporal);
-        prevAlpha[idx] = smoothed;
-        d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
+        var a0 = h1[idx], a1 = h0[idx], a2 = raw;
+        // branchless median of 3
+        var med = Math.max(Math.min(a0, a1), Math.min(Math.max(a0, a1), a2));
+        h1[idx] = h0[idx];
+        h0[idx] = raw;
+        d[idx * 4 + 3] = med < 20 ? 0 : med;
       }
 
       wctx.putImageData(imgData, 0, 0);
@@ -1327,15 +1329,14 @@
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
   // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
-  // Low temporal smoothing since flat graphics are already stable frame
-  // to frame and we want the glitch-style transitions to stay snappy.
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false, temporal: 0.2 });
+  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
 
   // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out. Higher temporal smoothing here specifically — the hand and
-  // glowing orb are the reflective/noisy areas that were flickering
-  // grey, and this is what stabilizes them.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3, temporal: 0.45 });
+  // key out. Bumped processing scale up (0.5 → 0.65) so the hand's
+  // highlight/shadow shading is sampled more precisely before the
+  // median filter runs on it — less raw noise in means less chance any
+  // single frame is a true outlier to begin with.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.65, skip: 3 });
 })();
 </script>
 </body>
