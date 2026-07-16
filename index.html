@@ -1122,16 +1122,10 @@
     var stack   = new Int32Array(n);
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
     var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
-    // MEDIAN-OF-5 TEMPORAL FILTER: h0..h3 hold the last 4 processed
-    // frames' raw alpha per pixel. Taking the median of the current
-    // sample + these 4 tolerates short RUNS of bad frames (compression
-    // artifacts on the hand rarely last more than 1-2 samples once
-    // combined with the wider `skip` spacing below), not just single
-    // isolated outliers like a median-of-3 does.
-    var h0 = new Uint8Array(n).fill(255);
-    var h1 = new Uint8Array(n).fill(255);
-    var h2 = new Uint8Array(n).fill(255);
-    var h3 = new Uint8Array(n).fill(255);
+    var alphaBlur = new Uint8Array(n); // spatially-smoothed alpha, reused every frame
+    // Single-tap temporal smoothing — cheap (one read, one multiply-add,
+    // one write per pixel) and low-risk compared to multi-frame history.
+    var prevAlpha = new Float32Array(n).fill(255);
 
     var frameCount = 0;
 
@@ -1275,34 +1269,37 @@
         }
       }
 
-      // 6) MEDIAN-OF-5 TEMPORAL FILTER — the actual fix for the
-      //    intermittently-grey hand. A single frame's alpha decision can
-      //    be wrong (compression noise flips a borderline highlight
-      //    pixel across the threshold) even after despeckling, since
-      //    despeckle only looks at spatial neighbors within one frame,
-      //    not across time. Taking the median of this frame + the last
-      //    4 processed samples throws out short runs of bad frames
-      //    entirely instead of blending them in, so a multi-frame
-      //    compression artifact can't show through — while a real,
-      //    sustained transition still reaches full effect within a
-      //    handful of samples since it stops being an outlier.
+      // 6) SPATIAL ALPHA BLUR — a plain 3x3 average of the despeckled
+      //    alpha values. This is pure spatial math with no frame-to-frame
+      //    state, so it can't introduce timing bugs: any single noisy
+      //    pixel (like a boundary highlight on the hand) gets pulled
+      //    toward its neighbors' values instead of standing out on its own.
+      var abx, aby, abdx, abdy, abyy, abxx, aidx, asum, acnt;
+      for (aby = 0; aby < h; aby++) {
+        for (abx = 0; abx < w; abx++) {
+          aidx = aby * w + abx;
+          asum = 0; acnt = 0;
+          for (abdy = -1; abdy <= 1; abdy++) {
+            abyy = aby + abdy; if (abyy < 0 || abyy >= h) continue;
+            for (abdx = -1; abdx <= 1; abdx++) {
+              abxx = abx + abdx; if (abxx < 0 || abxx >= w) continue;
+              asum += alphaBuf[abyy * w + abxx]; acnt++;
+            }
+          }
+          alphaBlur[aidx] = Math.round(asum / acnt);
+        }
+      }
+
+      // 7) LIGHT TEMPORAL SMOOTHING — blends the spatially-smoothed alpha
+      //    with its own value from the previous processed frame. A single
+      //    cheap multiply-add per pixel, no per-frame history arrays, low
+      //    risk of perf regression. Combined with the spatial blur above,
+      //    this is what softens the residual hand-highlight flicker
+      //    without the cost or bugs of a multi-frame sort.
       for (idx = 0; idx < n; idx++) {
-        var raw = alphaBuf[idx];
-        var v0 = h3[idx], v1 = h2[idx], v2 = h1[idx], v3 = h0[idx], v4 = raw;
-        // insertion-sort 5 values, take the middle (index 2) — cheap and
-        // branch-predictable for such a small fixed-size set
-        var t;
-        if (v0 > v1) { t = v0; v0 = v1; v1 = t; }
-        if (v2 > v3) { t = v2; v2 = v3; v3 = t; }
-        if (v0 > v2) { t = v0; v0 = v2; v2 = t; }
-        if (v1 > v3) { t = v1; v1 = v3; v3 = t; }
-        if (v1 > v4) { t = v1; v1 = v4; v4 = t; }
-        if (v1 > v2) { t = v1; v1 = v2; v2 = t; }
-        if (v3 > v4) { t = v3; v3 = v4; v4 = t; }
-        if (v2 > v3) { t = v2; v2 = v3; v3 = t; }
-        var med = v2; // middle value after the network above
-        h3[idx] = h2[idx]; h2[idx] = h1[idx]; h1[idx] = h0[idx]; h0[idx] = raw;
-        d[idx * 4 + 3] = med < 20 ? 0 : med;
+        var smoothed = prevAlpha[idx] * 0.35 + alphaBlur[idx] * 0.65;
+        prevAlpha[idx] = smoothed;
+        d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
       }
 
       wctx.putImageData(imgData, 0, 0);
@@ -1345,14 +1342,11 @@
   if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
 
   // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out. skip bumped 3→5: samples are now spaced further apart in
-  // real time, so consecutive processed frames rarely land inside the
-  // same short compression-artifact run on the hand — this is what
-  // stops the grey flicker. It also means fewer expensive per-pixel
-  // passes per second, so it's a perf win too, not a tradeoff.
-  // softness widened 12→18 so a pixel right on the edge fades instead
-  // of hard-snapping between opaque and transparent.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 18, scale: 0.65, skip: 5 });
+  // key out. Back to the original scale/skip (0.5 / 3) — the wider
+  // scale and skip from the last attempt made things heavier, not
+  // lighter. The spatial + light temporal blending above does the
+  // actual anti-flicker work now, without changing the sampling rate.
+  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3 });
 })();
 </script>
 </body>
