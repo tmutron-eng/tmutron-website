@@ -54,13 +54,6 @@
       padding: 28px 0;
       position: relative;
     }
-    /* ─── ACADEMIC RESOURCE DRIVE STRIP ─── */
-    #resource-drive-strip {
-      background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 28px 0;
-      position: relative;
-    }
     .oh-strip-inner {
       display: flex;
       align-items: center;
@@ -167,31 +160,41 @@
       font-weight: 300; line-height: 1.75; margin-bottom: 20px;
       padding: 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(227,27,35,0.3);
     }
-    .review-section { margin-bottom: 20px; }
-    .review-section-title { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
-    .review-text { font-family: var(--font-body); font-size: 13px; color: var(--steel-light); font-weight: 300; line-height: 1.7; }
+    .review-section { margin-bottom: 24px; }
+    .review-section-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--red); text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
+    .review-text { font-family: var(--font-body); font-size: 14.5px; color: var(--steel-light); font-weight: 300; line-height: 1.85; }
     .review-text ul { margin: 8px 0 8px 16px; display: flex; flex-direction: column; gap: 4px; }
     .review-text li::marker { color: var(--red); }
-    .course-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .course-link-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--font-cond); font-size: 11px; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--red); border: 1px solid rgba(227,27,35,0.4);
-      padding: 6px 12px; text-decoration: none; transition: background 0.2s, color 0.2s;
+    /* Inline links inside review text / week tables — legible, underlined, hover-highlighted */
+    .review-text a, .week-topic a {
+      color: #ff5a5f;
+      text-decoration: underline;
+      text-decoration-color: rgba(255,90,95,0.4);
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: color 0.15s, text-decoration-color 0.15s;
     }
-    .course-link-btn:hover { background: var(--red); color: var(--white); }
-    .course-link-btn svg { width: 10px; height: 10px; }
+    .review-text a:hover, .week-topic a:hover { color: #ff8388; text-decoration-color: #ff8388; }
+    .course-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .course-link-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-cond); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); background: rgba(227,27,35,0.12); border: 1px solid rgba(227,27,35,0.5);
+      padding: 8px 14px; border-radius: 4px; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .course-link-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); transform: translateY(-1px); }
+    .course-link-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
     .weeks-table { margin-top: 16px; }
     .weeks-table-header {
       display: grid; grid-template-columns: 70px 1fr; gap: 16px;
       padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
       font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; color: var(--steel); text-transform: uppercase;
     }
-    .week-row { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start; }
+    .week-row { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start; }
     .week-row:last-child { border-bottom: none; }
     .week-num { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.1em; }
-    .week-topic { font-family: var(--font-body); font-size: 13px; color: var(--steel-light); font-weight: 300; }
+    .week-topic { font-family: var(--font-body); font-size: 14px; color: var(--steel-light); font-weight: 300; line-height: 2; }
     .prof-chip {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
@@ -294,20 +297,26 @@
             <span class="mono" style="font-size:11px;letter-spacing:0.15em;">05 — ACADEMICS</span>
           </div>
           <div class="line-wrap" style="overflow:hidden;margin-top:24px;">
-            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--white);line-height:0.95;margin:0;">STUDY</h1>
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--white);line-height:0.95;margin:0;">THE RESOURCE</h1>
           </div>
           <div class="line-wrap" style="overflow:hidden;">
-            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--red);line-height:0.95;margin:0;">SMARTER.</h1>
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--red);line-height:0.95;margin:0;">DRIVE.</h1>
           </div>
           <p class="reveal-up delay-2" style="font-family:var(--font-body);font-size:clamp(15px,2vw,18px);color:var(--steel-light);font-weight:300;max-width:480px;line-height:1.6;margin-top:24px;">
-            Week-by-week guides, student reviews, and curated resources — for every year of Mechatronics at TMU.
+            Past exams, course notes, and student-shared materials — organized by course and ready to open. This is the fastest way to get ahead.
           </p>
+          <div class="reveal-up delay-3" style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;">
+            <a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener" class="oh-link-btn" style="padding:16px 28px;font-size:13px;">
+              Open the Resource Drive
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
         </div>
         <div class="ac-hero-right reveal-up delay-3">
           <div class="ac-hud-panel">
-            <div class="ac-hud-row"><div class="ac-hud-num">4</div><div class="ac-hud-label">Years Covered</div></div>
-            <div class="ac-hud-row"><div class="ac-hud-num">12+</div><div class="ac-hud-label">Course Guides</div></div>
-            <div class="ac-hud-row"><div class="ac-hud-num">100%</div><div class="ac-hud-label">Student-Written</div></div>
+            <div class="ac-hud-row"><div class="ac-hud-num" style="font-size:20px;">Open</div><div class="ac-hud-label">Past Exams &amp; Notes</div></div>
+            <div class="ac-hud-row"><div class="ac-hud-num">12+</div><div class="ac-hud-label">Courses Organized</div></div>
+            <div class="ac-hud-row"><div class="ac-hud-num">100%</div><div class="ac-hud-label">Student-Shared</div></div>
           </div>
         </div>
       </div>
@@ -329,27 +338,6 @@
         </div>
         <a href="https://sites.google.com/torontomu.ca/mime/student-handbook/instructor-schedules?authuser=0" target="_blank" rel="noopener" class="oh-link-btn">
           View Instructor Schedules
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════ ACADEMIC RESOURCE DRIVE ═══════ -->
-  <section id="resource-drive-strip">
-    <div class="container">
-      <div class="oh-strip-inner">
-        <div class="oh-left">
-          <div class="oh-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="oh-text">
-            <h3>Academic Resource Drive</h3>
-            <p>Past exams, course notes, and other student-shared materials, organized by course.</p>
-          </div>
-        </div>
-        <a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener" class="oh-link-btn">
-          Open Resource Drive
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
       </div>
@@ -384,9 +372,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
 
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTH140 is your first real university-level calculus course and one of the most important courses in your first semester. The course focuses on building a strong understanding of limits, derivatives, applications of differentiation, and integrals, and it sets the foundation for future courses such as MTH240.<br><br>You learn how to differentiate common functions, use rules such as product/quotient/chain rule, and apply derivatives to real problems such as optimization, related rates, and motion.<br><br>The best professor, in my opinion, is Francis Duah. If you can take his class, he explains concepts clearly, keeps his class engaged consistently, and makes the course feel more manageable for new/incoming students.</div>
-
             <div class="course-links">
               <a href="https://www.youtube.com/watch?v=fYyARMqiaag&list=PLF797E961509B4EB5" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Professor Leonard</a>
               <a href="https://www.youtube.com/@TheOrganicChemistryTutor" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>The Organic Chemistry Tutor</a>
@@ -415,9 +400,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Professor: <span>Dr. Xu</span></div>
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">Many of the topics done in PCS125 have already been covered in high school, and essentially this course further expands on them in more complexity. The course explores topics such as gravity fields, electric fields, electric potential, magnetic fields, electromagnetic induction, simple harmonic motion, and wave behavior. Success in this course requires consistent practice with problem solving, regular attendance for lectures is strongly recommended and are mandatory for labs. The assigned textbook problems, WebAssign assignments, and the lecture slides all provide valuable opportunities to reinforce and apply the concepts covered in class. Because many concepts are interconnected and built upon one another, staying on top of your work is HIGHLY encouraged to ensure your success in this course.</div>
-
             <div class="course-links">
               <a href="https://www.youtube.com/@WeAreShowboat" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>WeAreShowboat</a>
               <a href="https://www.youtube.com/@TheOrganicChemistryTutor" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>The Organic Chemistry Tutor</a>
@@ -438,9 +420,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Professor: <span>Dr. Chen</span></div>
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTL200 is an introductory materials science and engineering course that focuses on understanding the relationship between the structure of materials and their properties. In order to understand why materials act the way they do, students study atomic structure and bonding, crystal structures, material defects, diffusion, and phase diagrams throughout the semester. The course also looks at the mechanical, physical, and chemical characteristics of the main kinds of engineering materials, such as metals, ceramics, polymers, and composites. In order to show how materials are selected and utilised in actual engineering applications, the course introduces topics such as corrosion, material failure, material strengthening mechanisms, and material selection. While there are some calculations involved, much of the course focuses on conceptual understanding and the ability to apply material science principles to different scenarios. Since many topics build upon one another, it's important that you stay on top of things throughout the semester because understanding the foundations early on will make later concepts so much easier to understand.</div>
-
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">This course is all about memorising and understanding a large amount of information. My professor did not provide lecture slides, so I relied heavily on the textbook for studying. If your professor is similar, get comfortable with reading the textbook because it will likely be your primary study resource. I would strongly recommend using AI, flashcards, or any study method that helps break down large amounts of content into manageable study sessions. PLEASE stay on top of things, once you're done a chapter make a summary of that chapter and the information it provided, because it piles up quickly. Last minute studying is not viable for the course, it is just vast amounts of information that you have to stuff down your brain in a short amount of time, avoid this as much as you can, please take my word for it. I'm speaking from experience.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">The labs were pretty easy, just make sure to read the lab manual. There isn't anything you need to prepare beside that from what I recall. Your TA will explain the procedure for you and your group, then you just have to complete it while recording whatever data is necessary for your lab report later. The lab manuals are also easy as long as you divide the work evenly, otherwise it may overwhelm you. Also hold your group members accountable if they aren't doing their portion of the report.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">Once you're done with the course material, do past midterms. The midterm is MCQ style with mostly theory questions and some calculations at the end. The calculation questions are weighted more compared to the theory questions. The majority of the questions are repeated and can be on an old midterm, so making sure to do past midterm should be your top priority. For my year it was 90% identical to the past midterm, with few theory questions different, but for the calculations it was just different numbers. Make sure to attend the study hall done by the TA Nikolai Sydorenko (if he's doing one), he does a comprehensive review of the material covered, although it's long, around 4 hours ish, but it is entirely worth it. You are given a formula sheet but you have to know your symbols. Now although in recent years, the midterms looked similar, just to be safe do not rely on the past midterms as your only study source.</div></div>
@@ -466,9 +445,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Recommended prof: <span>Dr. Saeid Samiezadeh</span></div>
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTH240 (Calculus II) is where calculus starts to become more interesting and actually useful. Up until now, from high school through Calculus I, you've mostly been learning foundational ideas, starting from basic functions and limits and building up to derivatives and simple integrals. This course is where those foundations finally start getting used in more practical and meaningful ways. You build directly off Calculus I and learn new integration techniques, along with L'Hôpital's Rule and improper integrals, which help you deal with problems that look undefined or impossible at first. A large part of the course focuses on sequences and series, including power series, where you learn how functions can be represented and approximated using infinite sums. You're also introduced to first order differential equations, which are used to model systems that change over time and show up often in physics and engineering. Toward the end of the course, you get a first look at functions of multiple variables and partial derivatives, which sets the foundation for multivariable calculus and future technical courses.</div>
-
             <div class="course-links">
               <a href="https://youtube.com/playlist?list=PLDesaqWTN6EQ2J4vgsN1HyBeRADEh4Cw-&si=Fae64d3jbFbToin-" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Calc II Playlist</a>
               <a href="https://drive.google.com/drive/u/0/folders/1w3EmkLP9SQHthvBlJ3jqcDAPKAMynlKm" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Google Drive Resources</a>
@@ -485,9 +461,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MEC222 introduces you to the basics of engineering graphical communication, mainly teaching the basics on engineering drawings on paper and drawings made with CAD (computer aided design), along with the basics of Solidworks. Solidworks is a 3D CAD software used in mechanical engineering and related fields to design parts and create assemblies using parts.<br><br>The labs consist of 2 different sections, the manual studio labs, and the CAD/Solidworks labs. In the manual studio labs you are required to complete different views of a model, or create new ones from scratch. In the CAD labs, you are required to create a 3D model based off a given drawing.</div>
-
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs are mandatory, the TAs are generally helpful in the labs if you are stuck on a feature that you do not know how to CAD/Sketch. Manual Studio Labs (Hand drawn) do have a take home component to them. There is a big sketching project that is due around the end of the semester, I recommend starting as soon as possible, as sketching is very time consuming and there is a lot to be done for the final assignment. The manual studio labs do not allow rulers or compasses to be used as a guide to draw straight lines/perfect circles, all lines must be done freehanded, the only use of rulers that is allowed is measuring out lengths.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">There are 2 midterms, one for CAD and one for manual studio, as long as you're doing fine in the labs you should be fine for the midterm.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">The final exam is a mix of sketching and MCQ on knowledge and terminology.</div></div>
@@ -502,9 +475,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Recommended prof: <span>Professor Hamlin</span></div>
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">This course is your gateway into coding with C.</div>
-
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">I recommend going to Professor Hamlin's lectures, he is great at explaining the fundamentals of coding especially if you don't know anything at the beginning of the semester.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs aren't mandatory, but if you don't know how to code or struggle with coding, I'd highly recommend going to them because you are able to ask your TA's questions about the assignments and they can help debug your code with you. Matthew Ritchie was my TA and he was super helpful.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">The midterm is a technical one where you will be given a few questions, similar to the lab assignments you get, but a little bit harder. As long as you don't cheat/use ChatGPT to help you code all your assignments then the midterm will be relatively easy. My year was not allowed to have cheat sheets for this exam, so remember your syntax because if the code doesn't even compile then you will get a 0 automatically.</div></div>
@@ -519,9 +489,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">This course is broken down into two main topics, Statics and Mechanics:<br><br>Statics is the broad introduction and the foundation needed to understand Mechanics as it focuses on the equilibrium of rigid bodies, two and three force members, trusses, frames, and machines.<br><br>Mechanics is similar to statics in some ways, but instead of working in equilibrium this half of the course deals with dynamic movements as it focuses on stress and strain, Hooke's Law, axial and torsional loading and statically indeterminate problems.</div>
-
             <div class="course-links">
               <a href="https://www.youtube.com/playlist?list=PLXePpKFSUW2ZxGn6VdAPY9d7l7HowWVYL" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Statics Playlist 1</a>
               <a href="https://www.youtube.com/playlist?list=PLRqDfxcafc23LXGoItpkYMKtUdHaQwSDC" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Statics Playlist 2</a>
@@ -540,9 +507,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MEC325 lectures cover how ergonomics and human factors affect design. In your labs there will be 3 in-person online quizzes in total and a semester-long group project with assigned groupmates. There is no midterm. The quizzes and final exam are composed entirely of multiple choice questions related to lecture material and are cumulative.<br><br>To pass the course, a 50% combined weighted average between the quizzes and final exam is needed. A separate 50% combined weighted average is also required for the project component (milestones and final report).</div>
-
             <div class="review-section"><div class="review-section-title">Group Project (semester long)</div><div class="review-text">Milestone 1 + Milestone 2 + Final Report.<br><br>MEC325 often has one of the lower course averages. The group project portion is worth a good chunk and is very harshly marked. Groupmates are assigned based on a personality quiz. I suggest your team meet outside of lab time to discuss/work on the project together; it can be online and does not have to be every week.<br><br>For the final project either split the CAD work evenly or have 2-3 people working on just the CAD specifically as it is very time consuming for 1 person to do alone. The remaining members can do the rest of the report, which is largely based on previous milestones with added feedback and design changes on top.</div></div>
             <div class="review-section"><div class="review-section-title">Quizzes & Final Exam</div><div class="review-text">The quizzes use randomized questions from a cumulative question pool, so attending lectures and/or studying lecture materials will help you do well on them; knowledge of the ear and eye WILL be needed. If time allows, read the textbook but skip the history sections for efficiency.<br><br>Studying for the final exam is nearly identical to studying for the quizzes as their contents overlap. Therefore start early and ace those quizzes from the beginning.</div></div>
           </div></div>
@@ -574,9 +538,6 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Professor: <span>Prof. Chhabra</span></div>
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">This course gives you the beginning knowledge of C++ programming, as well as some very minor introduction to Python. The largest amount of learning in this course is done through the very challenging labs, where you are tasked with making a virtual robot navigate around an enclosed space, around obstacles, in a certain path, etc. The focus is primarily on building off of CPS188, and creating a very strong foundation of understanding of C++. The basics (for and while loops, if statements, vectors/arrays, strings) are taught, and then more advanced algorithms and techniques (structures and classes, pointers, operator overloading) are concentrated on, with a large amount of time on the 4 pillars of Object Oriented Programming (Abstraction, Encapsulation, Inheritance, and Polymorphism). Python shows up for a very small portion at the end of the course.</div>
-
             <div class="course-links">
               <a href="https://www.youtube.com/watch?v=S3nx34WFXjI&list=PLZPZq0r_RZOMHoXIcxze_lP97j2Ase2on" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>C++ Bro Code</a>
               <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>W3Schools C++</a>
@@ -604,9 +565,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTE 401 is the core circuits course for Mechatronics students, covering the foundations of electrical engineering: DC analysis, nodal and mesh methods, Thevenin/Norton equivalents, capacitors and inductors, transient response, AC circuits, phasors, impedance, and power analysis.<br><br>Students spend the term moving from resistive networks into RC/RL/RLC dynamics and sinusoidal steady-state behavior, while developing strong problem-solving habits and lab measurement skills using oscilloscopes, signal generators, and meters as outlined in the official course description.<br><br>Assessment is split heavily between theory and labs, with a midterm, a comprehensive final, lab reports, quizzes, and two individual lab tests — all of which must be passed separately to clear the course.</div>
-
             <div class="course-links">
               <a href="https://youtube.com/playlist?list=PLGbSiamfWIH8ZZ6bvcqEyVOA6euTFWCB7" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>EES 512 Circuit Analysis Playlist</a>
             </div>
@@ -668,9 +626,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTE 501 is the core signals & systems course in Mechatronics. You learn how to describe and analyze:<br><br>• Continuous-time and discrete-time signals<br>• Linear time-invariant (LTI) systems using differential/difference equations, impulse response, and convolution<br>• Frequency-domain tools: Fourier Transform, DTFS/DTFT, and z-transform<br>• Concepts like stability, causality, poles/zeros, sampling, and aliasing<br><br>Big picture: this course teaches you to think about signals and systems in both time and frequency, which is essential later for controls, robotics, communications, and embedded signal processing.</div>
-
             <div class="course-links">
               <a href="https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>MIT OCW – Signals & Systems</a>
               <a href="https://www.adampanagos.org/dt-signals-and-systems" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Adam Panagos – DT Signals</a>
@@ -693,9 +648,6 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="review-section-title">📖 Course Overview</div>
-            <div class="course-overview">MTE 502 is where you learn how the "brain" of a mechatronic system works. The course uses the ATmega328P (the chip on the Arduino Uno) and shows how it talks to sensors, motors, and other hardware. You start with the basics of CPU and memory (registers, stack, status flags), then move into AVR assembly and C, learning how to control digital I/O pins, use timers, generate PWM, read analog values with the ADC, and handle interrupts.<br><br>By the end, you should be able to look at a small robot or embedded system and actually understand what the microcontroller is doing: how it reads inputs, makes decisions, and drives outputs in real time. The course is very "hands-on" and connects directly to robotics, controls, and mechatronics projects.</div>
-
             <div class="course-links">
               <a href="https://youtube.com/playlist?list=PL09ZAP7_T_LmlX5vctZV4PFfZwMNzjX1F&si=Ze77OJ2JJR1Rwc2q" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>AVR Assembly Playlist</a>
               <a href="https://share.google/I12Cz5PKWTEqtLfbt" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>ATmega328P Datasheet</a>
@@ -758,8 +710,8 @@
   <!-- MARQUEE -->
   <div class="marquee-strip">
     <div class="marquee-track">
-      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>STUDY SMARTER</span><span class="mx">✦</span>
-      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>STUDY SMARTER</span><span class="mx">✦</span>
+      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>RESOURCE DRIVE</span><span class="mx">✦</span>
+      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>RESOURCE DRIVE</span><span class="mx">✦</span>
     </div>
   </div>
 
