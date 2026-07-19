@@ -1072,25 +1072,20 @@
           this was the main perf/lag culprit: previously the two
           per-pixel chroma-key loops kept running at full tilt no
           matter where you'd scrolled to on the page.
-       5. TEMPORAL ALPHA SMOOTHING (updated — asymmetric attack/release):
-          compression noise on reflective surfaces (the robot's hand,
-          the glowing orb) makes individual pixels flicker just across
-          the keying threshold from frame to frame, even though nothing
-          is actually moving there. Previously each pixel's alpha was
-          blended evenly with its own value from the previous processed
-          frame (35% old / 65% new), which still let a single noisy
-          frame yank a pixel most of the way toward transparent — this
-          is what caused the hand to visibly flash grey/white.
-          Now the blend is ASYMMETRIC: when a pixel is becoming MORE
-          opaque (a real reveal), it reacts almost immediately (fast
-          attack). When a pixel is becoming MORE transparent (a
-          potential key-out), it reacts very slowly (slow release) —
-          so a single-frame noise dip can no longer visibly fade the
-          hand; only a sustained, many-frame drop (an actual background
-          reveal) will. Real background/foreground transitions still
-          read as instant on the reveal side, and reliably resolve to
-          fully transparent on the fade side, just smoothed out instead
-          of flickering.
+       5. TEMPORAL ALPHA SMOOTHING (streak-gated): compression noise on
+          reflective surfaces (the robot's hand, the glowing orb) makes
+          individual pixels flicker just across the keying threshold
+          from frame to frame, even though nothing is actually moving
+          there. A plain even blend still let a single noisy frame yank
+          a pixel toward transparent (the hand flashing grey); a slow
+          blend fixed that but smeared real motion into a ghost trail
+          instead. The fix: each pixel becoming MORE opaque updates
+          fast (a real reveal shouldn't lag). Each pixel becoming MORE
+          transparent only counts if it reads that way for 2 processed
+          frames in a row — a single noisy frame barely moves it at all,
+          but a real, sustained transition is recognized within a
+          couple of frames and resolves quickly, instead of dragging
+          out into a smudge.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
@@ -1142,6 +1137,10 @@
     // Asymmetric (attack/release) temporal smoothing state — the previous
     // frame's post-smoothing alpha for every pixel, seeded fully opaque.
     var prevAlpha = new Float32Array(n).fill(255);
+    // Consecutive-frame "this pixel looks like background" counter, used to
+    // tell a single noisy frame apart from a genuine transition. Reused
+    // every frame, never reallocated.
+    var lowStreak = new Uint8Array(n);
 
     var frameCount = 0;
 
@@ -1306,25 +1305,43 @@
         }
       }
 
-      // 7) ASYMMETRIC TEMPORAL SMOOTHING (attack/release) — replaces the
-      //    old even 35/65 blend. A pixel becoming MORE opaque (rising
-      //    alpha — a real reveal, e.g. the hand moving back over that
-      //    spot) is applied almost immediately (fast "attack"). A pixel
-      //    becoming MORE transparent (falling alpha — a potential
-      //    key-out) is damped hard (slow "release"), so a single noisy
-      //    frame on a reflective surface like the hand can no longer
-      //    visibly flash it grey/transparent — it takes many consecutive
-      //    low readings in a row for a pixel to actually fade, which only
-      //    happens for genuine background. This is what stops the hand
-      //    from ever visibly losing its white color.
+      // 7) STREAK-GATED TEMPORAL SMOOTHING — replaces the earlier slow
+      //    exponential release (0.92/0.08), which fixed the grey flicker
+      //    but over-corrected into a smeary, ghost-trailing look: a plain
+      //    slow blend has a long exponential tail, so every edge takes
+      //    ~1-2 seconds to actually catch up to what the video is doing,
+      //    which reads as smudge on any real motion.
+      //
+      //    Instead of one blend speed for all drops, a per-pixel counter
+      //    (lowStreak) tracks how many PROCESSED frames in a row a pixel
+      //    has read as "background-leaning". A single noisy frame on a
+      //    reflective surface (the hand) barely moves the pixel at all —
+      //    it's held almost exactly at its previous value. Only once a
+      //    pixel reads low for 2 frames running (real, sustained motion —
+      //    not one-off compression noise) does it switch into a normal,
+      //    fast-converging blend, so genuine transitions resolve within a
+      //    couple of frames instead of dragging out into a trail.
+      //    Rising alpha (becoming more opaque) is always fast — that
+      //    direction never caused the problem.
+      var LOW_ALPHA_THRESH = 140;
       for (idx = 0; idx < n; idx++) {
         var prev = prevAlpha[idx];
-        var cur  = alphaBlur[idx];
+        var raw  = alphaBlur[idx];
         var smoothed;
-        if (cur >= prev) {
-          smoothed = prev * 0.15 + cur * 0.85;   // fast attack (opacity rising)
+        if (raw >= prev) {
+          smoothed = prev * 0.15 + raw * 0.85;   // fast attack (opacity rising)
+          lowStreak[idx] = 0;
         } else {
-          smoothed = prev * 0.92 + cur * 0.08;   // slow release (opacity falling)
+          if (raw < LOW_ALPHA_THRESH) {
+            if (lowStreak[idx] < 255) lowStreak[idx]++;
+          } else {
+            lowStreak[idx] = 0;
+          }
+          if (lowStreak[idx] >= 2) {
+            smoothed = prev * 0.30 + raw * 0.70;  // confirmed transition — resolve quickly
+          } else {
+            smoothed = prev * 0.95 + raw * 0.05;  // first low reading — likely noise, barely move
+          }
         }
         prevAlpha[idx] = smoothed;
         d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
