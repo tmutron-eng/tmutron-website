@@ -1072,17 +1072,25 @@
           this was the main perf/lag culprit: previously the two
           per-pixel chroma-key loops kept running at full tilt no
           matter where you'd scrolled to on the page.
-       5. TEMPORAL ALPHA SMOOTHING (new): compression noise on
-          reflective surfaces (the robot's hand, the glowing orb)
-          makes individual pixels flicker just across the keying
-          threshold from frame to frame, even though nothing is
-          actually moving there. Each pixel's alpha is now blended
-          with its own value from the previous processed frame
-          instead of being trusted in isolation, so a one-frame
-          noise spike gets averaged out instead of visibly flashing
-          the hand grey. Real background/foreground transitions
-          still read as instant since they persist across many
-          frames instead of just one.
+       5. TEMPORAL ALPHA SMOOTHING (updated — asymmetric attack/release):
+          compression noise on reflective surfaces (the robot's hand,
+          the glowing orb) makes individual pixels flicker just across
+          the keying threshold from frame to frame, even though nothing
+          is actually moving there. Previously each pixel's alpha was
+          blended evenly with its own value from the previous processed
+          frame (35% old / 65% new), which still let a single noisy
+          frame yank a pixel most of the way toward transparent — this
+          is what caused the hand to visibly flash grey/white.
+          Now the blend is ASYMMETRIC: when a pixel is becoming MORE
+          opaque (a real reveal), it reacts almost immediately (fast
+          attack). When a pixel is becoming MORE transparent (a
+          potential key-out), it reacts very slowly (slow release) —
+          so a single-frame noise dip can no longer visibly fade the
+          hand; only a sustained, many-frame drop (an actual background
+          reveal) will. Real background/foreground transitions still
+          read as instant on the reveal side, and reliably resolve to
+          fully transparent on the fade side, just smoothed out instead
+          of flickering.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
@@ -1131,8 +1139,8 @@
     var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
     var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
     var alphaBlur = new Uint8Array(n); // spatially-smoothed alpha, reused every frame
-    // Single-tap temporal smoothing — cheap (one read, one multiply-add,
-    // one write per pixel) and low-risk compared to multi-frame history.
+    // Asymmetric (attack/release) temporal smoothing state — the previous
+    // frame's post-smoothing alpha for every pixel, seeded fully opaque.
     var prevAlpha = new Float32Array(n).fill(255);
 
     var frameCount = 0;
@@ -1298,14 +1306,26 @@
         }
       }
 
-      // 7) LIGHT TEMPORAL SMOOTHING — blends the spatially-smoothed alpha
-      //    with its own value from the previous processed frame. A single
-      //    cheap multiply-add per pixel, no per-frame history arrays, low
-      //    risk of perf regression. Combined with the spatial blur above,
-      //    this is what softens the residual hand-highlight flicker
-      //    without the cost or bugs of a multi-frame sort.
+      // 7) ASYMMETRIC TEMPORAL SMOOTHING (attack/release) — replaces the
+      //    old even 35/65 blend. A pixel becoming MORE opaque (rising
+      //    alpha — a real reveal, e.g. the hand moving back over that
+      //    spot) is applied almost immediately (fast "attack"). A pixel
+      //    becoming MORE transparent (falling alpha — a potential
+      //    key-out) is damped hard (slow "release"), so a single noisy
+      //    frame on a reflective surface like the hand can no longer
+      //    visibly flash it grey/transparent — it takes many consecutive
+      //    low readings in a row for a pixel to actually fade, which only
+      //    happens for genuine background. This is what stops the hand
+      //    from ever visibly losing its white color.
       for (idx = 0; idx < n; idx++) {
-        var smoothed = prevAlpha[idx] * 0.35 + alphaBlur[idx] * 0.65;
+        var prev = prevAlpha[idx];
+        var cur  = alphaBlur[idx];
+        var smoothed;
+        if (cur >= prev) {
+          smoothed = prev * 0.15 + cur * 0.85;   // fast attack (opacity rising)
+        } else {
+          smoothed = prev * 0.92 + cur * 0.08;   // slow release (opacity falling)
+        }
         prevAlpha[idx] = smoothed;
         d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
       }
@@ -1373,8 +1393,9 @@
   // Mascot: tight threshold/softness so only genuinely near-white pixels
   // key out. Back to the original scale/skip (0.5 / 3) on desktop — the
   // wider scale and skip from an earlier attempt made things heavier,
-  // not lighter. The spatial + light temporal blending above does the
-  // actual anti-flicker work now, without changing the sampling rate.
+  // not lighter. The spatial blur + asymmetric temporal smoothing above
+  // do the actual anti-flicker work now, without changing the sampling
+  // rate.
   if (mascotVideo && mascotCanvas) {
     chromaKeyFlood(mascotVideo, mascotCanvas, {
       threshold: 30, softness: 12,
