@@ -665,11 +665,19 @@
 
   <!-- ═══════════════════ STATS GRID 3 + EVENT CHIPS CSS ═══════════════════ -->
   <style>
-    /* 3-column stat grid */
+    /* 3-column stat grid, stepping down for tablet/phone widths so the
+       stat-number's clamp(52px,6vw,80px) floor never gets squeezed into
+       a too-narrow column. Was a single 640px cut straight to 1 column —
+       left 641-1100px (most tablets) stuck at 3 cramped columns. */
     .stats-grid-3 {
       grid-template-columns: repeat(3, 1fr) !important;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
+      .stats-grid-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 480px) {
       .stats-grid-3 {
         grid-template-columns: 1fr !important;
       }
@@ -1338,15 +1346,42 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
+  // MOBILE PERF: this per-pixel flood-fill + blur pipeline runs twice a
+  // frame (logo + mascot) and is expensive on phone-class CPUs/GPUs —
+  // dropping internal render scale and processing fewer frames/sec keeps
+  // the rest of the page (scroll, carousel drag) responsive on mobile
+  // without changing how big anything looks on screen (CSS still
+  // controls display size).
+  var isNarrowViewport = window.matchMedia('(max-width: 700px)').matches;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reduced motion: key one frame so the logo/mascot aren't blank, then
+  // stop re-processing entirely instead of running a continuous loop.
+  var mobileSkipBump = isNarrowViewport ? 2 : 0;
+  var mobileScaleCut = isNarrowViewport ? 0.7 : 1;
+
   // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
-  if (logoVideo && logoCanvas)     chromaKeyFlood(logoVideo, logoCanvas, { threshold: 130, softness: 25, scale: 0.55, skip: 3, finalSmoothing: false });
+  if (logoVideo && logoCanvas) {
+    chromaKeyFlood(logoVideo, logoCanvas, {
+      threshold: 130, softness: 25,
+      scale: 0.55 * mobileScaleCut,
+      skip: prefersReducedMotion ? 999 : 3 + mobileSkipBump,
+      finalSmoothing: false
+    });
+  }
 
   // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out. Back to the original scale/skip (0.5 / 3) — the wider
-  // scale and skip from the last attempt made things heavier, not
-  // lighter. The spatial + light temporal blending above does the
+  // key out. Back to the original scale/skip (0.5 / 3) on desktop — the
+  // wider scale and skip from an earlier attempt made things heavier,
+  // not lighter. The spatial + light temporal blending above does the
   // actual anti-flicker work now, without changing the sampling rate.
-  if (mascotVideo && mascotCanvas) chromaKeyFlood(mascotVideo, mascotCanvas, { threshold: 30, softness: 12, scale: 0.5, skip: 3 });
+  if (mascotVideo && mascotCanvas) {
+    chromaKeyFlood(mascotVideo, mascotCanvas, {
+      threshold: 30, softness: 12,
+      scale: 0.5 * mobileScaleCut,
+      skip: prefersReducedMotion ? 999 : 3 + mobileSkipBump
+    });
+  }
 })();
 </script>
 </body>
