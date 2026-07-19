@@ -165,26 +165,9 @@
     .review-text { font-family: var(--font-body); font-size: 14.5px; color: var(--steel-light); font-weight: 300; line-height: 1.85; }
     .review-text ul { margin: 8px 0 8px 16px; display: flex; flex-direction: column; gap: 4px; }
     .review-text li::marker { color: var(--red); }
-    /* Inline links inside review text / week tables — legible, underlined, hover-highlighted */
-    .review-text a, .week-topic a {
-      color: #ff5a5f;
-      text-decoration: underline;
-      text-decoration-color: rgba(255,90,95,0.4);
-      text-underline-offset: 3px;
-      font-weight: 500;
-      transition: color 0.15s, text-decoration-color 0.15s;
-    }
-    .review-text a:hover, .week-topic a:hover { color: #ff8388; text-decoration-color: #ff8388; }
+    /* .review-text a / .week-topic a / .course-link-btn now live in css/style.css
+       (shared across pages) — see the "SHARED LINK / BUTTON STYLES" block there. */
     .course-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-    .course-link-btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-family: var(--font-cond); font-size: 12px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--white); background: rgba(227,27,35,0.12); border: 1px solid rgba(227,27,35,0.5);
-      padding: 8px 14px; border-radius: 4px; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
-    }
-    .course-link-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); transform: translateY(-1px); }
-    .course-link-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
     .weeks-table { margin-top: 16px; }
     .weeks-table-header {
       display: grid; grid-template-columns: 70px 1fr; gap: 16px;
