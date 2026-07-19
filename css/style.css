@@ -1633,3 +1633,57 @@ em { font-style: italic; color: var(--red); }
   border-color: var(--red);
   color: var(--white) !important;
 }
+
+/* ══════════════════════════════════════════════════
+   MOBILE HARDENING — small-phone safety net
+   The clamp() minimums on display headlines (64-140px,
+   42-72px, etc.) don't shrink further below their floor,
+   so on very narrow phones (≤380px) they can crowd the
+   edges even with overflow-x:hidden masking it. Scoped
+   tightly so nothing above this width changes.
+   ══════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .hero-headline   { font-size: clamp(46px, 13vw, 64px); }
+  .cta-headline    { font-size: clamp(38px, 11vw, 52px); }
+  .section-title   { font-size: clamp(32px, 9vw, 42px); }
+  .ev-hero-title   { font-size: clamp(44px, 12vw, 64px); }
+  .tm-hero-title   { font-size: clamp(42px, 11vw, 60px); }
+  .suggest-title   { font-size: clamp(28px, 9vw, 36px); }
+  .container       { padding: 0 16px; }
+}
+
+/* Touch target sizing — bump a few controls up toward the ~40-44px
+   guideline on phones without changing their look on desktop. */
+@media (max-width: 600px) {
+  .nav-hamburger { padding: 10px; }
+  .gr-btn        { width: 40px; height: 40px; }
+  .filter-btn    { padding: 16px 14px; }
+  .social-link   { width: 40px; height: 40px; }
+}
+
+/* ══════════════════════════════════════════════════
+   SHARED LINK / BUTTON STYLES — used on academics.html
+   (course resource links, inline citation links in
+   student reviews, week-by-week video links). Centralized
+   here so any page can reuse them.
+   ══════════════════════════════════════════════════ */
+.review-text a, .week-topic a {
+  color: #ff5a5f;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,90,95,0.4);
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.review-text a:hover, .week-topic a:hover { color: #ff8388; text-decoration-color: #ff8388; }
+
+.course-link-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-cond); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--white); background: rgba(227,27,35,0.12); border: 1px solid rgba(227,27,35,0.5);
+  padding: 8px 14px; border-radius: 4px; text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+.course-link-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); transform: translateY(-1px); }
+.course-link-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
