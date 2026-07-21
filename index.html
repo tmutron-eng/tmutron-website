@@ -271,7 +271,7 @@
             <div class="ring r3"></div>
             <div class="ring-center mascot-wrap">
               <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
             </div>
             <div class="orbit o1"><div class="orbit-dot"></div></div>
             <div class="orbit o2"><div class="orbit-dot od2"></div></div>
@@ -722,11 +722,17 @@
     }
 
     /* ══════════════════════════════════════════
-       CANVAS LOGO + MASCOT — replaces static SVGs
-       Rendered via live chroma-key JS (see bottom script) because
-       <video> elements cannot show alpha transparency in any browser —
-       only <canvas> can, so the source videos play hidden and get
-       painted frame-by-frame onto these canvases with white keyed out.
+       CANVAS LOGO + MASCOT
+       The logo canvas still uses the live chroma-key JS (see bottom
+       script) because its source is a plain mp4 with no transparency
+       info at all — <video> elements can't show alpha, so a hidden
+       <video> plays it and a visible <canvas> paints it frame-by-frame
+       with white keyed out.
+
+       The mascot no longer needs any of that: its clip is an
+       alpha-channel WebM with real per-pixel transparency baked in by
+       the video itself, so the canvas just draws its frames directly —
+       see renderAlphaVideo() in the script below.
        ══════════════════════════════════════════ */
 
     /* Hero big logo canvas — same box the SVG used to sit in */
@@ -1048,16 +1054,27 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════
-     LIVE CHROMA-KEY RENDERER  (perf-optimized flood-fill version)
+     LOGO CHROMA-KEY + MASCOT ALPHA-VIDEO RENDERERS
 
-     <video> elements can never show alpha transparency in
-     any browser — only <canvas> can. So each source video
-     plays hidden, and frames are painted onto a paired canvas
-     with connected-to-edge white pixels made transparent
-     (flood fill from the border), so isolated white "MCU"/"TMU"
-     lettering enclosed by red never gets keyed out.
+     The logo clip (mcu-tmu-logo-glitch-src.mp4) is a plain mp4 with no
+     transparency info, so it still goes through the flood-fill
+     chroma-key pipeline below: <video> elements can't show alpha in any
+     browser, so it plays hidden and gets painted frame-by-frame onto a
+     canvas with connected-to-edge white pixels keyed out (flood fill
+     from the border, so isolated white "MCU"/"TMU" lettering enclosed
+     by red never gets keyed out).
 
-     PERF FIXES vs the naive per-pixel version:
+     The mascot clip (mcu-robot-mascot-src.webm) is different: it's an
+     alpha-channel WebM with genuine per-pixel transparency baked in by
+     the video encode itself. It doesn't need any chroma-keying — the
+     canvas just draws its frames directly via renderAlphaVideo(), and
+     the transparency comes along for free wherever the browser decodes
+     WebM alpha (Chrome/Edge reliably, Firefox mostly; Safari doesn't
+     support WebM alpha and will show an opaque frame there, same
+     ceiling the old approach had anyway since Safari couldn't handle
+     the old flood-fill canvas trick well either).
+
+     PERF FIXES vs a naive per-pixel version (logo path):
        1. Processing happens on a small OFFSCREEN work canvas at
           `scale` (default 0.5 = 1/4 the pixels) instead of full
           resolution, then the result is scaled up into the visible
@@ -1069,23 +1086,23 @@
           ONCE per canvas and reused every frame — no per-frame GC churn.
        4. The whole loop pauses while the tab is hidden, AND while the
           hero section is scrolled off-screen (IntersectionObserver) —
-          this was the main perf/lag culprit: previously the two
-          per-pixel chroma-key loops kept running at full tilt no
-          matter where you'd scrolled to on the page.
-       5. TEMPORAL ALPHA SMOOTHING (streak-gated): compression noise on
-          reflective surfaces (the robot's hand, the glowing orb) makes
-          individual pixels flicker just across the keying threshold
-          from frame to frame, even though nothing is actually moving
-          there. A plain even blend still let a single noisy frame yank
-          a pixel toward transparent (the hand flashing grey); a slow
-          blend fixed that but smeared real motion into a ghost trail
-          instead. The fix: each pixel becoming MORE opaque updates
-          fast (a real reveal shouldn't lag). Each pixel becoming MORE
-          transparent only counts if it reads that way for 2 processed
-          frames in a row — a single noisy frame barely moves it at all,
-          but a real, sustained transition is recognized within a
-          couple of frames and resolves quickly, instead of dragging
-          out into a smudge.
+          this was the main perf/lag culprit: previously the per-pixel
+          chroma-key loop kept running at full tilt no matter where
+          you'd scrolled to on the page. The mascot's simpler
+          renderAlphaVideo() shares this same visibility gate.
+       5. TEMPORAL ALPHA SMOOTHING (streak-gated, logo path only):
+          compression noise on reflective/glitchy areas makes individual
+          pixels flicker just across the keying threshold from frame to
+          frame, even though nothing is actually moving there. A plain
+          even blend still let a single noisy frame yank a pixel toward
+          transparent; a slow blend fixed that but smeared real motion
+          into a ghost trail instead. The fix: each pixel becoming MORE
+          opaque updates fast (a real reveal shouldn't lag). Each pixel
+          becoming MORE transparent only counts if it reads that way for
+          2 processed frames in a row — a single noisy frame barely
+          moves it at all, but a real, sustained transition is
+          recognized within a couple of frames and resolves quickly,
+          instead of dragging out into a smudge.
      ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
@@ -1178,11 +1195,10 @@
 
       // 1a) smooth RGB (3x3 average) for the keying decision only — the
       //     visible pixel colors in `d` are left completely untouched.
-      //     Reflective surfaces (the hand, the glowing orb) carry
-      //     compression noise/dither that flickers right around the
-      //     threshold pixel-by-pixel; averaging it out first means a
-      //     patch of surface reads as one consistent value instead of
-      //     scattering into speckle.
+      //     Reflective surfaces carry compression noise/dither that
+      //     flickers right around the threshold pixel-by-pixel;
+      //     averaging it out first means a patch of surface reads as
+      //     one consistent value instead of scattering into speckle.
       var bx, by, bdx, bdy, byy, bxx, oi, rs, gs, bs, cnt;
       for (by = 0; by < h; by++) {
         for (bx = 0; bx < w; bx++) {
@@ -1259,13 +1275,10 @@
         }
       }
 
-      // 5) DESPECKLE PASS — fixes the white sparkle/noise artifacts around
-      //    reflective parts (robot hand, glowing orb): compression noise
-      //    and specular highlights on those surfaces sometimes land just
-      //    outside the flood-fill's connected path and stay opaque, which
-      //    shows up as stray white flecks in what should be transparent
-      //    background. Any pixel that's mostly surrounded by
-      //    already-transparent neighbors gets treated as background too,
+      // 5) DESPECKLE PASS — cleans up stray white flecks that land just
+      //    outside the flood-fill's connected path (specular
+      //    highlights/compression noise) by treating any pixel mostly
+      //    surrounded by already-transparent neighbors as background too,
       //    regardless of whether the flood fill technically reached it.
       for (y = ry0 + 1; y < ry1; y++) {
         for (x = rx0 + 1; x < rx1; x++) {
@@ -1287,8 +1300,8 @@
       // 6) SPATIAL ALPHA BLUR — a plain 3x3 average of the despeckled
       //    alpha values. This is pure spatial math with no frame-to-frame
       //    state, so it can't introduce timing bugs: any single noisy
-      //    pixel (like a boundary highlight on the hand) gets pulled
-      //    toward its neighbors' values instead of standing out on its own.
+      //    pixel gets pulled toward its neighbors' values instead of
+      //    standing out on its own.
       var abx, aby, abdx, abdy, abyy, abxx, aidx, asum, acnt;
       for (aby = 0; aby < h; aby++) {
         for (abx = 0; abx < w; abx++) {
@@ -1305,24 +1318,17 @@
         }
       }
 
-      // 7) STREAK-GATED TEMPORAL SMOOTHING — replaces the earlier slow
-      //    exponential release (0.92/0.08), which fixed the grey flicker
-      //    but over-corrected into a smeary, ghost-trailing look: a plain
-      //    slow blend has a long exponential tail, so every edge takes
-      //    ~1-2 seconds to actually catch up to what the video is doing,
-      //    which reads as smudge on any real motion.
-      //
-      //    Instead of one blend speed for all drops, a per-pixel counter
+      // 7) STREAK-GATED TEMPORAL SMOOTHING — a per-pixel counter
       //    (lowStreak) tracks how many PROCESSED frames in a row a pixel
-      //    has read as "background-leaning". A single noisy frame on a
-      //    reflective surface (the hand) barely moves the pixel at all —
-      //    it's held almost exactly at its previous value. Only once a
-      //    pixel reads low for 2 frames running (real, sustained motion —
-      //    not one-off compression noise) does it switch into a normal,
-      //    fast-converging blend, so genuine transitions resolve within a
-      //    couple of frames instead of dragging out into a trail.
-      //    Rising alpha (becoming more opaque) is always fast — that
-      //    direction never caused the problem.
+      //    has read as "background-leaning". A single noisy frame barely
+      //    moves the pixel at all — it's held almost exactly at its
+      //    previous value. Only once a pixel reads low for 2 frames
+      //    running (real, sustained motion — not one-off compression
+      //    noise) does it switch into a normal, fast-converging blend, so
+      //    genuine transitions resolve within a couple of frames instead
+      //    of dragging out into a trail. Rising alpha (becoming more
+      //    opaque) is always fast — that direction never caused the
+      //    problem.
       var LOW_ALPHA_THRESH = 140;
       for (idx = 0; idx < n; idx++) {
         var prev = prevAlpha[idx];
@@ -1378,26 +1384,80 @@
     requestAnimationFrame(frame);
   }
 
+  // Simple alpha-preserving video-to-canvas renderer — used for clips
+  // that already carry real per-pixel transparency (alpha-channel
+  // WebM), so no chroma-key/flood-fill/despeckle work is needed at all.
+  // Canvas drawImage() from a <video> element preserves that alpha
+  // natively wherever the browser decodes WebM alpha (Chrome/Edge
+  // reliably, Firefox mostly; Safari doesn't support it and will just
+  // show an opaque frame there).
+  function renderAlphaVideo(video, canvas, opts) {
+    opts = opts || {};
+    var skip = opts.skip != null ? opts.skip : 0;
+    var ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+
+    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
+    var rect = { x: 0, y: 0, w: canvas.width, h: canvas.height };
+    function updateRect() {
+      var vw = video.videoWidth, vh = video.videoHeight;
+      if (!vw || !vh) { rect = { x: 0, y: 0, w: canvas.width, h: canvas.height }; return; }
+      var cw = canvas.width, ch = canvas.height;
+      var canvasAspect = cw / ch, vidAspect = vw / vh;
+      var dw, dh;
+      if (vidAspect > canvasAspect) { dw = cw; dh = cw / vidAspect; }
+      else                          { dh = ch; dw = ch * vidAspect; }
+      rect = {
+        x: Math.round((cw - dw) / 2),
+        y: Math.round((ch - dh) / 2),
+        w: Math.round(dw),
+        h: Math.round(dh)
+      };
+    }
+    video.addEventListener('loadedmetadata', updateRect);
+    updateRect();
+
+    var frameCount = 0;
+    function frame() {
+      if (document.hidden || !heroVisible) { requestAnimationFrame(frame); return; }
+      if (video.readyState >= 2 && !video.paused && !video.ended) {
+        frameCount++;
+        if (frameCount % (skip + 1) === 0) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(video, rect.x, rect.y, rect.w, rect.h);
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    var tryPlay = function () {
+      var p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
+    };
+    tryPlay();
+    video.addEventListener('loadedmetadata', tryPlay);
+    document.addEventListener('click', tryPlay, { once: true });
+    requestAnimationFrame(frame);
+  }
+
   var logoVideo  = document.getElementById('mcuLogoSrcVideo');
   var logoCanvas = document.getElementById('mcuLogoCanvas');
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  // MOBILE PERF: this per-pixel flood-fill + blur pipeline runs twice a
-  // frame (logo + mascot) and is expensive on phone-class CPUs/GPUs —
-  // dropping internal render scale and processing fewer frames/sec keeps
-  // the rest of the page (scroll, carousel drag) responsive on mobile
-  // without changing how big anything looks on screen (CSS still
-  // controls display size).
+  // MOBILE PERF: the logo's per-pixel flood-fill + blur pipeline is
+  // expensive on phone-class CPUs/GPUs — dropping internal render scale
+  // and processing fewer frames/sec keeps the rest of the page (scroll,
+  // carousel drag) responsive on mobile without changing how big
+  // anything looks on screen (CSS still controls display size).
   var isNarrowViewport = window.matchMedia('(max-width: 700px)').matches;
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Reduced motion: key one frame so the logo/mascot aren't blank, then
-  // stop re-processing entirely instead of running a continuous loop.
   var mobileSkipBump = isNarrowViewport ? 2 : 0;
   var mobileScaleCut = isNarrowViewport ? 0.7 : 1;
 
   // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
+  // Still needs the full chroma-key pipeline since it's a plain mp4.
   if (logoVideo && logoCanvas) {
     chromaKeyFlood(logoVideo, logoCanvas, {
       threshold: 130, softness: 25,
@@ -1407,17 +1467,13 @@
     });
   }
 
-  // Mascot: tight threshold/softness so only genuinely near-white pixels
-  // key out. Back to the original scale/skip (0.5 / 3) on desktop — the
-  // wider scale and skip from an earlier attempt made things heavier,
-  // not lighter. The spatial blur + asymmetric temporal smoothing above
-  // do the actual anti-flicker work now, without changing the sampling
-  // rate.
+  // Mascot: alpha-channel WebM — just draw its frames straight through,
+  // no keying needed. A light frame-skip on mobile is still worthwhile
+  // for perf (drawImage + clearRect every frame at 60fps adds up on
+  // phones), but there's no chroma-key math to tune here anymore.
   if (mascotVideo && mascotCanvas) {
-    chromaKeyFlood(mascotVideo, mascotCanvas, {
-      threshold: 30, softness: 12,
-      scale: 0.5 * mobileScaleCut,
-      skip: prefersReducedMotion ? 999 : 3 + mobileSkipBump
+    renderAlphaVideo(mascotVideo, mascotCanvas, {
+      skip: prefersReducedMotion ? 999 : mobileSkipBump
     });
   }
 })();
