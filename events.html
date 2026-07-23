@@ -95,33 +95,26 @@
         </p>
       </div>
 
-      <!-- Right: HUD stats panel -->
-      <div class="ev-hud-panel reveal-right delay-2">
+      <!-- Right: HUD video panel -->
+      <div class="ev-hud-panel ev-video-panel reveal-right delay-2">
         <div class="ev-hud-header mono">
           <span class="ev-hud-dot"></span>
           EVENTS SYSTEM · ACTIVE
         </div>
-        <div class="ev-hud-stats">
-          <div class="ev-hud-stat">
-            <span class="ev-hud-num">10</span>
-            <span class="ev-hud-label mono">EVENTS THIS YEAR</span>
-          </div>
-          <div class="ev-hud-divider"></div>
-          <div class="ev-hud-stat">
-            <span class="ev-hud-num">300<span style="font-size:0.5em;color:var(--red)">+</span></span>
-            <span class="ev-hud-label mono">MEMBERS REACHED</span>
-          </div>
-          <div class="ev-hud-divider"></div>
-          <div class="ev-hud-stat">
-            <span class="ev-hud-num-sm mono">APR 2025</span>
-            <span class="ev-hud-label mono">MCU FOUNDED</span>
-          </div>
+
+        <div class="ev-video-frame">
+          <video class="ev-hud-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/images/mom_events.webm" type="video/webm">
+          </video>
+          <div class="ev-video-scan"></div>
+          <span class="ev-video-rec mono"><span class="ev-hud-dot ev-rec-dot"></span>REC</span>
+          <div class="evf-corner evf-tl"></div>
+          <div class="evf-corner evf-tr"></div>
+          <div class="evf-corner evf-bl"></div>
+          <div class="evf-corner evf-br"></div>
         </div>
+
         <div class="ev-hud-footer mono">YEAR 1 · 2025–26</div>
-        <div class="hbp-bracket hbp-tl"></div>
-        <div class="hbp-bracket hbp-tr"></div>
-        <div class="hbp-bracket hbp-bl"></div>
-        <div class="hbp-bracket hbp-br"></div>
       </div>
     </div>
   </section>
