@@ -371,6 +371,130 @@
       50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 0 6px rgba(87,242,135,0); }
     }
 
+    /* ══════════════════════════════════════════════
+       DISCORD BOT STAGE — hex-portal frame, echoes
+       the loader's hex mark; dual red/blurple glow;
+       grounded floor light; status tag. Scoped to its
+       own classes (doesn't touch .hero-mascot-solo /
+       .hud-video-float used on team.html / events.html).
+       ══════════════════════════════════════════════ */
+    .discord-bot-stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(260px, 26vw, 380px);
+      aspect-ratio: 1;
+      flex-shrink: 0;
+    }
+    .discord-bot-stage::before {
+      content: '';
+      position: absolute;
+      bottom: -4%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68%;
+      height: 16%;
+      background: radial-gradient(ellipse at center, rgba(227,27,35,0.4) 0%, transparent 75%);
+      filter: blur(16px);
+      z-index: 0;
+    }
+    .dbs-glow {
+      position: absolute;
+      inset: -18%;
+      background: radial-gradient(circle at 50% 42%, rgba(227,27,35,0.26) 0%, rgba(88,101,242,0.12) 45%, transparent 75%);
+      filter: blur(36px);
+      animation: dbs-pulse 4.5s ease-in-out infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes dbs-pulse {
+      0%, 100% { opacity: 0.65; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.08); }
+    }
+    .dbs-hex-ring,
+    .dbs-hex-ring-outer {
+      position: absolute;
+      fill: none;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .dbs-hex-ring {
+      inset: 6%;
+      stroke: rgba(88,101,242,0.4);
+      stroke-width: 0.6;
+      animation: dbs-spin 34s linear infinite;
+    }
+    .dbs-hex-ring-outer {
+      inset: -4%;
+      stroke: rgba(227,27,35,0.22);
+      stroke-width: 0.4;
+      stroke-dasharray: 3 4;
+      animation: dbs-spin 50s linear infinite reverse;
+    }
+    .dbs-hex-ring polygon,
+    .dbs-hex-ring-outer polygon { vector-effect: non-scaling-stroke; }
+    @keyframes dbs-spin { to { transform: rotate(360deg); } }
+    .discord-bot-frame {
+      position: relative;
+      z-index: 2;
+      width: 76%;
+      height: 76%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(18px) scale(0.92);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .discord-bot-frame.in-view { opacity: 1; transform: translateY(0) scale(1); }
+    .discord-bot-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 18px rgba(227,27,35,0.32))
+        drop-shadow(0 0 42px rgba(88,101,242,0.2))
+        drop-shadow(0 12px 26px rgba(0,0,0,0.55));
+      animation: hud-video-bob 3.6s ease-in-out infinite;
+    }
+    .dbs-tag {
+      position: absolute;
+      bottom: -6%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--steel);
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(88,101,242,0.3);
+      padding: 6px 14px;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+    .dbs-tag .dbs-pulse-dot {
+      width: 5px; height: 5px;
+      background: #57f287;
+      border-radius: 50%;
+      animation: dbs-pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes dbs-pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(87,242,135,0.4); }
+      50%      { opacity: 0.85; box-shadow: 0 0 0 5px rgba(87,242,135,0); }
+    }
+    @media (max-width: 900px) {
+      .discord-bot-stage { margin: 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .dbs-glow, .dbs-hex-ring, .dbs-hex-ring-outer,
+      .discord-bot-frame video, .dbs-tag .dbs-pulse-dot { animation: none !important; }
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .ct-hero-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -468,13 +592,26 @@
             discord.gg/5hYv4qEW
           </div>
         </div>
-        <div class="hero-mascot-solo">
-          <div class="hud-video-float">
+
+        <!-- ═══ DISCORD BOT STAGE — hex-portal frame ═══ -->
+        <div class="discord-bot-stage">
+          <div class="dbs-glow"></div>
+          <svg class="dbs-hex-ring-outer" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,2 98,28 98,88 50,114 2,88 2,28"/>
+          </svg>
+          <svg class="dbs-hex-ring" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,2 98,28 98,88 50,114 2,88 2,28"/>
+          </svg>
+          <div class="discord-bot-frame">
             <video autoplay muted loop playsinline>
               <source src="assets/images/mom.contact.webm" type="video/webm">
             </video>
           </div>
+          <div class="dbs-tag mono">
+            <span class="dbs-pulse-dot"></span>MCU-BOT // ONLINE
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -745,10 +882,10 @@
   </script>
   <script src="js/animations.js"></script>
   <script>
-  // Reveal the floating mascot video — self-contained here in case
-  // animations.js doesn't already have a generic .hud-video-float handler.
+  // Reveal the Discord bot stage's video frame — self-contained here in
+  // case animations.js doesn't already have a generic handler for it.
   (function () {
-    var el = document.querySelector('.hud-video-float');
+    var el = document.querySelector('.discord-bot-frame');
     if (!el) return;
     setTimeout(function () { el.classList.add('in-view'); }, 300);
   })();
