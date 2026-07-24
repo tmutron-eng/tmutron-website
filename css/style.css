@@ -1677,6 +1677,37 @@ em { font-style: italic; color: var(--red); }
 .evf-bl::after,  .evf-br::after  { top: auto; bottom: 0; }
 
 /* ══════════════════════════════════════════════════
+   HERO MASCOT SOLO WRAPPER — team.html + events.html
+   Replaces the bordered HUD panel entirely. Just the
+   video, nudged left, with a soft ambient glow behind
+   it — same idea as the homepage mascot, no chrome.
+   ══════════════════════════════════════════════════ */
+.hero-mascot-solo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform: translateX(-30px);
+}
+.hero-mascot-solo::before {
+  content: '';
+  position: absolute;
+  inset: -70px;
+  background: radial-gradient(circle, rgba(227,27,35,0.16) 0%, transparent 70%);
+  filter: blur(44px);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-mascot-solo .hud-video-float {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .hero-mascot-solo { display: none; }
+}
+
+/* ══════════════════════════════════════════════════
    FLOATING VIDEO MASCOT — team.html + events.html
    No frame, no border, no scan/REC overlay — the clip
    just floats free with a soft glow and a gentle bob,
