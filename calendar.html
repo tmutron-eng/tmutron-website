@@ -47,6 +47,14 @@
       position: relative; z-index: 5;
       padding: 60px clamp(20px,5vw,60px);
       width: 100%; max-width: var(--max-w); margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 48px;
+    }
+    .cal-hero-left { display: flex; flex-direction: column; }
+    @media (max-width: 900px) {
+      .cal-hero-inner { grid-template-columns: 1fr; }
     }
     .cal-eyebrow {
       font-family: var(--font-mono);
@@ -264,9 +272,18 @@
     <div class="cal-hero-scan"></div>
     <div class="cal-hero-grid"></div>
     <div class="cal-hero-inner">
-      <span class="cal-eyebrow reveal-up">MCU // SCHEDULE</span>
-      <h1 class="cal-hero-title reveal-up delay-1">CALENDAR</h1>
-      <p class="cal-hero-sub reveal-up delay-2">Study halls, workshops, socials and more — synced live from our Google Calendar. Click any event for details, or subscribe to get it on your own calendar.</p>
+      <div class="cal-hero-left">
+        <span class="cal-eyebrow reveal-up">MCU // SCHEDULE</span>
+        <h1 class="cal-hero-title reveal-up delay-1">CALENDAR</h1>
+        <p class="cal-hero-sub reveal-up delay-2">Study halls, workshops, socials and more — synced live from our Google Calendar. Click any event for details, or subscribe to get it on your own calendar.</p>
+      </div>
+      <div class="hero-mascot-solo">
+        <div class="hud-video-float">
+          <video autoplay muted loop playsinline>
+            <source src="assets/images/mom.calendar.webm" type="video/webm">
+          </video>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -404,6 +421,15 @@
     if (isMobile()) setMode('AGENDA');
   })();
   </script>
-<script src="js/animations.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+  // Reveal the floating mascot video — self-contained here in case
+  // animations.js doesn't already have a generic .hud-video-float handler.
+  (function () {
+    var el = document.querySelector('.hud-video-float');
+    if (!el) return;
+    setTimeout(function () { el.classList.add('in-view'); }, 300);
+  })();
+  </script>
 </body>
 </html>
