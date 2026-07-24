@@ -296,10 +296,12 @@
           </div>
         </div>
         <div class="ac-hero-right reveal-up delay-3">
-          <div class="ac-hud-panel">
-            <div class="ac-hud-row"><div class="ac-hud-num" style="font-size:20px;">Open</div><div class="ac-hud-label">Past Exams &amp; Notes</div></div>
-            <div class="ac-hud-row"><div class="ac-hud-num">12+</div><div class="ac-hud-label">Courses Organized</div></div>
-            <div class="ac-hud-row"><div class="ac-hud-num">100%</div><div class="ac-hud-label">Student-Shared</div></div>
+          <div class="hero-mascot-solo">
+            <div class="hud-video-float">
+              <video autoplay muted loop playsinline>
+                <source src="assets/images/mom.academics.webm" type="video/webm">
+              </video>
+            </div>
           </div>
         </div>
       </div>
@@ -770,5 +772,14 @@
     const fy = document.getElementById('footer-year'); if (fy) fy.textContent = new Date().getFullYear();
   </script>
   <script src="js/animations.js"></script>
+  <script>
+  // Reveal the floating mascot video — self-contained here in case
+  // animations.js doesn't already have a generic .hud-video-float handler.
+  (function () {
+    var el = document.querySelector('.hud-video-float');
+    if (!el) return;
+    setTimeout(function () { el.classList.add('in-view'); }, 300);
+  })();
+  </script>
 </body>
 </html>
