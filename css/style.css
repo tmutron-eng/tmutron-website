@@ -1677,146 +1677,54 @@ em { font-style: italic; color: var(--red); }
 .evf-bl::after,  .evf-br::after  { top: auto; bottom: 0; }
 
 /* ══════════════════════════════════════════════════
-   EVENTS HUD — VIDEO PANEL (events.html)
-   Ready to use if/when you want to swap the numbers
-   HUD panel on events.html for a looping video, same
-   as team.html below. Not wired into events.html yet.
+   FLOATING VIDEO MASCOT — team.html + events.html
+   No frame, no border, no scan/REC overlay — the clip
+   just floats free with a soft glow and a gentle bob,
+   the same treatment as the homepage robot mascot.
    ══════════════════════════════════════════════════ */
-.ev-video-panel {
+.hud-video-float {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 24px 24px 20px;
-}
-.ev-video-frame {
-  position: relative;
-  width: 100%;
-  max-width: 210px;
-  aspect-ratio: 360 / 446;
-  margin: 4px 0 20px;
-  border-radius: 3px;
-  overflow: hidden;
-  background: #000;
-  border: 1px solid rgba(227,27,35,0.35);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 16px 40px rgba(0,0,0,0.5), 0 0 32px rgba(227,27,35,0.12);
-}
-.ev-hud-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(1.05) contrast(1.03);
-}
-.ev-video-scan {
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 40%;
-  background: linear-gradient(to bottom, rgba(227,27,35,0.10), transparent);
-  animation: ev-video-scan-move 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-@keyframes ev-video-scan-move {
-  0%, 100% { transform: translateY(-100%); opacity: 0; }
-  10%       { opacity: 0.8; }
-  50%       { transform: translateY(220%); opacity: 0.4; }
-  90%       { opacity: 0; }
-}
-.ev-video-rec {
-  position: absolute;
-  top: 10px; left: 10px; z-index: 3;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 9px; letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.85);
-  background: rgba(0,0,0,0.35);
-  padding: 4px 8px; border-radius: 2px;
-  backdrop-filter: blur(2px);
-}
-.ev-rec-dot { width: 6px; height: 6px; }
-@media (prefers-reduced-motion: reduce) {
-  .ev-video-scan { animation: none; opacity: 0; }
-}
-
-/* ══════════════════════════════════════════════════
-   TEAM HUD — VIDEO PANEL (team.html)
-   Replaces the stat-number HUD panel in team.html's
-   hero, with mom.team.webm looping in a bordered frame
-   that "bends in" (3D perspective swing) as it scrolls
-   into view. Reuses .evf-corner above for the brackets.
-   ══════════════════════════════════════════════════ */
-.tm-video-panel {
-  display: flex;
   justify-content: center;
-  padding: 4px 4px 8px;
-}
-.tm-video-frame {
-  position: relative;
   width: 100%;
   max-width: 230px;
   aspect-ratio: 360 / 446;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #000;
-  border: 1px solid rgba(227,27,35,0.35);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.03),
-    0 16px 40px rgba(0,0,0,0.5),
-    0 0 32px rgba(227,27,35,0.12);
+  margin: 8px auto 4px;
+  background: transparent;
+  overflow: visible;
 
-  /* bend-in start state */
   opacity: 0;
-  transform: perspective(900px) rotateY(-34deg) rotateX(4deg) translateX(24px) scale(0.94);
-  transform-origin: right center;
+  transform: translateY(18px) scale(0.92);
   transition:
     opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
 }
-.tm-video-frame.in-view {
+.hud-video-float.in-view {
   opacity: 1;
-  transform: perspective(900px) rotateY(0deg) rotateX(0deg) translateX(0) scale(1);
+  transform: translateY(0) scale(1);
 }
-.tm-hud-video {
+.hud-video-float video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: transparent;
   display: block;
-  filter: saturate(1.05) contrast(1.03);
+  filter:
+    drop-shadow(0 0 18px rgba(227,27,35,0.28))
+    drop-shadow(0 0 44px rgba(227,27,35,0.14))
+    drop-shadow(0 10px 24px rgba(0,0,0,0.5));
+  animation: hud-video-bob 3.6s ease-in-out infinite;
 }
-.tm-video-scan {
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 40%;
-  background: linear-gradient(to bottom, rgba(227,27,35,0.10), transparent);
-  animation: tm-video-scan-move 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-@keyframes tm-video-scan-move {
-  0%, 100% { transform: translateY(-100%); opacity: 0; }
-  10%       { opacity: 0.8; }
-  50%       { transform: translateY(220%); opacity: 0.4; }
-  90%       { opacity: 0; }
-}
-.tm-video-rec {
-  position: absolute;
-  top: 10px; left: 10px; z-index: 3;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-mono, 'Share Tech Mono', monospace);
-  font-size: 9px; letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.85);
-  background: rgba(0,0,0,0.35);
-  padding: 4px 8px; border-radius: 2px;
-  backdrop-filter: blur(2px);
-}
-.tm-video-rec .tm-rec-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #e31b23; display: inline-block;
-  animation: tm-rec-pulse 1.4s ease-in-out infinite;
-}
-@keyframes tm-rec-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.25; }
+@keyframes hud-video-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tm-video-scan { animation: none; opacity: 0; }
-  .tm-video-frame { transition: opacity 0.4s ease; transform: none !important; opacity: 1; }
+  .hud-video-float video { animation: none; }
+  .hud-video-float {
+    transition: opacity 0.4s ease;
+    transform: none !important;
+    opacity: 1;
+  }
 }
