@@ -311,7 +311,6 @@
     .flip-back-li.tbd { opacity: 0.4; pointer-events: none; cursor: default; }
 
     /* ── AURA SYSTEM ── */
-    /* Use filter:drop-shadow on the card itself so glow can't be clipped by grid overflow */
     @keyframes aura-white {
       0%,100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.20)) drop-shadow(0 0 24px rgba(255,255,255,0.10)) drop-shadow(0 0 48px rgba(255,255,255,0.05)); }
       40%      { filter: drop-shadow(0 0 14px rgba(255,255,255,0.38)) drop-shadow(0 0 36px rgba(255,255,255,0.18)) drop-shadow(0 0 72px rgba(255,255,255,0.08)); }
@@ -333,39 +332,16 @@
       65%      { filter: drop-shadow(0 0 5px rgba(200,15,22,0.16)) drop-shadow(0 0 18px rgba(170,8,14,0.08)); }
     }
 
-    /* Aura applied directly to the flip-card — no pseudo-element needed, no clipping */
     .aura-wrap {
       position: relative;
       border-radius: 20px;
-      /* overflow must NOT be hidden so filter glow bleeds out */
     }
     .aura-wrap > * { position: relative; z-index: 1; }
 
-    /* Apply glow via filter on the wrapper — avoids conflicting with card entrance animation */
     .aura-white  { animation: aura-white  3.2s ease-in-out infinite; }
     .aura-green  { animation: aura-green  3.6s ease-in-out infinite; }
     .aura-orange { animation: aura-orange 3.4s ease-in-out infinite; }
     .aura-red    { animation: aura-red    2.9s ease-in-out infinite; }
-
-    /* ── HUD STAT CARD FIXES ── */
-    .tm-hud-num {
-      font-family: 'Bebas Neue', Impact, sans-serif !important;
-      font-size: clamp(3.4rem, 5.5vw, 4.8rem) !important;
-      font-weight: 400 !important;
-      line-height: 1 !important;
-      color: #ffffff !important;
-      letter-spacing: 0.02em !important;
-      display: block !important;
-    }
-    .tm-hud-num-sm {
-      font-family: 'Bebas Neue', Impact, sans-serif !important;
-      font-size: clamp(2rem, 3.5vw, 2.8rem) !important;
-      font-weight: 400 !important;
-      line-height: 1 !important;
-      color: #e31b23 !important;
-      letter-spacing: 0.05em !important;
-      display: block !important;
-    }
 
     /* ── STAGGERED ENTRANCE ── */
     .flip-card {
@@ -379,7 +355,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Glow on wrapper starts invisible until card is in view */
     .aura-wrap:not(:has(.flip-card.in-view)) {
       filter: none !important;
       animation: none !important;
@@ -493,22 +468,21 @@
           <span class="ev-hud-dot"></span>
           TEAM ROSTER · ACTIVE
         </div>
-        <div class="tm-hud-stats">
-          <div class="tm-hud-stat">
-            <span class="tm-hud-num">20</span>
-            <span class="tm-hud-label mono">TEAM MEMBERS</span>
-          </div>
-          <div class="tm-hud-divider"></div>
-          <div class="tm-hud-stat">
-            <span class="tm-hud-num">9</span>
-            <span class="tm-hud-label mono">DEPARTMENTS</span>
-          </div>
-          <div class="tm-hud-divider"></div>
-          <div class="tm-hud-stat">
-            <span class="tm-hud-num-sm mono">2026–27</span>
-            <span class="tm-hud-label mono">CURRENT TERM</span>
+
+        <div class="tm-video-panel">
+          <div class="tm-video-frame" id="tmVideoFrame">
+            <video class="tm-hud-video" autoplay muted loop playsinline>
+              <source src="assets/images/mom.team.webm" type="video/webm">
+            </video>
+            <div class="tm-video-scan"></div>
+            <div class="tm-video-rec"><span class="tm-rec-dot"></span>LIVE</div>
+            <div class="evf-corner evf-tl"></div>
+            <div class="evf-corner evf-tr"></div>
+            <div class="evf-corner evf-bl"></div>
+            <div class="evf-corner evf-br"></div>
           </div>
         </div>
+
         <div class="tm-hud-footer mono">MECHATRONICS COURSE UNION · TMU</div>
         <div class="hbp-bracket hbp-tl"></div>
         <div class="hbp-bracket hbp-tr"></div>
@@ -1185,6 +1159,21 @@
         requestAnimationFrame(draw);
       }
       draw();
+    })();
+
+    /* Bend-in entrance for the team-hero video panel */
+    (function() {
+      const frame = document.getElementById('tmVideoFrame');
+      if (!frame) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            frame.classList.add('in-view');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+      obs.observe(frame);
     })();
   </script>
   <script src="js/animations.js"></script>
