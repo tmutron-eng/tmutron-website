@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/hero-circuit.css" />
 <style>
 /* ══════════════════════════════════════════════════
    MCU CAROUSEL — replaces the existing carousel
@@ -202,8 +203,8 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section id="hero">
+  <!-- ═══════════════════ HERO (v2 — circuit + console layout) ═══════════════════ -->
+  <section id="hero" class="hero-v2">
 
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
@@ -213,10 +214,12 @@
     <div class="hud-corner hud-br"></div>
     <div class="hud-label hud-label-bot"><span class="mono">LAT: 43.6577° N &nbsp;|&nbsp; LONG: 79.3788° W &nbsp;|&nbsp; STATUS: ACTIVE</span></div>
 
-    <div class="hero-inner">
+    <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-inner-v2">
 
       <!-- LEFT COLUMN -->
-      <div class="hero-left">
+      <div class="hero-left-v2">
         <div class="hero-badge reveal-up delay-1">
           <span class="badge-dot"></span>
           <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
@@ -249,36 +252,33 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div class="hero-right reveal-right delay-2">
+      <!-- RIGHT COLUMN — the console cluster -->
+      <div class="hero-right-v2 reveal-right delay-2">
 
-        <div class="hero-right-glow"></div>
+        <div class="cluster-glow"></div>
 
-        <div class="hero-logo-block">
-          <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
-          <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-          <div class="hbp-bracket hbp-tl"></div>
-          <div class="hbp-bracket hbp-tr"></div>
-          <div class="hbp-bracket hbp-bl"></div>
-          <div class="hbp-bracket hbp-br"></div>
-          <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
-        </div>
+        <div id="heroCluster">
 
-        <div class="hero-mascot-block">
-          <div class="ring-system">
-            <div class="ring r1"></div>
-            <div class="ring r2"></div>
-            <div class="ring r3"></div>
-            <div class="ring-center mascot-wrap">
-              <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-              <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-            </div>
-            <div class="orbit o1"><div class="orbit-dot"></div></div>
-            <div class="orbit o2"><div class="orbit-dot od2"></div></div>
-            <div class="orbit o3"><div class="orbit-dot od3"></div></div>
+          <div class="cluster-panel">
+            <div class="cluster-scan"></div>
+
+            <div class="hbp-bracket hbp-tl"></div>
+            <div class="hbp-bracket hbp-tr"></div>
+            <div class="hbp-bracket hbp-bl"></div>
+            <div class="hbp-bracket hbp-br"></div>
+
+            <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
+            <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+
+            <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
           </div>
 
-          <div class="readout-panels">
+          <div class="cluster-mascot">
+            <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+            <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+          </div>
+
+          <div class="readout-panels readout-panels-v2">
             <div class="readout-panel">
               <span class="mono rp-label">DEPT</span>
               <span class="rp-val">MECHATRONICS</span>
@@ -292,10 +292,11 @@
               <span class="rp-val rp-active">● ACTIVE</span>
             </div>
           </div>
-        </div>
 
-      </div><!-- /hero-right -->
-    </div><!-- /hero-inner -->
+        </div><!-- /#heroCluster -->
+
+      </div><!-- /.hero-right-v2 -->
+    </div><!-- /.hero-inner-v2 -->
   </section>
 
   <!-- ═══════════════════ STATS ═══════════════════ -->
@@ -557,6 +558,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/hero-circuit.js"></script>
   <script>
     /* ── Animated section background canvases ──
        PERF FIX: each section's animation loop now pauses via
@@ -733,9 +735,19 @@
        alpha-channel WebM with real per-pixel transparency baked in by
        the video itself, so the canvas just draws its frames directly —
        see renderAlphaVideo() in the script below.
+
+       NOTE: the sizing/positioning rules below for .ring-system,
+       .ring-center, .mascot-wrap are leftover from the old hero
+       layout and no longer match anything in the DOM (that markup
+       was replaced by #heroCluster / .cluster-panel / .cluster-mascot
+       in css/hero-circuit.css). They're harmless dead weight — left
+       here only so this diff stays a pure addition and nothing above
+       gets touched. Safe to delete whenever you tidy this file up.
        ══════════════════════════════════════════ */
 
-    /* Hero big logo canvas — same box the SVG used to sit in */
+    /* Hero big logo canvas — sizing now controlled by
+       .cluster-panel .hbp-logo-svg in hero-circuit.css (higher
+       specificity), this stays as a fallback only. */
     canvas.hbp-logo-svg {
       display: block;
       width: clamp(220px, 26vw, 340px);
@@ -745,7 +757,10 @@
       border-radius: 2px;
     }
 
-    /* Mascot canvas — bumped up in size from the old fixed 130px slot */
+    /* Mascot canvas — sizing now controlled by
+       .cluster-mascot .mascot-svg in hero-circuit.css (higher
+       specificity + unique keyframe name), this stays as a fallback
+       only and no longer actually applies once hero-circuit.css loads. */
     .ring-system { width: 300px !important; height: 300px !important; }
     .ring-center { width: 160px !important; height: 160px !important; }
     .mascot-wrap { width: 160px !important; height: 160px !important; }
@@ -832,32 +847,9 @@
     }
 
     /* ══ MOBILE FIX: bring back the logo/mascot on phones ══
-       style.css sets `.hero-right { display: none; }` under 600px —
-       that was hiding the whole logo+mascot block on mobile. Instead,
-       show it scaled down so phones get the same visual, just smaller.
-       Scoped to this breakpoint only, so nothing above 600px changes. */
-    @media (max-width: 600px) {
-      .hero-inner {
-        text-align: center;
-      }
-      .hero-left {
-        align-items: center;
-      }
-      .hero-actions { width: 100%; justify-content: center; }
-      .hero-right {
-        display: flex !important;
-        transform: scale(0.72);
-        transform-origin: top center;
-        margin-top: -12px;
-        margin-bottom: -32px;
-      }
-      .hero-right-glow { inset: -40px -60px -40px -80px; }
-      .readout-panels { gap: 6px; }
-      .readout-panel { min-width: 68px; padding: 6px 10px; }
-    }
-    @media (max-width: 400px) {
-      .hero-right { transform: scale(0.6); margin-bottom: -50px; }
-    }
+       hero-circuit.css handles the mobile scale-down for the new
+       .hero-right-v2 layout directly (see its own @media blocks),
+       so nothing extra is needed here for the v2 hero. */
   </style>
 
 <script>
