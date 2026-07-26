@@ -217,6 +217,87 @@
       .ac-hud-panel { grid-template-columns: 1fr; }
       .ac-hud-row { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
     }
+
+    /* ══════════════════════════════════════════════
+       LIKE SYSTEM — "Student Favorite" reviews
+       ══════════════════════════════════════════════ */
+    .ac-likes-note {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 10px 0; margin-top: 2px;
+    }
+    .ac-likes-note svg { color: var(--red); flex-shrink: 0; width: 14px; height: 14px; }
+    .ac-likes-note span {
+      font-family: var(--font-body); font-size: 12.5px; font-weight: 300;
+      color: var(--steel); letter-spacing: 0.01em;
+    }
+    .ac-likes-note strong { color: var(--steel-light); font-weight: 500; }
+
+    .review-block { position: relative; min-width: 0; }
+    .review-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px 16px; flex-wrap: wrap;
+      margin-top: 28px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .review-block:first-child .review-block-header,
+    .review-block-header.rb-first {
+      margin-top: 0; padding-top: 0; border-top: none;
+    }
+    .rb-header-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+    .rb-title {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
+      color: var(--red); text-transform: uppercase; font-weight: 600; white-space: nowrap;
+    }
+    .review-block-header .prof-chip { margin: 0; }
+
+    .rb-favorite-tag {
+      display: none; align-items: center; gap: 5px;
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
+      color: var(--red); background: rgba(227,27,35,0.12);
+      border: 1px solid rgba(227,27,35,0.35);
+      padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .rb-favorite-tag::before { content: '★'; font-size: 10px; line-height: 1; }
+    .review-block.rb-top .rb-favorite-tag { display: inline-flex; }
+
+    .like-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-cond); font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--steel-light); background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.14); border-radius: 20px;
+      padding: 7px 15px 7px 12px; cursor: pointer; flex-shrink: 0;
+      transition: background 0.2s var(--ease-out-expo), border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .like-btn:hover:not(:disabled) { border-color: rgba(227,27,35,0.55); color: var(--white); background: rgba(227,27,35,0.09); transform: translateY(-1px); }
+    .like-btn:disabled { opacity: 0.7; cursor: default; }
+    .like-btn svg {
+      width: 15px; height: 15px; flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), fill 0.2s, stroke 0.2s;
+    }
+    .like-btn.liked { border-color: var(--red); background: rgba(227,27,35,0.16); color: var(--white); }
+    .like-btn.liked svg { fill: var(--red); stroke: var(--red); transform: scale(1.12); }
+    .like-btn.pulsing svg { animation: like-pop 0.42s var(--ease-out-expo); }
+    @keyframes like-pop { 0% { transform: scale(1); } 45% { transform: scale(1.45) rotate(-8deg); } 100% { transform: scale(1.12); } }
+    .like-count { font-variant-numeric: tabular-nums; min-width: 12px; text-align: left; }
+
+    @media (max-width: 480px) {
+      .review-block-header { gap: 10px; }
+      .rb-header-left { width: 100%; justify-content: space-between; }
+    }
+
+    /* ── General overlap / overflow hardening ── */
+    .course-header { flex-wrap: wrap; row-gap: 8px; }
+    .course-header > div:first-child { min-width: 0; flex: 1 1 auto; }
+    .course-code, .course-name, .course-meta { overflow-wrap: break-word; word-break: break-word; }
+    .course-overview, .review-text, .week-topic { overflow-wrap: break-word; word-break: break-word; }
+    .weeks-table-header, .week-row { min-width: 0; }
+    .week-topic { min-width: 0; }
+    .weeks-table-header > div:last-child, .week-row > div:last-child { min-width: 0; }
+    .course-coming-tag { flex-shrink: 0; }
+    .course-links { align-items: flex-start; }
+    .course-link-btn { max-width: 100%; }
+    .prof-chip { flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -329,6 +410,14 @@
     </div>
   </section>
 
+  <!-- LIKES HINT -->
+  <div class="container">
+    <div class="ac-likes-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+      <span>Like the reviews you find most helpful — <strong>most-liked rises to the top</strong> of each course, marked <strong>★ Student Favorite</strong>.</span>
+    </div>
+  </div>
+
   <!-- YEAR TAB BAR -->
   <div class="year-tab-bar" id="year-tab-bar">
     <div class="year-tab-bar-inner">
@@ -366,15 +455,32 @@
               <a href="https://www.khanacademy.org/math/calculus-1" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Khan Academy</a>
             </div>
 
-            <div class="review-section-title" style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);">⚡ Nelson's Review</div>
+            <div class="review-block" data-key="mth140-nelson">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="rb-title">⚡ Nelson's Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mth140-nelson" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">The course is fairly easy to pass if you practice continuously (about 2 hours a week). It's not just a "read the slides and understand" course — you actually have to solve practice problems to understand the material better.<br><br>As mentioned before, if you are a new student looking for the best professor, choose Francis Duah; his teaching methods actually help you to understand the material rather than just memorizing it.</div></div>
             <div class="review-section"><div class="review-section-title">Tests / Midterms / Exams</div><div class="review-text">The major advice for any exams is NOT to wait till the week or a day before the exam. Continuous practice ensures that you are able to solve such questions on an exam or test like it's second nature. Take advantage of past questions from previous years and use them to practice; questions on the midterms/finals are always similar to the past questions. Ensure to master limits, derivatives, RIEMANN SUM, chain rule, and trig derivatives — they always show up on the finals.</div></div>
 
-            <div class="review-section-title" style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);">⚡ Aheseha's Review</div>
+            </div>
+
+            <div class="review-block" data-key="mth140-aheseha">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="rb-title">⚡ Aheseha's Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mth140-aheseha" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">General</div><div class="review-text">Calculus I can be overwhelming if you fall behind a couple of lessons, it's important to stay on top of things as there are numerous new principles that build on one another to solve problems. It's better to prioritize in-class recommended problems rather than textbook recommendations. It's also important to move on from the practice problems if you have a decent understanding of the current unit; there will be plenty of opportunities to practice in future units.</div></div>
             <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">The labs review course questions assigned by the professor, taken up by a TA. They are not mandatory, however, it is recommended to attend for practice and attendance. These questions are useful as they mimic the formats of exam questions. It is also a smaller classroom setting where you can converse and ask questions regarding the course material.</div></div>
             <div class="review-section"><div class="review-section-title">Midterm</div><div class="review-text">Past midterms are significantly different from the recommended textbook problems, it is wiser to study past midterms compared to recommended textbook problems. Attend the study hall it targets for relevant midterm questions, and you can ask the teaching professor for clarifications. Performing well on the midterm allows leisure for the final exam as well, however the midterm exam for this course is usually harder than the final.</div></div>
             <div class="review-section"><div class="review-section-title">Final Exam</div><div class="review-text">Like the midterm, it is wiser to review the past exams, as you will find similarities. Attending the study hall also helps, however self-practice beforehand of all the study hall questions allows you to follow along easier.</div></div>
+            </div>
 
           </div></div>
         </div>
@@ -393,11 +499,19 @@
               <a href="https://www.youtube.com/@TheOrganicChemistryTutor" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>The Organic Chemistry Tutor</a>
             </div>
 
-            <div class="prof-chip" style="margin-top:20px;">Reviewed by: <span>Laith</span></div>
+            <div class="review-block" data-key="pcs125-laith">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin-top:0;">Reviewed by: <span>Laith</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="pcs125-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">In my opinion, the start of the course is not very hard, you learn about basic stuff like waves and oscillations which can be challenging in some way, depending on the lesson but overall not too bad. However once the course transitions to electricity and electric fields that's when the course picks up and becomes noticeably harder. It requires a lot more visualization and deeper understanding. It's just too many concepts all at once, and all are connected in some way, with so many formulas and different scenarios to consider it can be overwhelming, but with enough dedication and practice you can still do very well. Focus on the theory, the tests are often theory heavy, and in my year, nearly half of the midterm and final exam questions were theory. I would recommend looking at your professors slides for the theory portion as their slides often include many of the theories that you may encounter in your examination. Look for past exams as well because you may find that some questions are repeated or very similar.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Most of the labs are easy and can be done within the given time period, but you need to make sure to do your due diligence as well by reading the lab manual and understanding what you will be required to do during the lab period. I would also recommend preparing anything you can before the lab starts, such as adding your name, student number, question numbers, and creating any required tables or graph outlines, as doing so during the lab is just wasting your lab time. Be careful not to include any data, calculations, or completed work beforehand, as this could be considered academic misconduct. You will be required to hand in your lab report by the end of the lab session. Your TA will explain the procedure and demonstrate how to use the equipment provided. TA's will often write important notes and formulas to use on the board, so pay attention to those.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">Study everything you have been assigned, such as lecture slides, some of the assigned textbook work (doing the entire question set from the textbook is possible, but it takes a lot of time. Just do a couple of questions from each section, check which concepts you struggle with the most and focus on those), and Webassign, then proceed to past midterms. The past midterms should give you an idea of what the theory questions may look like and will prepare you to question yourself if you truly understood a concept or not. For my year, I do not believe the study hall was that helpful, the TA just went through the past midterm provided. I guess it would be beneficial if you have done the past midterm and you struggled with it. Since you're required to get at least 50% in the theory (examination) portion of the course, performing well on the midterm can take a significant amount of pressure off the final exam, since generally the material covered up to the midterm is easier than that of the final.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">It's a cumulative final so everything is included, but the focus would be on the stuff covered after the midterm, as in you will get fewer questions about past midterm material than that of the post midterm. Just repeat whatever you did for the midterm, but keeping your focus on the post midterm material, past finals were externally helpful because some questions were directly taken from some of them. I did not attend the study hall, so I do not really know how that went but I would guess it followed a typical format to the midterm. Attending a professor's exam review is highly encouraged because you can ask them questions, and they will point out some mistakes that most students fall into.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -410,11 +524,19 @@
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Professor: <span>Dr. Chen</span></div>
             <div class="course-overview">MTL200 is an introductory materials science and engineering course that focuses on understanding the relationship between the structure of materials and their properties. In order to understand why materials act the way they do, students study atomic structure and bonding, crystal structures, material defects, diffusion, and phase diagrams throughout the semester. The course also looks at the mechanical, physical, and chemical characteristics of the main kinds of engineering materials, such as metals, ceramics, polymers, and composites. In order to show how materials are selected and utilised in actual engineering applications, the course introduces topics such as corrosion, material failure, material strengthening mechanisms, and material selection. While there are some calculations involved, much of the course focuses on conceptual understanding and the ability to apply material science principles to different scenarios. Since many topics build upon one another, it's important that you stay on top of things throughout the semester because understanding the foundations early on will make later concepts so much easier to understand.</div>
-            <div class="prof-chip">Reviewed by: <span>Laith</span></div>
+            <div class="review-block" data-key="mtl200-laith">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Laith</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mtl200-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">This course is all about memorising and understanding a large amount of information. My professor did not provide lecture slides, so I relied heavily on the textbook for studying. If your professor is similar, get comfortable with reading the textbook because it will likely be your primary study resource. I would strongly recommend using AI, flashcards, or any study method that helps break down large amounts of content into manageable study sessions. PLEASE stay on top of things, once you're done a chapter make a summary of that chapter and the information it provided, because it piles up quickly. Last minute studying is not viable for the course, it is just vast amounts of information that you have to stuff down your brain in a short amount of time, avoid this as much as you can, please take my word for it. I'm speaking from experience.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">The labs were pretty easy, just make sure to read the lab manual. There isn't anything you need to prepare beside that from what I recall. Your TA will explain the procedure for you and your group, then you just have to complete it while recording whatever data is necessary for your lab report later. The lab manuals are also easy as long as you divide the work evenly, otherwise it may overwhelm you. Also hold your group members accountable if they aren't doing their portion of the report.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">Once you're done with the course material, do past midterms. The midterm is MCQ style with mostly theory questions and some calculations at the end. The calculation questions are weighted more compared to the theory questions. The majority of the questions are repeated and can be on an old midterm, so making sure to do past midterm should be your top priority. For my year it was 90% identical to the past midterm, with few theory questions different, but for the calculations it was just different numbers. Make sure to attend the study hall done by the TA Nikolai Sydorenko (if he's doing one), he does a comprehensive review of the material covered, although it's long, around 4 hours ish, but it is entirely worth it. You are given a formula sheet but you have to know your symbols. Now although in recent years, the midterms looked similar, just to be safe do not rely on the past midterms as your only study source.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">Do the same as what you did to the midterm. The final follows a format of MCQ (around 60ish) and long answer questions (around 7ish). All of the MCQ are required to be done while for the long answer question, you only had to pick 5 of the 7 provided, making sure to clearly indicate them. You had to show your work in a legible manner, while also including your units. You will be penalized if you did not include your units. Past finals are not given, so you may not be able to find any unfortunately. Make sure to attend the study hall conducted by the TA Nikolai Sydorenko, the long answer questions on his document are what you often see in your final, this was the case for my years final. So attending his study hall not only will prepare you for the MCQ, but also the long answer as some of what he does are almost identical.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -442,8 +564,16 @@
               <a href="https://drive.google.com/drive/u/0/folders/1w3EmkLP9SQHthvBlJ3jqcDAPKAMynlKm" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Google Drive Resources</a>
             </div>
 
-            <div class="prof-chip" style="margin-top:20px;">Reviewed by: <span>Hassan</span></div>
+            <div class="review-block" data-key="mth240-hassan">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Hassan</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mth240-hassan" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">⚡ Student Review</div><div class="review-text">If you struggled in Calculus I, that's totally fine. I struggled with Calculus I (MTH140) and honestly hated it. Calc 2 is where I actually started seeing the use of math, and where it became more interesting and even kind of fun. In Calc 2, you focus on specific areas of calculus, especially integration and sequences and series, and you actually spend time understanding them instead of rushing through everything. These are the longest parts of the course, and with practice they get easier and easier. I never thought integrals or series could be fun, but once things start clicking, they actually are. This was especially true for me because I had a good professor, Dr. Saeid Samiezadeh. I never used the textbook at all. I only studied from his slides, and they were more than enough, especially when combined with past midterms and finals to prepare for the midterm and final.<br><br>The labs were easy as long as you were caught up with the material. If you understand the content, the lab quizzes are straightforward.<br><br>For integrals, which make up a big chunk of the course at the start, I'd honestly recommend doing reps whenever you're bored. As corny as it sounds, repetition is the best way to understand it. You should be able to look at an integral and instantly know what method to use. If you can't, you just need more reps. I had a friend who used to solve integrals at the gym. You don't need to be that locked in, but the idea is the same.<br><br>Since the course mainly focuses on integrals, sequences and series, first order differential equations, and a bit of multivariable calculus, it's easier to follow. There's a lot of repetition, and you eventually get into a flow, unlike Calc 1 where it felt like new concepts were being thrown at you all at once.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -455,10 +585,18 @@
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">MEC222 introduces you to the basics of engineering graphical communication, mainly teaching the basics on engineering drawings on paper and drawings made with CAD (computer aided design), along with the basics of SolidWorks. SolidWorks is a 3D CAD software used in mechanical engineering and related fields to design parts and create assemblies using parts. The labs consist of 2 different sections, the manual studios labs, and the CAD/SolidWorks labs. In the manual studio labs you are required to complete different views of a model, or create new ones from scratch. In the CAD labs, you are required to create a 3D model based off a given drawing.</div>
-            <div class="prof-chip">Reviewed by: <span>Phelix</span></div>
+            <div class="review-block" data-key="mec222-phelix">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Phelix</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mec222-phelix" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs are mandatory, the TAs are generally helpful in the labs if you are stuck on a feature that you do not know how to CAD/Sketch. Manual Studio Labs (Hand drawn) do have a take home component to them. There is a big sketching project that is due around the end of the semester, I recommend starting as soon as possible, as sketching is very time consuming and there is a lot to be done for the final assignment. The manual studio labs do not allow rulers or compasses to be used as a guide to draw straight lines/perfect circles, all lines must be done freehanded, the only use of rulers that is allowed is measuring out lengths.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">There are 2 midterms, one for CAD and one for manual studio, as long as you're doing fine in the labs you should be fine for the midterm.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">The final exam is a mix of sketching and MCQ on knowledge and terminology.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -471,12 +609,20 @@
           <div class="course-body"><div class="course-body-inner">
             <div class="prof-chip">Recommended prof: <span>Professor Hamlin</span></div>
             <div class="course-overview">This course is your gateway into coding with C.</div>
-            <div class="prof-chip">Reviewed by: <span>Vannessa</span></div>
+            <div class="review-block" data-key="cps188-vannessa">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Vannessa</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="cps188-vannessa" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">I recommend going to Professor Hamlin's lectures, he is great at explaining the fundamentals of coding especially if you don't know anything at the beginning of the semester.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs aren't mandatory, but if you don't know how to code or struggle with coding, I'd highly recommend going to them because you are able to ask your TA's questions about the assignments and they can help debug your code with you. Matthew Ritchie was my TA and he was super helpful.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">The midterm is a technical one where you will be given a few questions, similar to the lab assignments you get, but a little bit harder. As long as you don't cheat/use ChatGPT to help you code all your assignments then the midterm will be relatively easy. My year was not allowed to have cheat sheets for this exam, so remember your syntax because if the code doesn't even compile then you will get a 0 automatically.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Exam</div><div class="review-text">You will not be expected to code during the exam. It is multiple choice however there are a lot of questions and not a lot of time. You'll have 1-2 minutes to complete each question or else you'll run out of time. Remember syntax and how to convert binary to other base numbers and the other way around. The exam was honestly much easier than the midterm, so you got this!</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">N/A</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -494,10 +640,18 @@
               <a href="https://www.youtube.com/playlist?list=PLRqDfxcafc21wlI3E56IkDmRJ-33apMjv" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Mechanics Playlist</a>
             </div>
 
-            <div class="prof-chip" style="margin-top:20px;">Reviewed by: <span>Alliyah</span></div>
+            <div class="review-block" data-key="mec323-alliyah">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Alliyah</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mec323-alliyah" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">MEC323 is an important foundation for MEC311 (Dynamics) which students will take next semester so it's crucial to understand the main concepts of Statics to better understand Mechanics which will give you a stronger foundation when going into Dynamics.</div></div>
             <div class="review-section"><div class="review-section-title">Midterm / Exam</div><div class="review-text">Practice tutorial problems, as a large number of questions on the midterm/exam are very similar to these tutorial questions.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">Although there is no final project, there is a computer assignment worth 2.5% of your final mark that is due in Week 11.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -545,11 +699,20 @@
               <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>W3Schools C++</a>
             </div>
 
-            <div class="review-section"><div class="review-section-title">⚡ Student Review</div><div class="review-text">This course builds upon your existing minor experience with programming from CPS188 to make you proficient in C coding. The labs are very challenging, not just because you're tasked with making a virtual robot move, but also because there are no youtube videos or reddit posts you can copy solutions from. Additionally, I feel you get a very solid understanding of C programming from the assignments and labs. It's very easy to cheat on those, but keep in mind that if you cheat/chatGPT all of the course your understanding in later courses (ex MTE502) will be hampered significantly.</div></div>
+            <div class="review-block" data-key="mte301-review">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="rb-title">⚡ Student Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mte301-review" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
+            <div class="review-section"><div class="review-section-title">General</div><div class="review-text">This course builds upon your existing minor experience with programming from CPS188 to make you proficient in C coding. The labs are very challenging, not just because you're tasked with making a virtual robot move, but also because there are no youtube videos or reddit posts you can copy solutions from. Additionally, I feel you get a very solid understanding of C programming from the assignments and labs. It's very easy to cheat on those, but keep in mind that if you cheat/chatGPT all of the course your understanding in later courses (ex MTE502) will be hampered significantly.</div></div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">It's important to ask questions as much as possible, Professor Chhabra can go rapidly through the slides but he's never afraid to explain topics when prompted. Professor Chhabra tends to go very in depth into minute details of abstract/unnecessary concepts that can be confusing. However, when you ask for clarification he has no qualms clearing things up. I recommend reading the textbook, unironically. It provides deeper insight into the purpose of the more complex OOP programming you do (inheritance, multithreading).</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">As mentioned above, the labs are extremely challenging. They are purposefully made in this way, to be uncheatable; you will not be able to ask ChatGPT, or Chegg, or find tutorials on youtube on how to do the labs. The best advice is to try and find an upper year mechatronics student who's taken the course, and ask for their advice on how best to complete the labs.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm and Exam</div><div class="review-text">Usually you're allowed a cheat sheet on the final, and it's best to make that with a mix of theoretical understanding (i.e. what the 4 pillars of OOP are, what inheritance means) as well as coding examples, as those are also asked on exams.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">The final project allows for a lot of customization. Don't be afraid to pick an ambitious project. You have a lot of time to complete it, and it's worth quite a large amount. It's also just a great opportunity to choose something challenging, as you have multiple students and a large amount of time to complete the project. Choosing something physical (i.e. a dexterous hand or a block sorting robot) also acts as a really addition to your resume, for next year's coop race.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -574,13 +737,20 @@
 
             <div class="review-section"><div class="review-section-title">Other Helpful Resources</div><div class="review-text">Neso Academy – Circuit Analysis playlists · Michel van Biezen – Step-by-step DC/AC problems · All About Electronics – Transients & phasors · Khan Academy – Kirchhoff's laws refreshers.<br><br>Simulators: Falstad Circuit Simulator, CircuitLab, LTspice (excellent for RC/RL step responses).</div></div>
 
-            <div class="prof-chip" style="margin-top:12px;">Reviewed by: <span>Qamber</span></div>
-            <div class="review-section-title" style="margin-top:12px;">⚡ Student Reviews & Advice</div>
+            <div class="review-block" data-key="mte401-qamber">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Reviews &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mte401-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">MTE 401 is very formula-driven, but what really matters is process. You're constantly asked to convert a circuit into equations, pick the right method (nodal vs mesh vs Thevenin), and solve efficiently. Falling behind early — especially around nodal/mesh and source transformations — makes the rest of the term much harder.<br><br>Attend tutorials and try to stay on top of lecture material by working through the assigned and recommended problems each week. This keeps concepts fresh and directly helps with the in-lab quizzes.<br><br>Consistency is everything in this course. Weekly practice beats last-minute cramming.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs focus on real circuits: Ohm's Law, nodal analysis, Thevenin equivalents, RC/RL step responses, resonance, and AC behavior as shown in the lab schedule.<br><br>Student tips: Prepare ahead of time — labs can be confusing on first pass, and most groups end up using the full two hours. Doing solid pre-lab analysis and simulations makes in-lab work much smoother. Labs build directly toward the lab tests near the end of the semester, so treat every session as practice. Simulate circuits in LTspice before coming in. Wiring errors eat time — double-check connections early. Keep organized notes and screenshots; they help massively when writing reports.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterms</div><div class="review-text">The midterm usually focuses on DC analysis and early energy-storage concepts.<br><br>How to prepare: Practice as much as you can — volume matters in this course. Focus on understanding how to approach a question rather than memorizing formulas. Build a routine: identify nodes → pick a method → write equations → solve → sanity-check. Once the conceptual structure clicks, most problems become very manageable.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final Exam</div><div class="review-text">The final is comprehensive and emphasizes AC analysis, phasors, impedance, power calculations, resonance, and RC/RL transients alongside earlier DC topics.<br><br>Student advice: Keep practicing full problems under time pressure. Aim for conceptual mastery first — recognizing what a circuit is asking for makes the algebra much easier. Redo lab tests and tutorial problems. Drill phasor conversions and power-factor questions until they're automatic. Use external resources like the EES 512 playlist to reinforce difficult sections.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts from Students</div><div class="review-text">MTE 401 is challenging but very doable if you stay consistent. The students who perform best are the ones who practice weekly, attend tutorials, and treat labs seriously instead of leaving circuits until exam season.<br><br>If you master nodal and mesh early, prepare properly for labs, and keep up with lecture problems, this course becomes much smoother — and sets you up well for later mechatronics courses involving motors, machines, and power electronics.</div></div>
+            </div>
 
             <div class="review-section-title" style="margin-top:24px;">📅 Week-by-Week Video Roadmap</div>
             <div class="review-text" style="margin-bottom:12px;">Curated by the MCU team — click any topic below to jump straight to the recommended video. "Ohm's Law" doesn't have a direct link yet; check the full playlist above or <a href="contact.html" style="color:var(--red);">send us the link</a> and we'll add it.</div>
@@ -637,13 +807,20 @@
             </div>
             <div class="review-text" style="margin-top:8px;">Also recommended: <em>3Blue1Brown</em> — their Fourier Series / Fourier Transform intuition videos (search their channel on YouTube).</div>
 
-            <div class="prof-chip" style="margin-top:20px;">Reviewed by: <span>Qamber</span></div>
-            <div class="review-section-title" style="margin-top:12px;">⚡ Student Review & Advice</div>
+            <div class="review-block" data-key="mte501-qamber">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mte501-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">General Course Experience</div><div class="review-text">MTE 501 is concept-heavy but very rewarding. It's less about crunching numbers and more about recognizing what kind of problem you're looking at (time domain, frequency domain, z-domain), and choosing the right tool: convolution, Fourier, Laplace/z-transform, frequency response, etc.<br><br>The math itself isn't brutal (mostly algebra, complex numbers, and geometric series), but there are lots of new ideas stacked on top of each other. Lathi's textbook is dense but solid, use it as a reference and problem bank. If you keep up with the concepts and do practice problems by "type", the course feels manageable. If you cram purely from formulas, it feels rough.</div></div>
             <div class="review-section"><div class="review-section-title">General Study Advice</div><div class="review-text">Think in question types, not chapters: "Given a difference equation → find H(z) and h[n]", "Finite-length DT signal → DTFT via geometric series", "Periodic DT signal → DTFS via Euler", "Rational X(z) + ROC → inverse z and time support", etc.<br><br>Build a 1-page cheat sheet of recipes: how to recognise each type, step-by-step "do this, then this", and common traps (forgetting the δ[n] term, wrong ROC, off-by-one in convolution).<br><br>When using solved examples or solutions: first identify what type of problem it is. Then cover the solution and force yourself to say the next step out loud before checking.<br><br>Treat complex exponentials as your best friends: once you see that e^(jωn) is an eigenfunction, frequency-response questions get way easier.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterms & Exams</div><div class="review-text">Typical structure (may vary by year):<br><br><strong style="color:var(--white)">Midterm</strong> (one page single-sided cheat sheet allowed) — up to and including Laplace transform: continuous-time signals and systems, LTI properties, impulse/step response, convolution (CT/DT depending on offering), Laplace transform, properties, solving differential equations.<br><br><strong style="color:var(--white)">Final Exam</strong> (cumulative but heavier on later topics, one page double-sided cheat sheet allowed) — sampling and aliasing, discrete-time LTI systems and convolution, DTFS/DTFT and frequency response, z-transform, ROC, poles/zeros, inverse z, stability.<br><br>For the midterm, focus on: being able to go diff eq → Laplace → H(s) → y(t) or h(t) smoothly, recognising when convolution in time is easier vs transform methods, and understanding what poles mean for stability and transient behaviour.<br><br>For the final, spend extra time on: sampling diagrams and Nyquist-rate questions, DT convolution (especially with exponentials and finite pulses), DTFS/DTFT patterns (using geometric series and Euler), and ROC reasoning for z-transform (causal vs non-causal, stable vs unstable).</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">MTE 501 is usually more theory + problem-solving than a big hardware project. Labs are Python experiments: plotting time-domain signals and their spectra, visualising convolution and filtering, demonstrating sampling and aliasing by changing the sample rate.<br><br>They're a good chance to see what the math is doing: how a filter actually shapes a signal, what aliasing looks like, how poles/zeros move the frequency response. Don't treat labs as throwaway "marks only". If you pay attention, they'll make the exam questions feel way more intuitive.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts from Students</div><div class="review-text">"It's one of those courses that feels abstract while you're in it but suddenly makes sense when you hit control systems and DSP."<br><br>"Don't leave it to the last week. Even 1–2 hours a week of practice problems by type pays off huge."<br><br>"Having a clean, organised cheatsheet of patterns and ROCs was honestly more useful than memorising giant tables."<br><br>If I could only give one piece of advice, it would be to practice. Practice helps build intuition for problem solving, and most questions are similar in how you have to approach them.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -661,14 +838,21 @@
               <a href="https://share.google/ONjXVzeH1i3L2qtA5" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>AVR Instruction Set</a>
             </div>
 
-            <div class="prof-chip" style="margin-top:20px;">Reviewed by: <span>Qamber</span></div>
-            <div class="review-section-title" style="margin-top:12px;">⚡ Student Review & Advice</div>
+            <div class="review-block" data-key="mte502-qamber">
+            <div class="review-block-header">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mte502-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">This course is all about really understanding what the microcontroller is doing under the hood.<br><br>Assembly matters a lot. Don't just memorize instructions. Practice tracing small snippets line by line: track registers, SREG flags, and the stack.<br><br>Think like hardware, not just like a programmer. When you see C code, ask: "What bits and registers is this touching?" That mindset matches how the prof writes questions.<br><br>Build a smart cheat sheet. Organize it by topics (Registers/Flags, Digital I/O, Timers/PWM, ADC, Interrupts, Control) and only write things you actually understand: key formulas, typical register setups, common instruction patterns.<br><br>Practice bit math. Binary/hex conversions, masks, shifts, and flag logic appear constantly in this course and on tests.</div></div>
             <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs are where the slides become real: you configure DDRx/PORTx/PINx, set up ADC, timers, PWM, and sometimes basic control on a robot or similar setup. But in practice, lab time is short (1 hour long) for how much you need to do.<br><br>Try to write and think through as much of the code as possible at home (using the slides and datasheet). Treat lab sessions mainly as demo + debugging time, not full development time. Come in with code that compiles and "should" work. Use your lab hours to test on actual hardware, fix wiring issues, and tune small details (pull-ups, pin mappings, delays). Many problems are simple things: wrong pin, wrong DDR/PORT settings, missing ground, or power issues. Check those first.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Midterm and Quiz</div><div class="review-text">The midterm and quiz are usually a mix of multiple choice, short answer, and longer written questions. They test both concepts and your ability to reason through small examples.<br><br>What they typically focus on: core architecture (CPU, registers, SREG flags, stack, and memory spaces — Flash vs SRAM vs EEPROM); assembly reasoning (trace what a short AVR assembly snippet does — register changes, flags, stack pushes/pops); digital I/O (how PINx/PORTx/DDRx work together, what SBI/CBI/IN/OUT/LD/ST do in context); basic control concepts (open-loop vs closed-loop, basic feedback ideas, and simple use of PWM).<br><br>For the midterm, expect questions that feel like "mini versions" of the final: still heavy on reasoning, but centered on earlier topics (architecture, assembly basics, I/O, simple control). The quiz covers post-midterm content and is a good prep for finals.<br><br>Advice: practice midterm-style questions by hand — trace code, compute flag results, explain what a configuration does, and write short, keyword-heavy explanations. Use any old quizzes/midterms (if available) to see how the prof phrases things — the style usually repeats.</div></div>
             <div class="review-section"><div class="review-section-title">📝 Final Exam</div><div class="review-text">The final exam is cumulative, but tends to lean more on the later material while still expecting you to remember the basics.<br><br>Common focus areas: everything from the midterm, plus timer configuration, prescalers, and timing/PWM calculations; ADC setup and usage, converting between ADC readings, voltages, and physical units; interrupts (enabling/disabling, vector flow, what happens to PC/SREG/stack); control-style questions using the microcontroller (e.g., simple PID logic, block diagrams, error sources).<br><br>You are usually allowed one double-sided 8.5"×11" cheat sheet for the final. Treat it as a summary of your understanding, not just a wall of text: organize it by sections (Registers/Flags, Memory Map, Digital I/O, Timers/PWM, ADC, Interrupts, Control); include key formulas (timer periods, PWM duty, ADC conversion), the most important register names and bitfields, 1–2 common configuration "templates" for each peripheral, and a few small assembly patterns you can reuse (e.g., loop structure, bit set/clear, pointer-based load/store).<br><br>During studying, practice answering exam-type questions using only your cheat sheet so you know exactly where everything is on the page.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project / Maze Robot</div><div class="review-text">Your final project will include an autonomous line following maze solving robot, which will bring together sensing, timers, PWM motor control, and decision logic on the microcontroller. This part of the course can be very fun but also time-consuming.<br><br>Key points: start early — you will need a lot of in-lab testing time with the real maze or environment, it rarely works perfectly the first time. There are many environment and hardware factors: friction, wheel slip, sensor noise, lighting, battery level, mechanical alignment, etc. These issues only show up when you run the robot on a real course. Try to get a simple version working as soon as possible: basic driving, turning, and sensing — then refine the logic and tuning. Use home time to clean up your code, structure your state logic, and tune thresholds in a rough way; use lab time to adjust the robot based on what you actually see it doing.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts / Recommendations from Students</div><div class="review-text">Don't fear assembly, just start early. The first few weeks can feel rough, but once you've done a handful of examples by hand, patterns start repeating. Small, regular practice beats cramming.<br><br>Use the datasheet and slides together. Treat the slides as the "map" and the ATmega328P datasheet as the "dictionary." When you see a register in the slides, look it up once in the datasheet so it sticks.<br><br>Build your cheat sheet as you go. Don't leave it for the night before the final. Add formulas, register setups, and small code patterns each week. If you use it while doing practice problems, you'll remember where everything is.<br><br>Take labs seriously and work ahead. Most students say there isn't enough time to write and debug everything during the lab slot. Do as much coding as you can at home and use lab time mainly to test and fine-tune on real hardware.<br><br>Start the project early and test on the actual maze. The robot almost never works perfectly on the first try. You'll need a lot of trial and error because of friction, sensor noise, battery levels, and alignment. The groups that start early and test often are the ones that finish calmly.<br><br>Ask questions when things don't make sense. If a timing formula, register field, or assembly snippet feels confusing, clear it up right away — with the prof, TA, or classmates. Small gaps add up fast in this course.<br><br>If you like robots or embedded systems, this course is worth the effort. It's a lot of work, but you walk away actually understanding how microcontrollers think and how to make them control real hardware, which pays off in upper-year projects and design teams.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -793,6 +977,103 @@
     function fixReviewCols() { document.querySelectorAll('.review-cols').forEach(el => { el.style.gridTemplateColumns = window.innerWidth < 700 ? '1fr' : '1fr 1fr'; }); }
     fixReviewCols(); window.addEventListener('resize', fixReviewCols);
     const fy = document.getElementById('footer-year'); if (fy) fy.textContent = new Date().getFullYear();
+  </script>
+  <script>
+  // ══════════════════════════════════════════════════
+  // LIKE SYSTEM — like-only, YouTube-style toggle.
+  // Counts are shared globally via CounterAPI (free, no
+  // signup). Each visitor's own "have I liked this" state
+  // is remembered locally so their heart stays filled and
+  // they can un-like from their own device only.
+  // Whichever review has the most likes floats to the top
+  // of its course and gets a "★ Student Favorite" tag.
+  // ══════════════════════════════════════════════════
+  (function () {
+    const NAMESPACE = 'mcu-tmu-academics-likes';
+    const API = 'https://api.counterapi.dev/v1';
+    const likedStorageKey = k => 'mcu_liked_' + k;
+
+    async function getCount(key) {
+      try {
+        const res = await fetch(`${API}/${NAMESPACE}/${key}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return typeof data.count === 'number' ? data.count : 0;
+      } catch (e) { return null; }
+    }
+
+    async function bump(key, up) {
+      try {
+        const res = await fetch(`${API}/${NAMESPACE}/${key}/${up ? 'up' : 'down'}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return typeof data.count === 'number' ? data.count : 0;
+      } catch (e) { return null; }
+    }
+
+    function paintCount(btn, val) {
+      const span = btn.querySelector('.like-count');
+      if (span) span.textContent = (val === null || val === undefined) ? '–' : Math.max(0, val);
+    }
+
+    function sortSiblingBlocks(block) {
+      const parent = block.parentElement;
+      if (!parent) return;
+      const blocks = Array.from(parent.children).filter(el => el.classList && el.classList.contains('review-block'));
+      if (blocks.length < 2) {
+        blocks.forEach(b => b.classList.toggle('rb-top', (Number(b.dataset.likes) || 0) > 0));
+        return;
+      }
+      blocks.sort((a, b) => (Number(b.dataset.likes) || 0) - (Number(a.dataset.likes) || 0));
+      const topLikes = Number(blocks[0].dataset.likes) || 0;
+      blocks.forEach((b, i) => {
+        b.classList.toggle('rb-top', i === 0 && topLikes > 0);
+        parent.appendChild(b);
+      });
+    }
+
+    window.toggleLike = async function (btn, evt) {
+      if (evt) evt.stopPropagation();
+      if (btn.disabled) return;
+      const key = btn.dataset.key;
+      const wasLiked = btn.classList.contains('liked');
+      btn.disabled = true;
+      const newCount = await bump(key, !wasLiked);
+      btn.disabled = false;
+      if (newCount === null) return;
+      btn.classList.toggle('liked', !wasLiked);
+      btn.classList.add('pulsing');
+      setTimeout(() => btn.classList.remove('pulsing'), 420);
+      try { localStorage.setItem(likedStorageKey(key), wasLiked ? '0' : '1'); } catch (e) {}
+      paintCount(btn, newCount);
+      const block = btn.closest('.review-block');
+      if (block) {
+        block.dataset.likes = newCount;
+        sortSiblingBlocks(block);
+      }
+    };
+
+    async function init() {
+      const buttons = Array.from(document.querySelectorAll('.like-btn'));
+      await Promise.all(buttons.map(async (btn) => {
+        const key = btn.dataset.key;
+        let liked = '0';
+        try { liked = localStorage.getItem(likedStorageKey(key)) || '0'; } catch (e) {}
+        if (liked === '1') btn.classList.add('liked');
+        const count = await getCount(key);
+        const block = btn.closest('.review-block');
+        if (block) block.dataset.likes = count || 0;
+        paintCount(btn, count);
+      }));
+      document.querySelectorAll('.review-block').forEach(b => sortSiblingBlocks(b));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
   </script>
   <script src="js/animations.js"></script>
   <script>
