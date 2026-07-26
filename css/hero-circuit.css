@@ -1,0 +1,236 @@
+/* ══════════════════════════════════════════════════
+   MCU — HERO REDESIGN LAYER
+   hero-circuit.css
+   Load this AFTER css/style.css. Nothing in here
+   overwrites existing selectors — it only styles the
+   new hero-v2 markup (hero-inner-v2 / hero-left-v2 /
+   hero-right-v2 / #heroCluster / .cluster-*).
+   Your chroma-key logo canvas and alpha-webm robot
+   canvas keep their original ids and are untouched.
+   ══════════════════════════════════════════════════ */
+
+/* ─── CIRCUIT BACKGROUND CANVAS ─── */
+.circuit-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+@media (prefers-reduced-motion: reduce) {
+  .circuit-canvas { opacity: 0.35; }
+}
+
+/* ─── HERO GRID V2 ─── */
+.hero-v2 { position: relative; }
+
+.hero-inner-v2 {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1.12fr 0.95fr;
+  align-items: center;
+  min-height: calc(100vh - var(--nav-h));
+  max-width: var(--max-w);
+  margin: 0 auto;
+  width: 100%;
+  padding: 60px clamp(20px, 5vw, 60px);
+  gap: 24px;
+}
+
+.hero-left-v2 {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* pull the headline block a touch closer to the console
+   so the two halves read as one composition, not a split page */
+.hero-left-v2 .hero-headline {
+  margin-right: -8px;
+}
+
+.hero-right-v2 {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  perspective: 1400px;
+}
+
+/* soft ambient bloom behind the whole cluster */
+.cluster-glow {
+  position: absolute;
+  inset: -90px -110px -60px -170px;
+  background:
+    radial-gradient(ellipse 65% 60% at 60% 42%, rgba(227,27,35,0.20) 0%, rgba(227,27,35,0.09) 38%, rgba(227,27,35,0.02) 68%, transparent 100%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+/* the console — everything sits inside this, tilts together on mousemove */
+#heroCluster {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+#heroCluster.tilting { transition: transform 0.08s linear; }
+
+/* glass panel holding the logo */
+.cluster-panel {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  padding: 22px 26px 16px;
+  border: 1px solid rgba(227, 27, 35, 0.28);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(227, 27, 35, 0.055), rgba(255, 255, 255, 0.015));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 44px rgba(227, 27, 35, 0.10),
+    0 24px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.6s ease;
+}
+
+/* scan sweep — quick highlight bar that runs top to bottom every few seconds */
+.cluster-scan {
+  position: absolute;
+  left: 0; right: 0; top: -30%;
+  height: 30%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: cluster-scan-move 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+@keyframes cluster-scan-move {
+  0%   { top: -30%; }
+  55%  { top: 110%; }
+  100% { top: 110%; }
+}
+
+/* brief intensified glow right after the site's own loader finishes */
+.hero-v2.powered .cluster-panel {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 70px rgba(227, 27, 35, 0.28),
+    0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.hero-v2.powered .cluster-glow {
+  animation: cluster-glow-pulse 1.4s ease-out 1;
+}
+@keyframes cluster-glow-pulse {
+  0%   { opacity: 0.4; }
+  30%  { opacity: 1.4; }
+  100% { opacity: 1; }
+}
+
+/* corner brackets — reuse your existing .hbp-bracket parts, just repositioned to the panel */
+.cluster-panel .hbp-bracket { opacity: 0.8; }
+
+/* logo canvas sits inside the panel now, no separate outer wrapper needed */
+.cluster-panel .hbp-logo-svg {
+  width: clamp(190px, 22vw, 280px);
+  height: auto;
+}
+
+.cluster-panel .hbp-hud-label {
+  margin-top: 0;
+}
+
+/* mascot sits just below the panel, slightly overlapping its bottom edge */
+.cluster-mascot {
+  position: relative;
+  margin-top: -18px;
+  width: clamp(150px, 17vw, 210px);
+  height: clamp(180px, 21vw, 254px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.cluster-mascot .mascot-svg {
+  position: static;
+  transform: none;
+  width: 100% !important;
+  height: 100% !important;
+  animation: mcu-cluster-mascot-float 3s ease-in-out infinite;
+}
+@keyframes mcu-cluster-mascot-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+/* thin dashed ring kept as a single quiet accent behind the mascot,
+   instead of the old triple concentric ring system */
+.cluster-mascot::before {
+  content: '';
+  position: absolute;
+  inset: 6% ;
+  border: 1px dashed rgba(227, 27, 35, 0.22);
+  border-radius: 50%;
+  animation: cluster-ring-spin 22s linear infinite;
+  pointer-events: none;
+}
+@keyframes cluster-ring-spin { to { transform: rotate(360deg); } }
+
+/* readout strip, restyled as a slim console readout under the mascot */
+.readout-panels-v2 {
+  display: flex;
+  gap: 1px;
+  background: rgba(227, 27, 35, 0.16);
+  border: 1px solid rgba(227, 27, 35, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.readout-panels-v2 .readout-panel {
+  border: none;
+  border-radius: 0;
+  background: rgba(15, 15, 15, 0.55);
+  flex: 1;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .hero-inner-v2 { gap: 16px; }
+  .cluster-panel { max-width: 300px; }
+}
+@media (max-width: 900px) {
+  .hero-inner-v2 {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px clamp(20px, 5vw, 60px) 60px;
+  }
+  .hero-left-v2 .hero-headline { margin-right: 0; }
+  #heroCluster { transform: none !important; }
+}
+@media (max-width: 600px) {
+  .hero-right-v2 { transform: scale(0.82); transform-origin: top center; margin-top: -8px; margin-bottom: -20px; }
+  .cluster-glow { inset: -50px -60px -30px -90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #heroCluster, .cluster-scan, .cluster-mascot::before, .cluster-mascot .mascot-svg {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
