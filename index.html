@@ -203,8 +203,8 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO (v2 — circuit + console layout) ═══════════════════ -->
-  <section id="hero" class="hero-v2">
+  <!-- ═══════════════════ HERO (v3 — centered portal + arms) ═══════════════════ -->
+  <section id="hero" class="hero-v3">
 
     <div class="hero-scan-line"></div>
     <div class="hero-grid-overlay"></div>
@@ -216,69 +216,79 @@
 
     <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
 
-    <div class="hero-inner-v2">
+    <!-- Real, screen-reader/SEO heading. The big animated text below is
+         a visual duplicate marked aria-hidden, since the portal graphic
+         needs to sit inside it and a <div> isn't valid content for an
+         actual <h1>. -->
+    <h1 class="hero-a11y-heading">Engineer the future.</h1>
 
-      <!-- LEFT COLUMN -->
-      <div class="hero-left-v2">
-        <div class="hero-badge reveal-up delay-1">
-          <span class="badge-dot"></span>
-          <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
-        </div>
+    <div class="hero-inner-v3">
 
-        <h1 class="hero-headline reveal-up delay-2">
-          <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
-          <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
-          <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
-        </h1>
-
-        <p class="hero-sub reveal-up delay-3">
-          The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
-          We build community through academics, hands-on workshops, and relentless ambition.
-        </p>
-
-        <div class="hero-actions reveal-up delay-4">
-          <a href="events.html" class="btn-primary">
-            <span>Explore Events</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="team.html" class="btn-ghost">
-            <span>Meet the Team</span>
-          </a>
-        </div>
-
-        <div class="scroll-indicator reveal-up delay-5">
-          <div class="scroll-line"></div>
-          <span class="mono">SCROLL</span>
-        </div>
+      <div class="hero-badge reveal-up delay-1">
+        <span class="badge-dot"></span>
+        <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
       </div>
 
-      <!-- RIGHT COLUMN — the console cluster -->
-      <div class="hero-right-v2 reveal-right delay-2">
+      <div class="hero-headline reveal-up delay-2" aria-hidden="true">
+        <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
 
-        <div class="cluster-glow"></div>
+        <!-- ═══ PORTAL BLOCK ═══ -->
+        <div class="portal-block">
+          <div class="portal-frame">
 
-        <div id="heroCluster">
+            <div class="portal-arms">
+              <svg class="arm arm-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="arm-upper">
+                  <circle cx="24" cy="170" r="10" class="arm-joint arm-joint-base"/>
+                  <line x1="24" y1="170" x2="95" y2="110" class="arm-bone"/>
+                  <g class="arm-fore">
+                    <circle cx="95" cy="110" r="7" class="arm-joint"/>
+                    <line x1="95" y1="110" x2="165" y2="55" class="arm-bone arm-bone-fore"/>
+                    <g class="arm-clamp">
+                      <line x1="165" y1="55" x2="182" y2="40"/>
+                      <line x1="165" y1="55" x2="178" y2="66"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+              <svg class="arm arm-right" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g class="arm-upper">
+                  <circle cx="24" cy="170" r="10" class="arm-joint arm-joint-base"/>
+                  <line x1="24" y1="170" x2="95" y2="110" class="arm-bone"/>
+                  <g class="arm-fore">
+                    <circle cx="95" cy="110" r="7" class="arm-joint"/>
+                    <line x1="95" y1="110" x2="165" y2="55" class="arm-bone arm-bone-fore"/>
+                    <g class="arm-clamp">
+                      <line x1="165" y1="55" x2="182" y2="40"/>
+                      <line x1="165" y1="55" x2="178" y2="66"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
 
-          <div class="cluster-panel">
-            <div class="cluster-scan"></div>
+            <div class="portal-stage" id="portalStage">
+              <div class="portal-glow"></div>
+              <div class="portal-ring portal-ring-outer"></div>
+              <div class="portal-ring portal-ring-mid"></div>
+              <div class="portal-sweep"></div>
+              <div class="portal-ring portal-ring-inner"></div>
 
-            <div class="hbp-bracket hbp-tl"></div>
-            <div class="hbp-bracket hbp-tr"></div>
-            <div class="hbp-bracket hbp-bl"></div>
-            <div class="hbp-bracket hbp-br"></div>
+              <div class="portal-core" id="heroCluster">
+                <div class="portal-logo-slot">
+                  <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
+                  <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+                </div>
+                <div class="portal-mascot-slot">
+                  <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+                  <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+                </div>
+              </div>
+            </div>
 
-            <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
-            <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+          </div><!-- /.portal-frame -->
 
-            <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
-          </div>
-
-          <div class="cluster-mascot">
-            <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-            <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-          </div>
-
-          <div class="readout-panels readout-panels-v2">
+          <div class="readout-panels portal-readout">
             <div class="readout-panel">
               <span class="mono rp-label">DEPT</span>
               <span class="rp-val">MECHATRONICS</span>
@@ -292,11 +302,33 @@
               <span class="rp-val rp-active">● ACTIVE</span>
             </div>
           </div>
+        </div><!-- /.portal-block -->
 
-        </div><!-- /#heroCluster -->
+        <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
+        <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
+      </div><!-- /.hero-headline -->
 
-      </div><!-- /.hero-right-v2 -->
-    </div><!-- /.hero-inner-v2 -->
+      <p class="hero-sub reveal-up delay-3">
+        The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
+        We build community through academics, hands-on workshops, and relentless ambition.
+      </p>
+
+      <div class="hero-actions reveal-up delay-4">
+        <a href="events.html" class="btn-primary">
+          <span>Explore Events</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="team.html" class="btn-ghost">
+          <span>Meet the Team</span>
+        </a>
+      </div>
+
+      <div class="scroll-indicator reveal-up delay-5">
+        <div class="scroll-line"></div>
+        <span class="mono">SCROLL</span>
+      </div>
+
+    </div><!-- /.hero-inner-v3 -->
   </section>
 
   <!-- ═══════════════════ STATS ═══════════════════ -->
@@ -737,17 +769,14 @@
        see renderAlphaVideo() in the script below.
 
        NOTE: the sizing/positioning rules below for .ring-system,
-       .ring-center, .mascot-wrap are leftover from the old hero
-       layout and no longer match anything in the DOM (that markup
-       was replaced by #heroCluster / .cluster-panel / .cluster-mascot
-       in css/hero-circuit.css). They're harmless dead weight — left
-       here only so this diff stays a pure addition and nothing above
-       gets touched. Safe to delete whenever you tidy this file up.
+       .ring-center, .mascot-wrap, canvas.hbp-logo-svg, canvas.mascot-svg
+       are leftover from the ORIGINAL hero layout (before any of these
+       redesigns) and no longer match anything in the current DOM — the
+       portal layout in css/hero-circuit.css controls sizing now via
+       .portal-logo-slot .hbp-logo-svg / .portal-mascot-slot .mascot-svg,
+       which both have higher CSS specificity. Left here only so this
+       diff stays additive; safe to delete whenever you tidy this file up.
        ══════════════════════════════════════════ */
-
-    /* Hero big logo canvas — sizing now controlled by
-       .cluster-panel .hbp-logo-svg in hero-circuit.css (higher
-       specificity), this stays as a fallback only. */
     canvas.hbp-logo-svg {
       display: block;
       width: clamp(220px, 26vw, 340px);
@@ -756,11 +785,6 @@
       background: transparent;
       border-radius: 2px;
     }
-
-    /* Mascot canvas — sizing now controlled by
-       .cluster-mascot .mascot-svg in hero-circuit.css (higher
-       specificity + unique keyframe name), this stays as a fallback
-       only and no longer actually applies once hero-circuit.css loads. */
     .ring-system { width: 300px !important; height: 300px !important; }
     .ring-center { width: 160px !important; height: 160px !important; }
     .mascot-wrap { width: 160px !important; height: 160px !important; }
@@ -782,10 +806,6 @@
     @media (max-width: 1100px) {
       .ring-system { width: 250px !important; height: 250px !important; }
     }
-
-    /* Nav/footer logo images already have brightness(0) invert(1) applied
-       via .nav-logo-img / .footer-logo-img in style.css — this keeps them
-       crisp white marks consistent with the old inline SVG treatment. */
 
     /* ══ CTA BANNER REDESIGN ══ */
     #cta-banner { position: relative; }
@@ -845,11 +865,6 @@
     @media (max-width: 900px) {
       .cta-deco { display: none; }
     }
-
-    /* ══ MOBILE FIX: bring back the logo/mascot on phones ══
-       hero-circuit.css handles the mobile scale-down for the new
-       .hero-right-v2 layout directly (see its own @media blocks),
-       so nothing extra is needed here for the v2 hero. */
   </style>
 
 <script>
