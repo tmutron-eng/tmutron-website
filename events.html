@@ -78,88 +78,94 @@
     <div class="hud-corner hud-bl"></div>
     <div class="hud-corner hud-br"></div>
 
+    <!-- decorative side rails -->
+    <div class="evx-rail evx-rail-left mono" aria-hidden="true">TORONTO METROPOLITAN UNIVERSITY</div>
+    <div class="evx-rail evx-rail-right mono" aria-hidden="true">MECHATRONICS COURSE UNION</div>
+
     <div class="container evx-hero-inner">
-      <!-- Left: title + live readout strip -->
+      <!-- Left: layered title + funding plaque -->
       <div class="evx-hero-left">
         <div class="hero-badge reveal-up delay-1">
           <span class="badge-dot"></span>
           <span class="mono">03 — EVENT ARCHIVE</span>
         </div>
-        <h1 class="ev-hero-title reveal-up delay-2">
-          <span class="line-wrap"><span class="hero-line">EVENT</span></span>
-          <span class="line-wrap"><span class="hero-line ev-title-accent">ARCHIVE.</span></span>
-        </h1>
+
+        <div class="evx-title-wrap reveal-up delay-2">
+          <span class="evx-title-ghost" aria-hidden="true">ARCHIVE</span>
+          <h1 class="ev-hero-title">
+            <span class="line-wrap"><span class="hero-line">EVENT</span></span>
+            <span class="line-wrap"><span class="hero-line ev-title-accent">ARCHIVE.</span></span>
+          </h1>
+          <div class="evx-title-tick mono">// LOG INDEX — ALL RECORDS</div>
+        </div>
+
         <p class="ev-hero-sub reveal-up delay-3">
           Every workshop, tournament, and social MCU has run so far — logged and catalogued
           in one place. Open to all Mechatronics students at TMU.
         </p>
 
-        <div class="evx-readout reveal-up delay-4">
-          <div class="evx-readout-item">
-            <span class="evx-readout-num" id="evxCountLogged">11</span>
-            <span class="evx-readout-label mono">EVENTS LOGGED</span>
-          </div>
-          <div class="evx-readout-div"></div>
-          <div class="evx-readout-item">
-            <span class="evx-readout-num">$1.2K<span class="evx-readout-plus">+</span></span>
-            <span class="evx-readout-label mono">RAISED FOR CAMH</span>
-          </div>
-          <div class="evx-readout-div"></div>
-          <div class="evx-readout-item">
-            <span class="evx-readout-num">02</span>
-            <span class="evx-readout-label mono">CATEGORIES</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: mascot video, framed as an archive monitor -->
-      <div class="evx-hero-right reveal-right delay-2">
-        <div class="evx-video-frame" id="evVideoFrame">
+        <div class="evx-fund-plaque reveal-up delay-4">
           <span class="evf-corner evf-tl"></span>
           <span class="evf-corner evf-tr"></span>
           <span class="evf-corner evf-bl"></span>
           <span class="evf-corner evf-br"></span>
-          <div class="evx-video-glow"></div>
-          <div class="evx-video-sweep"></div>
-          <video autoplay muted loop playsinline preload="metadata">
-            <source src="assets/images/mom.events.webm" type="video/webm">
-          </video>
-          <div class="evx-video-tag">
-            <span class="evx-video-dot"></span>
-            <span class="mono">MCU-CAM // ARCHIVE REEL</span>
+          <div class="evx-fund-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="evx-fund-text">
+            <span class="evx-fund-num">$1,200<span class="evx-fund-plus">+</span></span>
+            <span class="evx-fund-label mono">RAISED FOR CAMH — MECH BULL NIGHT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: mascot video, framed as an archive monitor with orbit rings -->
+      <div class="evx-hero-right reveal-right delay-2">
+        <div class="evx-ring-wrap">
+          <div class="evx-ring evx-ring-1"></div>
+          <div class="evx-ring evx-ring-2"></div>
+          <div class="evx-video-frame" id="evVideoFrame">
+            <span class="evf-corner evf-tl"></span>
+            <span class="evf-corner evf-tr"></span>
+            <span class="evf-corner evf-bl"></span>
+            <span class="evf-corner evf-br"></span>
+            <div class="evx-video-glow"></div>
+            <div class="evx-video-sweep"></div>
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/images/mom.events.webm" type="video/webm">
+            </video>
+            <div class="evx-video-tag">
+              <span class="evx-video-dot"></span>
+              <span class="mono">MCU-CAM // ARCHIVE REEL</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ FILTER BAR ═══════════════════ -->
-  <div id="filter-bar">
-    <div class="container filter-bar-inner">
-      <div class="filter-tabs" role="tablist">
-        <button class="filter-btn active" data-filter="all" role="tab">All</button>
-        <button class="filter-btn" data-filter="workshop" role="tab">Workshop</button>
-        <button class="filter-btn" data-filter="social" role="tab">Social</button>
-      </div>
-      <span class="filter-count mono" id="filter-count">SHOWING 11 FILES</span>
-    </div>
-  </div>
-
   <!-- ═══════════════════ ARCHIVE GRID ═══════════════════ -->
   <section id="events-main" class="section-dark">
     <div class="section-blob b1"></div>
     <div class="section-blob b2"></div>
+    <div class="evx-texture" aria-hidden="true"></div>
     <div class="container" style="position:relative;z-index:1;">
 
       <div class="ev-section-label reveal-up">
         <span class="mono ev-section-tag">FULL ARCHIVE</span>
         <div class="ev-section-line"></div>
+        <span class="mono ev-archive-count">11 FILES ON RECORD</span>
       </div>
 
+      <div class="archive-frame">
+        <span class="arcf-corner arcf-tl"></span>
+        <span class="arcf-corner arcf-tr"></span>
+        <span class="arcf-corner arcf-bl"></span>
+        <span class="arcf-corner arcf-br"></span>
       <div class="archive-grid" id="events-grid">
 
         <!-- 001: Marvel Rivals Tournament — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal" data-type="social">
+        <article class="arc-card arc-wide arc-reveal">
           <div class="arc-card-media" style="background-image:url('assets/images/marvel-rivals.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -177,7 +183,7 @@
         </article>
 
         <!-- 002: ROS2 Tutorial -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
             <span class="ep-icon">🤖</span>
@@ -196,7 +202,7 @@
         </article>
 
         <!-- 003: Big Hero 6 Movie Night -->
-        <article class="arc-card arc-reveal" data-type="social">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-social">
             <div class="ep-grid"></div>
             <span class="ep-icon">🎬</span>
@@ -215,7 +221,7 @@
         </article>
 
         <!-- 004: SolidWorks Tutorials -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
             <span class="ep-icon">📐</span>
@@ -234,7 +240,7 @@
         </article>
 
         <!-- 005: Mech Bull Night — featured, full width -->
-        <article class="arc-card arc-feature arc-reveal" data-type="social">
+        <article class="arc-card arc-feature arc-reveal">
           <div class="arc-feature-media eimg-social">
             <div class="ep-grid"></div>
             <span class="ep-icon">🤠</span>
@@ -259,7 +265,7 @@
         </article>
 
         <!-- 006: Arduino Workshop -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
             <span class="ep-icon">🔌</span>
@@ -278,7 +284,7 @@
         </article>
 
         <!-- 007: Sumobot Competition -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
             <span class="ep-icon">⚡</span>
@@ -297,7 +303,7 @@
         </article>
 
         <!-- 008: Valentine's Day w/ MECU -->
-        <article class="arc-card arc-reveal" data-type="social">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-social">
             <div class="ep-grid"></div>
             <span class="ep-icon">💘</span>
@@ -316,7 +322,7 @@
         </article>
 
         <!-- 009: PCB Soldering Workshop -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
             <span class="ep-icon">🔧</span>
@@ -335,7 +341,7 @@
         </article>
 
         <!-- 010: Jarvis Workshop — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal" data-type="workshop">
+        <article class="arc-card arc-wide arc-reveal">
           <div class="arc-card-media" style="background-image:url('assets/images/jarvis-build.JPG');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -353,7 +359,7 @@
         </article>
 
         <!-- 011: Raspberry Pi Workshop -->
-        <article class="arc-card arc-reveal" data-type="workshop">
+        <article class="arc-card arc-reveal">
           <div class="arc-card-media" style="background-image:url('assets/images/raspberry.JPG');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -371,6 +377,7 @@
         </article>
 
       </div><!-- /archive-grid -->
+      </div><!-- /archive-frame -->
 
     </div>
   </section>
@@ -488,29 +495,101 @@
       padding: 60px clamp(20px, 5vw, 60px);
       width: 100%; max-width: var(--max-w); margin: 0 auto;
     }
-    .evx-hero-left { display: flex; flex-direction: column; }
+    .evx-hero-left { display: flex; flex-direction: column; position: relative; z-index: 2; }
 
-    /* Readout strip beneath subtitle — real numbers, not decoration */
-    .evx-readout {
-      display: flex; align-items: center; gap: 28px;
-      margin-top: 36px; padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      flex-wrap: wrap;
+    /* Decorative vertical side rails */
+    .evx-rail {
+      position: absolute; top: 50%; z-index: 4;
+      writing-mode: vertical-rl;
+      transform: translateY(-50%);
+      font-size: 10px; letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.16);
+      pointer-events: none; white-space: nowrap;
     }
-    .evx-readout-item { display: flex; flex-direction: column; gap: 4px; }
-    .evx-readout-num {
+    .evx-rail-left { left: 16px; }
+    .evx-rail-right { right: 16px; transform: translateY(-50%) rotate(180deg); }
+    @media (max-width: 1100px) { .evx-rail { display: none; } }
+
+    /* Layered title — big ghost outline bleeding behind the real headline */
+    .evx-title-wrap { position: relative; }
+    .evx-title-ghost {
+      position: absolute;
+      top: -0.18em; left: -0.04em;
       font-family: var(--font-display);
-      font-size: clamp(28px, 3vw, 38px);
+      font-size: clamp(90px, 12vw, 180px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(227,27,35,0.16);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    .evx-title-wrap .ev-hero-title { position: relative; z-index: 1; margin-bottom: 14px; }
+    .evx-title-tick {
+      font-size: 10px; letter-spacing: 0.2em; color: rgba(227,27,35,0.55);
+      margin-bottom: 24px; position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .evx-title-tick::after {
+      content: ''; flex: 1; max-width: 60px; height: 1px;
+      background: rgba(227,27,35,0.35);
+    }
+
+    /* Funding plaque — single highlighted stat, framed like an instrument readout */
+    .evx-fund-plaque {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 16px;
+      margin-top: 32px;
+      padding: 16px 22px;
+      border: 1px solid rgba(227,27,35,0.3);
+      border-radius: 3px;
+      background: rgba(227,27,35,0.045);
+      backdrop-filter: blur(3px);
+      width: fit-content;
+    }
+    .evx-fund-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(227,27,35,0.14);
+      color: var(--red);
+    }
+    .evx-fund-text { display: flex; flex-direction: column; gap: 2px; }
+    .evx-fund-num {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3vw, 34px);
       line-height: 1; color: var(--white);
     }
-    .evx-readout-plus { color: var(--red); }
-    .evx-readout-label { font-size: 10px; letter-spacing: 0.16em; color: var(--steel); white-space: nowrap; }
-    .evx-readout-div { width: 1px; height: 34px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+    .evx-fund-plus { color: var(--red); }
+    .evx-fund-label { font-size: 10px; letter-spacing: 0.14em; color: var(--steel); }
 
     /* Right column — video framed as an archive monitor, centered & grounded */
     .evx-hero-right {
       display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 2;
+    }
+    .evx-ring-wrap {
       position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .evx-ring {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .evx-ring-1 {
+      width: 340px; height: 340px;
+      border: 1px dashed rgba(227,27,35,0.22);
+      animation: ring-rotate 32s linear infinite;
+    }
+    .evx-ring-2 {
+      width: 388px; height: 388px;
+      border: 1px solid rgba(227,27,35,0.1);
+      animation: ring-rotate-rev 44s linear infinite;
+    }
+    @media (max-width: 1000px) {
+      .evx-ring-1 { width: 250px; height: 250px; }
+      .evx-ring-2 { width: 290px; height: 290px; }
     }
     .evx-video-frame {
       position: relative;
@@ -567,6 +646,43 @@
       animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
     }
 
+    /* Section label — count replaces the old filter bar */
+    .ev-archive-count {
+      font-size: 10px; letter-spacing: 0.16em; color: var(--steel);
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* Faint diagonal texture across the archive section */
+    .evx-texture {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.014) 0px, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 32px);
+    }
+
+    /* Outer HUD frame wrapping the whole archive — ties the grid into the
+       same "instrument panel" language as the video monitor + funding plaque */
+    .archive-frame {
+      position: relative;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+    }
+    .arcf-corner {
+      position: absolute; width: 22px; height: 22px; z-index: 2; pointer-events: none;
+    }
+    .arcf-corner::before, .arcf-corner::after {
+      content: ''; position: absolute; background: rgba(227,27,35,0.55);
+    }
+    .arcf-tl { top: -1px; left: -1px; }
+    .arcf-tr { top: -1px; right: -1px; }
+    .arcf-bl { bottom: -1px; left: -1px; }
+    .arcf-br { bottom: -1px; right: -1px; }
+    .arcf-tl::before, .arcf-tr::before, .arcf-bl::before, .arcf-br::before { width: 100%; height: 2px; top: 0; left: 0; }
+    .arcf-tl::after,  .arcf-tr::after,  .arcf-bl::after,  .arcf-br::after  { width: 2px; height: 100%; top: 0; left: 0; }
+    .arcf-tr::before, .arcf-br::before { left: auto; right: 0; }
+    .arcf-tr::after,  .arcf-br::after  { left: auto; right: 0; }
+    .arcf-bl::before, .arcf-br::before { top: auto; bottom: 0; }
+    .arcf-bl::after,  .arcf-br::after  { top: auto; bottom: 0; }
+
     /* ───────────────────────────────────────
        ARCHIVE GRID — asymmetric bento layout
        ─────────────────────────────────────── */
@@ -585,8 +701,9 @@
       display: flex; flex-direction: column;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.05);
-      transition: background 0.3s, box-shadow 0.3s;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
     }
+    .arc-card:hover { transform: translateY(-4px); }
     .arc-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: var(--red); transform: scaleX(0); transform-origin: left;
@@ -704,6 +821,7 @@
       .evx-hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .evx-hero-right { order: -1; }
       .evx-video-frame { max-width: 220px; }
+      .evx-title-ghost { font-size: clamp(70px, 16vw, 130px); }
       .archive-grid { grid-template-columns: repeat(2, 1fr); }
       .arc-wide { grid-column: span 2; }
     }
@@ -712,19 +830,20 @@
       .arc-wide { grid-column: span 1; }
       .arc-feature { flex-direction: column; }
       .arc-feature-media { width: 100%; aspect-ratio: 16/9; }
-      .evx-readout { gap: 20px; }
-      .filter-tabs { overflow-x: auto; padding-bottom: 2px; }
-      .filter-bar-inner { flex-direction: column; align-items: flex-start; gap: 0; }
-      .filter-count { padding: 8px 0 12px; }
+      .archive-frame { padding: 12px; }
+      .ev-section-label { flex-wrap: wrap; }
+      .evx-fund-plaque { width: 100%; }
       .suggest-inner { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 380px) {
       .ev-hero-title { font-size: clamp(44px, 12vw, 64px); }
+      .evx-title-ghost { font-size: clamp(56px, 18vw, 90px); }
       .suggest-title { font-size: clamp(28px, 9vw, 36px); }
       .container { padding: 0 16px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .arc-reveal { opacity: 1 !important; transform: none !important; }
+      .evx-ring-1, .evx-ring-2 { animation: none !important; }
       .evx-video-frame video, .evx-video-sweep, .arc-scan { animation: none !important; }
     }
   </style>
@@ -734,30 +853,6 @@
     /* Footer year */
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
-
-    // ── Filter logic — All / Workshop / Social ──
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const allCards    = document.querySelectorAll('.arc-card');
-    const countEl     = document.getElementById('filter-count');
-
-    function updateCount() {
-      const visible = document.querySelectorAll('.arc-card:not(.arc-hidden)').length;
-      if (countEl) countEl.textContent = `SHOWING ${visible} FILE${visible !== 1 ? 'S' : ''}`;
-    }
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        allCards.forEach(card => {
-          const match = (f === 'all') || (card.dataset.type === f);
-          card.classList.toggle('arc-hidden', !match);
-        });
-        updateCount();
-      });
-    });
-    updateCount();
 
     // ── Staggered scroll-reveal for archive cards ──
     (function() {
