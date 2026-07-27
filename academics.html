@@ -15,7 +15,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ─── ACADEMICS PAGE STYLES ─── */
     #academics-hero {
       min-height: 60vh;
       background: var(--black);
@@ -45,8 +44,6 @@
     .ac-hud-row:last-child { border-bottom: none; }
     .ac-hud-num { font-size: 28px; color: var(--red); font-family: var(--font-display); letter-spacing: 0; line-height: 1; }
     .ac-hud-label { font-size: 10px; color: var(--steel); }
-
-    /* ─── OFFICE HOURS STRIP ─── */
     #office-hours-strip {
       background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%);
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -88,8 +85,6 @@
       .oh-strip-inner { flex-direction: column; align-items: flex-start; }
       .oh-link-btn { width: 100%; justify-content: center; }
     }
-
-    /* Year Tab Bar */
     .year-tab-bar {
       position: sticky; top: var(--nav-h); z-index: 50;
       background: #161412; border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -105,8 +100,6 @@
     }
     .yr-tab:hover { color: var(--white); }
     .yr-tab.active { color: var(--white); border-bottom-color: var(--red); }
-
-    /* Year Sections */
     .year-section { padding: var(--section-pad) 0; position: relative; overflow: hidden; }
     .year-section:nth-child(odd) { background: #222020; }
     .year-section:nth-child(even) { background: #1a1818; }
@@ -124,8 +117,6 @@
       color: var(--steel); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .semester-label span { color: var(--red); margin-right: 8px; }
-
-    /* Course Cards — stacked one-per-line, accordion drop-down on click */
     .courses-grid {
       display: flex;
       flex-direction: column;
@@ -165,8 +156,6 @@
     .review-text { font-family: var(--font-body); font-size: 14.5px; color: var(--steel-light); font-weight: 300; line-height: 1.85; }
     .review-text ul { margin: 8px 0 8px 16px; display: flex; flex-direction: column; gap: 4px; }
     .review-text li::marker { color: var(--red); }
-    /* .review-text a / .week-topic a / .course-link-btn now live in css/style.css
-       (shared across pages) — see the "SHARED LINK / BUTTON STYLES" block there. */
     .course-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
     .weeks-table { margin-top: 16px; }
     .weeks-table-header {
@@ -202,7 +191,6 @@
     }
     .contribute-strip p { font-family: var(--font-body); font-size: 15px; color: var(--steel-light); font-weight: 300; }
     .contribute-strip p strong { color: var(--white); font-weight: 500; }
-
     @media (max-width: 900px) {
       .ac-hero-inner { flex-direction: column; }
       .ac-hero-right { width: 100%; }
@@ -217,10 +205,6 @@
       .ac-hud-panel { grid-template-columns: 1fr; }
       .ac-hud-row { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
     }
-
-    /* ══════════════════════════════════════════════
-       LIKE SYSTEM — "Student Favorite" reviews
-       ══════════════════════════════════════════════ */
     .ac-likes-note {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
       padding: 10px 0; margin-top: 2px;
@@ -231,7 +215,6 @@
       color: var(--steel); letter-spacing: 0.01em;
     }
     .ac-likes-note strong { color: var(--steel-light); font-weight: 500; }
-
     .review-block { position: relative; min-width: 0; }
     .review-block-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -249,7 +232,6 @@
       color: var(--red); text-transform: uppercase; font-weight: 600; white-space: nowrap;
     }
     .review-block-header .prof-chip { margin: 0; }
-
     .rb-favorite-tag {
       display: none; align-items: center; gap: 5px;
       font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
@@ -260,7 +242,6 @@
     }
     .rb-favorite-tag::before { content: '★'; font-size: 10px; line-height: 1; }
     .review-block.rb-top .rb-favorite-tag { display: inline-flex; }
-
     .like-btn {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--font-cond); font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
@@ -275,18 +256,17 @@
       width: 15px; height: 15px; flex-shrink: 0;
       transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), fill 0.2s, stroke 0.2s;
     }
-    .like-btn.liked { border-color: var(--red); background: rgba(227,27,35,0.16); color: var(--white); }
+    .like-btn.liked { border-color: var(--red); background: rgba(227,27,35,0.16); color: var(--white); cursor: default; }
     .like-btn.liked svg { fill: var(--red); stroke: var(--red); transform: scale(1.12); }
     .like-btn.pulsing svg { animation: like-pop 0.42s var(--ease-out-expo); }
     @keyframes like-pop { 0% { transform: scale(1); } 45% { transform: scale(1.45) rotate(-8deg); } 100% { transform: scale(1.12); } }
     .like-count { font-variant-numeric: tabular-nums; min-width: 12px; text-align: left; }
-
+    .like-btn.like-error { border-color: #ff5555; color: #ff8080; animation: like-shake 0.4s; }
+    @keyframes like-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
     @media (max-width: 480px) {
       .review-block-header { gap: 10px; }
       .rb-header-left { width: 100%; justify-content: space-between; }
     }
-
-    /* ── General overlap / overflow hardening ── */
     .course-header { flex-wrap: wrap; row-gap: 8px; }
     .course-header > div:first-child { min-width: 0; flex: 1 1 auto; }
     .course-code, .course-name, .course-meta { overflow-wrap: break-word; word-break: break-word; }
@@ -301,7 +281,6 @@
   </style>
 </head>
 <body>
-
   <div id="loader">
     <div class="loader-inner">
       <svg class="loader-hex" viewBox="0 0 100 116" fill="none">
@@ -427,7 +406,6 @@
       <button class="yr-tab" data-year="4" onclick="scrollToYear(4)">Year 4</button>
     </div>
   </div>
-
   <!-- YEAR 1 -->
   <section class="year-section" id="year-1" data-year="1">
     <div class="container" style="position:relative;z-index:1;">
@@ -546,7 +524,6 @@
         <div class="course-card reveal-up"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">PCS211</div><div class="course-name">Physics: Mechanics</div><div class="course-meta">Physics · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
         <div class="course-card reveal-up delay-1"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">ECN801</div><div class="course-name">Engineering Economics</div><div class="course-meta">Economics · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
       </div>
-
       <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
       <div class="courses-grid">
 
@@ -674,7 +651,6 @@
       </div>
     </div>
   </section>
-
   <!-- YEAR 2 -->
   <section class="year-section" id="year-2" data-year="2">
     <div class="container" style="position:relative;z-index:1;">
@@ -719,7 +695,6 @@
         <div class="course-card reveal-up delay-1"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CMN432</div><div class="course-name">Communication for Engineers</div><div class="course-meta">Communications · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
         <div class="course-card reveal-up delay-2"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH425</div><div class="course-name">Probability & Statistics</div><div class="course-meta">Math · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
       </div>
-
       <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
       <div class="courses-grid">
 
@@ -782,7 +757,6 @@
       </div>
     </div>
   </section>
-
   <!-- YEAR 3 -->
   <section class="year-section" id="year-3" data-year="3">
     <div class="container" style="position:relative;z-index:1;">
@@ -863,8 +837,6 @@
       </div>
     </div>
   </section>
-
-
   <!-- YEAR 4 -->
   <section class="year-section" id="year-4" data-year="4">
     <div class="container" style="position:relative;z-index:1;">
@@ -980,35 +952,45 @@
   </script>
   <script>
   // ══════════════════════════════════════════════════
-  // LIKE SYSTEM — like-only, YouTube-style toggle.
-  // Counts are shared globally via CounterAPI (free, no
-  // signup). Each visitor's own "have I liked this" state
-  // is remembered locally so their heart stays filled and
-  // they can un-like from their own device only.
-  // Whichever review has the most likes floats to the top
-  // of its course and gets a "★ Student Favorite" tag.
+  // LIKE SYSTEM — powered by Abacus (free, no-auth counter API).
+  // One like per person per review (no unlike) — this is what keeps
+  // the shared count correct for every visitor/device without needing
+  // any account, API key, or backend of our own.
+  // Whichever review has the most likes floats to the top of its
+  // course and gets a "★ Student Favorite" tag.
   // ══════════════════════════════════════════════════
   (function () {
-    const NAMESPACE = 'mcu-tmu-academics-likes';
-    const API = 'https://api.counterapi.dev/v1';
+    const NAMESPACE = 'mcu-tmu-academics';
+    const API = 'https://abacus.jasoncameron.dev';
     const likedStorageKey = k => 'mcu_liked_' + k;
+    const REFRESH_MS = 20000; // periodically re-sync so other visitors' likes show up without a reload
 
-    async function getCount(key) {
-      try {
-        const res = await fetch(`${API}/${NAMESPACE}/${key}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return typeof data.count === 'number' ? data.count : 0;
-      } catch (e) { return null; }
+    async function fetchJSON(url, retries = 1) {
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 6000);
+        try {
+          const res = await fetch(url, { signal: controller.signal });
+          clearTimeout(timer);
+          if (res.status === 429) { await new Promise(r => setTimeout(r, 800)); continue; }
+          if (!res.ok) return null;
+          return await res.json();
+        } catch (e) {
+          clearTimeout(timer);
+          if (attempt === retries) return null;
+        }
+      }
+      return null;
     }
 
-    async function bump(key, up) {
-      try {
-        const res = await fetch(`${API}/${NAMESPACE}/${key}/${up ? 'up' : 'down'}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return typeof data.count === 'number' ? data.count : 0;
-      } catch (e) { return null; }
+    async function getCount(key) {
+      const data = await fetchJSON(`${API}/get/${NAMESPACE}/${key}`);
+      return data && typeof data.value === 'number' ? data.value : 0;
+    }
+
+    async function hitCount(key) {
+      const data = await fetchJSON(`${API}/hit/${NAMESPACE}/${key}`, 2);
+      return data && typeof data.value === 'number' ? data.value : null;
     }
 
     function paintCount(btn, val) {
@@ -1034,24 +1016,36 @@
 
     window.toggleLike = async function (btn, evt) {
       if (evt) evt.stopPropagation();
-      if (btn.disabled) return;
+      if (btn.disabled || btn.classList.contains('liked')) return; // one like per person — keeps the shared count honest
       const key = btn.dataset.key;
-      const wasLiked = btn.classList.contains('liked');
       btn.disabled = true;
-      const newCount = await bump(key, !wasLiked);
-      btn.disabled = false;
-      if (newCount === null) return;
-      btn.classList.toggle('liked', !wasLiked);
-      btn.classList.add('pulsing');
+      const newCount = await hitCount(key);
+      if (newCount === null) {
+        btn.disabled = false;
+        btn.classList.add('like-error');
+        setTimeout(() => btn.classList.remove('like-error'), 1200);
+        return;
+      }
+      btn.classList.add('liked', 'pulsing');
       setTimeout(() => btn.classList.remove('pulsing'), 420);
-      try { localStorage.setItem(likedStorageKey(key), wasLiked ? '0' : '1'); } catch (e) {}
+      try { localStorage.setItem(likedStorageKey(key), '1'); } catch (e) {}
       paintCount(btn, newCount);
       const block = btn.closest('.review-block');
-      if (block) {
-        block.dataset.likes = newCount;
-        sortSiblingBlocks(block);
-      }
+      if (block) { block.dataset.likes = newCount; sortSiblingBlocks(block); }
+      btn.disabled = false;
     };
+
+    async function refreshAllCounts() {
+      const buttons = Array.from(document.querySelectorAll('.like-btn'));
+      await Promise.all(buttons.map(async (btn) => {
+        const key = btn.dataset.key;
+        const count = await getCount(key);
+        paintCount(btn, count);
+        const block = btn.closest('.review-block');
+        if (block) block.dataset.likes = count;
+      }));
+      document.querySelectorAll('.review-block').forEach(b => sortSiblingBlocks(b));
+    }
 
     async function init() {
       const buttons = Array.from(document.querySelectorAll('.like-btn'));
@@ -1062,10 +1056,11 @@
         if (liked === '1') btn.classList.add('liked');
         const count = await getCount(key);
         const block = btn.closest('.review-block');
-        if (block) block.dataset.likes = count || 0;
+        if (block) block.dataset.likes = count;
         paintCount(btn, count);
       }));
       document.querySelectorAll('.review-block').forEach(b => sortSiblingBlocks(b));
+      setInterval(refreshAllCounts, REFRESH_MS);
     }
 
     if (document.readyState === 'loading') {
