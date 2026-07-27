@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Events — MCU | Mechatronics Course Union · TMU</title>
-  <meta name="description" content="Workshops, socials, gaming tournaments, and more — browse all MCU events at Toronto Metropolitan University." />
+  <meta name="description" content="The full MCU event archive — workshops, socials, gaming tournaments, and more, all in one place." />
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -78,29 +78,56 @@
     <div class="hud-corner hud-bl"></div>
     <div class="hud-corner hud-br"></div>
 
-    <div class="container ev-hero-inner">
-      <!-- Left: title -->
-      <div class="ev-hero-left">
+    <div class="container evx-hero-inner">
+      <!-- Left: title + live readout strip -->
+      <div class="evx-hero-left">
         <div class="hero-badge reveal-up delay-1">
           <span class="badge-dot"></span>
-          <span class="mono">03 — EVENTS &amp; WORKSHOPS</span>
+          <span class="mono">03 — EVENT ARCHIVE</span>
         </div>
         <h1 class="ev-hero-title reveal-up delay-2">
-          <span class="line-wrap"><span class="hero-line">WHAT'S</span></span>
-          <span class="line-wrap"><span class="hero-line ev-title-accent">HAPPENING.</span></span>
+          <span class="line-wrap"><span class="hero-line">EVENT</span></span>
+          <span class="line-wrap"><span class="hero-line ev-title-accent">ARCHIVE.</span></span>
         </h1>
         <p class="ev-hero-sub reveal-up delay-3">
-          Workshops, gaming tournaments, movie nights, and more — there's always something on.
-          Open to all Mechatronics students at TMU.
+          Every workshop, tournament, and social MCU has run so far — logged and catalogued
+          in one place. Open to all Mechatronics students at TMU.
         </p>
+
+        <div class="evx-readout reveal-up delay-4">
+          <div class="evx-readout-item">
+            <span class="evx-readout-num" id="evxCountLogged">11</span>
+            <span class="evx-readout-label mono">EVENTS LOGGED</span>
+          </div>
+          <div class="evx-readout-div"></div>
+          <div class="evx-readout-item">
+            <span class="evx-readout-num">$1.2K<span class="evx-readout-plus">+</span></span>
+            <span class="evx-readout-label mono">RAISED FOR CAMH</span>
+          </div>
+          <div class="evx-readout-div"></div>
+          <div class="evx-readout-item">
+            <span class="evx-readout-num">02</span>
+            <span class="evx-readout-label mono">CATEGORIES</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Right: floating video mascot, no panel -->
-      <div class="hero-mascot-solo reveal-right delay-2">
-        <div class="hud-video-float" id="evVideoFrame">
+      <!-- Right: mascot video, framed as an archive monitor -->
+      <div class="evx-hero-right reveal-right delay-2">
+        <div class="evx-video-frame" id="evVideoFrame">
+          <span class="evf-corner evf-tl"></span>
+          <span class="evf-corner evf-tr"></span>
+          <span class="evf-corner evf-bl"></span>
+          <span class="evf-corner evf-br"></span>
+          <div class="evx-video-glow"></div>
+          <div class="evx-video-sweep"></div>
           <video autoplay muted loop playsinline preload="metadata">
             <source src="assets/images/mom.events.webm" type="video/webm">
           </video>
+          <div class="evx-video-tag">
+            <span class="evx-video-dot"></span>
+            <span class="mono">MCU-CAM // ARCHIVE REEL</span>
+          </div>
         </div>
       </div>
     </div>
@@ -111,314 +138,239 @@
     <div class="container filter-bar-inner">
       <div class="filter-tabs" role="tablist">
         <button class="filter-btn active" data-filter="all" role="tab">All</button>
-        <button class="filter-btn" data-filter="past" role="tab">Past</button>
-        <div class="filter-sep"></div>
         <button class="filter-btn" data-filter="workshop" role="tab">Workshop</button>
         <button class="filter-btn" data-filter="social" role="tab">Social</button>
       </div>
-      <span class="filter-count mono" id="filter-count">SHOWING 11 EVENTS</span>
+      <span class="filter-count mono" id="filter-count">SHOWING 11 FILES</span>
     </div>
   </div>
 
-  <!-- ═══════════════════ EVENTS GRID ═══════════════════ -->
+  <!-- ═══════════════════ ARCHIVE GRID ═══════════════════ -->
   <section id="events-main" class="section-dark">
     <div class="section-blob b1"></div>
     <div class="section-blob b2"></div>
     <div class="container" style="position:relative;z-index:1;">
 
-      <!-- NO UPCOMING STATE -->
       <div class="ev-section-label reveal-up">
-        <span class="mono ev-section-tag">UPCOMING</span>
+        <span class="mono ev-section-tag">FULL ARCHIVE</span>
         <div class="ev-section-line"></div>
       </div>
 
-      <div class="ev-no-upcoming reveal-up">
-        <div class="ev-no-upcoming-inner">
-          <div class="ev-no-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div class="archive-grid" id="events-grid">
+
+        <!-- 001: Marvel Rivals Tournament — wide, photo -->
+        <article class="arc-card arc-wide arc-reveal" data-type="social">
+          <div class="arc-card-media" style="background-image:url('assets/images/marvel-rivals.jpg');">
+            <div class="arc-media-overlay"></div>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-social mono">SOCIAL</span>
+            <span class="arc-file mono">FILE Nº 001</span>
           </div>
-          <p class="ev-no-title mono">NO UPCOMING EVENTS RIGHT NOW</p>
-          <p class="ev-no-sub">Check back soon — or join the Discord for announcements as they drop.</p>
-          <a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer" class="btn-ghost btn-sm" style="margin-top:8px;">Join Discord for Updates</a>
-        </div>
-      </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Marvel Rivals Tournament</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Red Bull Gaming Hub · Catalyst Learning Centre
+            </span>
+            <p class="arc-card-desc">MCU's very first event — catered with pita and hummus, 4 full teams battled through a mixed double-elimination bracket, with the Catalyst Learning Centre doubling as the spectators' lounge and a cooldown area between games. A great way to kick off the course union, and a staple event ever since.</p>
+          </div>
+        </article>
 
-      <!-- PAST EVENTS -->
-      <div class="ev-section-label reveal-up" style="margin-top: 80px;">
-        <span class="mono ev-section-tag">PAST EVENTS</span>
-        <div class="ev-section-line"></div>
-        <button class="ev-toggle-past mono" id="toggle-past" aria-expanded="false">
-          Show Past Events
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="ev-toggle-chevron"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-      </div>
+        <!-- 002: ROS2 Tutorial -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media arc-media-icon eimg-workshop">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">🤖</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 002</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">ROS2 Tutorial</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering
+            </span>
+            <p class="arc-card-desc">Led by Velocity TMU, this 2-hour hands-on session covered ROS2 fundamentals — nodes, interfaces, and real robot communication — and ended with students programming a moveable robot of their own.</p>
+          </div>
+        </article>
 
-      <div class="events-past-wrap" id="past-events-wrap">
-        <div class="events-full-grid" id="events-grid">
+        <!-- 003: Big Hero 6 Movie Night -->
+        <article class="arc-card arc-reveal" data-type="social">
+          <div class="arc-card-media arc-media-icon eimg-social">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">🎬</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-social mono">SOCIAL</span>
+            <span class="arc-file mono">FILE Nº 003</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Big Hero 6 Movie Night</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Campus
+            </span>
+            <p class="arc-card-desc">Held during midterm season as a cooldown and mental-health break, this Big Hero 6 screening came with popcorn and snacks for a relaxed night off. Turnout ran lower than usual, but as MCU's second-ever social event, it was a solid, easygoing intro to the community.</p>
+          </div>
+        </article>
 
-          <!-- 1: Marvel Rivals Tournament — social -->
-          <article class="ev-card ev-card-past tilt-card" data-type="social" data-status="past">
-            <div class="ev-card-img" style="background-image:url('assets/images/marvel-rivals.jpg');background-size:cover;background-position:center;">
-              <div class="ep-photo-overlay"></div>
-              <span class="event-badge badge-social">Social</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">FEB</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Marvel Rivals Tournament</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  Red Bull Gaming Hub · Catalyst Learning Centre
-                </span>
-              </div>
-              <p class="ev-card-desc">MCU's very first event — catered with pita and hummus, 4 full teams battled through a mixed double-elimination bracket, with the Catalyst Learning Centre doubling as the spectators' lounge and a cooldown area between games. A great way to kick off the course union, and a staple event ever since.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 004: SolidWorks Tutorials -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media arc-media-icon eimg-workshop">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">📐</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 004</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">SolidWorks Beginner, CSWA &amp; CSWP</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering Labs
+            </span>
+            <p class="arc-card-desc">A three-tier SolidWorks series — the first session covered the basics and sent every participant home with a free SolidWorks license, while the second and third built toward CSWA and CSWP certification prep respectively. Industry-standard CAD skills for your résumé.</p>
+          </div>
+        </article>
 
-          <!-- 2: ROS2 Tutorial — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img eimg-workshop">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">🤖</span>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">FEB</span>
-                <span class="edc-mon">2025</span>
-              </div>
+        <!-- 005: Mech Bull Night — featured, full width -->
+        <article class="arc-card arc-feature arc-reveal" data-type="social">
+          <div class="arc-feature-media eimg-social">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">🤠</span>
+            <div class="arc-scan"></div>
+          </div>
+          <div class="arc-feature-body">
+            <div class="arc-feature-top">
+              <span class="arc-tag arc-tag-social mono">SOCIAL</span>
+              <span class="arc-file mono">FILE Nº 005</span>
             </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">ROS2 Tutorial</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering
-                </span>
-              </div>
-              <p class="ev-card-desc">Led by Velocity TMU, this 2-hour hands-on session covered ROS2 fundamentals — nodes, interfaces, and real robot communication — and ended with students programming a moveable robot of their own.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
+            <h3 class="arc-card-title">Mech Bull Night</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Gould Street, TMU
+            </span>
+            <p class="arc-card-desc">Run in collaboration with MECU, this carnival-style event on Gould Street raised money for CAMH — Canada's largest mental health teaching hospital. Inflatable games, refreshments, face painting, and our signature mechanical bull ran on a dollar-a-ticket system, with every cent going straight to the cause. The event was packed.</p>
+            <div class="arc-feature-stat">
+              <span class="afs-num">$1,200<span class="afs-plus">+</span></span>
+              <span class="afs-label mono">RAISED FOR CAMH</span>
             </div>
-          </article>
+          </div>
+        </article>
 
-          <!-- 3: Big Hero 6 Movie Night — social -->
-          <article class="ev-card ev-card-past tilt-card" data-type="social" data-status="past">
-            <div class="ev-card-img eimg-social">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">🎬</span>
-              <span class="event-badge badge-social">Social</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">MAR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Big Hero 6 Movie Night</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Campus
-                </span>
-              </div>
-              <p class="ev-card-desc">Held during midterm season as a cooldown and mental-health break, this Big Hero 6 screening came with popcorn and snacks for a relaxed night off. Turnout ran lower than usual, but as MCU's second-ever social event, it was a solid, easygoing intro to the community.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 006: Arduino Workshop -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media arc-media-icon eimg-workshop">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">🔌</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 006</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Arduino Workshop</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering Lab
+            </span>
+            <p class="arc-card-desc">An evening full of prototyping, debugging, and learning the basics of electronics. Over 50 participants learned how basic circuitry works — from connecting and blinking an LED, to reading digital input through a push-button, to wiring an LCD for a visual text display.</p>
+          </div>
+        </article>
 
-          <!-- 4: SolidWorks Tutorials — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img eimg-workshop">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">📐</span>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">MAR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">SolidWorks Beginner, CSWA &amp; CSWP</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering Labs
-                </span>
-              </div>
-              <p class="ev-card-desc">A three-tier SolidWorks series — the first session covered the basics and sent every participant home with a free SolidWorks license, while the second and third built toward CSWA and CSWP certification prep respectively. Industry-standard CAD skills for your résumé.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 007: Sumobot Competition -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media arc-media-icon eimg-workshop">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">⚡</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 007</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Sumobot Competition</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering Lab
+            </span>
+            <p class="arc-card-desc">Students designed and programmed autonomous sumo robots to compete head-to-head in the ring. Pure engineering chaos. Absolutely iconic.</p>
+          </div>
+        </article>
 
-          <!-- 5: Mech Bull Night — social -->
-          <article class="ev-card ev-card-past tilt-card" data-type="social" data-status="past">
-            <div class="ev-card-img eimg-social">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">🤠</span>
-              <span class="event-badge badge-social">Social</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">MAR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Mech Bull Night</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  Gould Street, TMU
-                </span>
-              </div>
-              <p class="ev-card-desc">Run in collaboration with MECU, this carnival-style event on Gould Street raised money for CAMH — Canada's largest mental health teaching hospital. Inflatable games, refreshments, face painting, and our signature mechanical bull ran on a dollar-a-ticket system, with every cent going straight to the cause. The event was packed, and we raised over $1,200 for CAMH.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 008: Valentine's Day w/ MECU -->
+        <article class="arc-card arc-reveal" data-type="social">
+          <div class="arc-card-media arc-media-icon eimg-social">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">💘</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-social mono">SOCIAL</span>
+            <span class="arc-file mono">FILE Nº 008</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Valentine's Day Event w/ MECU</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Campus
+            </span>
+            <p class="arc-card-desc">A collab with the Mechanical Engineering Course Union (MECU) for Valentine's Day. Engineers can absolutely be romantic — or at least try.</p>
+          </div>
+        </article>
 
-          <!-- 6: Arduino Workshop — workshop (added: doc-only event, no card previously existed) -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img eimg-workshop">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">🔌</span>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">TBD</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Arduino Workshop</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering Lab
-                </span>
-              </div>
-              <p class="ev-card-desc">An evening full of prototyping, debugging, and learning the basics of electronics. Over 50 participants learned how basic circuitry works and how to put it into practice — from connecting and blinking an LED, to reading digital input through a push-button, to wiring an LCD for a visual text display.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 009: PCB Soldering Workshop -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media arc-media-icon eimg-workshop">
+            <div class="ep-grid"></div>
+            <span class="ep-icon">🔧</span>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 009</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">PCB Soldering Workshop</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Kerr Hall Engineering Lab
+            </span>
+            <p class="arc-card-desc">Hands-on soldering fundamentals — iron technique, component placement, and inspection. Students left with a working board they built themselves.</p>
+          </div>
+        </article>
 
-          <!-- 7: Sumobot — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img eimg-workshop">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">⚡</span>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">APR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Sumobot Competition</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering Lab
-                </span>
-              </div>
-              <p class="ev-card-desc">Students designed and programmed autonomous sumo robots to compete head-to-head in the ring. Pure engineering chaos. Absolutely iconic.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 010: Jarvis Workshop — wide, photo -->
+        <article class="arc-card arc-wide arc-reveal" data-type="workshop">
+          <div class="arc-card-media" style="background-image:url('assets/images/jarvis-build.JPG');">
+            <div class="arc-media-overlay"></div>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 010</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Jarvis Workshop</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering
+            </span>
+            <p class="arc-card-desc">A deep dive into building your own voice-activated AI assistant — hardware integration, natural language commands, and embedded control. Tony Stark would approve.</p>
+          </div>
+        </article>
 
-          <!-- 8: Valentine's Day w/ MECU — social -->
-          <article class="ev-card ev-card-past tilt-card" data-type="social" data-status="past">
-            <div class="ev-card-img eimg-social">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">💘</span>
-              <span class="event-badge badge-social">Social</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">FEB</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Valentine's Day Event w/ MECU</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Campus
-                </span>
-              </div>
-              <p class="ev-card-desc">A collab with the Mechanical Engineering Course Union (MECU) for Valentine's Day. Engineers can absolutely be romantic — or at least try.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
+        <!-- 011: Raspberry Pi Workshop -->
+        <article class="arc-card arc-reveal" data-type="workshop">
+          <div class="arc-card-media" style="background-image:url('assets/images/raspberry.JPG');">
+            <div class="arc-media-overlay"></div>
+            <div class="arc-scan"></div>
+            <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
+            <span class="arc-file mono">FILE Nº 011</span>
+          </div>
+          <div class="arc-card-body">
+            <h3 class="arc-card-title">Raspberry Pi Workshop</h3>
+            <span class="arc-card-loc mono">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              TMU Engineering Lab
+            </span>
+            <p class="arc-card-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing — the gateway to embedded Linux.</p>
+          </div>
+        </article>
 
-          <!-- 9: PCB Soldering Workshop — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img eimg-workshop">
-              <div class="ep-grid"></div>
-              <span class="ep-icon">🔧</span>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">MAR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">PCB Soldering Workshop</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  Kerr Hall Engineering Lab
-                </span>
-              </div>
-              <p class="ev-card-desc">Hands-on soldering fundamentals — iron technique, component placement, and inspection. Students left with a working board they built themselves.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
-
-          <!-- 10: Jarvis Workshop — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img" style="background-image:url('assets/images/jarvis-build.JPG');background-size:cover;background-position:center;">
-              <div class="ep-photo-overlay"></div>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">APR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Jarvis Workshop</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering
-                </span>
-              </div>
-              <p class="ev-card-desc">A deep dive into building your own voice-activated AI assistant — hardware integration, natural language commands, and embedded control. Tony Stark would approve.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
-
-          <!-- 11: Raspberry Pi Workshop — workshop -->
-          <article class="ev-card ev-card-past tilt-card" data-type="workshop" data-status="past">
-            <div class="ev-card-img" style="background-image:url('assets/images/raspberry.JPG');background-size:cover;background-position:center;">
-              <div class="ep-photo-overlay"></div>
-              <span class="event-badge badge-workshop">Workshop</span>
-              <div class="ev-date-chip ev-date-chip-past">
-                <span class="edc-day">APR</span>
-                <span class="edc-mon">2025</span>
-              </div>
-            </div>
-            <div class="ev-card-body">
-              <h3 class="ev-card-title">Raspberry Pi Workshop</h3>
-              <div class="ev-card-meta">
-                <span class="ev-meta-item">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  TMU Engineering Lab
-                </span>
-              </div>
-              <p class="ev-card-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing — the gateway to embedded Linux.</p>
-              <span class="ev-card-cta ev-card-cta-past ev-no-link">No Recap Available</span>
-            </div>
-          </article>
-
-        </div>
-      </div><!-- /past-events-wrap -->
+      </div><!-- /archive-grid -->
 
     </div>
   </section>
@@ -522,53 +474,258 @@
     </div>
   </footer>
 
-  <!-- ═══════════════════ EXTRA CSS ═══════════════════ -->
+  <!-- ═══════════════════ EXTRA CSS — EVENTS PAGE REDESIGN ═══════════════════ -->
   <style>
-    /* Photo card overlay — darkens real photos so badges/text stay readable */
-    .ep-photo-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.25) 0%,
-        rgba(0,0,0,0.1) 40%,
-        rgba(0,0,0,0.55) 100%
-      );
-      z-index: 0;
+    /* ───────────────────────────────────────
+       HERO — two-column, readout strip + framed video monitor
+       ─────────────────────────────────────── */
+    .evx-hero-inner {
+      position: relative; z-index: 5;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 56px;
+      padding: 60px clamp(20px, 5vw, 60px);
+      width: 100%; max-width: var(--max-w); margin: 0 auto;
     }
-    /* Ensure badges/chips sit above overlay */
-    .ev-card-img .event-badge,
-    .ev-card-img .ev-date-chip,
-    .ev-card-img .ev-past-overlay { z-index: 2; }
-    .ev-no-upcoming {
-      margin-bottom: 24px;
+    .evx-hero-left { display: flex; flex-direction: column; }
+
+    /* Readout strip beneath subtitle — real numbers, not decoration */
+    .evx-readout {
+      display: flex; align-items: center; gap: 28px;
+      margin-top: 36px; padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
     }
-    .ev-no-upcoming-inner {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; gap: 12px;
-      padding: 56px 40px;
-      border: 1px dashed rgba(255,255,255,0.1);
+    .evx-readout-item { display: flex; flex-direction: column; gap: 4px; }
+    .evx-readout-num {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1; color: var(--white);
+    }
+    .evx-readout-plus { color: var(--red); }
+    .evx-readout-label { font-size: 10px; letter-spacing: 0.16em; color: var(--steel); white-space: nowrap; }
+    .evx-readout-div { width: 1px; height: 34px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+
+    /* Right column — video framed as an archive monitor, centered & grounded */
+    .evx-hero-right {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .evx-video-frame {
+      position: relative;
+      width: 100%; max-width: 300px;
+      aspect-ratio: 4 / 5;
+      border-radius: 8px;
+      border: 1px solid rgba(227,27,35,0.3);
+      background: linear-gradient(180deg, rgba(227,27,35,0.07) 0%, rgba(15,15,15,0.5) 60%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
+    }
+    .evx-video-glow {
+      position: absolute; inset: -60%;
+      background: radial-gradient(circle at 50% 40%, rgba(227,27,35,0.28) 0%, transparent 65%);
+      filter: blur(30px);
+      z-index: 0; pointer-events: none;
+    }
+    .evx-video-frame video {
+      position: relative; z-index: 1;
+      width: 88%; height: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.5));
+      animation: evx-video-bob 3.8s ease-in-out infinite;
+    }
+    @keyframes evx-video-bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    /* Moving scan sweep inside the frame */
+    .evx-video-sweep {
+      position: absolute; left: 0; right: 0; top: -20%;
+      height: 40%; z-index: 2; pointer-events: none;
+      background: linear-gradient(180deg, transparent, rgba(227,27,35,0.14), transparent);
+      animation: evx-sweep 5s ease-in-out infinite;
+    }
+    @keyframes evx-sweep {
+      0%   { top: -40%; opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { top: 100%; opacity: 1; }
+      60%  { opacity: 0; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .evx-video-tag {
+      position: absolute; left: 12px; bottom: 12px; z-index: 3;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.65);
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+      padding: 5px 9px; border-radius: 3px; backdrop-filter: blur(3px);
+    }
+    .evx-video-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--red); box-shadow: 0 0 6px var(--red);
+      animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
+    }
+
+    /* ───────────────────────────────────────
+       ARCHIVE GRID — asymmetric bento layout
+       ─────────────────────────────────────── */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: dense;
+      gap: 2px;
+      background: rgba(255,255,255,0.04);
       border-radius: 4px;
-      background: rgba(255,255,255,0.015);
+      overflow: hidden;
     }
-    .ev-no-icon { opacity: 0.35; margin-bottom: 4px; }
-    .ev-no-title {
-      font-size: 12px; letter-spacing: 0.18em;
-      color: var(--steel); margin: 0;
+    .arc-card {
+      position: relative;
+      background: #2a2422;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.3s, box-shadow 0.3s;
     }
-    .ev-no-sub {
-      font-size: 14px; font-weight: 300;
-      color: var(--steel); max-width: 340px;
-      line-height: 1.6; margin: 0;
+    .arc-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--red); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s var(--ease-out-expo); z-index: 3;
     }
-    /* Disabled recap link — looks like cta but not clickable */
-    .ev-no-link {
-      display: inline-flex; align-items: center;
-      font-family: var(--font-cond); font-size: 11px;
-      font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-      cursor: default; margin-top: auto;
-      font-style: italic;
+    .arc-card:hover::before { transform: scaleX(1); }
+    .arc-card:hover { background: #333028; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .arc-wide { grid-column: span 2; }
+
+    /* Reveal-on-scroll for cards */
+    .arc-reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+    }
+    .arc-reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    /* Card media */
+    .arc-card-media {
+      position: relative; aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background-size: cover; background-position: center;
+    }
+    .arc-media-icon.eimg-workshop { background-color: #1e0a0a; }
+    .arc-media-icon.eimg-social   { background-color: #0a160a; }
+    .arc-card-media .ep-icon {
+      font-size: 40px; position: relative; z-index: 1;
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+    .arc-card:hover .arc-card-media .ep-icon { transform: scale(1.12); }
+    .arc-card-media[style*="background-image"] {
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+    .arc-card:hover .arc-card-media[style*="background-image"] { transform: scale(1.06); }
+    .arc-media-overlay {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.6) 100%);
+    }
+    /* Hover scan sweep across media */
+    .arc-scan {
+      position: absolute; left: 0; right: 0; top: -30%;
+      height: 40%; z-index: 2; pointer-events: none;
+      background: linear-gradient(180deg, transparent, rgba(227,27,35,0.22), transparent);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .arc-card:hover .arc-scan { opacity: 1; animation: arc-scan-move 1.1s ease-in-out; }
+    @keyframes arc-scan-move { from { top: -40%; } to { top: 110%; } }
+
+    /* Tag + file number, replacing date chips */
+    .arc-tag {
+      position: absolute; top: 12px; left: 12px; z-index: 3;
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .arc-tag-workshop { background: rgba(227,27,35,0.18); color: var(--red); border: 1px solid rgba(227,27,35,0.35); }
+    .arc-tag-social   { background: rgba(34,197,94,0.14); color: #4ade80; border: 1px solid rgba(34,197,94,0.28); }
+    .arc-file {
+      position: absolute; top: 12px; right: 12px; z-index: 3;
+      font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.55);
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 9px; border-radius: 2px; backdrop-filter: blur(2px);
+    }
+
+    /* Card body */
+    .arc-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
+    .arc-card-title {
+      font-family: var(--font-cond); font-size: 19px; font-weight: 700;
+      letter-spacing: 0.03em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 10px; line-height: 1.2;
+    }
+    .arc-card-loc {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; letter-spacing: 0.06em; color: var(--steel);
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .arc-card-loc svg { opacity: 0.6; flex-shrink: 0; }
+    .arc-card-desc {
+      font-size: 13px; font-weight: 300; line-height: 1.65;
+      color: var(--steel-light);
+    }
+
+    /* Featured / spotlight card — Mech Bull Night */
+    .arc-feature {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      background: #2c211d;
+    }
+    .arc-feature-media {
+      position: relative;
+      width: 34%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background-color: #180d08;
+    }
+    .arc-feature-media .ep-icon { font-size: 64px; position: relative; z-index: 1; }
+    .arc-feature-body { padding: 32px 36px; flex: 1; display: flex; flex-direction: column; }
+    .arc-feature-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .arc-feature-top .arc-file {
+      position: static; background: none; border: none; padding: 0;
+      backdrop-filter: none; color: var(--steel);
+    }
+    .arc-feature .arc-card-title { font-size: 26px; margin-bottom: 8px; }
+    .arc-feature .arc-card-desc { max-width: 640px; margin-bottom: 20px; }
+    .arc-feature-stat {
+      display: flex; align-items: baseline; gap: 12px;
+      padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: auto;
+    }
+    .afs-num { font-family: var(--font-display); font-size: 34px; color: var(--white); line-height: 1; }
+    .afs-plus { color: var(--red); }
+    .afs-label { font-size: 10px; letter-spacing: 0.16em; color: var(--steel); }
+
+    /* ───────────────────────────────────────
+       RESPONSIVE
+       ─────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .evx-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .evx-hero-right { order: -1; }
+      .evx-video-frame { max-width: 220px; }
+      .archive-grid { grid-template-columns: repeat(2, 1fr); }
+      .arc-wide { grid-column: span 2; }
+    }
+    @media (max-width: 700px) {
+      .archive-grid { grid-template-columns: 1fr; }
+      .arc-wide { grid-column: span 1; }
+      .arc-feature { flex-direction: column; }
+      .arc-feature-media { width: 100%; aspect-ratio: 16/9; }
+      .evx-readout { gap: 20px; }
+      .filter-tabs { overflow-x: auto; padding-bottom: 2px; }
+      .filter-bar-inner { flex-direction: column; align-items: flex-start; gap: 0; }
+      .filter-count { padding: 8px 0 12px; }
+      .suggest-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 380px) {
+      .ev-hero-title { font-size: clamp(44px, 12vw, 64px); }
+      .suggest-title { font-size: clamp(28px, 9vw, 36px); }
+      .container { padding: 0 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .arc-reveal { opacity: 1 !important; transform: none !important; }
+      .evx-video-frame video, .evx-video-sweep, .arc-scan { animation: none !important; }
     }
   </style>
 
@@ -578,33 +735,14 @@
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
 
-    /* Bend-in / float-in entrance for the hero video mascot */
-    (function() {
-      const frame = document.getElementById('evVideoFrame');
-      if (!frame) return;
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            frame.classList.add('in-view');
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
-      obs.observe(frame);
-    })();
-
-    // ── Filter logic ──
-    // All cards are past; "upcoming" filter shows empty state
-    const filterBtns  = document.querySelectorAll('.filter-btn');
-    const allCards     = document.querySelectorAll('.ev-card');
-    const countEl      = document.getElementById('filter-count');
-    const noUpcoming   = document.querySelector('.ev-no-upcoming');
-    const pastWrap     = document.getElementById('past-events-wrap');
-    const toggleBtn    = document.getElementById('toggle-past');
+    // ── Filter logic — All / Workshop / Social ──
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const allCards    = document.querySelectorAll('.arc-card');
+    const countEl     = document.getElementById('filter-count');
 
     function updateCount() {
-      const visible = document.querySelectorAll('.ev-card:not(.ev-hidden)').length;
-      if (countEl) countEl.textContent = `SHOWING ${visible} EVENT${visible !== 1 ? 'S' : ''}`;
+      const visible = document.querySelectorAll('.arc-card:not(.arc-hidden)').length;
+      if (countEl) countEl.textContent = `SHOWING ${visible} FILE${visible !== 1 ? 'S' : ''}`;
     }
 
     filterBtns.forEach(btn => {
@@ -612,61 +750,50 @@
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const f = btn.dataset.filter;
-
-        // Show/hide no-upcoming banner
-        if (noUpcoming) noUpcoming.style.display = (f === 'upcoming') ? 'block' : 'block';
-
-        // All past cards — show/hide based on type or status
         allCards.forEach(card => {
-          const type   = card.dataset.type;
-          const status = card.dataset.status;
-          let match;
-          if (f === 'all' || f === 'past') {
-            match = true;
-          } else if (f === 'upcoming') {
-            match = false; // no upcoming events
-          } else {
-            match = f === type;
-          }
-          card.classList.toggle('ev-hidden', !match);
+          const match = (f === 'all') || (card.dataset.type === f);
+          card.classList.toggle('arc-hidden', !match);
         });
-
-        // Auto-expand past section when filtering to past/type
-        if (f !== 'upcoming') expandPast();
-
         updateCount();
       });
     });
-
-    // ── Past events toggle ──
-    let pastExpanded = false;
-
-    function expandPast() {
-      if (!pastExpanded) {
-        pastExpanded = true;
-        pastWrap.classList.add('expanded');
-        if (toggleBtn) {
-          toggleBtn.setAttribute('aria-expanded', 'true');
-          toggleBtn.querySelector('.ev-toggle-chevron').style.transform = 'rotate(180deg)';
-          toggleBtn.childNodes[0].textContent = 'Hide Past Events';
-        }
-      }
-    }
-
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        pastExpanded = !pastExpanded;
-        pastWrap.classList.toggle('expanded', pastExpanded);
-        toggleBtn.setAttribute('aria-expanded', pastExpanded);
-        toggleBtn.querySelector('.ev-toggle-chevron').style.transform = pastExpanded ? 'rotate(180deg)' : '';
-        toggleBtn.childNodes[0].textContent = pastExpanded ? 'Hide Past Events' : 'Show Past Events';
-        updateCount();
-      });
-    }
-
     updateCount();
 
-    // ── Animated section canvas ──
+    // ── Staggered scroll-reveal for archive cards ──
+    (function() {
+      const items = document.querySelectorAll('.arc-reveal');
+      if (!items.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = (Array.from(items).indexOf(el) % 6) * 70;
+            setTimeout(() => el.classList.add('in-view'), delay);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      items.forEach(el => obs.observe(el));
+    })();
+
+    /* Bend-in / float-in entrance for the hero video monitor */
+    (function() {
+      const frame = document.getElementById('evVideoFrame');
+      if (!frame) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            frame.style.opacity = '1';
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      frame.style.opacity = '0';
+      frame.style.transition = 'opacity 0.9s cubic-bezier(0.16,1,0.3,1)';
+      obs.observe(frame);
+    })();
+
+    // ── Animated section canvas (unchanged) ──
     (function() {
       const section = document.getElementById('events-main');
       if (!section) return;
