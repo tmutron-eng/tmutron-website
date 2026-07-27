@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════
-   MCU — HERO REDESIGN LAYER
+   MCU — HERO REDESIGN LAYER (v3 — centered portal)
    hero-circuit.js
    Load this AFTER js/animations.js, before </body>.
    Does not touch mcuLogoCanvas / mcuMascotCanvas or
@@ -8,7 +8,7 @@
 
 'use strict';
 
-/* ─── 1. CIRCUIT TRACE BACKGROUND ─── */
+/* ─── 1. CIRCUIT TRACE BACKGROUND — converges to true center ─── */
 (function initCircuitBoard() {
   var canvas = document.getElementById('circuitCanvas');
   var hero = document.getElementById('hero');
@@ -35,26 +35,26 @@
 
   function buildPaths() {
     paths = [];
-    var fx = w * 0.70, fy = h * 0.48; // focal point near the console
-    var count = w < 700 ? 8 : 16;
+    var fx = w * 0.5, fy = h * 0.5; // true center — the portal
+    var count = w < 700 ? 10 : 20;
 
     for (var i = 0; i < count; i++) {
-      var edge = Math.floor(Math.random() * 3); // 0 top, 1 left, 2 bottom (skip right — that's where the focal point lives)
+      var edge = Math.floor(Math.random() * 4); // 0 top, 1 left, 2 bottom, 3 right
       var sx, sy;
       if (edge === 0) { sx = Math.random() * w; sy = 0; }
       else if (edge === 1) { sx = 0; sy = Math.random() * h; }
-      else { sx = Math.random() * w * 0.9; sy = h; }
+      else if (edge === 2) { sx = Math.random() * w; sy = h; }
+      else { sx = w; sy = Math.random() * h; }
 
-      var bendX = edge === 1 ? sx + (fx - sx) * (0.3 + Math.random() * 0.3) : fx * (0.5 + Math.random() * 0.3);
       var pts = [{ x: sx, y: sy }];
-
-      if (edge === 1) {
-        pts.push({ x: bendX, y: sy });
-        pts.push({ x: bendX, y: fy });
+      if (edge === 0 || edge === 2) {
+        var midY = sy + (fy - sy) * (0.35 + Math.random() * 0.3);
+        pts.push({ x: sx, y: midY });
+        pts.push({ x: fx, y: midY });
       } else {
-        pts.push({ x: sx, y: fy + (sy - fy) * 0.5 });
-        pts.push({ x: bendX, y: fy + (sy - fy) * 0.5 });
-        pts.push({ x: bendX, y: fy });
+        var midX = sx + (fx - sx) * (0.35 + Math.random() * 0.3);
+        pts.push({ x: midX, y: sy });
+        pts.push({ x: midX, y: fy });
       }
       pts.push({ x: fx, y: fy });
 
@@ -144,7 +144,6 @@
   });
 
   if (reduced) {
-    // draw a single static frame, no animation loop
     visible = false;
     ctx.clearRect(0, 0, w, h);
     paths.forEach(function (p) { drawPolyline(p, 0.09); });
@@ -157,11 +156,11 @@
 })();
 
 
-/* ─── 2. CLUSTER PARALLAX TILT ─── */
-(function initClusterTilt() {
-  var heroRight = document.querySelector('.hero-right-v2');
-  var cluster = document.getElementById('heroCluster');
-  if (!heroRight || !cluster) return;
+/* ─── 2. PORTAL PARALLAX TILT ─── */
+(function initPortalTilt() {
+  var frame = document.querySelector('.portal-frame');
+  var core = document.getElementById('heroCluster');
+  if (!frame || !core) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!window.matchMedia('(pointer: fine)').matches) return; // skip on touch
 
@@ -171,8 +170,8 @@
   function loop() {
     cx = lerp(cx, tx, 0.12);
     cy = lerp(cy, ty, 0.12);
-    cluster.style.setProperty('--rx', cx.toFixed(2) + 'deg');
-    cluster.style.setProperty('--ry', cy.toFixed(2) + 'deg');
+    core.style.setProperty('--rx', cx.toFixed(2) + 'deg');
+    core.style.setProperty('--ry', cy.toFixed(2) + 'deg');
     if (Math.abs(cx - tx) > 0.02 || Math.abs(cy - ty) > 0.02) {
       raf = requestAnimationFrame(loop);
     } else {
@@ -180,17 +179,17 @@
     }
   }
 
-  heroRight.addEventListener('mousemove', function (e) {
-    var r = heroRight.getBoundingClientRect();
+  frame.addEventListener('mousemove', function (e) {
+    var r = frame.getBoundingClientRect();
     ty = ((e.clientX - r.left) / r.width - 0.5) * 10;   // rotateY
     tx = -((e.clientY - r.top) / r.height - 0.5) * 8;   // rotateX
-    cluster.classList.add('tilting');
+    core.classList.add('tilting');
     if (!raf) raf = requestAnimationFrame(loop);
   });
 
-  heroRight.addEventListener('mouseleave', function () {
+  frame.addEventListener('mouseleave', function () {
     tx = 0; ty = 0;
-    cluster.classList.remove('tilting');
+    core.classList.remove('tilting');
     if (!raf) raf = requestAnimationFrame(loop);
   });
 })();
@@ -210,8 +209,6 @@
 
   if (!loader) { powerUp(); return; }
 
-  // fire the moment your existing loader logic marks itself hidden;
-  // fall back to a timeout in case that class never fires for some reason
   var fired = false;
   function fireOnce() {
     if (fired) return;
