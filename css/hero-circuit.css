@@ -1,10 +1,8 @@
 /* ══════════════════════════════════════════════════
-   MCU — HERO REDESIGN LAYER
+   MCU — HERO REDESIGN LAYER (v3 — centered portal)
    hero-circuit.css
-   Load this AFTER css/style.css. Nothing in here
-   overwrites existing selectors — it only styles the
-   new hero-v2 markup (hero-inner-v2 / hero-left-v2 /
-   hero-right-v2 / #heroCluster / .cluster-*).
+   Load this AFTER css/style.css. Only styles new hero
+   markup (hero-inner-v3 / hero-headline / portal-*).
    Your chroma-key logo canvas and alpha-webm robot
    canvas keep their original ids and are untouched.
    ══════════════════════════════════════════════════ */
@@ -23,212 +21,229 @@
   .circuit-canvas { opacity: 0.35; }
 }
 
-/* ─── HERO GRID V2 ─── */
-.hero-v2 { position: relative; }
+/* ─── VISUALLY-HIDDEN REAL HEADING (a11y/SEO) ─── */
+.hero-a11y-heading {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
-.hero-inner-v2 {
+/* ─── HERO GRID V3 — single centered column ─── */
+.hero-v3 { position: relative; }
+
+.hero-inner-v3 {
   position: relative;
   z-index: 5;
-  display: grid;
-  grid-template-columns: 1.12fr 0.95fr;
-  align-items: center;
-  min-height: calc(100vh - var(--nav-h));
   max-width: var(--max-w);
   margin: 0 auto;
   width: 100%;
-  padding: 60px clamp(20px, 5vw, 60px);
-  gap: 24px;
-}
-
-.hero-left-v2 {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* pull the headline block a touch closer to the console
-   so the two halves read as one composition, not a split page */
-.hero-left-v2 .hero-headline {
-  margin-right: -8px;
-}
-
-.hero-right-v2 {
-  position: relative;
-  z-index: 4;
+  min-height: calc(100vh - var(--nav-h));
+  padding: 70px clamp(20px, 5vw, 60px) 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
-  perspective: 1400px;
+  text-align: center;
 }
 
-/* soft ambient bloom behind the whole cluster */
-.cluster-glow {
-  position: absolute;
-  inset: -90px -110px -60px -170px;
-  background:
-    radial-gradient(ellipse 65% 60% at 60% 42%, rgba(227,27,35,0.20) 0%, rgba(227,27,35,0.09) 38%, rgba(227,27,35,0.02) 68%, transparent 100%);
-  filter: blur(6px);
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: screen;
-}
+.hero-v3 .hero-badge { margin-bottom: 8px; }
+.hero-v3 .hero-headline { display: flex; flex-direction: column; align-items: center; }
+.hero-v3 .hero-sub { margin-left: auto; margin-right: auto; }
+.hero-v3 .hero-actions { justify-content: center; }
+.hero-v3 .scroll-indicator { justify-content: center; }
 
-/* the console — everything sits inside this, tilts together on mousemove */
-#heroCluster {
-  position: relative;
-  z-index: 1;
+/* ─── PORTAL BLOCK — sits between the two heading halves ─── */
+.portal-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform-style: preserve-3d;
+  gap: 18px;
+  margin: 22px auto 26px;
+}
+
+.portal-frame {
+  position: relative;
+  width: min(760px, 94vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── ROBOTIC ARMS ─── */
+.portal-arms {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.arm {
+  position: absolute;
+  top: 50%;
+  width: clamp(130px, 19vw, 220px);
+  height: auto;
+  transform: translateY(-46%);
+  opacity: 0.9;
+}
+.arm-left  { left: -1%; }
+.arm-right { right: -1%; transform: translateY(-46%) scaleX(-1); }
+
+.arm-bone      { stroke: rgba(227, 27, 35, 0.55); stroke-width: 4; stroke-linecap: round; }
+.arm-bone-fore { stroke: rgba(255, 255, 255, 0.5); }
+.arm-joint       { fill: rgba(255, 255, 255, 0.7); }
+.arm-joint-base  { fill: rgba(227, 27, 35, 0.6); }
+.arm-clamp line  { stroke: rgba(255, 255, 255, 0.6); stroke-width: 3; stroke-linecap: round; }
+
+.arm-upper {
+  transform-box: view-box;
+  transform-origin: 24px 170px;
+  animation: arm-sway-upper 6s ease-in-out infinite;
+}
+.arm-fore {
+  transform-box: view-box;
+  transform-origin: 95px 110px;
+  animation: arm-sway-fore 4.2s ease-in-out infinite;
+}
+@keyframes arm-sway-upper {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+@keyframes arm-sway-fore {
+  0%, 100% { transform: rotate(3deg); }
+  50%      { transform: rotate(-3deg); }
+}
+
+/* ─── PORTAL STAGE — the ring assembly ─── */
+.portal-stage {
+  position: relative;
+  z-index: 2;
+  width: clamp(300px, 38vw, 460px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-glow {
+  position: absolute;
+  inset: -18%;
+  background: radial-gradient(circle, rgba(227, 27, 35, 0.28) 0%, rgba(227, 27, 35, 0.10) 45%, transparent 75%);
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.portal-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.portal-ring-outer { inset: 0;   border: 1px dashed rgba(227, 27, 35, 0.35); animation: portal-spin 26s linear infinite; }
+.portal-ring-mid   { inset: 8%;  border: 1px solid  rgba(227, 27, 35, 0.18); animation: portal-spin-rev 19s linear infinite; }
+.portal-ring-inner { inset: 16%; border: 1px dashed rgba(255, 255, 255, 0.14); animation: portal-spin 13s linear infinite; }
+
+@keyframes portal-spin     { to { transform: rotate(360deg); } }
+@keyframes portal-spin-rev { to { transform: rotate(-360deg); } }
+
+.portal-sweep {
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(227, 27, 35, 0.35) 18deg, transparent 46deg, transparent 360deg);
+  animation: portal-spin 5.5s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* the tilting core — logo + robot live here */
+.portal-core {
+  position: relative;
+  z-index: 2;
+  width: 78%;
+  height: 78%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
 }
-#heroCluster.tilting { transition: transform 0.08s linear; }
+.portal-core.tilting { transition: transform 0.08s linear; }
 
-/* glass panel holding the logo */
-.cluster-panel {
+.portal-logo-slot {
   position: relative;
   width: 100%;
-  max-width: 360px;
-  padding: 22px 26px 16px;
-  border: 1px solid rgba(227, 27, 35, 0.28);
-  border-radius: 6px;
-  background: linear-gradient(180deg, rgba(227, 27, 35, 0.055), rgba(255, 255, 255, 0.015));
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-    0 0 44px rgba(227, 27, 35, 0.10),
-    0 24px 60px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  transition: box-shadow 0.6s ease;
-}
-
-/* scan sweep — quick highlight bar that runs top to bottom every few seconds */
-.cluster-scan {
-  position: absolute;
-  left: 0; right: 0; top: -30%;
-  height: 30%;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-  animation: cluster-scan-move 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  pointer-events: none;
-}
-@keyframes cluster-scan-move {
-  0%   { top: -30%; }
-  55%  { top: 110%; }
-  100% { top: 110%; }
-}
-
-/* brief intensified glow right after the site's own loader finishes */
-.hero-v2.powered .cluster-panel {
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-    0 0 70px rgba(227, 27, 35, 0.28),
-    0 24px 60px rgba(0, 0, 0, 0.5);
-}
-.hero-v2.powered .cluster-glow {
-  animation: cluster-glow-pulse 1.4s ease-out 1;
-}
-@keyframes cluster-glow-pulse {
-  0%   { opacity: 0.4; }
-  30%  { opacity: 1.4; }
-  100% { opacity: 1; }
-}
-
-/* corner brackets — reuse your existing .hbp-bracket parts, just repositioned to the panel */
-.cluster-panel .hbp-bracket { opacity: 0.8; }
-
-/* logo canvas sits inside the panel now, no separate outer wrapper needed */
-.cluster-panel .hbp-logo-svg {
-  width: clamp(190px, 22vw, 280px);
-  height: auto;
-}
-
-.cluster-panel .hbp-hud-label {
-  margin-top: 0;
-}
-
-/* mascot sits just below the panel, slightly overlapping its bottom edge */
-.cluster-mascot {
-  position: relative;
-  margin-top: -18px;
-  width: clamp(150px, 17vw, 210px);
-  height: clamp(180px, 21vw, 254px);
-  display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 2;
 }
-.cluster-mascot .mascot-svg {
+.portal-logo-slot .hbp-logo-svg {
+  width: clamp(140px, 15vw, 210px);
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(227, 27, 35, 0.5));
+}
+
+.portal-mascot-slot {
+  position: relative;
+  margin-top: -6%;
+  width: 60%;
+  z-index: 3;
+}
+.portal-mascot-slot .mascot-svg {
   position: static;
   transform: none;
   width: 100% !important;
-  height: 100% !important;
-  animation: mcu-cluster-mascot-float 3s ease-in-out infinite;
+  height: auto !important;
+  animation: mcu-portal-mascot-float 3s ease-in-out infinite;
 }
-@keyframes mcu-cluster-mascot-float {
+@keyframes mcu-portal-mascot-float {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
+  50%      { transform: translateY(-8px); }
 }
 
-/* thin dashed ring kept as a single quiet accent behind the mascot,
-   instead of the old triple concentric ring system */
-.cluster-mascot::before {
-  content: '';
-  position: absolute;
-  inset: 6% ;
-  border: 1px dashed rgba(227, 27, 35, 0.22);
-  border-radius: 50%;
-  animation: cluster-ring-spin 22s linear infinite;
-  pointer-events: none;
+/* ─── POWERED STATE — brief glow burst right after the loader hides ─── */
+.hero-v3.powered .portal-glow { opacity: 1.6; }
+.hero-v3.powered .portal-ring-outer,
+.hero-v3.powered .portal-ring-mid,
+.hero-v3.powered .portal-ring-inner {
+  filter: drop-shadow(0 0 6px rgba(227, 27, 35, 0.6));
 }
-@keyframes cluster-ring-spin { to { transform: rotate(360deg); } }
 
-/* readout strip, restyled as a slim console readout under the mascot */
-.readout-panels-v2 {
+/* ─── READOUT STRIP — sits under the whole portal ─── */
+.portal-readout {
   display: flex;
   gap: 1px;
   background: rgba(227, 27, 35, 0.16);
   border: 1px solid rgba(227, 27, 35, 0.2);
   border-radius: 3px;
   overflow: hidden;
-  margin-top: 6px;
 }
-.readout-panels-v2 .readout-panel {
+.portal-readout .readout-panel {
   border: none;
   border-radius: 0;
   background: rgba(15, 15, 15, 0.55);
-  flex: 1;
 }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 1100px) {
-  .hero-inner-v2 { gap: 16px; }
-  .cluster-panel { max-width: 300px; }
-}
 @media (max-width: 900px) {
-  .hero-inner-v2 {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 40px clamp(20px, 5vw, 60px) 60px;
-  }
-  .hero-left-v2 .hero-headline { margin-right: 0; }
-  #heroCluster { transform: none !important; }
+  .portal-frame { width: min(600px, 92vw); }
+}
+@media (max-width: 760px) {
+  .portal-arms { display: none; }
 }
 @media (max-width: 600px) {
-  .hero-right-v2 { transform: scale(0.82); transform-origin: top center; margin-top: -8px; margin-bottom: -20px; }
-  .cluster-glow { inset: -50px -60px -30px -90px; }
+  .hero-inner-v3 { padding-top: 50px; }
+  .portal-block { margin: 14px auto 18px; gap: 12px; }
+  .portal-readout .readout-panel { padding: 6px 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #heroCluster, .cluster-scan, .cluster-mascot::before, .cluster-mascot .mascot-svg {
+  .arm-upper, .arm-fore,
+  .portal-ring-outer, .portal-ring-mid, .portal-ring-inner, .portal-sweep,
+  .portal-core, .portal-mascot-slot .mascot-svg {
     animation: none !important;
     transition: none !important;
     transform: none !important;
