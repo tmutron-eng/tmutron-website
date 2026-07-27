@@ -1,7 +1,5 @@
 # tmutron-website
 
-AI descriptions
-
 CALENDAR:
 - Add an upcoming event
 
