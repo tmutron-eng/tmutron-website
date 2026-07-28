@@ -203,7 +203,7 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO (v3 — centered portal + arms) ═══════════════════ -->
+  <!-- ═══════════════════ HERO (v4 — compact centered portal) ═══════════════════ -->
   <section id="hero" class="hero-v3">
 
     <div class="hero-scan-line"></div>
@@ -216,11 +216,30 @@
 
     <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
 
-    <!-- Real, screen-reader/SEO heading. The big animated text below is
-         a visual duplicate marked aria-hidden, since the portal graphic
-         needs to sit inside it and a <div> isn't valid content for an
-         actual <h1>. -->
+    <!-- Real, screen-reader/SEO heading covering the full phrase. -->
     <h1 class="hero-a11y-heading">Engineer the future.</h1>
+
+    <!-- Pinned top-left status card -->
+    <div class="hero-status-card readout-panels" aria-hidden="true">
+      <div class="readout-panel">
+        <span class="mono rp-label">DEPT</span>
+        <span class="rp-val">MECHATRONICS</span>
+      </div>
+      <div class="readout-panel">
+        <span class="mono rp-label">YEAR</span>
+        <span class="rp-val" id="current-year">2025</span>
+      </div>
+      <div class="readout-panel">
+        <span class="mono rp-label">STATUS</span>
+        <span class="rp-val rp-active">● ACTIVE</span>
+      </div>
+    </div>
+
+    <!-- Pinned top-right mascot -->
+    <div class="hero-mascot-corner" aria-hidden="true">
+      <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+      <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+    </div>
 
     <div class="hero-inner-v3">
 
@@ -229,84 +248,90 @@
         <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
       </div>
 
+      <!-- Headline block 1 — text only, cheap to clone for the glitch effect -->
       <div class="hero-headline reveal-up delay-2" aria-hidden="true">
         <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
+      </div>
 
-        <!-- ═══ PORTAL BLOCK ═══ -->
-        <div class="portal-block">
-          <div class="portal-frame">
+      <!-- ═══ PORTAL BLOCK — logo only ═══ -->
+      <div class="portal-block reveal-up delay-2">
+        <div class="portal-frame">
 
-            <div class="portal-arms">
-              <svg class="arm arm-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <g class="arm-upper">
-                  <circle cx="24" cy="170" r="10" class="arm-joint arm-joint-base"/>
-                  <line x1="24" y1="170" x2="95" y2="110" class="arm-bone"/>
-                  <g class="arm-fore">
-                    <circle cx="95" cy="110" r="7" class="arm-joint"/>
-                    <line x1="95" y1="110" x2="165" y2="55" class="arm-bone arm-bone-fore"/>
-                    <g class="arm-clamp">
-                      <line x1="165" y1="55" x2="182" y2="40"/>
-                      <line x1="165" y1="55" x2="178" y2="66"/>
-                    </g>
-                  </g>
+          <div class="portal-arms">
+            <svg class="arm arm-right" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g class="arm-upper-group">
+                <rect x="4" y="176" width="30" height="36" rx="6" class="arm-base-plate"/>
+                <circle cx="11" cy="184" r="2.5" class="arm-bolt"/>
+                <circle cx="27" cy="184" r="2.5" class="arm-bolt"/>
+                <circle cx="11" cy="204" r="2.5" class="arm-bolt"/>
+                <circle cx="27" cy="204" r="2.5" class="arm-bolt"/>
+                <circle cx="24" cy="190" r="12" class="arm-joint-outer"/>
+                <circle cx="24" cy="190" r="5" class="arm-joint-inner"/>
+                <line x1="24" y1="190" x2="96" y2="122" class="arm-bone-upper"/>
+                <line x1="24" y1="190" x2="96" y2="122" class="arm-highlight"/>
+                <g class="arm-fore-group">
+                  <circle cx="96" cy="122" r="9" class="arm-joint-outer"/>
+                  <circle cx="96" cy="122" r="3.5" class="arm-joint-inner"/>
+                  <line x1="96" y1="122" x2="158" y2="62" class="arm-bone-fore"/>
+                  <line x1="96" y1="122" x2="158" y2="62" class="arm-highlight"/>
+                  <circle cx="158" cy="62" r="6" class="arm-joint-outer"/>
+                  <line x1="158" y1="62" x2="178" y2="42" class="arm-clamp"/>
+                  <line x1="158" y1="62" x2="174" y2="76" class="arm-clamp"/>
+                  <circle cx="178" cy="42" r="3" class="arm-clamp-pad"/>
+                  <circle cx="174" cy="76" r="3" class="arm-clamp-pad"/>
                 </g>
-              </svg>
-              <svg class="arm arm-right" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <g class="arm-upper">
-                  <circle cx="24" cy="170" r="10" class="arm-joint arm-joint-base"/>
-                  <line x1="24" y1="170" x2="95" y2="110" class="arm-bone"/>
-                  <g class="arm-fore">
-                    <circle cx="95" cy="110" r="7" class="arm-joint"/>
-                    <line x1="95" y1="110" x2="165" y2="55" class="arm-bone arm-bone-fore"/>
-                    <g class="arm-clamp">
-                      <line x1="165" y1="55" x2="182" y2="40"/>
-                      <line x1="165" y1="55" x2="178" y2="66"/>
-                    </g>
-                  </g>
+              </g>
+            </svg>
+            <svg class="arm arm-left" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g class="arm-upper-group">
+                <rect x="4" y="176" width="30" height="36" rx="6" class="arm-base-plate"/>
+                <circle cx="11" cy="184" r="2.5" class="arm-bolt"/>
+                <circle cx="27" cy="184" r="2.5" class="arm-bolt"/>
+                <circle cx="11" cy="204" r="2.5" class="arm-bolt"/>
+                <circle cx="27" cy="204" r="2.5" class="arm-bolt"/>
+                <circle cx="24" cy="190" r="12" class="arm-joint-outer"/>
+                <circle cx="24" cy="190" r="5" class="arm-joint-inner"/>
+                <line x1="24" y1="190" x2="96" y2="122" class="arm-bone-upper"/>
+                <line x1="24" y1="190" x2="96" y2="122" class="arm-highlight"/>
+                <g class="arm-fore-group">
+                  <circle cx="96" cy="122" r="9" class="arm-joint-outer"/>
+                  <circle cx="96" cy="122" r="3.5" class="arm-joint-inner"/>
+                  <line x1="96" y1="122" x2="158" y2="62" class="arm-bone-fore"/>
+                  <line x1="96" y1="122" x2="158" y2="62" class="arm-highlight"/>
+                  <circle cx="158" cy="62" r="6" class="arm-joint-outer"/>
+                  <line x1="158" y1="62" x2="178" y2="42" class="arm-clamp"/>
+                  <line x1="158" y1="62" x2="174" y2="76" class="arm-clamp"/>
+                  <circle cx="178" cy="42" r="3" class="arm-clamp-pad"/>
+                  <circle cx="174" cy="76" r="3" class="arm-clamp-pad"/>
                 </g>
-              </svg>
-            </div>
+              </g>
+            </svg>
+          </div>
 
-            <div class="portal-stage" id="portalStage">
-              <div class="portal-glow"></div>
-              <div class="portal-ring portal-ring-outer"></div>
-              <div class="portal-ring portal-ring-mid"></div>
-              <div class="portal-sweep"></div>
-              <div class="portal-ring portal-ring-inner"></div>
+          <div class="portal-stage" id="portalStage">
+            <div class="portal-glow"></div>
+            <div class="portal-vortex"></div>
+            <div class="portal-ring portal-ring-outer"></div>
+            <div class="portal-ring portal-ring-mid"></div>
+            <div class="portal-sweep"></div>
+            <div class="portal-ring portal-ring-inner"></div>
 
-              <div class="portal-core" id="heroCluster">
-                <div class="portal-logo-slot">
-                  <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
-                  <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-                </div>
-                <div class="portal-mascot-slot">
-                  <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-                  <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-                </div>
+            <div class="portal-core" id="heroCluster">
+              <div class="portal-logo-slot">
+                <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
+                <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
               </div>
             </div>
-
-          </div><!-- /.portal-frame -->
-
-          <div class="readout-panels portal-readout">
-            <div class="readout-panel">
-              <span class="mono rp-label">DEPT</span>
-              <span class="rp-val">MECHATRONICS</span>
-            </div>
-            <div class="readout-panel">
-              <span class="mono rp-label">YEAR</span>
-              <span class="rp-val" id="current-year">2025</span>
-            </div>
-            <div class="readout-panel">
-              <span class="mono rp-label">STATUS</span>
-              <span class="rp-val rp-active">● ACTIVE</span>
-            </div>
           </div>
-        </div><!-- /.portal-block -->
 
+        </div><!-- /.portal-frame -->
+      </div><!-- /.portal-block -->
+
+      <!-- Headline block 2 — text only, cheap to clone for the glitch effect -->
+      <div class="hero-headline reveal-up delay-2" aria-hidden="true">
         <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
         <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
-      </div><!-- /.hero-headline -->
+      </div>
 
       <p class="hero-sub reveal-up delay-3">
         The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
@@ -770,12 +795,12 @@
 
        NOTE: the sizing/positioning rules below for .ring-system,
        .ring-center, .mascot-wrap, canvas.hbp-logo-svg, canvas.mascot-svg
-       are leftover from the ORIGINAL hero layout (before any of these
-       redesigns) and no longer match anything in the current DOM — the
-       portal layout in css/hero-circuit.css controls sizing now via
-       .portal-logo-slot .hbp-logo-svg / .portal-mascot-slot .mascot-svg,
-       which both have higher CSS specificity. Left here only so this
-       diff stays additive; safe to delete whenever you tidy this file up.
+       are leftover from earlier hero layouts and no longer match
+       anything relevant in the current DOM — sizing now comes from
+       .portal-logo-slot .hbp-logo-svg and .hero-mascot-corner
+       .mascot-svg in css/hero-circuit.css, both higher specificity.
+       Left here only so this diff stays additive; safe to delete
+       whenever you tidy this file up.
        ══════════════════════════════════════════ */
     canvas.hbp-logo-svg {
       display: block;
@@ -788,24 +813,6 @@
     .ring-system { width: 300px !important; height: 300px !important; }
     .ring-center { width: 160px !important; height: 160px !important; }
     .mascot-wrap { width: 160px !important; height: 160px !important; }
-    canvas.mascot-svg {
-      display: block;
-      width: 170px !important;
-      height: 204px !important;
-      object-fit: contain;
-      background: transparent;
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      filter: drop-shadow(0 0 16px rgba(91,200,232,0.2)) drop-shadow(0 6px 20px rgba(0,0,0,0.55));
-      animation: mascot-bob-v2 3s ease-in-out infinite;
-    }
-    @keyframes mascot-bob-v2 {
-      0%,100% { transform: translate(-50%,-50%) translateY(0); }
-      50%      { transform: translate(-50%,-50%) translateY(-8px); }
-    }
-    @media (max-width: 1100px) {
-      .ring-system { width: 250px !important; height: 250px !important; }
-    }
 
     /* ══ CTA BANNER REDESIGN ══ */
     #cta-banner { position: relative; }
