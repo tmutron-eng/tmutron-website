@@ -203,7 +203,7 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO (v4 — compact centered portal) ═══════════════════ -->
+  <!-- ═══════════════════ HERO (v5) ═══════════════════ -->
   <section id="hero" class="hero-v3">
 
     <div class="hero-scan-line"></div>
@@ -219,8 +219,9 @@
     <!-- Real, screen-reader/SEO heading covering the full phrase. -->
     <h1 class="hero-a11y-heading">Engineer the future.</h1>
 
-    <!-- Pinned top-left status card -->
-    <div class="hero-status-card readout-panels" aria-hidden="true">
+    <!-- Pinned top-left status card — now a vertical stack -->
+    <div class="hero-status-card" aria-hidden="true">
+      <div class="hero-status-card-head mono">SYSTEM</div>
       <div class="readout-panel">
         <span class="mono rp-label">DEPT</span>
         <span class="rp-val">MECHATRONICS</span>
@@ -253,54 +254,80 @@
         <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
       </div>
 
-      <!-- ═══ PORTAL BLOCK — logo only ═══ -->
+      <!-- ═══ PORTAL BLOCK — logo untouched, machine + void built around it ═══ -->
       <div class="portal-block reveal-up delay-2">
         <div class="portal-frame">
 
           <div class="portal-arms">
             <svg class="arm arm-right" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="steelR" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e8e8ec"/>
+                  <stop offset="45%" stop-color="#9a9aa2"/>
+                  <stop offset="100%" stop-color="#3a3a40"/>
+                </linearGradient>
+              </defs>
               <g class="arm-upper-group">
-                <rect x="4" y="176" width="30" height="36" rx="6" class="arm-base-plate"/>
+                <rect x="4" y="176" width="30" height="36" rx="6" fill="url(#steelR)" class="arm-base-plate"/>
                 <circle cx="11" cy="184" r="2.5" class="arm-bolt"/>
                 <circle cx="27" cy="184" r="2.5" class="arm-bolt"/>
                 <circle cx="11" cy="204" r="2.5" class="arm-bolt"/>
                 <circle cx="27" cy="204" r="2.5" class="arm-bolt"/>
+
                 <circle cx="24" cy="190" r="12" class="arm-joint-outer"/>
                 <circle cx="24" cy="190" r="5" class="arm-joint-inner"/>
-                <line x1="24" y1="190" x2="96" y2="122" class="arm-bone-upper"/>
-                <line x1="24" y1="190" x2="96" y2="122" class="arm-highlight"/>
+
+                <rect x="0" y="-6" width="99" height="12" rx="6" transform="translate(24 190) rotate(-43.36)" fill="url(#steelR)" class="arm-beam-edge"/>
+                <rect x="3" y="-5" width="93" height="3" rx="1.5" transform="translate(24 190) rotate(-43.36)" fill="rgba(255,255,255,0.3)"/>
+
                 <g class="arm-fore-group">
                   <circle cx="96" cy="122" r="9" class="arm-joint-outer"/>
                   <circle cx="96" cy="122" r="3.5" class="arm-joint-inner"/>
-                  <line x1="96" y1="122" x2="158" y2="62" class="arm-bone-fore"/>
-                  <line x1="96" y1="122" x2="158" y2="62" class="arm-highlight"/>
+
+                  <rect x="0" y="-5" width="86.3" height="10" rx="5" transform="translate(96 122) rotate(-44.05)" fill="url(#steelR)" class="arm-beam-edge"/>
+                  <rect x="3" y="-4" width="80.3" height="3" rx="1.5" transform="translate(96 122) rotate(-44.05)" fill="rgba(255,255,255,0.3)"/>
+
                   <circle cx="158" cy="62" r="6" class="arm-joint-outer"/>
-                  <line x1="158" y1="62" x2="178" y2="42" class="arm-clamp"/>
-                  <line x1="158" y1="62" x2="174" y2="76" class="arm-clamp"/>
+
+                  <rect x="0" y="-3" width="28.3" height="6" rx="3" transform="translate(158 62) rotate(-45)" fill="url(#steelR)" class="arm-beam-edge"/>
+                  <rect x="0" y="-3" width="21.3" height="6" rx="3" transform="translate(158 62) rotate(41.2)" fill="url(#steelR)" class="arm-beam-edge"/>
                   <circle cx="178" cy="42" r="3" class="arm-clamp-pad"/>
                   <circle cx="174" cy="76" r="3" class="arm-clamp-pad"/>
                 </g>
               </g>
             </svg>
             <svg class="arm arm-left" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="steelL" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e8e8ec"/>
+                  <stop offset="45%" stop-color="#9a9aa2"/>
+                  <stop offset="100%" stop-color="#3a3a40"/>
+                </linearGradient>
+              </defs>
               <g class="arm-upper-group">
-                <rect x="4" y="176" width="30" height="36" rx="6" class="arm-base-plate"/>
+                <rect x="4" y="176" width="30" height="36" rx="6" fill="url(#steelL)" class="arm-base-plate"/>
                 <circle cx="11" cy="184" r="2.5" class="arm-bolt"/>
                 <circle cx="27" cy="184" r="2.5" class="arm-bolt"/>
                 <circle cx="11" cy="204" r="2.5" class="arm-bolt"/>
                 <circle cx="27" cy="204" r="2.5" class="arm-bolt"/>
+
                 <circle cx="24" cy="190" r="12" class="arm-joint-outer"/>
                 <circle cx="24" cy="190" r="5" class="arm-joint-inner"/>
-                <line x1="24" y1="190" x2="96" y2="122" class="arm-bone-upper"/>
-                <line x1="24" y1="190" x2="96" y2="122" class="arm-highlight"/>
+
+                <rect x="0" y="-6" width="99" height="12" rx="6" transform="translate(24 190) rotate(-43.36)" fill="url(#steelL)" class="arm-beam-edge"/>
+                <rect x="3" y="-5" width="93" height="3" rx="1.5" transform="translate(24 190) rotate(-43.36)" fill="rgba(255,255,255,0.3)"/>
+
                 <g class="arm-fore-group">
                   <circle cx="96" cy="122" r="9" class="arm-joint-outer"/>
                   <circle cx="96" cy="122" r="3.5" class="arm-joint-inner"/>
-                  <line x1="96" y1="122" x2="158" y2="62" class="arm-bone-fore"/>
-                  <line x1="96" y1="122" x2="158" y2="62" class="arm-highlight"/>
+
+                  <rect x="0" y="-5" width="86.3" height="10" rx="5" transform="translate(96 122) rotate(-44.05)" fill="url(#steelL)" class="arm-beam-edge"/>
+                  <rect x="3" y="-4" width="80.3" height="3" rx="1.5" transform="translate(96 122) rotate(-44.05)" fill="rgba(255,255,255,0.3)"/>
+
                   <circle cx="158" cy="62" r="6" class="arm-joint-outer"/>
-                  <line x1="158" y1="62" x2="178" y2="42" class="arm-clamp"/>
-                  <line x1="158" y1="62" x2="174" y2="76" class="arm-clamp"/>
+
+                  <rect x="0" y="-3" width="28.3" height="6" rx="3" transform="translate(158 62) rotate(-45)" fill="url(#steelL)" class="arm-beam-edge"/>
+                  <rect x="0" y="-3" width="21.3" height="6" rx="3" transform="translate(158 62) rotate(41.2)" fill="url(#steelL)" class="arm-beam-edge"/>
                   <circle cx="178" cy="42" r="3" class="arm-clamp-pad"/>
                   <circle cx="174" cy="76" r="3" class="arm-clamp-pad"/>
                 </g>
@@ -310,8 +337,17 @@
 
           <div class="portal-stage" id="portalStage">
             <div class="portal-glow"></div>
+            <div class="portal-void"></div>
             <div class="portal-vortex"></div>
             <div class="portal-ring portal-ring-outer"></div>
+            <div class="portal-ring-tabs">
+              <span class="ring-tab ring-tab-1"></span>
+              <span class="ring-tab ring-tab-2"></span>
+              <span class="ring-tab ring-tab-3"></span>
+              <span class="ring-tab ring-tab-4"></span>
+              <span class="ring-tab ring-tab-5"></span>
+              <span class="ring-tab ring-tab-6"></span>
+            </div>
             <div class="portal-ring portal-ring-mid"></div>
             <div class="portal-sweep"></div>
             <div class="portal-ring portal-ring-inner"></div>
