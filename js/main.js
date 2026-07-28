@@ -383,118 +383,135 @@ function triggerHeroReveal() {
   });
 })();
 
-/* ─── HERO GLITCH — RGB split + clip-path flicker ─── */
+/* ─── HERO GLITCH — RGB split + clip-path flicker ───
+   CHANGED: the hero now has TWO separate `.hero-headline` blocks
+   ("ENGINEER" and "THE"/"FUTURE.") instead of one, with the portal
+   (logo, rings, robotic arms) sitting between them as its own
+   sibling element — not nested inside either headline. That split
+   was made specifically so this function never clones the portal:
+   cloneNode(true) on an element containing a <video> creates a
+   real second (and third, for the two RGB clones) video element
+   that starts decoding immediately, invisible, forever — that was
+   the actual cause of site-wide lag before. This version loops over
+   every `.hero-headline` match and runs the identical effect on
+   each independently, so both text blocks still glitch, in sync,
+   with nothing but cheap text ever being cloned. */
 (function initHeroGlitch() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const hero     = document.getElementById('hero');
+  const hero = document.getElementById('hero');
   if (!hero) return;
-  const headline = hero.querySelector('.hero-headline');
-  if (!headline) return;
+  const headlines = hero.querySelectorAll('.hero-headline');
+  if (!headlines.length) return;
 
-  headline.style.position = 'relative';
-
-  /* Build two pseudo-layer clones for RGB channel split */
-  function makeClone(color, offset) {
-    const c = headline.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    c.style.cssText = [
-      'position:absolute', 'top:0', 'left:0',
-      'width:100%', 'pointer-events:none',
-      'color:' + color,
-      'opacity:0',
-      'mix-blend-mode:screen',
-      'user-select:none'
-    ].join(';');
-    c._offset = offset;
-    headline.parentElement.insertBefore(c, headline.nextSibling);
-    return c;
-  }
-
-  const redClone  = makeClone('rgba(255,0,60,0.75)',  -3);
-  const cyanClone = makeClone('rgba(0,255,220,0.55)', +3);
-
-  /* Scramble chars using a subset of the glitch alphabet */
   const glitchChars = '!<>-_\\/[]{}—=+*^?#@%$01';
 
-  function scrambleEl(el, duration) {
-    const original = el.innerHTML;
-    const textNodes = [];
-    el.childNodes.forEach(n => { if (n.nodeType === 3) textNodes.push(n); });
-    if (!textNodes.length) return;
+  function setupInstance(headline) {
+    headline.style.position = 'relative';
 
-    const targets = textNodes.map(n => ({
-      node: n, original: n.textContent,
-      chars: n.textContent.split('')
-    }));
-
-    const start = performance.now();
-    function tick(now) {
-      const p = Math.min((now - start) / duration, 1);
-      targets.forEach(({ node, chars }) => {
-        node.textContent = chars.map((ch, i) => {
-          if (ch === ' ') return ' ';
-          /* resolve each char progressively from left */
-          if (i / chars.length < p * 1.4) return ch;
-          return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-        }).join('');
-      });
-      if (p < 1) requestAnimationFrame(tick);
-      else targets.forEach(({ node, original: o }) => { node.textContent = o; });
+    /* Build two pseudo-layer clones for RGB channel split */
+    function makeClone(color, offset) {
+      const c = headline.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.style.cssText = [
+        'position:absolute', 'top:0', 'left:0',
+        'width:100%', 'pointer-events:none',
+        'color:' + color,
+        'opacity:0',
+        'mix-blend-mode:screen',
+        'user-select:none'
+      ].join(';');
+      c._offset = offset;
+      headline.parentElement.insertBefore(c, headline.nextSibling);
+      return c;
     }
-    requestAnimationFrame(tick);
-  }
 
-  function runGlitch() {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    const redClone  = makeClone('rgba(255,0,60,0.75)',  -3);
+    const cyanClone = makeClone('rgba(0,255,220,0.55)', +3);
 
-    /* Phase 1 — channel split (160ms) */
-    redClone.style.opacity   = '1';
-    cyanClone.style.opacity  = '1';
-    redClone.style.transform  = `translateX(${redClone._offset}px)  skewX(-1deg)`;
-    cyanClone.style.transform = `translateX(${cyanClone._offset}px) skewX(1deg)`;
+    function scrambleEl(el, duration) {
+      const textNodes = [];
+      el.childNodes.forEach(n => { if (n.nodeType === 3) textNodes.push(n); });
+      if (!textNodes.length) return;
 
-    /* Scramble the original headline */
-    scrambleEl(headline, 220);
+      const targets = textNodes.map(n => ({
+        node: n,
+        chars: n.textContent.split('')
+      }));
 
-    /* Clip-path slice flicker */
-    const clips = [
-      'inset(10% 0 80% 0)',
-      'inset(40% 0 40% 0)',
-      'inset(70% 0 10% 0)',
-      'inset(0% 0 0% 0)'
-    ];
-    let ci = 0;
-    const clipInterval = setInterval(() => {
-      headline.style.clipPath = clips[ci % clips.length];
-      redClone.style.clipPath  = clips[(ci + 1) % clips.length];
-      cyanClone.style.clipPath = clips[(ci + 2) % clips.length];
-      ci++;
-      if (ci > 5) {
-        clearInterval(clipInterval);
-        headline.style.clipPath  = '';
-        redClone.style.clipPath  = '';
-        cyanClone.style.clipPath = '';
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        targets.forEach(({ node, chars }) => {
+          node.textContent = chars.map((ch, i) => {
+            if (ch === ' ') return ' ';
+            /* resolve each char progressively from left */
+            if (i / chars.length < p * 1.4) return ch;
+            return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+          }).join('');
+        });
+        if (p < 1) requestAnimationFrame(tick);
+        else targets.forEach(({ node, chars }) => { node.textContent = chars.join(''); });
       }
-    }, 40);
+      requestAnimationFrame(tick);
+    }
 
-    /* Phase 2 — settle (after 180ms) */
-    setTimeout(() => {
-      redClone.style.opacity  = '0';
-      cyanClone.style.opacity = '0';
-      redClone.style.transform  = '';
-      cyanClone.style.transform = '';
-    }, 180);
+    function runGlitch() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      /* Phase 1 — channel split (160ms) */
+      redClone.style.opacity   = '1';
+      cyanClone.style.opacity  = '1';
+      redClone.style.transform  = `translateX(${redClone._offset}px)  skewX(-1deg)`;
+      cyanClone.style.transform = `translateX(${cyanClone._offset}px) skewX(1deg)`;
+
+      /* Scramble the original headline */
+      scrambleEl(headline, 220);
+
+      /* Clip-path slice flicker */
+      const clips = [
+        'inset(10% 0 80% 0)',
+        'inset(40% 0 40% 0)',
+        'inset(70% 0 10% 0)',
+        'inset(0% 0 0% 0)'
+      ];
+      let ci = 0;
+      const clipInterval = setInterval(() => {
+        headline.style.clipPath = clips[ci % clips.length];
+        redClone.style.clipPath  = clips[(ci + 1) % clips.length];
+        cyanClone.style.clipPath = clips[(ci + 2) % clips.length];
+        ci++;
+        if (ci > 5) {
+          clearInterval(clipInterval);
+          headline.style.clipPath  = '';
+          redClone.style.clipPath  = '';
+          cyanClone.style.clipPath = '';
+        }
+      }, 40);
+
+      /* Phase 2 — settle (after 180ms) */
+      setTimeout(() => {
+        redClone.style.opacity  = '0';
+        cyanClone.style.opacity = '0';
+        redClone.style.transform  = '';
+        cyanClone.style.transform = '';
+      }, 180);
+    }
+
+    return runGlitch;
   }
+
+  const runners = Array.from(headlines).map(setupInstance);
+  function runAll() { runners.forEach(fn => fn()); }
 
   /* Fire once on page load after hero reveal */
-  setTimeout(runGlitch, 1400);
+  setTimeout(runAll, 1400);
 
-  /* Then randomly every 4–10 seconds */
+  /* Then randomly every 4–10 seconds, all instances together */
   function scheduleNext() {
     const delay = 4000 + Math.random() * 6000;
-    setTimeout(() => { runGlitch(); scheduleNext(); }, delay);
+    setTimeout(() => { runAll(); scheduleNext(); }, delay);
   }
   setTimeout(scheduleNext, 3000);
 })();
