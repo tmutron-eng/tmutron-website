@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════
-   MCU — HERO REDESIGN LAYER (v3 — centered portal)
+   MCU — HERO REDESIGN LAYER (v4 — compact centered portal)
    hero-circuit.js
    Load this AFTER js/animations.js, before </body>.
    Does not touch mcuLogoCanvas / mcuMascotCanvas or
@@ -8,7 +8,12 @@
 
 'use strict';
 
-/* ─── 1. CIRCUIT TRACE BACKGROUND — converges to true center ─── */
+/* ─── 1. CIRCUIT TRACE BACKGROUND — converges to true center ───
+   PERF NOTE: no ctx.shadowBlur anywhere in this loop. shadowBlur is
+   one of the most expensive things you can do in Canvas2D per-frame,
+   especially with 10-20 glowing dots redrawn every frame. The "glow"
+   here is instead a cheap two-circle draw (a larger, very transparent
+   circle behind a small bright one) — visually close, near-zero cost. */
 (function initCircuitBoard() {
   var canvas = document.getElementById('circuitCanvas');
   var hero = document.getElementById('hero');
@@ -36,7 +41,7 @@
   function buildPaths() {
     paths = [];
     var fx = w * 0.5, fy = h * 0.5; // true center — the portal
-    var count = w < 700 ? 10 : 20;
+    var count = w < 700 ? 8 : 16;
 
     for (var i = 0; i < count; i++) {
       var edge = Math.floor(Math.random() * 4); // 0 top, 1 left, 2 bottom, 3 right
@@ -105,23 +110,26 @@
     ctx.clearRect(0, 0, w, h);
 
     var boosted = now < poweredUntil;
-    var baseAlpha = boosted ? 0.16 : 0.07;
+    var baseAlpha = boosted ? 0.15 : 0.06;
     for (var i = 0; i < paths.length; i++) drawPolyline(paths[i], baseAlpha);
 
     for (i = 0; i < paths.length; i++) {
       var p = paths[i];
       var t = ((now * p.speed) + p.phase) % 1;
       var pos = pointAt(p, t);
-      var dotAlpha = boosted ? 1 : 0.85;
-      var r = boosted ? 2.6 : 1.8;
+      var haloR = boosted ? 7 : 5;
+      var dotR = boosted ? 2.4 : 1.7;
+
+      // cheap glow: soft halo circle, then bright core — no shadowBlur
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, haloR, 0, Math.PI * 2);
+      ctx.fillStyle = boosted ? 'rgba(227,27,35,0.22)' : 'rgba(227,27,35,0.14)';
+      ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,120,120,' + dotAlpha + ')';
-      ctx.shadowColor = 'rgba(227,27,35,0.9)';
-      ctx.shadowBlur = boosted ? 12 : 7;
+      ctx.arc(pos.x, pos.y, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = boosted ? 'rgba(255,150,150,0.95)' : 'rgba(255,150,150,0.8)';
       ctx.fill();
-      ctx.shadowBlur = 0;
     }
 
     raf = requestAnimationFrame(draw);
@@ -146,7 +154,7 @@
   if (reduced) {
     visible = false;
     ctx.clearRect(0, 0, w, h);
-    paths.forEach(function (p) { drawPolyline(p, 0.09); });
+    paths.forEach(function (p) { drawPolyline(p, 0.08); });
   }
 
   // exposed so the "powered" trigger below can brighten the traces briefly
@@ -156,7 +164,7 @@
 })();
 
 
-/* ─── 2. PORTAL PARALLAX TILT ─── */
+/* ─── 2. PORTAL PARALLAX TILT (logo only now) ─── */
 (function initPortalTilt() {
   var frame = document.querySelector('.portal-frame');
   var core = document.getElementById('heroCluster');
@@ -181,8 +189,8 @@
 
   frame.addEventListener('mousemove', function (e) {
     var r = frame.getBoundingClientRect();
-    ty = ((e.clientX - r.left) / r.width - 0.5) * 10;   // rotateY
-    tx = -((e.clientY - r.top) / r.height - 0.5) * 8;   // rotateX
+    ty = ((e.clientX - r.left) / r.width - 0.5) * 8;    // rotateY
+    tx = -((e.clientY - r.top) / r.height - 0.5) * 6;   // rotateX
     core.classList.add('tilting');
     if (!raf) raf = requestAnimationFrame(loop);
   });
