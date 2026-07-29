@@ -203,7 +203,7 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO (v5) ═══════════════════ -->
+  <!-- ═══════════════════ HERO (v6) ═══════════════════ -->
   <section id="hero" class="hero-v3">
 
     <div class="hero-scan-line"></div>
@@ -249,14 +249,13 @@
         <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
       </div>
 
-      <!-- ═══ HERO STACK — headline / portal / headline, wrapped so the
-           arm + mini-portal layer can span from ENGINEER down to
-           THE FUTURE. in one coordinate space ═══ -->
+      <!-- ═══ HERO STACK — combined headline + portal, wrapped so the
+           mecha-arm images can be positioned against both ═══ -->
       <div class="hero-stack">
 
-        <!-- Headline block 1 — text only, cheap to clone for the glitch effect -->
-        <div class="hero-headline reveal-up delay-2" aria-hidden="true">
-          <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
+        <!-- Headline — ENGINEER THE FUTURE. all on one line now -->
+        <div class="hero-headline hero-headline-combined reveal-up delay-2" aria-hidden="true">
+          <span class="line-wrap"><span class="hero-line">ENGINEER <span class="hero-line-accent">THE</span> FUTURE.</span></span>
         </div>
 
         <!-- ═══ PORTAL BLOCK — logo untouched, machine + void built around it ═══ -->
@@ -291,49 +290,16 @@
           </div><!-- /.portal-frame -->
         </div><!-- /.portal-block -->
 
-        <!-- Headline block 2 — single line now -->
-        <div class="hero-headline reveal-up delay-2" aria-hidden="true">
-          <span class="line-wrap"><span class="hero-line"><span class="hero-line-accent">THE</span> FUTURE.</span></span>
-        </div>
-
-        <!-- ═══ ARMS + SATELLITE PORTALS — spans the whole stack, right
-             arm reaches up to a mini portal near ENGINEER, left arm
-             reaches down to a mini portal near THE FUTURE. ═══ -->
-        <div class="hero-arms-layer" aria-hidden="true">
-          <svg class="arm-links" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="steelArm" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#e8e8ec"/>
-                <stop offset="45%" stop-color="#9a9aa2"/>
-                <stop offset="100%" stop-color="#3a3a40"/>
-              </linearGradient>
-            </defs>
-            <!-- Right arm: portal ring → up-right → mini portal near ENGINEER -->
-            <g class="arm-link-group arm-link-up">
-              <path d="M58,47 L74,29 L66,11" class="arm-link-path"/>
-              <circle cx="58" cy="47" r="1.6" class="arm-link-joint"/>
-              <circle cx="74" cy="29" r="1.3" class="arm-link-joint"/>
-            </g>
-            <!-- Left arm: portal ring → down-left → mini portal near THE FUTURE. -->
-            <g class="arm-link-group arm-link-down">
-              <path d="M42,55 L25,74 L33,90" class="arm-link-path"/>
-              <circle cx="42" cy="55" r="1.6" class="arm-link-joint"/>
-              <circle cx="25" cy="74" r="1.3" class="arm-link-joint"/>
-            </g>
-          </svg>
-
-          <div class="mini-portal mini-portal-up">
-            <div class="mini-portal-clamp mpc-a"></div>
-            <div class="mini-portal-clamp mpc-b"></div>
-            <div class="mini-portal-ring"></div>
-            <div class="mini-portal-void"></div>
+        <!-- ═══ MECHA ARMS — your generated arm/portal art, mounted
+             claw-toward-ring, portal reaching up + outward to flank
+             the headline. Right arm image mirrored so both arms
+             match each other. ═══ -->
+        <div class="hero-mecha-arms" aria-hidden="true">
+          <div class="mecha-arm-wrap mecha-arm-left">
+            <img src="assets/images/left_arm.png" alt="" class="mecha-arm-img" />
           </div>
-
-          <div class="mini-portal mini-portal-down">
-            <div class="mini-portal-clamp mpc-a"></div>
-            <div class="mini-portal-clamp mpc-b"></div>
-            <div class="mini-portal-ring"></div>
-            <div class="mini-portal-void"></div>
+          <div class="mecha-arm-wrap mecha-arm-right">
+            <img src="assets/images/right_arm.png" alt="" class="mecha-arm-img" />
           </div>
         </div>
 
