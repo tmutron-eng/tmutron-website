@@ -56,11 +56,21 @@
 
 .hero-v3 .hero-badge { margin-bottom: 6px; }
 
+/* ─── HERO STACK — headline / portal / headline, wrapped so the
+   arm+mini-portal layer below can span the whole thing ─── */
+.hero-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .hero-v3 .hero-headline {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: clamp(38px, 6vw, 84px);
+  font-size: clamp(32px, 5vw, 68px);
   margin-bottom: 0;
 }
 .hero-v3 .hero-sub  { margin-left: auto; margin-right: auto; margin-bottom: 20px; }
@@ -68,39 +78,38 @@
 .hero-v3 .scroll-indicator { justify-content: center; }
 
 /* ─── TOP-LEFT STATUS CARD — vertical "standing" card ───
-   FIX: top is now offset by --nav-h so it sits below the fixed nav
-   instead of behind it (it was measuring from the very top of #hero,
-   which starts at y:0 under the fixed nav bar). */
+   Sized up ~60% and nudged down + inward (toward the portal)
+   compared to v4. */
 .hero-status-card {
   position: absolute;
-  top: calc(var(--nav-h) + 14px);
-  left: clamp(20px, 5vw, 60px);
+  top: calc(var(--nav-h) + 78px);
+  left: clamp(64px, 10vw, 128px);
   z-index: 6;
   display: flex;
   flex-direction: column;
-  width: 112px;
+  width: 179px;
   background: rgba(227, 27, 35, 0.13);
   border: 1px solid rgba(227, 27, 35, 0.28);
-  border-radius: 4px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .hero-status-card-head {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   color: rgba(227, 27, 35, 0.85);
-  padding: 6px 10px 5px;
+  padding: 10px 16px 8px;
   border-bottom: 1px solid rgba(227, 27, 35, 0.22);
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 .hero-status-card-head::before {
   content: '';
-  width: 5px; height: 5px;
+  width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--red);
-  box-shadow: 0 0 6px var(--red);
+  box-shadow: 0 0 8px var(--red);
   flex-shrink: 0;
 }
 .hero-status-card .readout-panel {
@@ -108,21 +117,22 @@
   border-radius: 0;
   border-bottom: 1px solid rgba(227, 27, 35, 0.14);
   background: rgba(14, 14, 14, 0.6);
-  padding: 7px 10px;
+  padding: 11px 16px;
   min-width: 0;
   width: 100%;
   align-items: flex-start;
 }
 .hero-status-card .readout-panel:last-child { border-bottom: none; }
-.hero-status-card .rp-label { font-size: 8px; margin-bottom: 1px; }
-.hero-status-card .rp-val   { font-size: 10.5px; letter-spacing: 0.06em; }
+.hero-status-card .rp-label { font-size: 13px; margin-bottom: 2px; }
+.hero-status-card .rp-val   { font-size: 17px; letter-spacing: 0.06em; }
 
-/* ─── TOP-RIGHT MASCOT — same nav-overlap fix ─── */
+/* ─── TOP-RIGHT MASCOT — same nav-overlap fix, sized up ~60%
+   and nudged down + inward (toward the portal) ─── */
 .hero-mascot-corner {
   position: absolute;
-  top: calc(var(--nav-h) + 6px);
-  right: clamp(20px, 5vw, 60px);
-  width: clamp(84px, 8vw, 122px);
+  top: calc(var(--nav-h) + 58px);
+  right: clamp(58px, 9.5vw, 116px);
+  width: clamp(134px, 12.8vw, 195px);
   z-index: 6;
   pointer-events: none;
 }
@@ -154,48 +164,114 @@
   justify-content: center;
 }
 
-/* ─── ROBOTIC ARMS — gradient metal capsules ─── */
-.portal-arms {
+/* ─── ARMS + SATELLITE PORTALS ───
+   Replaces the old short side-gripping arms. This layer is a
+   sibling of .portal-block inside .hero-stack, absolutely
+   positioned to cover the ENGINEER headline → ring → THE FUTURE
+   headline in one 0–100 coordinate space (viewBox 0 0 100 100,
+   preserveAspectRatio="none"), so SVG path coordinates map 1:1
+   onto the same percentage grid used to place the mini-portal
+   divs. That's what keeps the metal beams lined up with the
+   portals they're "holding" at any viewport size. */
+.hero-arms-layer {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
 }
-.arm {
+.arm-links {
   position: absolute;
-  width: clamp(110px, 15vw, 170px);
-  height: auto;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-/* Right arm grips the upper-right of the ring (Engineer side) */
-.arm-right { top: 30%; right: 2%; }
-/* Left arm grips the lower-left of the ring (The Future side) */
-.arm-left  { top: 58%; left: 2%; transform: scaleX(-1); }
+.arm-link-path {
+  fill: none;
+  stroke: url(#steelArm);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+.arm-link-joint {
+  fill: #6a6a70;
+  stroke: rgba(255,255,255,0.45);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.arm-link-up {
+  transform-box: fill-box;
+  transform-origin: 58% 47%;
+  animation: arm-sway 6.4s ease-in-out infinite;
+}
+.arm-link-down {
+  transform-box: fill-box;
+  transform-origin: 42% 55%;
+  animation: arm-sway 5.6s ease-in-out infinite reverse;
+}
+@keyframes arm-sway {
+  0%, 100% { transform: rotate(-1.4deg); }
+  50%      { transform: rotate(1.4deg); }
+}
 
-.arm-base-plate { stroke: rgba(227, 27, 35, 0.45); stroke-width: 1.5; }
-.arm-bolt        { fill: rgba(227, 27, 35, 0.6); }
-.arm-joint-outer { fill: #2a2626; stroke: rgba(255, 255, 255, 0.45); stroke-width: 1.5; }
-.arm-joint-inner { fill: rgba(227, 27, 35, 0.75); }
-.arm-beam-edge { stroke: rgba(0, 0, 0, 0.35); stroke-width: 1; }
-.arm-clamp-pad   { fill: rgba(227, 27, 35, 0.7); }
+/* Satellite portals held at each arm's tip — same dark blue/black
+   glitch language as the center portal-void, scaled down, gripped
+   by small grey metal clamp bars. */
+.mini-portal {
+  position: absolute;
+  width: clamp(46px, 5.4vw, 70px);
+  height: clamp(46px, 5.4vw, 70px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 5;
+}
+.mini-portal-up   { top: 11%; left: 66%; }
+.mini-portal-down { top: 90%; left: 33%; }
 
-.arm-upper-group {
-  transform-box: view-box;
-  transform-origin: 24px 190px;
-  animation: arm-sway-upper 6.4s ease-in-out infinite;
+.mini-portal-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(227, 27, 35, 0.55);
+  box-shadow: 0 0 10px rgba(227, 27, 35, 0.35), inset 0 0 8px rgba(227, 27, 35, 0.2);
+  animation: portal-spin 14s linear infinite;
 }
-.arm-fore-group {
-  transform-box: view-box;
-  transform-origin: 96px 122px;
-  animation: arm-sway-fore 4.6s ease-in-out infinite;
+.mini-portal-void {
+  position: absolute; inset: 13%;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(70, 150, 255, 0.06) 0px, rgba(70, 150, 255, 0.06) 1px, transparent 1px, transparent 3px),
+    radial-gradient(circle, rgba(8, 12, 20, 0.95) 0%, rgba(4, 6, 12, 0.98) 60%, #000 100%);
+  box-shadow: inset 0 0 14px rgba(50, 100, 200, 0.35), inset 0 0 24px rgba(0, 0, 0, 0.6);
 }
-@keyframes arm-sway-upper {
-  0%, 100% { transform: rotate(-1.6deg); }
-  50%      { transform: rotate(1.6deg); }
+.mini-portal-void::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(180deg, transparent 42%, rgba(90, 170, 255, 0.35) 44%, transparent 47%);
+  animation: portal-glitch-bar 3.4s steps(1) infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
-@keyframes arm-sway-fore {
-  0%, 100% { transform: rotate(2.4deg); }
-  50%      { transform: rotate(-2.4deg); }
+.mini-portal-void::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(80, 170, 255, 0.25), 0 0 0 2px rgba(255, 60, 90, 0.12);
 }
+.mini-portal-clamp {
+  position: absolute;
+  width: 40%; height: 15%;
+  left: 50%;
+  background: linear-gradient(180deg, #e8e8ec, #9a9aa2 45%, #3a3a40);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 2px;
+  z-index: 2;
+  transform: translateX(-50%);
+}
+.mini-portal .mpc-a { top: -7%; }
+.mini-portal .mpc-b { bottom: -7%; }
 
 /* ─── PORTAL STAGE — the ring/vortex assembly ─── */
 .portal-stage {
@@ -368,7 +444,7 @@
   .portal-frame { width: min(420px, 84vw); }
 }
 @media (max-width: 760px) {
-  .portal-arms,
+  .hero-arms-layer,
   .hero-status-card,
   .hero-mascot-corner {
     display: none;
@@ -377,12 +453,12 @@
 @media (max-width: 600px) {
   .hero-inner-v3 { padding-top: 34px; }
   .portal-block { margin: 6px auto 8px; gap: 6px; }
-  .hero-v3 .hero-headline { font-size: clamp(32px, 8vw, 60px); }
+  .hero-v3 .hero-headline { font-size: clamp(28px, 7vw, 50px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .arm-upper-group, .arm-fore-group,
+  .arm-link-up, .arm-link-down,
   .portal-ring-outer, .portal-ring-mid, .portal-ring-inner, .portal-sweep, .portal-vortex,
-  .portal-void::before,
+  .portal-void::before, .mini-portal-ring, .mini-portal-void::before,
   .portal-core, .portal-logo-slot .hbp-logo-svg, .hero-mascot-corner .mascot-svg {
     animation: none !important;
     transition: none !important;
