@@ -1,14 +1,14 @@
 /* ══════════════════════════════════════════════════
-   MCU — HERO REDESIGN LAYER (v5)
+   MCU — HERO REDESIGN LAYER (v6)
    hero-circuit.css
    Load this AFTER css/style.css.
    Your chroma-key logo canvas, its glow/breathe
    animation, and its immediate surrounding rings are
-   untouched — this version only fixes the corner-card
-   nav overlap, restyles the status card as a vertical
-   stack, upgrades the arms to gradient metal capsules,
-   and adds a dark glitch "void" + silver tabs behind
-   the existing red rings.
+   untouched. v6 replaces the SVG-drawn arms + CSS mini
+   portals from v5 with the two generated arm/portal
+   images, combines ENGINEER / THE / FUTURE. into one
+   headline line above the ring, and resizes/repositions
+   the mascot + status card.
    ══════════════════════════════════════════════════ */
 
 /* ─── CIRCUIT BACKGROUND CANVAS ─── */
@@ -36,7 +36,7 @@
   border: 0;
 }
 
-/* ─── HERO GRID V5 — single centered column, compact ─── */
+/* ─── HERO GRID V6 — single centered column, compact ─── */
 .hero-v3 { position: relative; }
 
 .hero-inner-v3 {
@@ -54,10 +54,12 @@
   text-align: center;
 }
 
-.hero-v3 .hero-badge { margin-bottom: 6px; }
+/* extra breathing room under the TORONTO METROPOLITAN badge,
+   before the ENGINEER THE FUTURE. line starts */
+.hero-v3 .hero-badge { margin-bottom: 30px; }
 
-/* ─── HERO STACK — headline / portal / headline, wrapped so the
-   arm+mini-portal layer below can span the whole thing ─── */
+/* ─── HERO STACK — combined headline + portal, wrapped so the
+   arm-image layer below can be positioned against both ─── */
 .hero-stack {
   position: relative;
   display: flex;
@@ -70,19 +72,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: clamp(32px, 5vw, 68px);
   margin-bottom: 0;
 }
+
+/* ENGINEER THE FUTURE. — one line, sized down to fit, centered
+   above the ring */
+.hero-v3 .hero-headline.hero-headline-combined {
+  font-size: clamp(24px, 3.4vw, 46px);
+  letter-spacing: 0.015em;
+}
+
 .hero-v3 .hero-sub  { margin-left: auto; margin-right: auto; margin-bottom: 20px; }
 .hero-v3 .hero-actions { justify-content: center; margin-bottom: 22px; }
 .hero-v3 .scroll-indicator { justify-content: center; }
 
 /* ─── TOP-LEFT STATUS CARD — vertical "standing" card ───
-   Sized up ~60% and nudged down + inward (toward the portal)
-   compared to v4. */
+   Pushed further down than v5 so it clears the left arm
+   image instead of overlapping it. */
 .hero-status-card {
   position: absolute;
-  top: calc(var(--nav-h) + 78px);
+  top: calc(var(--nav-h) + 170px);
   left: clamp(64px, 10vw, 128px);
   z-index: 6;
   display: flex;
@@ -126,13 +135,12 @@
 .hero-status-card .rp-label { font-size: 13px; margin-bottom: 2px; }
 .hero-status-card .rp-val   { font-size: 17px; letter-spacing: 0.06em; }
 
-/* ─── TOP-RIGHT MASCOT — same nav-overlap fix, sized up ~60%
-   and nudged down + inward (toward the portal) ─── */
+/* ─── TOP-RIGHT MASCOT — bigger, nudged down + left vs v5 ─── */
 .hero-mascot-corner {
   position: absolute;
-  top: calc(var(--nav-h) + 58px);
-  right: clamp(58px, 9.5vw, 116px);
-  width: clamp(134px, 12.8vw, 195px);
+  top: calc(var(--nav-h) + 88px);
+  right: clamp(84px, 11.5vw, 148px);
+  width: clamp(150px, 14.5vw, 220px);
   z-index: 6;
   pointer-events: none;
 }
@@ -147,13 +155,14 @@
   50%      { transform: translateY(-7px); }
 }
 
-/* ─── PORTAL BLOCK — logo untouched, machine + void built around it ─── */
+/* ─── PORTAL BLOCK — logo untouched, nudged down a little via
+   the extra top margin so there's clear air below the headline ─── */
 .portal-block {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin: 8px auto 10px;
+  margin: 34px auto 10px;
 }
 
 .portal-frame {
@@ -164,114 +173,54 @@
   justify-content: center;
 }
 
-/* ─── ARMS + SATELLITE PORTALS ───
-   Replaces the old short side-gripping arms. This layer is a
-   sibling of .portal-block inside .hero-stack, absolutely
-   positioned to cover the ENGINEER headline → ring → THE FUTURE
-   headline in one 0–100 coordinate space (viewBox 0 0 100 100,
-   preserveAspectRatio="none"), so SVG path coordinates map 1:1
-   onto the same percentage grid used to place the mini-portal
-   divs. That's what keeps the metal beams lined up with the
-   portals they're "holding" at any viewport size. */
-.hero-arms-layer {
+/* ─── MECHA ARM IMAGES ───
+   Replaces the v5 SVG-drawn arms + CSS mini-portals with your
+   generated artwork. Both images are mounted claw-end toward the
+   ring, portal-end reaching up and outward to flank the headline:
+     - left_arm.png used as-is (its own claw→portal direction
+       already runs up-and-to-the-left).
+     - right_arm.png mirrored (scaleX(-1)) so it's a true mirror
+       of the left arm, reaching up-and-to-the-right.
+   The mirror lives on the wrapper (static), the float/entrance
+   animation lives on the <img> itself, so the two transforms
+   never fight each other. */
+.hero-mecha-arms {
   position: absolute;
   inset: 0;
   z-index: 4;
   pointer-events: none;
 }
-.arm-links {
+.mecha-arm-wrap {
   position: absolute;
-  inset: 0;
+  width: clamp(150px, 19vw, 260px);
+}
+.mecha-arm-left {
+  top: 2%;
+  left: 2%;
+}
+.mecha-arm-right {
+  top: 2%;
+  right: 2%;
+  transform: scaleX(-1);
+}
+.mecha-arm-img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 24px rgba(227, 27, 35, 0.28));
+  animation:
+    mecha-arm-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
+    mecha-arm-float 4.6s ease-in-out 2.1s infinite;
 }
-.arm-link-path {
-  fill: none;
-  stroke: url(#steelArm);
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  opacity: 0.92;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+@keyframes mecha-arm-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-.arm-link-joint {
-  fill: #6a6a70;
-  stroke: rgba(255,255,255,0.45);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
+@keyframes mecha-arm-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
-.arm-link-up {
-  transform-box: fill-box;
-  transform-origin: 58% 47%;
-  animation: arm-sway 6.4s ease-in-out infinite;
-}
-.arm-link-down {
-  transform-box: fill-box;
-  transform-origin: 42% 55%;
-  animation: arm-sway 5.6s ease-in-out infinite reverse;
-}
-@keyframes arm-sway {
-  0%, 100% { transform: rotate(-1.4deg); }
-  50%      { transform: rotate(1.4deg); }
-}
-
-/* Satellite portals held at each arm's tip — same dark blue/black
-   glitch language as the center portal-void, scaled down, gripped
-   by small grey metal clamp bars. */
-.mini-portal {
-  position: absolute;
-  width: clamp(46px, 5.4vw, 70px);
-  height: clamp(46px, 5.4vw, 70px);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 5;
-}
-.mini-portal-up   { top: 11%; left: 66%; }
-.mini-portal-down { top: 90%; left: 33%; }
-
-.mini-portal-ring {
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid rgba(227, 27, 35, 0.55);
-  box-shadow: 0 0 10px rgba(227, 27, 35, 0.35), inset 0 0 8px rgba(227, 27, 35, 0.2);
-  animation: portal-spin 14s linear infinite;
-}
-.mini-portal-void {
-  position: absolute; inset: 13%;
-  border-radius: 50%;
-  overflow: hidden;
-  background:
-    repeating-linear-gradient(0deg, rgba(70, 150, 255, 0.06) 0px, rgba(70, 150, 255, 0.06) 1px, transparent 1px, transparent 3px),
-    radial-gradient(circle, rgba(8, 12, 20, 0.95) 0%, rgba(4, 6, 12, 0.98) 60%, #000 100%);
-  box-shadow: inset 0 0 14px rgba(50, 100, 200, 0.35), inset 0 0 24px rgba(0, 0, 0, 0.6);
-}
-.mini-portal-void::before {
-  content: '';
-  position: absolute;
-  inset: -10%;
-  background: linear-gradient(180deg, transparent 42%, rgba(90, 170, 255, 0.35) 44%, transparent 47%);
-  animation: portal-glitch-bar 3.4s steps(1) infinite;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-.mini-portal-void::after {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(80, 170, 255, 0.25), 0 0 0 2px rgba(255, 60, 90, 0.12);
-}
-.mini-portal-clamp {
-  position: absolute;
-  width: 40%; height: 15%;
-  left: 50%;
-  background: linear-gradient(180deg, #e8e8ec, #9a9aa2 45%, #3a3a40);
-  border: 1px solid rgba(0, 0, 0, 0.35);
-  border-radius: 2px;
-  z-index: 2;
-  transform: translateX(-50%);
-}
-.mini-portal .mpc-a { top: -7%; }
-.mini-portal .mpc-b { bottom: -7%; }
 
 /* ─── PORTAL STAGE — the ring/vortex assembly ─── */
 .portal-stage {
@@ -295,7 +244,7 @@
   transition: opacity 0.6s ease;
 }
 
-/* NEW — the dark glitchy "opening" the machine is holding open */
+/* the dark glitchy "opening" the ring frames around the logo */
 .portal-void {
   position: absolute;
   inset: 19%;
@@ -444,7 +393,7 @@
   .portal-frame { width: min(420px, 84vw); }
 }
 @media (max-width: 760px) {
-  .hero-arms-layer,
+  .hero-mecha-arms,
   .hero-status-card,
   .hero-mascot-corner {
     display: none;
@@ -452,16 +401,17 @@
 }
 @media (max-width: 600px) {
   .hero-inner-v3 { padding-top: 34px; }
-  .portal-block { margin: 6px auto 8px; gap: 6px; }
-  .hero-v3 .hero-headline { font-size: clamp(28px, 7vw, 50px); }
+  .portal-block { margin: 20px auto 8px; gap: 6px; }
+  .hero-v3 .hero-headline.hero-headline-combined { font-size: clamp(20px, 6vw, 34px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .arm-link-up, .arm-link-down,
+  .mecha-arm-img,
   .portal-ring-outer, .portal-ring-mid, .portal-ring-inner, .portal-sweep, .portal-vortex,
-  .portal-void::before, .mini-portal-ring, .mini-portal-void::before,
+  .portal-void::before,
   .portal-core, .portal-logo-slot .hbp-logo-svg, .hero-mascot-corner .mascot-svg {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+    opacity: 1 !important;
   }
 }
