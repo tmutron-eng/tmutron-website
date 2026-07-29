@@ -236,10 +236,25 @@
       </div>
     </div>
 
+    <!-- Explore Events, pinned directly under the status card -->
+    <div class="hero-action-card">
+      <a href="events.html" class="btn-primary btn-sm">
+        <span>Explore Events</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
     <!-- Pinned top-right mascot -->
     <div class="hero-mascot-corner" aria-hidden="true">
       <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
       <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+    </div>
+
+    <!-- Meet the Team, pinned directly under the mascot -->
+    <div class="hero-action-mascot">
+      <a href="team.html" class="btn-ghost btn-sm">
+        <span>Meet the Team</span>
+      </a>
     </div>
 
     <div class="hero-inner-v3">
@@ -296,10 +311,10 @@
              match each other. ═══ -->
         <div class="hero-mecha-arms" aria-hidden="true">
           <div class="mecha-arm-wrap mecha-arm-left">
-            <img src="assets/images/left.arm.png" alt="" class="mecha-arm-img" />
+            <img src="assets/images/left_arm.png" alt="" class="mecha-arm-img" />
           </div>
           <div class="mecha-arm-wrap mecha-arm-right">
-            <img src="assets/images/right.arm.png" alt="" class="mecha-arm-img" />
+            <img src="assets/images/right_arm.png" alt="" class="mecha-arm-img" />
           </div>
         </div>
 
@@ -310,7 +325,11 @@
         We build community through academics, hands-on workshops, and relentless ambition.
       </p>
 
-      <div class="hero-actions reveal-up delay-4">
+      <!-- Desktop: the real buttons now live under the status card /
+           mascot (see .hero-action-card / .hero-action-mascot above).
+           This row is the mobile-only fallback, since the card and
+           mascot (and therefore those buttons) are hidden under 760px. -->
+      <div class="hero-actions hero-actions-mobile-only reveal-up delay-4">
         <a href="events.html" class="btn-primary">
           <span>Explore Events</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
