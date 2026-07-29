@@ -91,8 +91,8 @@
    image instead of overlapping it. */
 .hero-status-card {
   position: absolute;
-  top: calc(var(--nav-h) + 160px);
-  left: clamp(64px, 10vw, 133px);
+  top: calc(var(--nav-h) + 170px);
+  left: clamp(64px, 10vw, 128px);
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -135,6 +135,14 @@
 .hero-status-card .rp-label { font-size: 13px; margin-bottom: 2px; }
 .hero-status-card .rp-val   { font-size: 17px; letter-spacing: 0.06em; }
 
+/* "Explore Events" pinned directly under the status card */
+.hero-action-card {
+  position: absolute;
+  top: calc(var(--nav-h) + 360px);
+  left: clamp(64px, 10vw, 128px);
+  z-index: 6;
+}
+
 /* ─── TOP-RIGHT MASCOT — bigger, nudged down + left vs v5 ─── */
 .hero-mascot-corner {
   position: absolute;
@@ -154,6 +162,19 @@
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-7px); }
 }
+
+/* "Meet the Team" pinned directly under the mascot */
+.hero-action-mascot {
+  position: absolute;
+  top: calc(var(--nav-h) + 300px);
+  right: clamp(84px, 11.5vw, 148px);
+  z-index: 6;
+}
+
+/* Mobile fallback: status card / mascot (and now these two buttons)
+   are hidden under 760px, so the original centered button row comes
+   back for that breakpoint instead of just disappearing. */
+.hero-actions-mobile-only { display: none; }
 
 /* ─── PORTAL BLOCK — logo untouched, nudged down a little via
    the extra top margin so there's clear air below the headline ─── */
@@ -395,9 +416,12 @@
 @media (max-width: 760px) {
   .hero-mecha-arms,
   .hero-status-card,
-  .hero-mascot-corner {
+  .hero-mascot-corner,
+  .hero-action-card,
+  .hero-action-mascot {
     display: none;
   }
+  .hero-actions-mobile-only { display: flex; }
 }
 @media (max-width: 600px) {
   .hero-inner-v3 { padding-top: 34px; }
