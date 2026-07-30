@@ -214,7 +214,7 @@
 .hero-mascot-standalone {
   position: absolute;
   top: calc(var(--nav-h) + 200px);
-  right: clamp(110px, 20vw, 300px);
+  right: clamp(109px, 29vw, 275px);
   width: clamp(150px, 14.5vw, 225px);
   z-index: 6;
   pointer-events: none;
