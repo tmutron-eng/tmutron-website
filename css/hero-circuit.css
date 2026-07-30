@@ -213,8 +213,8 @@
    button below. ─── */
 .hero-mascot-standalone {
   position: absolute;
-  top: calc(var(--nav-h) + 245px);
-  right: clamp(105px, 25vw, 200px);
+  top: calc(var(--nav-h) + 200px);
+  right: clamp(105px, 25vw, 245px);
   width: clamp(150px, 14.5vw, 225px);
   z-index: 6;
   pointer-events: none;
