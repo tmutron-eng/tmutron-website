@@ -312,14 +312,28 @@
   position: absolute;
   width: clamp(165px, 20.5vw, 275px);
 }
+/* Rotation lives on the WRAPPER (not .mecha-arm-img) on purpose — the
+   image already has its own float animation, and setting `transform`
+   there directly would get wiped out every animation frame (same
+   class of bug as the headline issue). The wrapper has no animation
+   of its own, so a static rotate here is safe and permanent.
+   transform-origin is pinned to the bottom corner nearest the ring,
+   so the rotation swings the top (mounted) end in toward the
+   headline text instead of pivoting from the middle. */
 .mecha-arm-left {
-  top: 8%;
+  top: 3%;
   left: -6%;
+  transform: rotate(7deg);
+  transform-origin: bottom right;
 }
 .mecha-arm-right {
-  top: 8%;
-  right: -6%;
-  /* no transform here anymore — see comment above */
+  top: 3%;
+  right: -9%;
+  transform: rotate(-7deg);
+  transform-origin: bottom left;
+  /* pulled out further than the left arm's -6% — the right arm was
+     riding further into the ring than the left one, so it needs a
+     bigger outward offset to land at the same visual distance */
 }
 .mecha-arm-img {
   width: 100%;
