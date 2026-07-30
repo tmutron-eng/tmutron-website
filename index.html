@@ -16,11 +16,6 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/hero-circuit.css" />
 <style>
-/* ══════════════════════════════════════════════════
-   MCU CAROUSEL — replaces the existing carousel
-   <style> block in index.html (test)
-   ══════════════════════════════════════════════════ */
-
 .gr-wrap {
   outline: none;
   -webkit-user-select: none;
@@ -39,7 +34,6 @@
   perspective-origin: 50% 40%;
 }
 
-/* Cards always face forward — no rotateY ever */
 .gc {
   position: absolute;
   width: 260px;
@@ -102,7 +96,6 @@
 }
 .gc-l:hover { letter-spacing: .22em; }
 
-/* Nav controls */
 .gr-nav {
   display: flex;
   align-items: center;
@@ -151,7 +144,7 @@
 </head>
 <body>
 
-  <!-- ═══════════════════ LOADER ═══════════════════ -->
+  <!-- LOADER -->
   <div id="loader">
     <div class="loader-inner">
       <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -166,10 +159,8 @@
     </div>
   </div>
 
-  <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- ═══════════════════ NAV ═══════════════════ -->
   <nav id="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
@@ -203,7 +194,7 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════ HERO (v6) ═══════════════════ -->
+  <!-- HERO (v6) -->
   <section id="hero" class="hero-v3">
 
     <div class="hero-scan-line"></div>
@@ -216,45 +207,50 @@
 
     <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
 
-    <!-- Real, screen-reader/SEO heading covering the full phrase. -->
     <h1 class="hero-a11y-heading">Engineer the future.</h1>
 
-    <!-- Pinned top-left status card — now a vertical stack -->
-    <div class="hero-status-card" aria-hidden="true">
-      <div class="hero-status-card-head mono">SYSTEM</div>
-      <div class="readout-panel">
-        <span class="mono rp-label">DEPT</span>
-        <span class="rp-val">MECHATRONICS</span>
+    <!-- Left widget: status card + Explore Events button, grouped in
+         one flex column so the button always sits a fixed gap below
+         the card instead of overlapping it. -->
+    <div class="hero-left-widget">
+      <div class="hero-status-card" aria-hidden="true">
+        <div class="hero-status-card-head mono">SYSTEM</div>
+        <div class="readout-panel">
+          <span class="mono rp-label">DEPT</span>
+          <span class="rp-val">MECHATRONICS</span>
+        </div>
+        <div class="readout-panel">
+          <span class="mono rp-label">YEAR</span>
+          <span class="rp-val" id="current-year">2025</span>
+        </div>
+        <div class="readout-panel">
+          <span class="mono rp-label">STATUS</span>
+          <span class="rp-val rp-active">● ACTIVE</span>
+        </div>
       </div>
-      <div class="readout-panel">
-        <span class="mono rp-label">YEAR</span>
-        <span class="rp-val" id="current-year">2025</span>
-      </div>
-      <div class="readout-panel">
-        <span class="mono rp-label">STATUS</span>
-        <span class="rp-val rp-active">● ACTIVE</span>
+
+      <div class="hero-action-card">
+        <a href="events.html" class="btn-primary btn-sm">
+          <span>Explore Events</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
     </div>
 
-    <!-- Explore Events, pinned directly under the status card -->
-    <div class="hero-action-card">
-      <a href="events.html" class="btn-primary btn-sm">
-        <span>Explore Events</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
+    <!-- Right widget: mascot + Meet the Team button, same treatment,
+         top-aligned with the left widget so the mascot sits exactly
+         parallel to the status card. -->
+    <div class="hero-right-widget">
+      <div class="hero-mascot-corner" aria-hidden="true">
+        <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+        <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+      </div>
 
-    <!-- Pinned top-right mascot -->
-    <div class="hero-mascot-corner" aria-hidden="true">
-      <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-      <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-    </div>
-
-    <!-- Meet the Team, pinned directly under the mascot -->
-    <div class="hero-action-mascot">
-      <a href="team.html" class="btn-ghost btn-sm">
-        <span>Meet the Team</span>
-      </a>
+      <div class="hero-action-mascot">
+        <a href="team.html" class="btn-ghost btn-sm">
+          <span>Meet the Team</span>
+        </a>
+      </div>
     </div>
 
     <div class="hero-inner-v3">
@@ -264,16 +260,12 @@
         <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
       </div>
 
-      <!-- ═══ HERO STACK — combined headline + portal, wrapped so the
-           mecha-arm images can be positioned against both ═══ -->
       <div class="hero-stack">
 
-        <!-- Headline — ENGINEER THE FUTURE. all on one line now -->
         <div class="hero-headline hero-headline-combined reveal-up delay-2" aria-hidden="true">
           <span class="line-wrap"><span class="hero-line">ENGINEER <span class="hero-line-accent">THE</span> FUTURE.</span></span>
         </div>
 
-        <!-- ═══ PORTAL BLOCK — logo untouched, machine + void built around it ═══ -->
         <div class="portal-block reveal-up delay-2">
           <div class="portal-frame">
 
@@ -305,10 +297,9 @@
           </div><!-- /.portal-frame -->
         </div><!-- /.portal-block -->
 
-        <!-- ═══ MECHA ARMS — your generated arm/portal art, mounted
-             claw-toward-ring, portal reaching up + outward to flank
-             the headline. Right arm image mirrored so both arms
-             match each other. ═══ -->
+        <!-- MECHA ARMS — right_arm.png is already a mirrored companion
+             asset to left_arm.png, so no CSS scaleX flip is applied to
+             either here; see hero-circuit.css. -->
         <div class="hero-mecha-arms" aria-hidden="true">
           <div class="mecha-arm-wrap mecha-arm-left">
             <img src="assets/images/left_arm.png" alt="" class="mecha-arm-img" />
@@ -325,10 +316,6 @@
         We build community through academics, hands-on workshops, and relentless ambition.
       </p>
 
-      <!-- Desktop: the real buttons now live under the status card /
-           mascot (see .hero-action-card / .hero-action-mascot above).
-           This row is the mobile-only fallback, since the card and
-           mascot (and therefore those buttons) are hidden under 760px. -->
       <div class="hero-actions hero-actions-mobile-only reveal-up delay-4">
         <a href="events.html" class="btn-primary">
           <span>Explore Events</span>
@@ -347,7 +334,7 @@
     </div><!-- /.hero-inner-v3 -->
   </section>
 
-  <!-- ═══════════════════ STATS ═══════════════════ -->
+  <!-- STATS -->
   <section id="stats" class="section-dark">
     <div class="section-blob b1"></div>
     <div class="section-blob b2"></div>
@@ -376,7 +363,7 @@
     </div>
   </section>
 
-  <!-- ═══ WHAT WE DO ═══ -->
+  <!-- WHAT WE DO -->
   <section id="what-we-do" class="section-light">
     <div class="section-blob b1"></div><div class="section-blob b2"></div><div class="section-blob b3"></div>
     <div class="container">
@@ -405,7 +392,7 @@
     </div>
   </section>
 
-    <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
+  <!-- EVENTS PREVIEW -->
   <section id="events-preview" class="section-dark">
     <div class="section-blob b1"></div>
     <div class="section-blob b2"></div>
@@ -471,7 +458,6 @@
         </article>
       </div>
 
-      <!-- Past events ticker -->
       <div class="events-also-ran reveal-up">
         <span class="mono events-also-label">ALSO THIS YEAR:</span>
         <div class="events-also-list">
@@ -487,7 +473,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ MARQUEE STRIP ═══════════════════ -->
+  <!-- MARQUEE STRIP -->
   <div class="marquee-strip">
     <div class="marquee-track">
       <span class="mono">MECHATRONICS &nbsp;/&nbsp;</span>
@@ -509,7 +495,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════ CTA BANNER ═══════════════════ -->
+  <!-- CTA BANNER -->
   <section id="cta-banner" class="section-red">
     <div class="cta-grid-overlay"></div>
     <div class="hud-corner hud-tl"></div>
@@ -545,7 +531,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <!-- FOOTER -->
   <footer id="footer">
     <div class="container">
       <div class="footer-inner">
@@ -608,10 +594,6 @@
   <script src="js/main.js"></script>
   <script src="js/hero-circuit.js"></script>
   <script>
-    /* ── Animated section background canvases ──
-       PERF FIX: each section's animation loop now pauses via
-       IntersectionObserver when scrolled out of view, instead of
-       running requestAnimationFrame forever regardless of visibility. */
     (function() {
       const sections = [
         { id: 'stats',           color: '227,27,35',    speed: 0.18 },
@@ -648,7 +630,7 @@
         new ResizeObserver(resize).observe(section);
 
         function draw() {
-          if (!visible) { raf = null; return; } // stop the loop entirely when off-screen
+          if (!visible) { raf = null; return; }
 
           ctx.clearRect(0, 0, W, H);
           t += 0.007;
@@ -706,19 +688,13 @@
       });
     })();
 
-    /* Footer & hero year */
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
     const cy = document.getElementById('current-year');
     if (cy) cy.textContent = new Date().getFullYear();
   </script>
 
-  <!-- ═══════════════════ STATS GRID 3 + EVENT CHIPS CSS ═══════════════════ -->
   <style>
-    /* 3-column stat grid, stepping down for tablet/phone widths so the
-       stat-number's clamp(52px,6vw,80px) floor never gets squeezed into
-       a too-narrow column. Was a single 640px cut straight to 1 column —
-       left 641-1100px (most tablets) stuck at 3 cramped columns. */
     .stats-grid-3 {
       grid-template-columns: repeat(3, 1fr) !important;
     }
@@ -733,7 +709,6 @@
       }
     }
 
-    /* Event "also ran" chips below the cards */
     .events-also-ran {
       margin-top: 2.5rem;
       display: flex;
@@ -771,28 +746,6 @@
       border-color: rgba(227,27,35,0.5);
     }
 
-    /* ══════════════════════════════════════════
-       CANVAS LOGO + MASCOT
-       The logo canvas still uses the live chroma-key JS (see bottom
-       script) because its source is a plain mp4 with no transparency
-       info at all — <video> elements can't show alpha, so a hidden
-       <video> plays it and a visible <canvas> paints it frame-by-frame
-       with white keyed out.
-
-       The mascot no longer needs any of that: its clip is an
-       alpha-channel WebM with real per-pixel transparency baked in by
-       the video itself, so the canvas just draws its frames directly —
-       see renderAlphaVideo() in the script below.
-
-       NOTE: the sizing/positioning rules below for .ring-system,
-       .ring-center, .mascot-wrap, canvas.hbp-logo-svg, canvas.mascot-svg
-       are leftover from earlier hero layouts and no longer match
-       anything relevant in the current DOM — sizing now comes from
-       .portal-logo-slot .hbp-logo-svg and .hero-mascot-corner
-       .mascot-svg in css/hero-circuit.css, both higher specificity.
-       Left here only so this diff stays additive; safe to delete
-       whenever you tidy this file up.
-       ══════════════════════════════════════════ */
     canvas.hbp-logo-svg {
       display: block;
       width: clamp(220px, 26vw, 340px);
@@ -805,7 +758,6 @@
     .ring-center { width: 160px !important; height: 160px !important; }
     .mascot-wrap { width: 160px !important; height: 160px !important; }
 
-    /* ══ CTA BANNER REDESIGN ══ */
     #cta-banner { position: relative; }
     .cta-grid-overlay {
       position: absolute; inset: 0;
@@ -880,12 +832,10 @@
   var btnN  = document.getElementById('grn');
   var N     = cards.length;
 
-  /* ── Layout config ── */
-  var SPREAD  = 290;   /* px between card centres */
-  var Z_SIDE  = -140;  /* z-depth of adjacent cards */
-  var Z_FAR   = -220;  /* z-depth of far cards */
+  var SPREAD  = 290;
+  var Z_SIDE  = -140;
+  var Z_FAR   = -220;
 
-  /* ── State ── */
   var target = 0;
   var pos    = 0.0;
   var active = 0;
@@ -894,13 +844,11 @@
   function lerp(a, b, t) { return a + (b - a) * t; }
   function wi(i) { return ((i % N) + N) % N; }
 
-  /* shortest signed arc between two fractional positions */
   function shortArc(from, to) {
     var d = ((to - from) % N + N) % N;
     return d > N / 2 ? d - N : d;
   }
 
-  /* visual params for a card at fractional offset from centre */
   function params(offset) {
     var a = Math.abs(offset);
     var scale, opacity, z;
@@ -937,9 +885,7 @@
     }
 
     cards.forEach(function (card, i) {
-      /* offset = shortest arc from current float pos to this card index */
       var off = i - pos;
-      /* wrap to [-N/2, N/2] */
       while (off >  N / 2) off -= N;
       while (off < -N / 2) off += N;
 
@@ -949,7 +895,6 @@
       card.style.zIndex     = String(zi);
       card.style.visibility = p.op < 0.02 ? 'hidden' : 'visible';
       card.style.opacity    = String(p.op);
-      /* cards only move on X and Z — never rotate, never skew */
       card.style.transform  =
         'translateX(calc(-50% + ' + p.x.toFixed(2) + 'px))' +
         ' translateZ(' + p.z.toFixed(2) + 'px)' +
@@ -958,7 +903,6 @@
   }
 
   function animate() {
-    /* lerp pos toward target via shortest arc */
     var arc = shortArc(pos, target);
     pos += arc * 0.1;
     render();
@@ -972,14 +916,12 @@
   }
 
   function go(to) {
-    /* keep pos and target in sync via shortest arc so we never spin the long way */
     var arc = shortArc(wi(Math.round(pos)), wi(to));
     target  = pos + arc;
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(animate);
   }
 
-  /* ── Drag ── */
   var dragging = false, sx = 0, sp = 0, lx = 0, lt = 0, vx = 0;
 
   function dn(e) {
@@ -1020,7 +962,6 @@
   window.addEventListener('mouseup',  up);
   window.addEventListener('touchend', up);
 
-  /* ── Mouse wheel ── */
   var wt;
   wrap.addEventListener('wheel', function (e) {
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaX) < 8) return;
@@ -1035,22 +976,18 @@
     }, 130);
   }, { passive: false });
 
-  /* ── Buttons ── */
   if (btnP) btnP.addEventListener('click', function () { go(wi(Math.round(pos)) - 1); });
   if (btnN) btnN.addEventListener('click', function () { go(wi(Math.round(pos)) + 1); });
 
-  /* ── Dots ── */
   dots.forEach(function (d, i) {
     d.addEventListener('click', function () { go(i); });
   });
 
-  /* ── Keyboard ── */
   wrap.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowLeft')  { e.preventDefault(); go(wi(Math.round(pos)) - 1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); go(wi(Math.round(pos)) + 1); }
   });
 
-  /* ── Init ── */
   pos = 0; target = 0;
   cards[0].classList.add('gca');
   if (dots[0]) dots[0].classList.add('ga');
@@ -1058,63 +995,10 @@
 })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════
-     LOGO CHROMA-KEY + MASCOT ALPHA-VIDEO RENDERERS
-
-     The logo clip (mcu-tmu-logo-glitch-src.mp4) is a plain mp4 with no
-     transparency info, so it still goes through the flood-fill
-     chroma-key pipeline below: <video> elements can't show alpha in any
-     browser, so it plays hidden and gets painted frame-by-frame onto a
-     canvas with connected-to-edge white pixels keyed out (flood fill
-     from the border, so isolated white "MCU"/"TMU" lettering enclosed
-     by red never gets keyed out).
-
-     The mascot clip (mcu-robot-mascot-src.webm) is different: it's an
-     alpha-channel WebM with genuine per-pixel transparency baked in by
-     the video encode itself. It doesn't need any chroma-keying — the
-     canvas just draws its frames directly via renderAlphaVideo(), and
-     the transparency comes along for free wherever the browser decodes
-     WebM alpha (Chrome/Edge reliably, Firefox mostly; Safari doesn't
-     support WebM alpha and will show an opaque frame there, same
-     ceiling the old approach had anyway since Safari couldn't handle
-     the old flood-fill canvas trick well either).
-
-     PERF FIXES vs a naive per-pixel version (logo path):
-       1. Processing happens on a small OFFSCREEN work canvas at
-          `scale` (default 0.5 = 1/4 the pixels) instead of full
-          resolution, then the result is scaled up into the visible
-          canvas. Visual size on screen is unaffected (CSS controls
-          display size), only internal processing resolution drops.
-       2. Only every (skip+1)th video frame is actually re-keyed
-          (default skip=1 → ~30fps instead of 60fps for the effect).
-       3. Typed-array buffers (visited/distBuf/stack) are allocated
-          ONCE per canvas and reused every frame — no per-frame GC churn.
-       4. The whole loop pauses while the tab is hidden, AND while the
-          hero section is scrolled off-screen (IntersectionObserver) —
-          this was the main perf/lag culprit: previously the per-pixel
-          chroma-key loop kept running at full tilt no matter where
-          you'd scrolled to on the page. The mascot's simpler
-          renderAlphaVideo() shares this same visibility gate.
-       5. TEMPORAL ALPHA SMOOTHING (streak-gated, logo path only):
-          compression noise on reflective/glitchy areas makes individual
-          pixels flicker just across the keying threshold from frame to
-          frame, even though nothing is actually moving there. A plain
-          even blend still let a single noisy frame yank a pixel toward
-          transparent; a slow blend fixed that but smeared real motion
-          into a ghost trail instead. The fix: each pixel becoming MORE
-          opaque updates fast (a real reveal shouldn't lag). Each pixel
-          becoming MORE transparent only counts if it reads that way for
-          2 processed frames in a row — a single noisy frame barely
-          moves it at all, but a real, sustained transition is
-          recognized within a couple of frames and resolves quickly,
-          instead of dragging out into a smudge.
-     ═══════════════════════════════════════════════════ -->
 <script>
 (function () {
   'use strict';
 
-  // Shared visibility gate for both hero canvases — pauses all the
-  // expensive per-pixel work whenever the hero section isn't on screen.
   var heroVisible = true;
   var heroEl = document.getElementById('hero');
   if (heroEl && 'IntersectionObserver' in window) {
@@ -1126,47 +1010,35 @@
 
   function chromaKeyFlood(video, canvas, opts) {
     opts = opts || {};
-    var threshold = opts.threshold != null ? opts.threshold : 80;   // start of keying (0-441.7)
-    var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
-    var scale     = opts.scale     != null ? opts.scale     : 0.75; // internal render scale (perf)
-    var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
+    var threshold = opts.threshold != null ? opts.threshold : 80;
+    var softness  = opts.softness  != null ? opts.softness  : 40;
+    var scale     = opts.scale     != null ? opts.scale     : 0.75;
+    var skip      = opts.skip      != null ? opts.skip      : 1;
 
     var w = Math.max(1, Math.round(canvas.width  * scale));
     var h = Math.max(1, Math.round(canvas.height * scale));
 
-    // Small offscreen buffer we actually do the expensive per-pixel work on.
     var work = document.createElement('canvas');
     work.width = w; work.height = h;
     var wctx = work.getContext('2d', { willReadFrequently: true });
 
     var outCtx = canvas.getContext('2d');
-    // Flat graphics (the logo) read as crisper with a hard nearest-neighbor
-    // upscale than a blurred smooth one — costs nothing extra, just a draw
-    // setting, so we can keep internal resolution (and therefore perf) low
-    // without the logo looking soft.
     outCtx.imageSmoothingEnabled = opts.finalSmoothing !== false;
 
     var maxDist = threshold + softness;
     var n = w * h;
 
-    // Reusable buffers — allocated once, reused every frame (no per-frame GC churn)
     var visited = new Uint8Array(n);
     var distBuf = new Float32Array(n);
     var stack   = new Int32Array(n);
-    var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
-    var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
-    var alphaBlur = new Uint8Array(n); // spatially-smoothed alpha, reused every frame
-    // Asymmetric (attack/release) temporal smoothing state — the previous
-    // frame's post-smoothing alpha for every pixel, seeded fully opaque.
+    var alphaBuf = new Uint8Array(n);
+    var blurBuf  = new Uint8Array(n * 3);
+    var alphaBlur = new Uint8Array(n);
     var prevAlpha = new Float32Array(n).fill(255);
-    // Consecutive-frame "this pixel looks like background" counter, used to
-    // tell a single noisy frame apart from a genuine transition. Reused
-    // every frame, never reallocated.
     var lowStreak = new Uint8Array(n);
 
     var frameCount = 0;
 
-    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
     var rect = { x: 0, y: 0, w: w, h: h };
     function updateRect() {
       var vw = video.videoWidth, vh = video.videoHeight;
@@ -1198,12 +1070,6 @@
       var rx0 = rect.x, ry0 = rect.y;
       var rx1 = rect.x + rect.w - 1, ry1 = rect.y + rect.h - 1;
 
-      // 1a) smooth RGB (3x3 average) for the keying decision only — the
-      //     visible pixel colors in `d` are left completely untouched.
-      //     Reflective surfaces carry compression noise/dither that
-      //     flickers right around the threshold pixel-by-pixel;
-      //     averaging it out first means a patch of surface reads as
-      //     one consistent value instead of scattering into speckle.
       var bx, by, bdx, bdy, byy, bxx, oi, rs, gs, bs, cnt;
       for (by = 0; by < h; by++) {
         for (bx = 0; bx < w; bx++) {
@@ -1228,7 +1094,6 @@
         }
       }
 
-      // 1b) distance-from-white using the smoothed values (letterbox padding marked far)
       var idx, o;
       for (idx = 0; idx < n; idx++) {
         o = idx * 4;
@@ -1237,7 +1102,6 @@
         distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
       }
 
-      // 2) seed the flood fill from the video content rect's own border
       var sp = 0, x, y, idx0;
       for (x = rx0; x <= rx1; x++) {
         idx0 = ry0 * w + x;
@@ -1252,7 +1116,6 @@
         if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
       }
 
-      // 3) flood fill through connected background-ish pixels
       while (sp > 0) {
         var cur = stack[--sp];
         var cx = cur % w;
@@ -1265,9 +1128,6 @@
         if (cy < ry1) { nIdx = cur + w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
       }
 
-      // 4) compute alpha for visited pixels into alphaBuf (keep everything
-      //    else at its current opaque alpha so we have a full buffer to
-      //    despeckle against in step 5)
       for (idx = 0; idx < n; idx++) {
         o = idx * 4;
         if (!visited[idx]) { alphaBuf[idx] = d[o + 3]; continue; }
@@ -1280,15 +1140,10 @@
         }
       }
 
-      // 5) DESPECKLE PASS — cleans up stray white flecks that land just
-      //    outside the flood-fill's connected path (specular
-      //    highlights/compression noise) by treating any pixel mostly
-      //    surrounded by already-transparent neighbors as background too,
-      //    regardless of whether the flood fill technically reached it.
       for (y = ry0 + 1; y < ry1; y++) {
         for (x = rx0 + 1; x < rx1; x++) {
           idx = y * w + x;
-          if (alphaBuf[idx] < 60) continue; // already background/near-background
+          if (alphaBuf[idx] < 60) continue;
           var tn = 0;
           if (alphaBuf[idx - 1]     < 40) tn++;
           if (alphaBuf[idx + 1]     < 40) tn++;
@@ -1302,11 +1157,6 @@
         }
       }
 
-      // 6) SPATIAL ALPHA BLUR — a plain 3x3 average of the despeckled
-      //    alpha values. This is pure spatial math with no frame-to-frame
-      //    state, so it can't introduce timing bugs: any single noisy
-      //    pixel gets pulled toward its neighbors' values instead of
-      //    standing out on its own.
       var abx, aby, abdx, abdy, abyy, abxx, aidx, asum, acnt;
       for (aby = 0; aby < h; aby++) {
         for (abx = 0; abx < w; abx++) {
@@ -1323,24 +1173,13 @@
         }
       }
 
-      // 7) STREAK-GATED TEMPORAL SMOOTHING — a per-pixel counter
-      //    (lowStreak) tracks how many PROCESSED frames in a row a pixel
-      //    has read as "background-leaning". A single noisy frame barely
-      //    moves the pixel at all — it's held almost exactly at its
-      //    previous value. Only once a pixel reads low for 2 frames
-      //    running (real, sustained motion — not one-off compression
-      //    noise) does it switch into a normal, fast-converging blend, so
-      //    genuine transitions resolve within a couple of frames instead
-      //    of dragging out into a trail. Rising alpha (becoming more
-      //    opaque) is always fast — that direction never caused the
-      //    problem.
       var LOW_ALPHA_THRESH = 140;
       for (idx = 0; idx < n; idx++) {
         var prev = prevAlpha[idx];
         var raw  = alphaBlur[idx];
         var smoothed;
         if (raw >= prev) {
-          smoothed = prev * 0.15 + raw * 0.85;   // fast attack (opacity rising)
+          smoothed = prev * 0.15 + raw * 0.85;
           lowStreak[idx] = 0;
         } else {
           if (raw < LOW_ALPHA_THRESH) {
@@ -1349,9 +1188,9 @@
             lowStreak[idx] = 0;
           }
           if (lowStreak[idx] >= 2) {
-            smoothed = prev * 0.30 + raw * 0.70;  // confirmed transition — resolve quickly
+            smoothed = prev * 0.30 + raw * 0.70;
           } else {
-            smoothed = prev * 0.95 + raw * 0.05;  // first low reading — likely noise, barely move
+            smoothed = prev * 0.95 + raw * 0.05;
           }
         }
         prevAlpha[idx] = smoothed;
@@ -1365,14 +1204,12 @@
     }
 
     function frame() {
-      // Pause entirely when tab is hidden OR hero is scrolled off-screen —
-      // this is the main fix for site-wide lag from this effect.
       if (document.hidden || !heroVisible) { requestAnimationFrame(frame); return; }
 
       if (video.readyState >= 2 && !video.paused && !video.ended) {
         frameCount++;
         if (frameCount % (skip + 1) === 0) {
-          try { process(); } catch (e) { /* ignore a dropped frame */ }
+          try { process(); } catch (e) { }
         }
       }
       requestAnimationFrame(frame);
@@ -1380,7 +1217,7 @@
 
     var tryPlay = function () {
       var p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
+      if (p && typeof p.catch === 'function') p.catch(function () { });
     };
     tryPlay();
     video.addEventListener('loadedmetadata', tryPlay);
@@ -1389,20 +1226,12 @@
     requestAnimationFrame(frame);
   }
 
-  // Simple alpha-preserving video-to-canvas renderer — used for clips
-  // that already carry real per-pixel transparency (alpha-channel
-  // WebM), so no chroma-key/flood-fill/despeckle work is needed at all.
-  // Canvas drawImage() from a <video> element preserves that alpha
-  // natively wherever the browser decodes WebM alpha (Chrome/Edge
-  // reliably, Firefox mostly; Safari doesn't support it and will just
-  // show an opaque frame there).
   function renderAlphaVideo(video, canvas, opts) {
     opts = opts || {};
     var skip = opts.skip != null ? opts.skip : 0;
     var ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = true;
 
-    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
     var rect = { x: 0, y: 0, w: canvas.width, h: canvas.height };
     function updateRect() {
       var vw = video.videoWidth, vh = video.videoHeight;
@@ -1437,7 +1266,7 @@
 
     var tryPlay = function () {
       var p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
+      if (p && typeof p.catch === 'function') p.catch(function () { });
     };
     tryPlay();
     video.addEventListener('loadedmetadata', tryPlay);
@@ -1450,19 +1279,12 @@
   var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
   var mascotCanvas = document.getElementById('mcuMascotCanvas');
 
-  // MOBILE PERF: the logo's per-pixel flood-fill + blur pipeline is
-  // expensive on phone-class CPUs/GPUs — dropping internal render scale
-  // and processing fewer frames/sec keeps the rest of the page (scroll,
-  // carousel drag) responsive on mobile without changing how big
-  // anything looks on screen (CSS still controls display size).
   var isNarrowViewport = window.matchMedia('(max-width: 700px)').matches;
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var mobileSkipBump = isNarrowViewport ? 2 : 0;
   var mobileScaleCut = isNarrowViewport ? 0.7 : 1;
 
-  // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
-  // Still needs the full chroma-key pipeline since it's a plain mp4.
   if (logoVideo && logoCanvas) {
     chromaKeyFlood(logoVideo, logoCanvas, {
       threshold: 130, softness: 25,
@@ -1472,10 +1294,6 @@
     });
   }
 
-  // Mascot: alpha-channel WebM — just draw its frames straight through,
-  // no keying needed. A light frame-skip on mobile is still worthwhile
-  // for perf (drawImage + clearRect every frame at 60fps adds up on
-  // phones), but there's no chroma-key math to tune here anymore.
   if (mascotVideo && mascotCanvas) {
     renderAlphaVideo(mascotVideo, mascotCanvas, {
       skip: prefersReducedMotion ? 999 : mobileSkipBump
