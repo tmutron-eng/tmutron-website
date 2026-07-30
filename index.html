@@ -240,17 +240,17 @@
     <!-- Right widget: mascot + Meet the Team button, same treatment,
          top-aligned with the left widget so the mascot sits exactly
          parallel to the status card. -->
-    <div class="hero-right-widget">
-      <div class="hero-mascot-corner" aria-hidden="true">
-        <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-        <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-      </div>
+    <!-- Robot mascot — positioned entirely on its own -->
+    <div class="hero-mascot-standalone" aria-hidden="true">
+      <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
+      <video id="mcuMascotSrcVideo" src="assets/images/mcu-robot-mascot-src.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
+    </div>
 
-      <div class="hero-action-mascot">
-        <a href="team.html" class="btn-ghost btn-sm">
-          <span>Meet the Team</span>
-        </a>
-      </div>
+    <!-- "Meet the Team" button — positioned entirely on its own -->
+    <div class="hero-team-btn">
+      <a href="team.html" class="btn-ghost btn-sm">
+        <span>Meet the Team</span>
+      </a>
     </div>
 
     <div class="hero-inner-v3">
