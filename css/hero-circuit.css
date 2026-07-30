@@ -76,24 +76,83 @@
 }
 
 /* ENGINEER THE FUTURE. — one line, sized down to fit, centered
-   above the ring */
+   above the ring. Charged/held-in-a-force-field treatment: a
+   slow glow pulse on the whole line plus two small spark nodes
+   flanking the text where the arms would be gripping it. */
 .hero-v3 .hero-headline.hero-headline-combined {
   font-size: clamp(24px, 3.4vw, 46px);
   letter-spacing: 0.015em;
+  position: relative;
 }
 
-.hero-v3 .hero-sub  { margin-left: auto; margin-right: auto; margin-bottom: 20px; }
+.hero-v3 .hero-headline.hero-headline-combined .hero-line {
+  display: inline-block;
+  text-shadow: 0 0 8px rgba(227, 27, 35, 0.35), 0 0 22px rgba(227, 27, 35, 0.2);
+  animation: headline-charge 2.8s ease-in-out infinite;
+}
+.hero-v3 .hero-line-accent {
+  text-shadow: 0 0 10px rgba(227, 27, 35, 0.75), 0 0 30px rgba(227, 27, 35, 0.4), 0 0 60px rgba(227, 27, 35, 0.2);
+}
+@keyframes headline-charge {
+  0%, 100% { text-shadow: 0 0 8px rgba(227, 27, 35, 0.3), 0 0 20px rgba(227, 27, 35, 0.16); }
+  50%      { text-shadow: 0 0 12px rgba(227, 27, 35, 0.55), 0 0 34px rgba(227, 27, 35, 0.3); }
+}
+
+/* Small "field node" sparks at each side of the headline — the
+   point where the two arms would be gripping the text. Deliberately
+   small and quiet so it reads as a detail, not clutter. */
+.hero-v3 .hero-headline.hero-headline-combined::before,
+.hero-v3 .hero-headline.hero-headline-combined::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(227,27,35,0.85) 45%, transparent 75%);
+  box-shadow: 0 0 10px rgba(227, 27, 35, 0.8), 0 0 22px rgba(227, 27, 35, 0.45);
+  transform: translateY(-50%);
+  animation: spark-flicker 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero-v3 .hero-headline.hero-headline-combined::before { left: -5%; animation-delay: 0.4s; }
+.hero-v3 .hero-headline.hero-headline-combined::after  { right: -5%; }
+@keyframes spark-flicker {
+  0%, 100% { opacity: 0.35; transform: translateY(-50%) scale(0.8); }
+  45%      { opacity: 1;    transform: translateY(-50%) scale(1.2); }
+  60%      { opacity: 0.55; transform: translateY(-50%) scale(0.9); }
+}
+@media (max-width: 760px) {
+  .hero-v3 .hero-headline.hero-headline-combined::before,
+  .hero-v3 .hero-headline.hero-headline-combined::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-v3 .hero-headline.hero-headline-combined .hero-line { animation: none; }
+  .hero-v3 .hero-headline.hero-headline-combined::before,
+  .hero-v3 .hero-headline.hero-headline-combined::after { animation: none; opacity: 0.8; }
+}
+
+.hero-v3 .hero-sub  { margin-left: auto; margin-right: auto; margin-top: 14px; margin-bottom: 20px; }
 .hero-v3 .hero-actions { justify-content: center; margin-bottom: 22px; }
 .hero-v3 .scroll-indicator { justify-content: center; }
 
-/* ─── TOP-LEFT STATUS CARD — vertical "standing" card ───
-   Pushed further down than v5 so it clears the left arm
-   image instead of overlapping it. */
-.hero-status-card {
+/* ─── LEFT WIDGET — status card + "Explore Events" button as a
+   single flex column, so the button always sits a fixed gap
+   below the card no matter how tall the card's content is.
+   (Previously both were absolutely positioned independently with
+   hardcoded top offsets, which is what caused the button to
+   overlap the card.) ─── */
+.hero-left-widget {
   position: absolute;
   top: calc(var(--nav-h) + 170px);
   left: clamp(64px, 10vw, 128px);
   z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.hero-status-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 179px;
@@ -135,21 +194,35 @@
 .hero-status-card .rp-label { font-size: 13px; margin-bottom: 2px; }
 .hero-status-card .rp-val   { font-size: 17px; letter-spacing: 0.06em; }
 
-/* "Explore Events" pinned directly under the status card */
+/* "Explore Events" — now a normal flow child of the flex column,
+   centered under the card and matched to its width so it reads as
+   one unit instead of an accidental overlap. */
 .hero-action-card {
-  position: absolute;
-  top: calc(var(--nav-h) + 360px);
-  left: clamp(64px, 10vw, 128px);
-  z-index: 6;
+  position: relative;
+  width: 179px;
+}
+.hero-action-card .btn-primary {
+  width: 100%;
+  justify-content: center;
 }
 
-/* ─── TOP-RIGHT MASCOT — bigger, nudged down + left vs v5 ─── */
-.hero-mascot-corner {
+/* ─── RIGHT WIDGET — mascot + "Meet the Team" button, same flex
+   column treatment. top offset matches .hero-left-widget exactly
+   so the mascot sits at the same height as the status card. ─── */
+.hero-right-widget {
   position: absolute;
-  top: calc(var(--nav-h) + 88px);
+  top: calc(var(--nav-h) + 170px);
   right: clamp(84px, 11.5vw, 148px);
-  width: clamp(150px, 14.5vw, 220px);
   z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  pointer-events: none;
+}
+.hero-mascot-corner {
+  position: relative;
+  width: clamp(150px, 14.5vw, 220px);
   pointer-events: none;
 }
 .hero-mascot-corner .mascot-svg {
@@ -162,18 +235,14 @@
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-7px); }
 }
-
-/* "Meet the Team" pinned directly under the mascot */
 .hero-action-mascot {
-  position: absolute;
-  top: calc(var(--nav-h) + 300px);
-  right: clamp(84px, 11.5vw, 148px);
-  z-index: 6;
+  position: relative;
+  pointer-events: auto;
 }
 
-/* Mobile fallback: status card / mascot (and now these two buttons)
-   are hidden under 760px, so the original centered button row comes
-   back for that breakpoint instead of just disappearing. */
+/* Mobile fallback: both widgets (and their buttons) are hidden
+   under 760px, so the original centered button row comes back for
+   that breakpoint instead of just disappearing. */
 .hero-actions-mobile-only { display: none; }
 
 /* ─── PORTAL BLOCK — logo untouched, nudged down a little via
@@ -195,16 +264,17 @@
 }
 
 /* ─── MECHA ARM IMAGES ───
-   Replaces the v5 SVG-drawn arms + CSS mini-portals with your
-   generated artwork. Both images are mounted claw-end toward the
-   ring, portal-end reaching up and outward to flank the headline:
-     - left_arm.png used as-is (its own claw→portal direction
-       already runs up-and-to-the-left).
-     - right_arm.png mirrored (scaleX(-1)) so it's a true mirror
-       of the left arm, reaching up-and-to-the-right.
-   The mirror lives on the wrapper (static), the float/entrance
-   animation lives on the <img> itself, so the two transforms
-   never fight each other. */
+   Two generated arm/portal images, mounted mechanical-joint-end up
+   near the headline and claw-end down at the ring, so they read as
+   holding "ENGINEER THE FUTURE." between them and gripping the
+   portal ring below.
+
+   left_arm.png is used as-is. right_arm.png is already a mirrored
+   companion asset (its own claw→portal direction runs up-and-to-
+   the-right) — it does NOT need a CSS scaleX(-1) on top of that,
+   which was the bug: mirroring an already-mirrored image just
+   cancels back out to the same handedness as the left arm, so both
+   arms visually curled the same way instead of facing each other. */
 .hero-mecha-arms {
   position: absolute;
   inset: 0;
@@ -213,16 +283,16 @@
 }
 .mecha-arm-wrap {
   position: absolute;
-  width: clamp(150px, 19vw, 260px);
+  width: clamp(165px, 20.5vw, 275px);
 }
 .mecha-arm-left {
-  top: 2%;
-  left: 2%;
+  top: 4%;
+  left: 3%;
 }
 .mecha-arm-right {
-  top: 2%;
-  right: 2%;
-  transform: scaleX(-1);
+  top: 4%;
+  right: 3%;
+  /* no transform here anymore — see comment above */
 }
 .mecha-arm-img {
   width: 100%;
@@ -415,10 +485,8 @@
 }
 @media (max-width: 760px) {
   .hero-mecha-arms,
-  .hero-status-card,
-  .hero-mascot-corner,
-  .hero-action-card,
-  .hero-action-mascot {
+  .hero-left-widget,
+  .hero-right-widget {
     display: none;
   }
   .hero-actions-mobile-only { display: flex; }
