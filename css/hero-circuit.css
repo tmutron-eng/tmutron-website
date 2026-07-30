@@ -85,17 +85,21 @@
   position: relative;
 }
 
+/* IMPORTANT: this rule intentionally does NOT set `animation` or
+   `display` on .hero-line. That element almost certainly already
+   carries its own entrance animation/transform from style.css (the
+   "reveal-up" wrapper only fades/slides the outer container — the
+   text itself likely has its own reveal). Overriding the `animation`
+   shorthand here replaces that keyframe entirely, which is what made
+   the headline disappear: whatever base transform/opacity the reveal
+   animation was supposed to clear (e.g. translateY / clip) was left
+   in its hidden starting state forever. Text-shadow alone is purely
+   additive and can't hide anything. */
 .hero-v3 .hero-headline.hero-headline-combined .hero-line {
-  display: inline-block;
-  text-shadow: 0 0 8px rgba(227, 27, 35, 0.35), 0 0 22px rgba(227, 27, 35, 0.2);
-  animation: headline-charge 2.8s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(227, 27, 35, 0.4), 0 0 26px rgba(227, 27, 35, 0.22);
 }
 .hero-v3 .hero-line-accent {
-  text-shadow: 0 0 10px rgba(227, 27, 35, 0.75), 0 0 30px rgba(227, 27, 35, 0.4), 0 0 60px rgba(227, 27, 35, 0.2);
-}
-@keyframes headline-charge {
-  0%, 100% { text-shadow: 0 0 8px rgba(227, 27, 35, 0.3), 0 0 20px rgba(227, 27, 35, 0.16); }
-  50%      { text-shadow: 0 0 12px rgba(227, 27, 35, 0.55), 0 0 34px rgba(227, 27, 35, 0.3); }
+  text-shadow: 0 0 12px rgba(227, 27, 35, 0.8), 0 0 32px rgba(227, 27, 35, 0.45), 0 0 60px rgba(227, 27, 35, 0.22);
 }
 
 /* Small "field node" sparks at each side of the headline — the
@@ -126,7 +130,6 @@
   .hero-v3 .hero-headline.hero-headline-combined::after { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-v3 .hero-headline.hero-headline-combined .hero-line { animation: none; }
   .hero-v3 .hero-headline.hero-headline-combined::before,
   .hero-v3 .hero-headline.hero-headline-combined::after { animation: none; opacity: 0.8; }
 }
@@ -142,14 +145,16 @@
    hardcoded top offsets, which is what caused the button to
    overlap the card.) ─── */
 .hero-left-widget {
-  position: absolute;
-  top: calc(var(--nav-h) + 170px);
-  left: clamp(64px, 10vw, 128px);
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
+  position: absolute !important;
+  top: calc(var(--nav-h) + 170px) !important;
+  left: clamp(64px, 10vw, 128px) !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 6 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 22px !important;
 }
 .hero-status-card {
   position: relative;
@@ -210,24 +215,34 @@
    column treatment. top offset matches .hero-left-widget exactly
    so the mascot sits at the same height as the status card. ─── */
 .hero-right-widget {
-  position: absolute;
-  top: calc(var(--nav-h) + 170px);
-  right: clamp(84px, 11.5vw, 148px);
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
+  position: absolute !important;
+  top: calc(var(--nav-h) + 170px) !important;
+  right: clamp(84px, 11.5vw, 148px) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 6 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 22px !important;
   pointer-events: none;
 }
 .hero-mascot-corner {
-  position: relative;
-  width: clamp(150px, 14.5vw, 220px);
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: clamp(150px, 14.5vw, 220px) !important;
+  height: auto !important;
   pointer-events: none;
 }
+.hero-mascot-corner canvas.mascot-svg,
 .hero-mascot-corner .mascot-svg {
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  display: block;
   filter: drop-shadow(0 0 14px rgba(91, 200, 232, 0.25)) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
   animation: mcu-corner-mascot-float 3.2s ease-in-out infinite;
 }
@@ -236,7 +251,9 @@
   50%      { transform: translateY(-7px); }
 }
 .hero-action-mascot {
-  position: relative;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
   pointer-events: auto;
 }
 
@@ -275,9 +292,19 @@
    which was the bug: mirroring an already-mirrored image just
    cancels back out to the same handedness as the left arm, so both
    arms visually curled the same way instead of facing each other. */
+/* Previously this wrapper was inset:0 on the FULL .hero-stack (which
+   spans the whole hero width, well over 700px) — so "left:3%/right:3%"
+   meant 3% of that huge width, landing the arms out near the page
+   edges instead of near the ring. Constraining the wrapper itself to
+   a centered box matching the portal's own max-width means the same
+   percentages are now relative to the ring, not the page. */
 .hero-mecha-arms {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(620px, 92vw);
+  transform: translateX(-50%);
   z-index: 4;
   pointer-events: none;
 }
@@ -286,12 +313,12 @@
   width: clamp(165px, 20.5vw, 275px);
 }
 .mecha-arm-left {
-  top: 4%;
-  left: 3%;
+  top: 8%;
+  left: -6%;
 }
 .mecha-arm-right {
-  top: 4%;
-  right: 3%;
+  top: 8%;
+  right: -6%;
   /* no transform here anymore — see comment above */
 }
 .mecha-arm-img {
