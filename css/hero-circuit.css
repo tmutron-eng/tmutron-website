@@ -140,10 +140,7 @@
 
 /* ─── LEFT WIDGET — status card + "Explore Events" button as a
    single flex column, so the button always sits a fixed gap
-   below the card no matter how tall the card's content is.
-   (Previously both were absolutely positioned independently with
-   hardcoded top offsets, which is what caused the button to
-   overlap the card.) ─── */
+   below the card no matter how tall the card's content is. ─── */
 .hero-left-widget {
   position: absolute !important;
   top: calc(var(--nav-h) + 170px) !important;
@@ -199,9 +196,8 @@
 .hero-status-card .rp-label { font-size: 13px; margin-bottom: 2px; }
 .hero-status-card .rp-val   { font-size: 17px; letter-spacing: 0.06em; }
 
-/* "Explore Events" — now a normal flow child of the flex column,
-   centered under the card and matched to its width so it reads as
-   one unit instead of an accidental overlap. */
+/* "Explore Events" — normal flow child of the left flex column,
+   centered under the card and matched to its width. */
 .hero-action-card {
   position: relative;
   width: 179px;
@@ -211,75 +207,43 @@
   justify-content: center;
 }
 
-/* ─── RIGHT WIDGET — mascot + "Meet the Team" button, same flex
-   column treatment. top offset matches .hero-left-widget exactly
-   so the mascot sits at the same height as the status card. ─── */
-.hero-right-widget {
-  position: absolute !important;
-  top: calc(var(--nav-h) + 170px) !important;
-  right: clamp(84px, 11.5vw, 148px) !important;
-  left: auto !important;
-  bottom: auto !important;
-  z-index: 6 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 22px !important;
+/* ─── ROBOT MASCOT — standalone, positioned independently ───
+   No wrapper, no flex, no coupling to the button. Move this
+   element by editing top/right only; it never affects the
+   button below. ─── */
+.hero-mascot-standalone {
+  position: absolute;
+  top: calc(var(--nav-h) + 170px);
+  right: clamp(84px, 11.5vw, 148px);
+  width: clamp(150px, 14.5vw, 220px);
+  z-index: 6;
   pointer-events: none;
 }
-.hero-mascot-corner {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  width: clamp(150px, 14.5vw, 220px) !important;
-  height: auto !important;
-  pointer-events: none;
-}
-.hero-mascot-corner canvas.mascot-svg,
-.hero-mascot-corner .mascot-svg {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100% !important;
+.hero-mascot-standalone canvas.mascot-svg {
   display: block;
+  width: 100%;
+  height: auto;
   filter: drop-shadow(0 0 14px rgba(91, 200, 232, 0.25)) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
-  animation: mcu-corner-mascot-float 3.2s ease-in-out infinite;
+  animation: hero-mascot-float 3.2s ease-in-out infinite;
 }
-@keyframes mcu-corner-mascot-float {
+@keyframes hero-mascot-float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-7px); }
 }
-.hero-action-mascot {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  pointer-events: auto;
+
+/* ─── "MEET THE TEAM" BUTTON — standalone, positioned independently ───
+   Its own absolute box, unrelated to the mascot's box. Move this
+   element by editing top/right only. ─── */
+.hero-team-btn {
+  position: absolute;
+  top: calc(var(--nav-h) + 412px);
+  right: clamp(84px, 11.5vw, 148px);
+  z-index: 6;
 }
 
-/* Fix: force explicit flex order on the right widget's two children
-   so the "Meet the Team" button always renders directly under the
-   mascot, matching the left widget's card -> button stacking. A rule
-   somewhere else in style.css was likely still applying an absolute
-   position to .hero-action-mascot with higher effective priority,
-   which is what pulled the button out of the normal flex flow and up
-   near the top instead of under the robot. These higher-specificity,
-   !important rules override that regardless of source order. */
-.hero-right-widget .hero-mascot-corner {
-  order: 1 !important;
-}
-.hero-right-widget .hero-action-mascot {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  left: auto !important;
-  bottom: auto !important;
-  order: 2 !important;
-}
-
-/* Mobile fallback: both widgets (and their buttons) are hidden
-   under 760px, so the original centered button row comes back for
-   that breakpoint instead of just disappearing. */
+/* Mobile fallback: both widgets (and the standalone mascot/button)
+   are hidden under 760px, so the original centered button row comes
+   back for that breakpoint instead of just disappearing. */
 .hero-actions-mobile-only { display: none; }
 
 /* ─── PORTAL BLOCK — logo untouched, nudged down a little via
@@ -312,12 +276,6 @@
    which was the bug: mirroring an already-mirrored image just
    cancels back out to the same handedness as the left arm, so both
    arms visually curled the same way instead of facing each other. */
-/* Previously this wrapper was inset:0 on the FULL .hero-stack (which
-   spans the whole hero width, well over 700px) — so "left:3%/right:3%"
-   meant 3% of that huge width, landing the arms out near the page
-   edges instead of near the ring. Constraining the wrapper itself to
-   a centered box matching the portal's own max-width means the same
-   percentages are now relative to the ring, not the page. */
 .hero-mecha-arms {
   position: absolute;
   top: 0;
@@ -349,16 +307,8 @@
 .mecha-arm-right {
   top: 3%;
   right: -9%;
-  /* Bumped from -7deg to -11deg: transform-origin is bottom left (the
-     claw end at the ring stays put), so increasing this angle swings
-     the mounted/top end further inward toward "ENGINEER THE FUTURE",
-     closing the gap that was larger than the left arm's. Nudge to
-     -13deg if it still needs to sit a touch closer. */
   transform: rotate(-11deg);
   transform-origin: bottom left;
-  /* pulled out further than the left arm's -6% — the right arm was
-     riding further into the ring than the left one, so it needs a
-     bigger outward offset to land at the same visual distance */
 }
 .mecha-arm-img {
   width: 100%;
@@ -552,7 +502,8 @@
 @media (max-width: 760px) {
   .hero-mecha-arms,
   .hero-left-widget,
-  .hero-right-widget {
+  .hero-mascot-standalone,
+  .hero-team-btn {
     display: none;
   }
   .hero-actions-mobile-only { display: flex; }
@@ -566,7 +517,7 @@
   .mecha-arm-img,
   .portal-ring-outer, .portal-ring-mid, .portal-ring-inner, .portal-sweep, .portal-vortex,
   .portal-void::before,
-  .portal-core, .portal-logo-slot .hbp-logo-svg, .hero-mascot-corner .mascot-svg {
+  .portal-core, .portal-logo-slot .hbp-logo-svg, .hero-mascot-standalone canvas.mascot-svg {
     animation: none !important;
     transition: none !important;
     transform: none !important;
