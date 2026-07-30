@@ -215,7 +215,7 @@
   position: absolute;
   top: calc(var(--nav-h) + 200px);
   right: clamp(84px, 11.5vw, 148px);
-  width: clamp(1800px, 20vw, 300px);
+  width: clamp(150px, 20vw, 300px);
   z-index: 6;
   pointer-events: none;
 }
