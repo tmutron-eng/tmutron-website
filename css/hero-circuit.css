@@ -257,6 +257,26 @@
   pointer-events: auto;
 }
 
+/* Fix: force explicit flex order on the right widget's two children
+   so the "Meet the Team" button always renders directly under the
+   mascot, matching the left widget's card -> button stacking. A rule
+   somewhere else in style.css was likely still applying an absolute
+   position to .hero-action-mascot with higher effective priority,
+   which is what pulled the button out of the normal flex flow and up
+   near the top instead of under the robot. These higher-specificity,
+   !important rules override that regardless of source order. */
+.hero-right-widget .hero-mascot-corner {
+  order: 1 !important;
+}
+.hero-right-widget .hero-action-mascot {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  order: 2 !important;
+}
+
 /* Mobile fallback: both widgets (and their buttons) are hidden
    under 760px, so the original centered button row comes back for
    that breakpoint instead of just disappearing. */
@@ -329,7 +349,12 @@
 .mecha-arm-right {
   top: 3%;
   right: -9%;
-  transform: rotate(-7deg);
+  /* Bumped from -7deg to -11deg: transform-origin is bottom left (the
+     claw end at the ring stays put), so increasing this angle swings
+     the mounted/top end further inward toward "ENGINEER THE FUTURE",
+     closing the gap that was larger than the left arm's. Nudge to
+     -13deg if it still needs to sit a touch closer. */
+  transform: rotate(-11deg);
   transform-origin: bottom left;
   /* pulled out further than the left arm's -6% — the right arm was
      riding further into the ring than the left one, so it needs a
