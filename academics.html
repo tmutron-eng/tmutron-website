@@ -278,6 +278,62 @@
     .course-links { align-items: flex-start; }
     .course-link-btn { max-width: 100%; }
     .prof-chip { flex-wrap: wrap; }
+
+    /* ══ QUICK-JUMP STRIP ══ */
+    #ac-quicklinks { background: #14120f; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 0; }
+    .ql-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .ql-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--steel); text-transform: uppercase; margin-right: 4px; }
+    .ql-btn {
+      font-family: var(--font-cond); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--steel-light); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 16px; border-radius: 20px; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .ql-btn:hover { border-color: var(--red); color: var(--white); background: rgba(227,27,35,0.1); }
+
+    /* ══ OFFICE HOURS CALENDAR ══ */
+    #office-hours-cal { background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: var(--section-pad) 0; }
+    .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+    .oh-cal-header p { font-family: var(--font-body); font-size: 13.5px; color: var(--steel); font-weight: 300; max-width: 560px; line-height: 1.6; margin-top: 8px; }
+    .oh-cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .oh-day-col { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; overflow: hidden; min-height: 120px; }
+    .oh-day-head { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(227,27,35,0.12); padding: 10px 12px; border-bottom: 1px solid rgba(227,27,35,0.25); }
+    .oh-day-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .oh-slot { background: rgba(255,255,255,0.035); border-left: 2px solid var(--red); border-radius: 4px; padding: 8px 10px; }
+    .oh-slot-time { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.05em; margin-bottom: 3px; }
+    .oh-slot-prof { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 500; line-height: 1.35; }
+    .oh-slot-meta { font-family: var(--font-body); font-size: 11px; color: var(--steel); font-weight: 300; margin-top: 2px; }
+    .oh-slot.oh-empty { border-left-color: rgba(255,255,255,0.12); }
+    .oh-slot.oh-empty .oh-slot-prof { color: var(--steel); font-style: italic; }
+    .oh-cal-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .oh-cal-footer p { font-family: var(--font-mono); font-size: 10.5px; color: var(--steel); letter-spacing: 0.03em; }
+    @media (max-width: 900px) {
+      .oh-cal-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .oh-cal-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══ COURSE ROADMAP ══ */
+    #course-roadmap { background: #1e1c1a; padding: var(--section-pad) 0; position: relative; overflow: hidden; }
+    .roadmap-track { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+    .roadmap-year-row { display: flex; align-items: flex-start; gap: 20px; }
+    .roadmap-year-tag { flex-shrink: 0; width: 92px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase; padding-top: 12px; }
+    .roadmap-sems { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+    .roadmap-sem { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .roadmap-sem-label { font-family: var(--font-mono); font-size: 9.5px; color: var(--steel); letter-spacing: 0.08em; text-transform: uppercase; width: 66px; flex-shrink: 0; }
+    .roadmap-chip {
+      font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--steel-light);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;
+      padding: 6px 10px; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .roadmap-chip:hover { border-color: var(--red); color: var(--white); background: rgba(227,27,35,0.1); }
+    .roadmap-chip.rc-pending { color: var(--steel); border-style: dashed; font-style: italic; }
+    .roadmap-note { font-family: var(--font-body); font-size: 12.5px; color: var(--steel); font-weight: 300; margin-top: 24px; padding: 14px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(227,27,35,0.3); max-width: 720px; }
+    @media (max-width: 700px) {
+      .roadmap-year-row { flex-direction: column; gap: 8px; }
+      .roadmap-year-tag { width: auto; padding-top: 0; }
+      .roadmap-sem { align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -368,24 +424,133 @@
     </div>
   </section>
 
-  <!-- ═══════ OFFICE HOURS ═══════ -->
-  <section id="office-hours-strip">
+  <!-- ═══════ QUICK-JUMP NAV ═══════ -->
+  <div id="ac-quicklinks">
     <div class="container">
-      <div class="oh-strip-inner">
-        <div class="oh-left">
-          <div class="oh-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="oh-text">
-            <h3>Professor Office Hours</h3>
-            <p>Find instructor schedules and office hours via the TMU MIME Student Handbook.</p>
+      <div class="ql-inner">
+        <span class="ql-label">Jump to:</span>
+        <a href="#office-hours" class="ql-btn">Office Hours</a>
+        <a href="#course-roadmap" class="ql-btn">Course Roadmap</a>
+        <a href="#year-1" class="ql-btn">Course Reviews</a>
+        <a href="#ac-tutoring" class="ql-btn">Tutoring</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ OFFICE HOURS CALENDAR ═══════ -->
+  <section id="office-hours-cal">
+    <div class="container">
+      <div class="oh-cal-header">
+        <div>
+          <div class="year-badge" style="margin-bottom:10px;">Weekly Overview</div>
+          <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--white);line-height:1;">OFFICE HOURS</h2>
+          <p>A manually-maintained snapshot of office hours for profs teaching MCU core courses this term. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
+        </div>
+      </div>
+      <div class="oh-cal-grid">
+        <div class="oh-day-col">
+          <div class="oh-day-head">Monday</div>
+          <div class="oh-day-body">
+            <div class="oh-slot oh-empty"><div class="oh-slot-prof">— Add a professor —</div><div class="oh-slot-meta">Course · Room</div></div>
           </div>
         </div>
+        <div class="oh-day-col">
+          <div class="oh-day-head">Tuesday</div>
+          <div class="oh-day-body">
+            <div class="oh-slot oh-empty"><div class="oh-slot-prof">— Add a professor —</div><div class="oh-slot-meta">Course · Room</div></div>
+          </div>
+        </div>
+        <div class="oh-day-col">
+          <div class="oh-day-head">Wednesday</div>
+          <div class="oh-day-body">
+            <div class="oh-slot oh-empty"><div class="oh-slot-prof">— Add a professor —</div><div class="oh-slot-meta">Course · Room</div></div>
+          </div>
+        </div>
+        <div class="oh-day-col">
+          <div class="oh-day-head">Thursday</div>
+          <div class="oh-day-body">
+            <div class="oh-slot oh-empty"><div class="oh-slot-prof">— Add a professor —</div><div class="oh-slot-meta">Course · Room</div></div>
+          </div>
+        </div>
+        <div class="oh-day-col">
+          <div class="oh-day-head">Friday</div>
+          <div class="oh-day-body">
+            <div class="oh-slot oh-empty"><div class="oh-slot-prof">— Add a professor —</div><div class="oh-slot-meta">Course · Room</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="oh-cal-footer">
+        <p>Placeholder slots above — swap in real professor/time/room info directly in the HTML (see comment in source).</p>
         <a href="https://sites.google.com/torontomu.ca/mime/student-handbook/instructor-schedules?authuser=0" target="_blank" rel="noopener" class="oh-link-btn">
-          View Instructor Schedules
+          Official Instructor Schedules (TMU MIME)
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
       </div>
+      <!--
+        HOW TO EDIT: each day column above has one or more ".oh-slot" divs.
+        Duplicate a ".oh-slot" block, remove the "oh-empty" class, and fill in:
+          <div class="oh-slot">
+            <div class="oh-slot-time">2:00 – 4:00 PM</div>
+            <div class="oh-slot-prof">Dr. Jane Smith</div>
+            <div class="oh-slot-meta">MTE401 · ENG208</div>
+          </div>
+        Delete the "— Add a professor —" placeholder slot once a day has at least one real entry.
+      -->
+    </div>
+  </section>
+
+  <!-- ═══════ COURSE ROADMAP ═══════ -->
+  <section id="course-roadmap">
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="section-header reveal-up">
+        <div class="section-tag">Program Map</div>
+        <h2 class="section-title">COURSE ROADMAP</h2>
+        <p class="section-desc">The Mechatronics sequence at a glance — click any course to jump straight to its review below.</p>
+      </div>
+      <div class="roadmap-track">
+        <div class="roadmap-year-row reveal-up">
+          <div class="roadmap-year-tag">Year 1</div>
+          <div class="roadmap-sems">
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
+              <a href="#year-1" class="roadmap-chip">MTH140</a><a href="#year-1" class="roadmap-chip">PCS125</a><a href="#year-1" class="roadmap-chip">MTL200</a><a href="#year-1" class="roadmap-chip">MTH141</a><a href="#year-1" class="roadmap-chip">CEN100</a><a href="#year-1" class="roadmap-chip">CHY102</a><a href="#year-1" class="roadmap-chip">PCS211</a><a href="#year-1" class="roadmap-chip">ECN801</a>
+            </div>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
+              <a href="#year-1" class="roadmap-chip">MTH240</a><a href="#year-1" class="roadmap-chip">MEC222</a><a href="#year-1" class="roadmap-chip">CPS188</a><a href="#year-1" class="roadmap-chip">MEC323</a><a href="#year-1" class="roadmap-chip">MEC325</a>
+            </div>
+          </div>
+        </div>
+        <div class="roadmap-year-row reveal-up delay-1">
+          <div class="roadmap-year-tag">Year 2</div>
+          <div class="roadmap-sems">
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
+              <a href="#year-2" class="roadmap-chip">MTE301</a><a href="#year-2" class="roadmap-chip">CMN432</a><a href="#year-2" class="roadmap-chip">MTH425</a>
+            </div>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
+              <a href="#year-2" class="roadmap-chip">MTE401</a><a href="#year-2" class="roadmap-chip">MEC311</a><a href="#year-2" class="roadmap-chip">MEC511</a><a href="#year-2" class="roadmap-chip">MTH410</a><a href="#year-2" class="roadmap-chip">MEC322</a>
+            </div>
+          </div>
+        </div>
+        <div class="roadmap-year-row reveal-up delay-2">
+          <div class="roadmap-year-tag">Year 3</div>
+          <div class="roadmap-sems">
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
+              <a href="#year-3" class="roadmap-chip">MTE501</a><a href="#year-3" class="roadmap-chip">MTE502</a>
+            </div>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
+              <span class="roadmap-chip rc-pending">Sem 2 courses — TBD</span>
+            </div>
+          </div>
+        </div>
+        <div class="roadmap-year-row reveal-up delay-3">
+          <div class="roadmap-year-tag">Year 4</div>
+          <div class="roadmap-sems">
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Full Yr</span>
+              <a href="#year-4" class="roadmap-chip rc-pending">Capstone &amp; electives — TBD</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-note reveal-up delay-4">Year 3 Semester 2 and Year 4 aren't fully mapped yet — once we confirm the current course sequence for those terms, they'll be filled in here the same way. If you're in upper years and can confirm your term's course list, <a href="contact.html" style="color:var(--red);">let us know</a>.</div>
     </div>
   </section>
 
@@ -435,7 +600,7 @@
 
             <div class="review-block" data-key="mth140-nelson">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="rb-title">⚡ Nelson's Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Nelson</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth140-nelson" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -448,7 +613,7 @@
 
             <div class="review-block" data-key="mth140-aheseha">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="rb-title">⚡ Aheseha's Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Aheseha</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth140-aheseha" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -479,7 +644,7 @@
 
             <div class="review-block" data-key="pcs125-laith">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin-top:0;">Reviewed by: <span>Laith</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin-top:0;">Reviewed by: <span>Laith</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="pcs125-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -504,7 +669,7 @@
             <div class="course-overview">MTL200 is an introductory materials science and engineering course that focuses on understanding the relationship between the structure of materials and their properties. In order to understand why materials act the way they do, students study atomic structure and bonding, crystal structures, material defects, diffusion, and phase diagrams throughout the semester. The course also looks at the mechanical, physical, and chemical characteristics of the main kinds of engineering materials, such as metals, ceramics, polymers, and composites. In order to show how materials are selected and utilised in actual engineering applications, the course introduces topics such as corrosion, material failure, material strengthening mechanisms, and material selection. While there are some calculations involved, much of the course focuses on conceptual understanding and the ability to apply material science principles to different scenarios. Since many topics build upon one another, it's important that you stay on top of things throughout the semester because understanding the foundations early on will make later concepts so much easier to understand.</div>
             <div class="review-block" data-key="mtl200-laith">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Laith</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Laith</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mtl200-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -518,11 +683,56 @@
           </div></div>
         </div>
 
-        <div class="course-card reveal-up delay-3"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH141</div><div class="course-name">Linear Algebra</div><div class="course-meta">Math · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
-        <div class="course-card reveal-up delay-4"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CEN100</div><div class="course-name">Introduction to Engineering</div><div class="course-meta">Engineering · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
-        <div class="course-card reveal-up delay-5"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CHY102</div><div class="course-name">Chemistry for Engineers</div><div class="course-meta">Chemistry · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
-        <div class="course-card reveal-up"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">PCS211</div><div class="course-name">Physics: Mechanics</div><div class="course-meta">Physics · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
-        <div class="course-card reveal-up delay-1"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">ECN801</div><div class="course-name">Engineering Economics</div><div class="course-meta">Economics · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card has-content reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTH141</div><div class="course-name">Linear Algebra</div><div class="course-meta">Math · Semester 1</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTH141 covers Euclidean spaces (dot product, norm, angles, projections), matrices, determinants, systems of linear equations, linear transformations, lines and planes in 3D space, bases and dimensions, eigenvalues and diagonalizability, complex numbers, and vector spaces. It runs 4 lecture hours and 1 lab hour per week, with no prerequisites.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+        <div class="course-card has-content reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">CEN100</div><div class="course-name">Introduction to Engineering</div><div class="course-meta">Engineering · Semester 1</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, CEN100 orients first-year students to the academic structure and expectations of the engineering program, covering public and worker safety, the impact of engineering activities on health, and safety codes/standards. It introduces the different undergraduate engineering programs at TMU and the professional and ethical responsibilities of engineers, using case studies to illustrate different engineering fields. It runs 2 lecture hours and 1 tutorial hour per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+        <div class="course-card has-content reveal-up delay-5">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">CHY102</div><div class="course-name">Chemistry for Engineers</div><div class="course-meta">Chemistry · Semester 1</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, CHY102 (listed as "General Chemistry" for engineering students) covers stoichiometry, gases/liquids/solids, chemical equilibria, thermodynamics, kinetics, nuclear chemistry, and electrochemistry, with an emphasis on problem solving and calculation. It runs 3 lecture hours and 1 lab hour per week, with no prerequisites.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">PCS211</div><div class="course-name">Physics: Mechanics</div><div class="course-meta">Physics · Semester 1</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, PCS211 covers vector forces and coplanar force systems, moments and couples, free body diagrams and equilibrium, centre of mass and centroids, rectilinear and curvilinear motion kinematics, Newton's laws, friction, and work/energy and linear/angular momentum. It runs 3 lecture hours, 1 lab hour, and 1 tutorial hour per week, with no prerequisites.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+        <div class="course-card has-content reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">ECN801</div><div class="course-name">Engineering Economics</div><div class="course-meta">Economics · Semester 1</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, ECN801 covers investment decision-making and capital expenditure analysis, using discounted cash flow methods to evaluate projects. After building up the mathematics of cash flow equivalence, the course develops absolute and relative measures of project worth for individual and multiple projects, applied mainly to private-sector decisions with some public-sector examples. It runs 3 lecture hours per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
       </div>
       <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
       <div class="courses-grid">
@@ -543,7 +753,7 @@
 
             <div class="review-block" data-key="mth240-hassan">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Hassan</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Hassan</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth240-hassan" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -564,7 +774,7 @@
             <div class="course-overview">MEC222 introduces you to the basics of engineering graphical communication, mainly teaching the basics on engineering drawings on paper and drawings made with CAD (computer aided design), along with the basics of SolidWorks. SolidWorks is a 3D CAD software used in mechanical engineering and related fields to design parts and create assemblies using parts. The labs consist of 2 different sections, the manual studios labs, and the CAD/SolidWorks labs. In the manual studio labs you are required to complete different views of a model, or create new ones from scratch. In the CAD labs, you are required to create a 3D model based off a given drawing.</div>
             <div class="review-block" data-key="mec222-phelix">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Phelix</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Phelix</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mec222-phelix" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -588,7 +798,7 @@
             <div class="course-overview">This course is your gateway into coding with C.</div>
             <div class="review-block" data-key="cps188-vannessa">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Vannessa</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Vannessa</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="cps188-vannessa" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -619,7 +829,7 @@
 
             <div class="review-block" data-key="mec323-alliyah">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Alliyah</span></div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Alliyah</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mec323-alliyah" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -639,8 +849,18 @@
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MEC325 (officially "Introduction to Engineering Design") covers the role of design in engineering, the design process, conceptual design and evaluation, human factors in design, systems thinking, design for product life cycle, occupational safety, and environmental impact. A semester-long, team-based design project ties the material together into a real design scenario. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="review-block" data-key="mec325-review">
+            <div class="review-block-header rb-first">
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <button class="like-btn" data-key="mec325-review" onclick="toggleLike(this, event)" aria-label="Like this review">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                <span class="like-count">–</span>
+              </button>
+            </div>
             <div class="review-section"><div class="review-section-title">Group Project (semester long)</div><div class="review-text">Milestone 1 + Milestone 2 + Final Report.<br><br>MEC325 often has one of the lower course averages. The group project portion is worth a good chunk and is very harshly marked. Groupmates are assigned based on a personality quiz. I suggest your team meet outside of lab time to discuss/work on the project together; it can be online and does not have to be every week.<br><br>For the final project either split the CAD work evenly or have 2-3 people working on just the CAD specifically as it is very time consuming for 1 person to do alone. The remaining members can do the rest of the report, which is largely based on previous milestones with added feedback and design changes on top.</div></div>
             <div class="review-section"><div class="review-section-title">Quizzes & Final Exam</div><div class="review-text">The quizzes use randomized questions from a cumulative question pool, so attending lectures and/or studying lecture materials will help you do well on them; knowledge of the ear and eye WILL be needed. If time allows, read the textbook but skip the history sections for efficiency.<br><br>Studying for the final exam is nearly identical to studying for the quizzes as their contents overlap. Therefore start early and ace those quizzes from the beginning.</div></div>
+            </div>
           </div></div>
         </div>
 
@@ -677,7 +897,7 @@
 
             <div class="review-block" data-key="mte301-review">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="rb-title">⚡ Student Review</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mte301-review" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
