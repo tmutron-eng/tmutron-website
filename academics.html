@@ -290,28 +290,30 @@
     }
     .ql-btn:hover { border-color: var(--red); color: var(--white); background: rgba(227,27,35,0.1); }
 
-    /* ══ OFFICE HOURS CALENDAR ══ */
-    #office-hours-cal { background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: var(--section-pad) 0; }
+    /* ══ OFFICE HOURS SEARCH ══ */
+    #office-hours { background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: var(--section-pad) 0; }
     .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
     .oh-cal-header p { font-family: var(--font-body); font-size: 13.5px; color: var(--steel); font-weight: 300; max-width: 560px; line-height: 1.6; margin-top: 8px; }
-    .oh-cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .oh-day-col { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; overflow: hidden; min-height: 120px; }
-    .oh-day-head { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(227,27,35,0.12); padding: 10px 12px; border-bottom: 1px solid rgba(227,27,35,0.25); }
-    .oh-day-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .oh-slot { background: rgba(255,255,255,0.035); border-left: 2px solid var(--red); border-radius: 4px; padding: 8px 10px; }
-    .oh-slot-time { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.05em; margin-bottom: 3px; }
-    .oh-slot-prof { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 500; line-height: 1.35; }
-    .oh-slot-meta { font-family: var(--font-body); font-size: 11px; color: var(--steel); font-weight: 300; margin-top: 2px; }
-    .oh-slot.oh-empty { border-left-color: rgba(255,255,255,0.12); }
-    .oh-slot.oh-empty .oh-slot-prof { color: var(--steel); font-style: italic; }
-    .oh-cal-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .oh-search-wrap { position: relative; max-width: 480px; margin: 0 auto 28px; }
+    .oh-search-wrap svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
+    #oh-search-input {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 30px;
+      padding: 14px 20px 14px 48px; font-family: var(--font-body); font-size: 14px; color: var(--white); outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #oh-search-input::placeholder { color: var(--steel); }
+    #oh-search-input:focus { border-color: var(--red); background: rgba(255,255,255,0.06); }
+    .oh-results { display: flex; flex-direction: column; gap: 10px; max-width: 720px; margin: 0 auto; }
+    .oh-result-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 16px 20px; }
+    .oh-result-name { font-family: var(--font-cond); font-size: 16px; font-weight: 700; letter-spacing: 0.02em; color: var(--white); margin-bottom: 8px; }
+    .oh-result-slots { display: flex; flex-direction: column; gap: 6px; }
+    .oh-result-slot { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-family: var(--font-body); font-size: 13px; }
+    .oh-result-day { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--red); min-width: 76px; }
+    .oh-result-time { color: var(--steel-light); font-weight: 500; }
+    .oh-result-meta { color: var(--steel); font-weight: 300; }
+    .oh-empty-state { text-align: center; padding: 30px 20px; font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; margin: 0 auto; }
+    .oh-cal-footer { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
     .oh-cal-footer p { font-family: var(--font-mono); font-size: 10.5px; color: var(--steel); letter-spacing: 0.03em; }
-    @media (max-width: 900px) {
-      .oh-cal-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 560px) {
-      .oh-cal-grid { grid-template-columns: 1fr; }
-    }
 
     /* ══ COURSE ROADMAP ══ */
     #course-roadmap { background: #1e1c1a; padding: var(--section-pad) 0; position: relative; overflow: hidden; }
@@ -437,40 +439,22 @@
     </div>
   </div>
 
-  <!-- ═══════ OFFICE HOURS CALENDAR ═══════ -->
-  <section id="office-hours-cal">
+  <!-- ═══════ OFFICE HOURS SEARCH ═══════ -->
+  <section id="office-hours">
     <div class="container">
       <div class="oh-cal-header">
         <div>
-          <div class="year-badge" style="margin-bottom:10px;">Weekly Overview</div>
+          <div class="year-badge" style="margin-bottom:10px;">Search by Name</div>
           <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--white);line-height:1;">OFFICE HOURS</h2>
-          <p>A manually-maintained snapshot of office hours for profs teaching MCU core courses this term. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
+          <p>A manually-maintained lookup of office hours for profs teaching MCU core courses this term. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
         </div>
       </div>
-      <div class="oh-cal-grid">
-        <div class="oh-day-col">
-          <div class="oh-day-head">Monday</div>
-          <div class="oh-day-body"></div>
-        </div>
-        <div class="oh-day-col">
-          <div class="oh-day-head">Tuesday</div>
-          <div class="oh-day-body"></div>
-        </div>
-        <div class="oh-day-col">
-          <div class="oh-day-head">Wednesday</div>
-          <div class="oh-day-body"></div>
-        </div>
-        <div class="oh-day-col">
-          <div class="oh-day-head">Thursday</div>
-          <div class="oh-day-body"></div>
-        </div>
-        <div class="oh-day-col">
-          <div class="oh-day-head">Friday</div>
-          <div class="oh-day-body"></div>
-        </div>
+      <div class="oh-search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="oh-search-input" placeholder="Search a professor by first or last name…" autocomplete="off">
       </div>
+      <div id="oh-results" class="oh-results"></div>
       <div class="oh-cal-footer">
-        <p>Grid above is updated by the MCU team as hours are confirmed.</p>
         <a href="https://sites.google.com/torontomu.ca/mime/student-handbook/instructor-schedules?authuser=0" target="_blank" rel="noopener" class="oh-link-btn">
           Official Instructor Schedules (TMU MIME)
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -478,6 +462,65 @@
       </div>
     </div>
   </section>
+
+  <script>
+    // Office hours data — add one entry per professor. Each "slots" item is one
+    // recurring block of time. Keep this array as the single source of truth;
+    // the search box below reads directly from it.
+    const officeHoursData = [
+      // {
+      //   name: "Jane Smith",
+      //   slots: [
+      //     { day: "Monday", time: "2:00 – 4:00 PM", course: "MTE401", room: "ENG208" }
+      //   ]
+      // },
+    ];
+
+    (function () {
+      const input = document.getElementById('oh-search-input');
+      const results = document.getElementById('oh-results');
+      if (!input || !results) return;
+
+      function renderCard(person) {
+        const slots = person.slots.map(s => `
+          <div class="oh-result-slot">
+            <span class="oh-result-day">${s.day}</span>
+            <span class="oh-result-time">${s.time}</span>
+            <span class="oh-result-meta">${[s.course, s.room].filter(Boolean).join(' · ')}</span>
+          </div>`).join('');
+        return `<div class="oh-result-card"><div class="oh-result-name">${person.name}</div><div class="oh-result-slots">${slots}</div></div>`;
+      }
+
+      function render(query) {
+        const q = query.trim().toLowerCase();
+
+        if (!officeHoursData.length) {
+          results.innerHTML = '<div class="oh-empty-state">Office hours haven\'t been added yet — check the official source below in the meantime.</div>';
+          return;
+        }
+
+        if (!q) {
+          results.innerHTML = '<div class="oh-empty-state">Start typing a professor\'s name above to see their hours.</div>';
+          return;
+        }
+
+        const matches = officeHoursData.filter(person => {
+          const parts = person.name.toLowerCase().split(/\s+/);
+          return parts.some(part => part.startsWith(q)) || person.name.toLowerCase().includes(q);
+        });
+
+        if (!matches.length) {
+          results.innerHTML = `<div class="oh-empty-state">No match for "${query}". Try a different spelling, or check the official source below.</div>`;
+          return;
+        }
+
+        results.innerHTML = matches.map(renderCard).join('');
+      }
+
+      input.addEventListener('input', () => render(input.value));
+      render('');
+    })();
+  </script>
 
   <!-- ═══════ COURSE ROADMAP ═══════ -->
   <section id="course-roadmap">
