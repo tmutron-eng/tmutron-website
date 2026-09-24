@@ -290,30 +290,57 @@
     }
     .ql-btn:hover { border-color: var(--red); color: var(--white); background: rgba(227,27,35,0.1); }
 
-    /* ══ OFFICE HOURS SEARCH ══ */
+    /* ══ OFFICE HOURS ══ */
     #office-hours { background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: var(--section-pad) 0; }
-    .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+    .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
     .oh-cal-header p { font-family: var(--font-body); font-size: 13.5px; color: var(--steel); font-weight: 300; max-width: 560px; line-height: 1.6; margin-top: 8px; }
-    .oh-search-wrap { position: relative; max-width: 480px; margin: 0 auto 28px; }
-    .oh-search-wrap svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
-    #oh-search-input {
-      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 30px;
-      padding: 14px 20px 14px 48px; font-family: var(--font-body); font-size: 14px; color: var(--white); outline: none;
-      transition: border-color 0.2s, background 0.2s;
+    .oh-tip { display: flex; align-items: flex-start; gap: 10px; background: rgba(227,27,35,0.07); border: 1px solid rgba(227,27,35,0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; max-width: 720px; }
+    .oh-tip svg { flex-shrink: 0; color: var(--red); margin-top: 1px; }
+    .oh-tip p { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 300; line-height: 1.5; }
+    .oh-tip strong { color: var(--white); font-weight: 600; }
+    .oh-controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    .oh-select-wrap, .oh-search-wrap { position: relative; }
+    .oh-select-wrap { min-width: 220px; }
+    .oh-search-wrap { flex: 1; min-width: 220px; max-width: 420px; }
+    .oh-select-wrap svg, .oh-search-wrap svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
+    #oh-prof-select, #oh-search-input {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px;
+      padding: 12px 18px 12px 42px; font-family: var(--font-body); font-size: 13.5px; color: var(--white); outline: none;
+      transition: border-color 0.2s, background 0.2s; appearance: none;
     }
+    #oh-prof-select { cursor: pointer; }
     #oh-search-input::placeholder { color: var(--steel); }
-    #oh-search-input:focus { border-color: var(--red); background: rgba(255,255,255,0.06); }
-    .oh-results { display: flex; flex-direction: column; gap: 10px; max-width: 720px; margin: 0 auto; }
-    .oh-result-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 16px 20px; }
-    .oh-result-name { font-family: var(--font-cond); font-size: 16px; font-weight: 700; letter-spacing: 0.02em; color: var(--white); margin-bottom: 8px; }
-    .oh-result-slots { display: flex; flex-direction: column; gap: 6px; }
-    .oh-result-slot { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-family: var(--font-body); font-size: 13px; }
-    .oh-result-day { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--red); min-width: 76px; }
-    .oh-result-time { color: var(--steel-light); font-weight: 500; }
-    .oh-result-meta { color: var(--steel); font-weight: 300; }
+    #oh-prof-select:focus, #oh-search-input:focus { border-color: var(--red); background: rgba(255,255,255,0.06); }
+    .oh-cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+    .oh-day-col { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; overflow: hidden; min-height: 100px; }
+    .oh-day-head { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(227,27,35,0.12); padding: 10px 12px; border-bottom: 1px solid rgba(227,27,35,0.25); }
+    .oh-day-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .oh-slot { background: rgba(255,255,255,0.04); border-left: 2px solid var(--red); border-radius: 4px; padding: 8px 10px; cursor: pointer; transition: background 0.15s; }
+    .oh-slot:hover { background: rgba(227,27,35,0.1); }
+    .oh-slot-time { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.05em; margin-bottom: 3px; }
+    .oh-slot-prof { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 500; line-height: 1.35; }
+    .oh-slot-meta { font-family: var(--font-body); font-size: 11px; color: var(--steel); font-weight: 300; margin-top: 2px; }
     .oh-empty-state { text-align: center; padding: 30px 20px; font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; margin: 0 auto; }
-    .oh-cal-footer { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
-    .oh-cal-footer p { font-family: var(--font-mono); font-size: 10.5px; color: var(--steel); letter-spacing: 0.03em; }
+    .oh-bio-card { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; max-width: 640px; }
+    .oh-bio-card.active { display: block; }
+    .oh-bio-name { font-family: var(--font-cond); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .oh-bio-row { display: flex; gap: 8px; font-family: var(--font-body); font-size: 12.5px; margin-bottom: 4px; }
+    .oh-bio-row span:first-child { color: var(--steel); flex-shrink: 0; width: 70px; }
+    .oh-bio-row a { color: var(--red); text-decoration: none; }
+    .oh-bio-row a:hover { text-decoration: underline; }
+    .oh-bio-row span:last-child { color: var(--steel-light); font-weight: 300; }
+    .oh-cal-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 8px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .oh-cal-footer p { font-family: var(--font-mono); font-size: 10px; color: var(--steel); letter-spacing: 0.03em; max-width: 420px; }
+    .oh-footer-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .oh-btn-secondary {
+      display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-cond); font-size: 11.5px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--steel-light); background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14); padding: 9px 16px; border-radius: 20px; text-decoration: none; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .oh-btn-secondary:hover { border-color: var(--red); color: var(--white); }
+    @media (max-width: 900px) { .oh-cal-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .oh-cal-grid { grid-template-columns: 1fr; } }
 
     /* ══ COURSE ROADMAP ══ */
     #course-roadmap { background: #1e1c1a; padding: var(--section-pad) 0; position: relative; overflow: hidden; }
@@ -439,37 +466,62 @@
     </div>
   </div>
 
-  <!-- ═══════ OFFICE HOURS SEARCH ═══════ -->
+  <!-- ═══════ OFFICE HOURS ═══════ -->
   <section id="office-hours">
     <div class="container">
       <div class="oh-cal-header">
         <div>
-          <div class="year-badge" style="margin-bottom:10px;">Search by Name</div>
+          <div class="year-badge" style="margin-bottom:10px;">Weekly Calendar</div>
           <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--white);line-height:1;">OFFICE HOURS</h2>
-          <p>A manually-maintained lookup of office hours for profs teaching MCU core courses this term. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
+          <p>A manually-maintained calendar of office hours for profs teaching MCU core courses this term, pulled from Fall course outlines. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
         </div>
       </div>
-      <div class="oh-search-wrap">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="oh-search-input" placeholder="Search a professor by first or last name…" autocomplete="off">
+
+      <div class="oh-tip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <p><strong>Tip:</strong> most profs won't just see you if you show up unannounced — email them ahead of time to book a specific office-hours slot. A lot of students don't realize this until later.</p>
       </div>
-      <div id="oh-results" class="oh-results"></div>
+
+      <div class="oh-controls">
+        <div class="oh-select-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <select id="oh-prof-select"><option value="">All Professors</option></select>
+        </div>
+        <div class="oh-search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="oh-search-input" placeholder="Or search by first or last name…" autocomplete="off">
+        </div>
+      </div>
+
+      <div id="oh-bio-card" class="oh-bio-card"></div>
+      <div class="oh-cal-grid" id="oh-cal-grid"></div>
+
       <div class="oh-cal-footer">
-        <a href="https://sites.google.com/torontomu.ca/mime/student-handbook/instructor-schedules?authuser=0" target="_blank" rel="noopener" class="oh-link-btn">
-          Official Instructor Schedules (TMU MIME)
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
+        <p>Official source may be more current, but might not always be updated or accurate — that's exactly why we're building this calendar.</p>
+        <div class="oh-footer-links">
+          <button type="button" id="oh-export-btn" class="oh-btn-secondary">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download as Word
+          </button>
+          <a href="https://sites.google.com/torontomu.ca/mime/student-handbook/instructor-schedules?authuser=0" target="_blank" rel="noopener" class="oh-btn-secondary">
+            Official Instructor Schedules (TMU MIME)
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <script>
-    // Office hours data — add one entry per professor. Each "slots" item is one
-    // recurring block of time. Keep this array as the single source of truth;
-    // the search box below reads directly from it.
+    // Office hours data — one entry per professor. "slots" is a list of
+    // recurring weekly blocks; "bio" fields are optional but recommended.
+    // day must be one of: Monday, Tuesday, Wednesday, Thursday, Friday.
     const officeHoursData = [
       // {
       //   name: "Jane Smith",
+      //   email: "jane.smith@torontomu.ca",
+      //   profileUrl: "https://www.torontomu.ca/mime/contact-us/faculty/",
+      //   research: "Robotics and control systems",
       //   slots: [
       //     { day: "Monday", time: "2:00 – 4:00 PM", course: "MTE401", room: "ENG208" }
       //   ]
@@ -477,48 +529,127 @@
     ];
 
     (function () {
+      const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+      const select = document.getElementById('oh-prof-select');
       const input = document.getElementById('oh-search-input');
-      const results = document.getElementById('oh-results');
-      if (!input || !results) return;
+      const grid = document.getElementById('oh-cal-grid');
+      const bioCard = document.getElementById('oh-bio-card');
+      const exportBtn = document.getElementById('oh-export-btn');
+      if (!select || !input || !grid) return;
 
-      function renderCard(person) {
-        const slots = person.slots.map(s => `
-          <div class="oh-result-slot">
-            <span class="oh-result-day">${s.day}</span>
-            <span class="oh-result-time">${s.time}</span>
-            <span class="oh-result-meta">${[s.course, s.room].filter(Boolean).join(' · ')}</span>
-          </div>`).join('');
-        return `<div class="oh-result-card"><div class="oh-result-name">${person.name}</div><div class="oh-result-slots">${slots}</div></div>`;
+      // Populate dropdown from data
+      officeHoursData.forEach((p, i) => {
+        const opt = document.createElement('option');
+        opt.value = String(i);
+        opt.textContent = p.name;
+        select.appendChild(opt);
+      });
+
+      function getActivePerson() {
+        if (select.value !== '') return officeHoursData[Number(select.value)];
+        const q = input.value.trim().toLowerCase();
+        if (!q) return null;
+        const matches = officeHoursData.filter(p => {
+          const parts = p.name.toLowerCase().split(/\s+/);
+          return parts.some(part => part.startsWith(q)) || p.name.toLowerCase().includes(q);
+        });
+        return matches.length === 1 ? matches[0] : null;
       }
 
-      function render(query) {
-        const q = query.trim().toLowerCase();
+      function getVisiblePeople() {
+        const q = input.value.trim().toLowerCase();
+        if (select.value !== '') return [officeHoursData[Number(select.value)]];
+        if (!q) return officeHoursData;
+        return officeHoursData.filter(p => {
+          const parts = p.name.toLowerCase().split(/\s+/);
+          return parts.some(part => part.startsWith(q)) || p.name.toLowerCase().includes(q);
+        });
+      }
+
+      function renderBio() {
+        const person = getActivePerson();
+        if (!person || (!person.email && !person.profileUrl && !person.research)) {
+          bioCard.classList.remove('active');
+          bioCard.innerHTML = '';
+          return;
+        }
+        let rows = '';
+        if (person.profileUrl) rows += `<div class="oh-bio-row"><span>TMU Profile</span><a href="${person.profileUrl}" target="_blank" rel="noopener">View page →</a></div>`;
+        if (person.email) rows += `<div class="oh-bio-row"><span>Email</span><a href="mailto:${person.email}">${person.email}</a></div>`;
+        if (person.research) rows += `<div class="oh-bio-row"><span>Studies</span><span>${person.research}</span></div>`;
+        bioCard.innerHTML = `<div class="oh-bio-name">${person.name}</div>${rows}`;
+        bioCard.classList.add('active');
+      }
+
+      function renderGrid() {
+        const visible = getVisiblePeople();
 
         if (!officeHoursData.length) {
-          results.innerHTML = '<div class="oh-empty-state">Office hours haven\'t been added yet — check the official source below in the meantime.</div>';
+          grid.innerHTML = '<div class="oh-empty-state">Office hours haven\'t been added yet — check the official source below in the meantime.</div>';
           return;
         }
 
-        if (!q) {
-          results.innerHTML = '<div class="oh-empty-state">Start typing a professor\'s name above to see their hours.</div>';
+        if (!visible.length) {
+          grid.innerHTML = `<div class="oh-empty-state">No match for "${input.value}". Try a different spelling, or check the official source below.</div>`;
           return;
         }
 
-        const matches = officeHoursData.filter(person => {
-          const parts = person.name.toLowerCase().split(/\s+/);
-          return parts.some(part => part.startsWith(q)) || person.name.toLowerCase().includes(q);
-        });
-
-        if (!matches.length) {
-          results.innerHTML = `<div class="oh-empty-state">No match for "${query}". Try a different spelling, or check the official source below.</div>`;
-          return;
-        }
-
-        results.innerHTML = matches.map(renderCard).join('');
+        grid.innerHTML = DAYS.map(day => {
+          const daySlots = [];
+          visible.forEach(person => {
+            (person.slots || []).forEach(s => {
+              if (s.day === day) daySlots.push({ ...s, name: person.name });
+            });
+          });
+          const body = daySlots.length
+            ? daySlots.map(s => `
+                <div class="oh-slot">
+                  <div class="oh-slot-time">${s.time}</div>
+                  <div class="oh-slot-prof">${s.name}</div>
+                  <div class="oh-slot-meta">${[s.course, s.room].filter(Boolean).join(' · ')}</div>
+                </div>`).join('')
+            : '';
+          return `<div class="oh-day-col"><div class="oh-day-head">${day}</div><div class="oh-day-body">${body}</div></div>`;
+        }).join('');
       }
 
-      input.addEventListener('input', () => render(input.value));
-      render('');
+      function render() {
+        renderGrid();
+        renderBio();
+      }
+
+      select.addEventListener('change', () => { if (select.value !== '') input.value = ''; render(); });
+      input.addEventListener('input', () => { select.value = ''; render(); });
+
+      if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+          const visible = getVisiblePeople();
+          if (!visible.length) return;
+          let body = '<h2>MCU Office Hours</h2>';
+          visible.forEach(person => {
+            body += `<h3>${person.name}</h3>`;
+            if (person.email) body += `<p>Email: ${person.email}</p>`;
+            if (person.research) body += `<p>Studies: ${person.research}</p>`;
+            body += '<table border="1" cellpadding="6" style="border-collapse:collapse;"><tr><th>Day</th><th>Time</th><th>Course</th><th>Room</th></tr>';
+            (person.slots || []).forEach(s => {
+              body += `<tr><td>${s.day}</td><td>${s.time}</td><td>${s.course || ''}</td><td>${s.room || ''}</td></tr>`;
+            });
+            body += '</table><br>';
+          });
+          const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"></head><body>${body}</body></html>`;
+          const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'mcu-office-hours.doc';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+      }
+
+      render();
     })();
   </script>
 
@@ -557,23 +688,26 @@
           <div class="roadmap-year-tag">Year 3</div>
           <div class="roadmap-sems">
             <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
-              <a href="#year-3" class="roadmap-chip">MTE501</a><a href="#year-3" class="roadmap-chip">MTE502</a>
+              <a href="#year-3" class="roadmap-chip">MTE501</a><a href="#year-3" class="roadmap-chip">MTE502</a><a href="#year-3" class="roadmap-chip">EES612</a><a href="#year-3" class="roadmap-chip">MEC713</a><a href="#year-3" class="roadmap-chip">MTH510</a>
             </div>
             <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
-              <span class="roadmap-chip rc-pending">Sem 2 courses — TBD</span>
+              <a href="#year-3" class="roadmap-chip">MEC709</a><a href="#year-3" class="roadmap-chip">MTE601</a><a href="#year-3" class="roadmap-chip">MTE602</a><a href="#year-3" class="roadmap-chip">MTE603</a><a href="#year-3" class="roadmap-chip">MTE604</a><a href="#year-3" class="roadmap-chip">MTE751</a>
             </div>
           </div>
         </div>
         <div class="roadmap-year-row reveal-up delay-3">
           <div class="roadmap-year-tag">Year 4</div>
           <div class="roadmap-sems">
-            <div class="roadmap-sem"><span class="roadmap-sem-label">Full Yr</span>
-              <a href="#year-4" class="roadmap-chip rc-pending">Capstone &amp; electives — TBD</a>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
+              <span class="roadmap-chip rc-pending">MTE 70A/B Capstone, MTE701 + electives — TBD</span>
+            </div>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
+              <span class="roadmap-chip rc-pending">CEN800, MTE 70A/B Capstone, MTE801 + electives — TBD</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="roadmap-note reveal-up delay-4">Year 3 Semester 2 and Year 4 aren't fully mapped yet — once we confirm the current course sequence for those terms, they'll be filled in here the same way. If you're in upper years and can confirm your term's course list, <a href="contact.html" style="color:var(--red);">let us know</a>.</div>
+      <div class="roadmap-note reveal-up delay-4">Year 4 (7th &amp; 8th semester) has a capstone plus a mix of required and technical-elective courses that vary by student — those will be added as individual course cards once we confirm the current elective offerings. <a href="contact.html" style="color:var(--red);">Let us know</a> if you're in Year 4 and can help fill this in.</div>
     </div>
   </section>
 
@@ -1070,6 +1204,118 @@
             <div class="review-section"><div class="review-section-title">Final Project / Maze Robot</div><div class="review-text">Your final project will include an autonomous line following maze solving robot, which will bring together sensing, timers, PWM motor control, and decision logic on the microcontroller. This part of the course can be very fun but also time-consuming.<br><br>Key points: start early — you will need a lot of in-lab testing time with the real maze or environment, it rarely works perfectly the first time. There are many environment and hardware factors: friction, wheel slip, sensor noise, lighting, battery level, mechanical alignment, etc. These issues only show up when you run the robot on a real course. Try to get a simple version working as soon as possible: basic driving, turning, and sensing — then refine the logic and tuning. Use home time to clean up your code, structure your state logic, and tune thresholds in a rough way; use lab time to adjust the robot based on what you actually see it doing.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts / Recommendations from Students</div><div class="review-text">Don't fear assembly, just start early. The first few weeks can feel rough, but once you've done a handful of examples by hand, patterns start repeating. Small, regular practice beats cramming.<br><br>Use the datasheet and slides together. Treat the slides as the "map" and the ATmega328P datasheet as the "dictionary." When you see a register in the slides, look it up once in the datasheet so it sticks.<br><br>Build your cheat sheet as you go. Don't leave it for the night before the final. Add formulas, register setups, and small code patterns each week. If you use it while doing practice problems, you'll remember where everything is.<br><br>Take labs seriously and work ahead. Most students say there isn't enough time to write and debug everything during the lab slot. Do as much coding as you can at home and use lab time mainly to test and fine-tune on real hardware.<br><br>Start the project early and test on the actual maze. The robot almost never works perfectly on the first try. You'll need a lot of trial and error because of friction, sensor noise, battery levels, and alignment. The groups that start early and test often are the ones that finish calmly.<br><br>Ask questions when things don't make sense. If a timing formula, register field, or assembly snippet feels confusing, clear it up right away — with the prof, TA, or classmates. Small gaps add up fast in this course.<br><br>If you like robots or embedded systems, this course is worth the effort. It's a lot of work, but you walk away actually understanding how microcontrollers think and how to make them control real hardware, which pays off in upper-year projects and design teams.</div></div>
             </div>
+          </div></div>
+        </div>
+
+        <!-- EES612 -->
+        <div class="course-card has-content reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">EES612</div><div class="course-name">Electric Machines and Actuators</div><div class="course-meta">Electrical · Semester 5</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, EES612 covers single-phase transformers and their applications, DC and AC motor characteristics and their use in mechanical drives, power electronic circuits (H-bridges, PWM control, power amplifiers), DC servo and stepper motors, AC synchronous and induction motors, and an introduction to speed and torque control techniques for motors. Prerequisites: CEN199 and either EES512 or ELE202.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MEC713 -->
+        <div class="course-card has-content reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MEC713</div><div class="course-name">Project Management</div><div class="course-meta">Management · Semester 5</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MEC713 examines project management fundamentals within a full project life-cycle — from idea generation through to project close — covering project screening and selection, evaluation methods, project structures and control, scheduling, resource management, life-cycle costing, and computer support for project management. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, ECN801, and MTH510.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTH510 -->
+        <div class="course-card has-content reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTH510</div><div class="course-name">Numerical Analysis</div><div class="course-meta">Math · Semester 5</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTH510 covers Taylor's formula and truncation/round-off error, solving non-linear equations in one variable, linear equations and LU-decomposition, eigenvalues and eigenvectors, Jacobi and Gauss-Seidel methods, interpolation and curve fitting, numerical integration, and numerical solutions to ordinary differential equations (initial value problems). It runs 3 lecture hours and 1 lab hour per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+      </div>
+      <div class="semester-label reveal-up"><span>►</span> Semester 2</div>
+      <div class="courses-grid">
+
+        <!-- MEC709 -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MEC709</div><div class="course-name">Control Systems</div><div class="course-meta">Controls · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MEC709 covers mathematical model representation of physical control systems involving mechanical, hydraulic, pneumatic, and electrical components, open- and closed-loop control system analysis, block diagram algebra, and stability analysis techniques for first-, second-, and higher-order systems (Bode diagrams, Routh-Hurwitz analysis, root locus), plus an introduction to system compensation such as lead-lag compensators. It runs 3 lecture hours, 1 lab hour, and 1 tutorial hour per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE601 -->
+        <div class="course-card has-content reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE601</div><div class="course-name">Machine Mechanics and Design</div><div class="course-meta">Mechanical · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE601 covers the dynamics of complex, multi-component systems — gears and gear trains, power screws, belt drives, flywheels and gyroscopes — synthesis and analysis of mechanisms, a simple design-factor approach to stress analysis, variable loads and stress concentrations, bolted joints and springs, shaft and bearing design, brakes, welded joints, and vibration analysis and isolation. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, MEC311, MEC323, and CEN199.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE602 -->
+        <div class="course-card has-content reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE602</div><div class="course-name">Introduction to Robotics</div><div class="course-meta">Robotics · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE602 is a brief introduction to robotics with an emphasis on mechanics — a review of relevant linear algebra, robot geometry, velocity Jacobians, theoretical kinematics and dynamics, equations of motion, inertia and compliance analysis, kinematic redundancy, multi-robot coordination, robot calibration and performance testing, and the fundamentals of robot programming and selection. It runs 3 lecture hours and 1 lab hour per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE603 -->
+        <div class="course-card has-content reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE603</div><div class="course-name">Computer Structures and Real-Time Systems</div><div class="course-meta">Embedded · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE603 covers number systems, codes, and minimization techniques used in logic-system design, component specifications, an introduction to electronic digital computers and computer organization (hardware and software), and basic real-time concepts — process management, inter-process communication and synchronization, memory management, resource management, interrupt handling, concurrent programming, and file systems. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE604 -->
+        <div class="course-card has-content reveal-up delay-4">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE604</div><div class="course-name">Electromechanical System Modelling and Design</div><div class="course-meta">Design · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE604 covers electromechanical system modelling (including state-space formulation and time/frequency-domain solutions), design of motion transmission systems, sensing and measurement of mechanical motion, sensor selection, electromechanical actuator selection and specification, and control selection and implementation. A design project is assigned, typically involving a physical electromechanical prototype or a Gazebo-based simulation. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE751 -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE751</div><div class="course-name">Measurements, Sensors and Instruments</div><div class="course-meta">Measurement · Semester 6</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE751 covers the application of modern instrumentation to experimental measurements of mechanical and thermal systems, reviewing fundamental concepts of static and dynamic measurement, and discussing transducers, signal conditioning, data transmission, and digital data acquisition systems. It runs 3 lecture hours and 1 lab hour per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
           </div></div>
         </div>
 
