@@ -517,15 +517,24 @@
     // recurring weekly blocks; "bio" fields are optional but recommended.
     // day must be one of: Monday, Tuesday, Wednesday, Thursday, Friday.
     const officeHoursData = [
-      // {
-      //   name: "Jane Smith",
-      //   email: "jane.smith@torontomu.ca",
-      //   profileUrl: "https://www.torontomu.ca/mime/contact-us/faculty/",
-      //   research: "Robotics and control systems",
-      //   slots: [
-      //     { day: "Monday", time: "2:00 – 4:00 PM", course: "MTE401", room: "ENG208" }
-      //   ]
-      // },
+      {
+        name: "Prof. Fisseh",
+        slots: [
+          { day: "Friday", time: "11:00 AM – 1:00 PM", course: "", room: "VIC 703" }
+        ]
+      },
+      {
+        name: "Dr. Robin",
+        note: "By appointment only — email to book. Office: EPH415.",
+        slots: []
+      },
+      {
+        name: "Dr. Papini",
+        slots: [
+          { day: "Monday", time: "12:00 – 2:00 PM", course: "", room: "EPH327" },
+          { day: "Wednesday", time: "2:00 – 4:00 PM", course: "", room: "EPH327" }
+        ]
+      },
     ];
 
     (function () {
@@ -568,12 +577,13 @@
 
       function renderBio() {
         const person = getActivePerson();
-        if (!person || (!person.email && !person.profileUrl && !person.research)) {
+        if (!person || (!person.email && !person.profileUrl && !person.research && !person.note)) {
           bioCard.classList.remove('active');
           bioCard.innerHTML = '';
           return;
         }
         let rows = '';
+        if (person.note) rows += `<div class="oh-bio-row"><span>Note</span><span>${person.note}</span></div>`;
         if (person.profileUrl) rows += `<div class="oh-bio-row"><span>TMU Profile</span><a href="${person.profileUrl}" target="_blank" rel="noopener">View page →</a></div>`;
         if (person.email) rows += `<div class="oh-bio-row"><span>Email</span><a href="mailto:${person.email}">${person.email}</a></div>`;
         if (person.research) rows += `<div class="oh-bio-row"><span>Studies</span><span>${person.research}</span></div>`;
@@ -698,16 +708,16 @@
         <div class="roadmap-year-row reveal-up delay-3">
           <div class="roadmap-year-tag">Year 4</div>
           <div class="roadmap-sems">
-            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 1</span>
-              <span class="roadmap-chip rc-pending">MTE 70A/B Capstone, MTE701 + electives — TBD</span>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 7</span>
+              <a href="#year-4" class="roadmap-chip">MTE70A/B</a><a href="#year-4" class="roadmap-chip">MTE701</a><span class="roadmap-chip rc-pending">+2 electives</span>
             </div>
-            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 2</span>
-              <span class="roadmap-chip rc-pending">CEN800, MTE 70A/B Capstone, MTE801 + electives — TBD</span>
+            <div class="roadmap-sem"><span class="roadmap-sem-label">Sem 8</span>
+              <a href="#year-4" class="roadmap-chip">CEN800</a><a href="#year-4" class="roadmap-chip">MTE801</a><span class="roadmap-chip rc-pending">+2 electives</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="roadmap-note reveal-up delay-4">Year 4 (7th &amp; 8th semester) has a capstone plus a mix of required and technical-elective courses that vary by student — those will be added as individual course cards once we confirm the current elective offerings. <a href="contact.html" style="color:var(--red);">Let us know</a> if you're in Year 4 and can help fill this in.</div>
+      <div class="roadmap-note reveal-up delay-4">Year 4 electives vary by student — see the electives list on the Year 4 section below for the current official options.</div>
     </div>
   </section>
 
@@ -1333,10 +1343,67 @@
         <div class="year-badge">Year 04</div>
         <div class="year-title-block"><h2>FOURTH YEAR</h2><p>Capstone projects and advanced specialization — your final stretch</p></div>
       </div>
-      <div class="coming-soon-card" style="max-width:560px;">
-        <div class="cs-icon" style="font-size:32px;">◌</div>
-        <p style="font-size:15px;">Year 4 course guides are in progress. Upper-year students — your insights are needed here most.</p>
-        <a href="contact.html" class="btn-ghost" style="text-decoration:none;display:inline-block;">Contribute a Review →</a>
+      <div class="semester-label reveal-up"><span>►</span> Semester 7 &amp; 8 — Required</div>
+      <div class="courses-grid">
+
+        <!-- MTE70A/B -->
+        <div class="course-card has-content reveal-up">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE70A/B</div><div class="course-name">Mechatronics Capstone Design</div><div class="course-meta">Capstone · Semester 7 &amp; 8</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE70A/B uses mechatronic systems case studies to cover modelling, simulation, model validation, and control. Students work on individual design projects and also in teams on applied design problems — Part A (7th semester) focuses on design and simulation-based verification, while Part B (8th semester) focuses on prototyping and implementation. A technical report is submitted at the end of each term, along with an oral presentation. It runs 1 lecture hour and 3 lab hours per week across both terms. Prerequisites: MTE601, MTE751, MTE604, and MTE603.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE701 -->
+        <div class="course-card has-content reveal-up delay-1">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE701</div><div class="course-name">Real-Time Digital Control Systems Design</div><div class="course-meta">Controls · Semester 7</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE701 covers the design and implementation of real-time digital control systems — discrete equivalents of continuous-time system representations (transfer function and state-space models), stability analysis, digital controller design via transform and state-space methods, real-time system concepts, and concurrent programming for real-time implementation of digital control algorithms and scheduling. Lab work covers real-time programming and implementing digital control algorithms on an embedded controller. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- CEN800 -->
+        <div class="course-card has-content reveal-up delay-2">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">CEN800</div><div class="course-name">Law and Ethics in Engineering Practice</div><div class="course-meta">Professional · Semester 8</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, CEN800 studies the legal and ethical aspects of engineering practice — the Canadian legal system and business organizations, tort liability, business contract law, intellectual and industrial property, arbitration and alternative dispute resolution, occupational health and safety, ethical dilemmas in project management, sustainable development, and international standards for ethical and social responsibility. It runs 3 lecture hours per week, with no prerequisites.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+        <!-- MTE801 -->
+        <div class="course-card has-content reveal-up delay-3">
+          <div class="course-header" onclick="toggleCourse(this)">
+            <div><div class="course-code">MTE801</div><div class="course-name">Hardware in the Loop and RCP</div><div class="course-meta">Controls · Semester 8</div></div>
+            <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="course-body"><div class="course-body-inner">
+            <div class="course-overview">Per TMU's official course calendar, MTE801 assigns each student portable control hardware for the term. Students learn to interface it with industry-standard software via a data-acquisition device, build their own simulation models of the hardware, use those models to design a feedback controller, verify it in simulation, and then implement it on the hardware — refining the controller through a cycle of rapid control prototyping. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="semester-label reveal-up"><span>►</span> Technical Electives (choose 2 per semester)</div>
+      <div class="course-overview" style="max-width:720px;margin:0 0 8px;">Per TMU's official course calendar, students pick 2 core electives in the 7th semester and 2 in the 8th. Exact offerings vary by year, so confirm availability with your academic advisor before selecting.</div>
+      <div class="oh-bio-row" style="margin-bottom:4px;"><span style="width:100px;">Semester 7</span><span>MEC617 Manufacturing System Controls · MTE711 Fundamentals of Microelectromechanical Systems · MTE712 Sensor Fusion · MTE792 Digital Signal Processing · MTE829 System Models and Identification</span></div>
+      <div class="oh-bio-row" style="margin-bottom:8px;"><span style="width:100px;">Semester 8</span><span>CEN810 Selected Topics in Engineering · MTE811 Design of Modern Control Systems · MTE812 Autonomous Robots and Vehicles · MTE819 Control of Robotic Manipulators · MTE882 Introduction to Digital Image Processing · MTE888 Intelligent Systems</span></div>
+
+      <div class="contribute-strip reveal-up">
+        <p><strong>Taken one of the Year 4 electives?</strong> Yours could be the first review upper years see for it.</p>
+        <a href="contact.html" class="btn-ghost">Contribute →</a>
       </div>
     </div>
   </section>
