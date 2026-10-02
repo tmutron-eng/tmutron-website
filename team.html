@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Team — MCU | Mechatronics Course Union · TMU</title>
   <meta name="description" content="Meet the people behind the Mechatronics Course Union at Toronto Metropolitan University." />
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -16,373 +16,363 @@
   <link rel="stylesheet" href="css/style.css" />
 
   <style>
-    /* ── FLIP CARD SYSTEM ── */
-    .tm-grid {
-      display: grid;
-      gap: 20px;
-    }
-    .tm-grid-solo      { grid-template-columns: repeat(3, 1fr); }
-    .tm-grid-three     { grid-template-columns: repeat(3, 1fr); }
-    .tm-grid-four      { grid-template-columns: repeat(3, 1fr); }
+    /* ════════════════════════════════════════════════
+       TEAM PAGE v2
+       Replaces the old flip-card system. Everything here
+       only touches the team page. Theme tokens come from
+       css/style.css (--red, --font-*, --ease-out-expo).
+       ════════════════════════════════════════════════ */
 
-    .flip-card-solo-center {
-      grid-column: 2 / 3;
-    }
+    @property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
-    /* ── CARD BASE ── */
-    .flip-card {
-      perspective: 1400px;
-      height: 300px;
-      cursor: pointer;
-      position: relative;
-      border-radius: 20px;
-    }
-    .tm-grid-solo .flip-card { height: 380px; }
+    html.modal-open, html.modal-open body { overflow: hidden; }
 
-    .flip-card-inner {
-      position: relative;
-      width: 100%; height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-      will-change: transform;
-      border-radius: 20px;
-    }
-    @media (hover: hover) {
-      .flip-card:hover .flip-card-inner {
-        transform: rotateY(180deg);
-      }
-    }
-    .flip-card.flipped .flip-card-inner {
-      transform: rotateY(180deg);
-    }
+    /* animations.js hides the real cursor site-wide and draws its own, but an
+       open dialog sits in the browser's top layer ABOVE that custom cursor.
+       Give the real cursor back while the dialog is open. */
+    html.modal-open, html.modal-open * { cursor: auto !important; }
+    html.modal-open a, html.modal-open button { cursor: pointer !important; }
+    html.modal-open #cursor-ring, html.modal-open #cursor-dot { display: none; }
 
-    /* FRONT + BACK shared */
-    .flip-front, .flip-back {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-
-    /* FRONT — rich gradient, no harsh border */
-    .flip-front {
-      background: 
-        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(30,26,32,1) 0%, rgba(14,12,16,1) 100%);
-      box-shadow:
-        0 2px 0 0 rgba(255,255,255,0.04) inset,
-        0 -1px 0 0 rgba(0,0,0,0.5) inset,
-        0 24px 48px -12px rgba(0,0,0,0.8),
-        0 8px 16px -4px rgba(0,0,0,0.5);
-    }
-
-    .flip-front-photo {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-
-    /* Actual member photo, sits behind glow/initials/vignette */
-    .flip-front-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      z-index: 0;
-      transition: transform 0.6s cubic-bezier(0.23,1,0.32,1);
-    }
-    .flip-card:hover .flip-front-img {
-      transform: scale(1.04);
-    }
-    /* If a photo is present, fade the glowing initials down so they don't fight the image */
-    .flip-front-photo:has(.flip-front-img) .flip-front-initials {
-      opacity: 0;
-    }
-
-    /* Vignette edges */
-    .flip-front-photo::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Thin colored border glow via outline */
-    .flip-front-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    /* Ambient glow blob — bigger, softer */
-    .flip-front-glow {
-      position: absolute;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--fc, #e31b23) 0%, transparent 65%);
-      opacity: 0.14;
-      top: 38%; left: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(32px);
-      transition: opacity 0.5s, transform 0.7s;
-      z-index: 0;
-    }
-    .flip-card:hover .flip-front-glow {
-      opacity: 0.22;
-      transform: translate(-50%, -48%) scale(1.12);
-    }
-
-    /* Initials — softer glow, cleaner */
-    .flip-front-initials {
-      font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
-      color: var(--fc, #e31b23);
-      position: relative; z-index: 2;
-      letter-spacing: 0.1em;
-      text-shadow:
-        0 0 12px var(--fc, #e31b23),
-        0 0 40px var(--fc, #e31b23),
-        0 0 80px var(--fc, #e31b23);
-      opacity: 0.88;
-      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), opacity 0.3s;
-    }
-    .flip-card:hover .flip-front-initials {
-      transform: scale(1.08) translateY(-5px);
-      opacity: 1;
-    }
-
-    /* Bottom info panel — smoother fade */
-    .flip-front-info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      padding: 52px 18px 18px;
-      background: linear-gradient(to top,
-        rgba(8,6,10,1) 0%,
-        rgba(8,6,10,0.92) 40%,
-        rgba(8,6,10,0.5) 70%,
-        transparent 100%);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      border-radius: 0 0 20px 20px;
-      transform: translateY(0);
-      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
-    }
-    .flip-card:hover .flip-front-info {
-      transform: translateY(-4px);
-    }
-
-    .flip-front-bar {
-      font-family: var(--font-mono, 'Share Tech Mono', monospace);
-      font-size: 8px;
-      letter-spacing: 0.24em;
-      color: var(--fc, #e31b23);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0.85;
-    }
-    .flip-front-bar::before {
-      content: '';
-      display: inline-block;
-      width: 16px; height: 1px;
-      background: var(--fc, #e31b23);
-      flex-shrink: 0;
-      opacity: 0.8;
-    }
-    .flip-front-name {
-      font-family: var(--font-cond, 'Barlow Condensed', sans-serif);
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: rgba(255,255,255,0.97);
-      line-height: 1.1;
-    }
-
-    /* BACK — richer, no dead space */
-    .flip-back {
-      background: 
-        radial-gradient(ellipse 100% 60% at 50% 0%, rgba(var(--fc-rgb, 180,20,20),0.08) 0%, transparent 60%),
-        #0a080c;
-      box-shadow:
-        0 2px 0 0 rgba(255,255,255,0.04) inset,
-        0 -1px 0 0 rgba(0,0,0,0.5) inset,
-        0 24px 48px -12px rgba(0,0,0,0.8);
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 22px 20px 20px;
-      position: relative;
-    }
-
-    /* Colored top edge glow */
-    .flip-back::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 20%; right: 20%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--fc, #e31b23), transparent);
-      opacity: 0.7;
-    }
-
-    /* Bottom dept tag */
-    .flip-back::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 40%;
-      background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%);
-      border-radius: 0 0 20px 20px;
-      pointer-events: none;
-    }
-
-    .flip-back-role {
-      font-family: var(--font-mono, 'Share Tech Mono', monospace);
-      font-size: 8px;
-      letter-spacing: 0.24em;
-      color: var(--fc, #e31b23);
-      text-transform: uppercase;
-      margin-bottom: 5px;
-      opacity: 0.85;
-    }
-    .flip-back-name {
-      font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: 1.75rem;
-      color: rgba(255,255,255,0.97);
-      line-height: 1;
-      margin-bottom: 14px;
-      letter-spacing: 0.03em;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .flip-back-bio {
-      font-family: var(--font-body, 'Barlow', sans-serif);
-      font-size: 11.5px;
-      font-weight: 300;
-      line-height: 1.7;
-      color: rgba(210,207,215,0.82);
-    }
-    .flip-back-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-    }
-    .flip-back-meta {
-      font-family: var(--font-mono, 'Share Tech Mono', monospace);
-      font-size: 8.5px;
-      letter-spacing: 0.12em;
-      color: rgba(160,158,164,0.6);
-    }
-    .flip-back-li {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-cond, 'Barlow Condensed', sans-serif);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(160,158,164,0.5);
-      text-decoration: none;
-      transition: color 0.2s;
-      pointer-events: all; 
-    }
-    .flip-back-li:hover { color: rgba(255,255,255,0.85); }
-    .flip-back-li.tbd { opacity: 0.4; pointer-events: none; cursor: default; }
-
-    /* ── AURA SYSTEM ── */
-    @keyframes aura-white {
-      0%,100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.20)) drop-shadow(0 0 24px rgba(255,255,255,0.10)) drop-shadow(0 0 48px rgba(255,255,255,0.05)); }
-      40%      { filter: drop-shadow(0 0 14px rgba(255,255,255,0.38)) drop-shadow(0 0 36px rgba(255,255,255,0.18)) drop-shadow(0 0 72px rgba(255,255,255,0.08)); }
-      70%      { filter: drop-shadow(0 0 5px rgba(255,255,255,0.12)) drop-shadow(0 0 16px rgba(255,255,255,0.06)); }
-    }
-    @keyframes aura-green {
-      0%,100% { filter: drop-shadow(0 0 8px rgba(40,210,90,0.22)) drop-shadow(0 0 24px rgba(25,170,65,0.12)) drop-shadow(0 0 48px rgba(10,130,45,0.06)); }
-      40%      { filter: drop-shadow(0 0 14px rgba(50,230,100,0.40)) drop-shadow(0 0 36px rgba(35,190,75,0.20)) drop-shadow(0 0 72px rgba(15,150,55,0.09)); }
-      70%      { filter: drop-shadow(0 0 5px rgba(30,180,70,0.14)) drop-shadow(0 0 16px rgba(20,140,50,0.07)); }
-    }
-    @keyframes aura-orange {
-      0%,100% { filter: drop-shadow(0 0 8px rgba(255,145,25,0.22)) drop-shadow(0 0 24px rgba(220,105,12,0.12)) drop-shadow(0 0 48px rgba(175,65,5,0.06)); }
-      40%      { filter: drop-shadow(0 0 14px rgba(255,165,45,0.40)) drop-shadow(0 0 36px rgba(235,120,20,0.20)) drop-shadow(0 0 72px rgba(195,80,8,0.09)); }
-      70%      { filter: drop-shadow(0 0 5px rgba(210,95,8,0.14)) drop-shadow(0 0 16px rgba(170,55,2,0.07)); }
-    }
-    @keyframes aura-red {
-      0%,100% { filter: drop-shadow(0 0 8px rgba(227,27,35,0.28)) drop-shadow(0 0 24px rgba(200,15,22,0.15)) drop-shadow(0 0 52px rgba(170,8,14,0.07)); }
-      35%      { filter: drop-shadow(0 0 16px rgba(255,50,58,0.50)) drop-shadow(0 0 40px rgba(227,27,35,0.28)) drop-shadow(0 0 80px rgba(200,15,22,0.12)); }
-      65%      { filter: drop-shadow(0 0 5px rgba(200,15,22,0.16)) drop-shadow(0 0 18px rgba(170,8,14,0.08)); }
-    }
-
-    .aura-wrap {
-      position: relative;
-      border-radius: 20px;
-    }
-    .aura-wrap > * { position: relative; z-index: 1; }
-
-    .aura-white  { animation: aura-white  3.2s ease-in-out infinite; }
-    .aura-green  { animation: aura-green  3.6s ease-in-out infinite; }
-    .aura-orange { animation: aura-orange 3.4s ease-in-out infinite; }
-    .aura-red    { animation: aura-red    2.9s ease-in-out infinite; }
-
-    /* ── STAGGERED ENTRANCE ── */
-    .flip-card {
-      opacity: 0;
-      transform: translateY(28px);
-      transition:
-        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .flip-card.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .aura-wrap:not(:has(.flip-card.in-view)) {
-      filter: none !important;
-      animation: none !important;
-    }
-
-    /* ── REMOVE GRAY BAND ── */
-    .tm-grid-solo {
-      background: transparent !important;
-    }
-
-    /* Responsive */
-    @media (max-width: 1000px) {
-      .tm-grid-four { grid-template-columns: repeat(2, 1fr); }
+    /* ── Phone performance: the blurred, blended, animated blobs are the
+          most expensive thing on the old page. Radial gradients are already
+          soft, so the blur and blend add cost and no look. ── */
+    /* Selectors are deliberately as specific as the ones in style.css
+       (#team-main .section-blob.b1 etc.), otherwise the blur there wins. */
+    #team-main .section-blob.b1, #team-main .section-blob.b2,
+    #open-roles .section-blob.b1, #open-roles .section-blob.b3 {
+      filter: none; mix-blend-mode: normal;
     }
     @media (max-width: 900px) {
-      .tm-grid-solo  { grid-template-columns: 1fr; }
-      .flip-card-solo-center { grid-column: 1; }
-      .tm-grid-three { grid-template-columns: repeat(2, 1fr); }
-      .tm-grid-four  { grid-template-columns: repeat(2, 1fr); }
-      .flip-card { height: 270px; }
-      .tm-grid-solo .flip-card { height: 300px; }
-    }
-    @media (max-width: 600px) {
-      .tm-grid-three, .tm-grid-four { grid-template-columns: 1fr 1fr; }
-      .flip-card { height: 240px; }
+      /* transform:none also cancels the scroll parallax animations.js applies inline */
+      #team-main .section-blob.b1, #team-main .section-blob.b2,
+      #open-roles .section-blob.b1, #open-roles .section-blob.b3 {
+        animation: none !important; transform: none !important;
+      }
     }
 
-    .flip-card .tm-card { display: none; }
+    /* ── HERO READOUTS ── */
+    .tm-readouts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+    .tm-ro {
+      min-width: 96px; padding: 12px 18px; border-radius: 3px;
+      border: 1px solid rgba(227,27,35,0.25); background: rgba(227,27,35,0.05);
+    }
+    .tm-ro b {
+      display: block; font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(30px, 5vw, 40px); line-height: 1; color: var(--white);
+      letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
+    }
+    .tm-ro span {
+      display: block; margin-top: 6px; font-size: 9px;
+      letter-spacing: 0.2em; color: var(--steel); text-transform: uppercase;
+    }
+
+    /* ── STICKY FILTER BAR ── */
+    #tm-filter {
+      position: sticky; top: var(--nav-h); z-index: 20;
+      background: rgba(17,17,17,0.97);
+      border-top: 1px solid rgba(227,27,35,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .tmf-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .tmf-tabs { display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .tmf-tabs::-webkit-scrollbar { display: none; }
+    .tmf-btn {
+      position: relative; flex: none; padding: 18px 16px;
+      font-family: var(--font-cond); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--steel); background: none; border: 0; cursor: pointer;
+      transition: color 0.2s;
+    }
+    .tmf-btn::after {
+      content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: 2px;
+      background: var(--red); transform: scaleX(0);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .tmf-btn:hover, .tmf-btn[aria-pressed="true"] { color: var(--white); }
+    .tmf-btn[aria-pressed="true"]::after { transform: scaleX(1); }
+    .tmf-count { flex: none; font-size: 10px; letter-spacing: 0.18em; color: var(--steel); white-space: nowrap; }
+
+    /* ── TOOLBAR (roster label + search) ── */
+    .tm-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .tm-roster { font-size: 11px; letter-spacing: 0.2em; color: var(--steel); }
+    .tm-search { position: relative; flex: 0 1 340px; width: 100%; max-width: 340px; }
+    .tm-search input {
+      width: 100%; padding: 12px 16px 12px 42px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; color: var(--white);
+      font-family: var(--font-body); font-size: 16px; /* 16px stops iOS zoom */
+      outline: none; -webkit-appearance: none; appearance: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .tm-search input::placeholder { color: var(--steel); }
+    .tm-search input:focus { border-color: var(--red); background: rgba(227,27,35,0.05); }
+    .tm-search svg {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 16px; height: 16px; color: var(--steel); pointer-events: none;
+    }
+
+    /* ── TIERS ── */
+    .tm-tier + .tm-tier { margin-top: clamp(56px, 8vw, 88px); }
+    .tm-tier[hidden], .mc-cell[hidden] { display: none !important; }
+    .tm-tier-line { transform: scaleX(0); transform-origin: left; transition: transform 1.1s var(--ease-out-expo) 0.15s; }
+    .tm-tier-label.visible .tm-tier-line { transform: scaleX(1); }
+
+    /* ── GRID ── */
+    .mc-grid {
+      list-style: none; display: grid;
+      gap: clamp(12px, 1.8vw, 22px);
+      grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    }
+    .mc-grid.solo { grid-template-columns: minmax(0, 330px); justify-content: center; }
+    @media (max-width: 1000px) { .mc-grid:not(.solo) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 760px)  { .mc-grid:not(.solo) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 340px)  { .mc-grid:not(.solo) { grid-template-columns: minmax(0, 1fr); } }
+
+    /* ── CARD CELL: handles the roll-in only ── */
+    .mc-cell {
+      position: relative;
+      opacity: 0;
+      transform: perspective(900px) translate3d(0, 56px, 0) rotateX(16deg) scale(0.94);
+      transform-origin: 50% 100%;
+      transition: opacity 0.7s ease, transform 0.95s var(--ease-out-expo);
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+    .mc-cell.in { opacity: 1; transform: none; }
+
+    /* spinning tier-colour ring on the solo (President / Webmaster) cards */
+    .mc-cell.feature::before {
+      content: ""; position: absolute; inset: -2px; border-radius: 20px;
+      background: conic-gradient(from var(--ang), rgba(var(--rgb),0) 0 55%, rgba(var(--rgb),0.95) 85%, rgba(var(--rgb),0) 100%);
+      animation: mc-spin 5s linear infinite;
+    }
+    @keyframes mc-spin { to { --ang: 360deg; } }
+    @media (max-width: 900px) { .mc-cell.feature::before { animation: none; opacity: 0.7; } }
+
+    /* ── CARD: handles tilt, glow and hover ── */
+    .mc {
+      position: relative; z-index: 1; display: block; width: 100%;
+      aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: 18px;
+      overflow: hidden; cursor: pointer; text-align: left; color: var(--white);
+      font: inherit; -webkit-tap-highlight-color: transparent;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, #1e1a20 0%, #0e0c10 100%);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 18px 36px -18px rgba(0,0,0,0.9),
+        0 14px 40px -20px rgba(var(--rgb), 0.35);
+      transition: transform 0.2s ease-out, box-shadow 0.35s;
+    }
+    .mc:active { transform: scale(0.97); }
+    .mc:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--rgb), 0.9), 0 22px 50px -16px rgba(var(--rgb), 0.55);
+    }
+    .mc::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 4;
+      background: var(--fc); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.45s var(--ease-out-expo);
+    }
+    .mc:focus-visible::before { transform: scaleX(1); }
+
+    .mc-photo { position: absolute; inset: 0; }
+    .mc-photo::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(to top, rgba(8,6,10,0.96) 0%, rgba(8,6,10,0.7) 28%, transparent 58%);
+    }
+    .mc-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      opacity: 0; transform: scale(1.02);
+      transition: opacity 0.6s ease, transform 0.8s var(--ease-out-expo);
+    }
+    .mc.has-img .mc-img { opacity: 1; transform: none; }
+    .mc-initials {
+      position: absolute; inset: 0 0 18% 0; display: grid; place-items: center;
+      font-family: var(--font-display); font-size: clamp(48px, 9vw, 84px);
+      letter-spacing: 0.08em; color: var(--fc);
+      text-shadow: 0 0 24px rgba(var(--rgb), 0.7);
+      transition: opacity 0.4s;
+    }
+    .mc.has-img .mc-initials { opacity: 0; }
+
+    .mc-info {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+      padding: 14px 14px 15px; display: flex; flex-direction: column; gap: 5px;
+    }
+    .mc-role {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 8.5px; line-height: 1.3;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fc);
+    }
+    .mc-role::before { content: ""; width: 14px; height: 1px; background: currentColor; flex: none; }
+    .mc-name {
+      font-family: var(--font-cond); font-weight: 700; line-height: 1.1;
+      font-size: clamp(15px, 4.2vw, 19px); letter-spacing: 0.04em; color: #fff;
+    }
+    .mc-plus {
+      position: absolute; top: 10px; right: 10px; z-index: 4;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 16px; line-height: 1;
+      background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.18);
+      transition: transform 0.35s var(--ease-out-expo), background 0.25s, border-color 0.25s;
+    }
+
+    /* HUD corner brackets (reuse .evf-corner from style.css) */
+    .mc .evf-corner { opacity: 0; transition: opacity 0.25s, transform 0.35s var(--ease-out-expo); }
+    .mc .evf-corner::before, .mc .evf-corner::after { background: var(--fc); }
+    .mc .evf-tl { transform: translate(6px, 6px); }
+    .mc .evf-tr { transform: translate(-6px, 6px); }
+    .mc .evf-bl { transform: translate(6px, -6px); }
+    .mc .evf-br { transform: translate(-6px, -6px); }
+    .mc:focus-visible .evf-corner { opacity: 0.9; transform: none; }
+
+    .mc-glow { display: none; }
+
+    /* mouse only: tilt, spotlight, zoom, brackets */
+    @media (hover: hover) and (pointer: fine) {
+      .mc-glow {
+        display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+        background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 30%), rgba(var(--rgb), 0.28), transparent 65%);
+        transition: opacity 0.3s;
+      }
+      .mc:hover {
+        box-shadow: 0 0 0 1px rgba(var(--rgb), 0.55), 0 22px 50px -16px rgba(var(--rgb), 0.55);
+      }
+      .mc:hover::before { transform: scaleX(1); }
+      .mc:hover .mc-glow { opacity: 1; }
+      .mc:hover .mc-plus { transform: rotate(90deg); background: var(--fc); border-color: var(--fc); }
+      .mc.has-img:hover .mc-img { transform: scale(1.06); }
+      .mc:hover .evf-corner { opacity: 0.9; transform: none; }
+    }
+
+    .mc-empty { text-align: center; padding: 80px 0; color: var(--steel); letter-spacing: 0.15em; font-size: 12px; }
+
+    /* ── PROFILE DIALOG (opens on card click / tap) ── */
+    dialog.dossier {
+      border: 0; padding: 0; margin: 0; background: transparent; color: var(--white);
+      max-width: none; max-height: none; width: 100%; height: 100%; overflow: hidden;
+    }
+    dialog.dossier[open] { display: grid; place-items: center; padding: 20px; }
+    dialog.dossier::backdrop { background: rgba(6,5,7,0.9); }
+    .ds-shell {
+      --fc: #e31b23; --rgb: 227,27,35;
+      position: relative; width: min(900px, 100%);
+      max-height: min(660px, calc(100vh - 40px));
+      max-height: min(660px, calc(100dvh - 40px));
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-rows: minmax(0, 1fr);
+      background: #121012; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(var(--rgb), 0.35), 0 40px 90px -20px rgba(0,0,0,0.9), 0 0 80px -30px rgba(var(--rgb), 0.5);
+      animation: ds-in 0.5s var(--ease-out-expo);
+    }
+    @keyframes ds-in { from { opacity: 0; transform: translateY(28px) scale(0.96); } to { opacity: 1; transform: none; } }
+    @keyframes ds-up { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+    .ds-photo {
+      position: relative; min-height: 360px; overflow: hidden;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, #1e1a20 0%, #0e0c10 100%);
+    }
+    .ds-photo img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 15%; opacity: 0; transition: opacity 0.5s;
+    }
+    .ds-photo.has-img img { opacity: 1; }
+    .ds-initials {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--font-display); font-size: clamp(80px, 14vw, 140px);
+      letter-spacing: 0.08em; color: var(--fc); text-shadow: 0 0 40px rgba(var(--rgb), 0.7);
+    }
+    .ds-photo.has-img .ds-initials { opacity: 0; }
+    .ds-photo::after {
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2;
+      background: linear-gradient(90deg, transparent, var(--fc), transparent);
+      box-shadow: 0 0 14px var(--fc); opacity: 0; pointer-events: none;
+    }
+    .dossier[open] .ds-photo::after { animation: ds-scan 1.4s 0.15s var(--ease-in-out) 1; }
+    @keyframes ds-scan { 0% { top: 0; opacity: 0; } 15% { opacity: 0.9; } 85% { opacity: 0.9; } 100% { top: calc(100% - 2px); opacity: 0; } }
+    .ds-photo .evf-corner { opacity: 0.9; z-index: 3; }
+    .ds-photo .evf-corner::before, .ds-photo .evf-corner::after { background: var(--fc); }
+
+    .ds-body {
+      display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
+      overscroll-behavior: contain; padding: clamp(24px, 3vw, 40px);
+    }
+    .ds-body.swap { animation: ds-swap 0.35s var(--ease-out-expo); }
+    @keyframes ds-swap { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+    .ds-tag { font-size: 10px; letter-spacing: 0.22em; color: var(--fc); text-transform: uppercase; margin-bottom: 14px; }
+    .ds-name {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(40px, 6vw, 64px); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 10px;
+    }
+    .ds-role {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--steel-light);
+      padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .ds-bio { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--steel-light); }
+    .ds-li { margin-top: 20px; align-self: flex-start; }
+    .ds-li[hidden] { display: none; }
+    .ds-nav {
+      margin-top: auto; padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .ds-nav button {
+      font-family: var(--font-cond); font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--steel); background: none; border: 0;
+      padding: 10px 6px; cursor: pointer; transition: color 0.2s;
+    }
+    .ds-nav button:hover { color: var(--white); }
+    .ds-count { font-size: 10px; letter-spacing: 0.2em; color: var(--steel); }
+    .ds-close {
+      position: absolute; top: 12px; right: 12px; z-index: 6;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white); font-size: 22px; line-height: 1; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .ds-close:hover { background: var(--red); border-color: var(--red); }
+
+    @media (max-width: 700px) {
+      dialog.dossier[open] { padding: 0; place-items: end center; }
+      .ds-shell {
+        width: 100%; grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: clamp(170px, 30vh, 260px) minmax(0, 1fr);
+        grid-template-rows: clamp(170px, 30dvh, 260px) minmax(0, 1fr);
+        max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px);
+        border-radius: 20px 20px 0 0; animation-name: ds-up;
+      }
+      .ds-photo { min-height: 0; }
+      .ds-body { padding: 22px 20px calc(22px + env(safe-area-inset-bottom)); }
+      .ds-close { width: 44px; height: 44px; }
+    }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 900px) {
+      .tm-toolbar { margin-bottom: 32px; }
+      .tm-search { max-width: none; flex-basis: 100%; }
+    }
+    @media (max-width: 600px) {
+      .tmf-count { display: none; }
+      .tmf-btn { padding: 16px 14px; }
+      .tm-tier-label { margin-bottom: 28px; }
+    }
+    @media (max-width: 380px) {
+      .mc-role { font-size: 7.5px; letter-spacing: 0.14em; }
+      .mc-role::before { width: 8px; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .mc-cell { opacity: 1; transform: none; transition: none; }
+      .mc-cell.feature::before { animation: none; }
+      .ds-shell, .ds-body.swap { animation: none; }
+      .dossier[open] .ds-photo::after { animation: none; }
+      .tm-tier-line { transform: none; transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -461,17 +451,26 @@
         <p class="tm-hero-sub reveal-up delay-3">
           Engineers, leaders, and community builders. Every one of us is a student first — we just happen to run one of TMU's most active course unions too.
         </p>
+        <!-- filled by script: member count + one readout per big tier -->
+        <div class="tm-readouts reveal-up delay-4" id="tm-readouts"></div>
       </div>
 
       <div class="hero-mascot-solo reveal-right delay-2">
         <div class="hud-video-float" id="tmVideoFrame">
-          <video autoplay muted loop playsinline>
-            <source src="assets/images/mom.team.webm" type="video/webm">
-          </video>
+          <!-- source is attached by script on desktop only, so phones never download it -->
+          <video muted loop playsinline preload="none"></video>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════ STICKY FILTER ═══════════════════ -->
+  <div id="tm-filter">
+    <div class="tmf-inner">
+      <div class="tmf-tabs" id="tmf-tabs" role="group" aria-label="Filter team by role"></div>
+      <span class="mono tmf-count" id="tmf-count" aria-live="polite"></span>
+    </div>
+  </div>
 
   <!-- ═══════════════════ TEAM SECTIONS ═══════════════════ -->
   <section id="team-main" class="section-dark">
@@ -479,523 +478,45 @@
     <div class="section-blob b2"></div>
     <div class="container tm-container">
 
-      <!-- ══ 01 PRESIDENT ══ -->
-      <div class="tm-tier-label reveal-up">
-        <div class="tm-tier-left">
-          <span class="mono tm-tier-tag">01</span>
-          <h2 class="tm-tier-title">President</h2>
-        </div>
-        <div class="tm-tier-line"></div>
+      <div class="tm-toolbar">
+        <span class="mono tm-roster">ROSTER · 2026–27</span>
+        <label class="tm-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+          <input type="search" id="tm-search" placeholder="Search name or role" autocomplete="off" aria-label="Search the team" />
+        </label>
       </div>
 
-      <div class="tm-grid tm-grid-solo">
-        <div class="flip-card flip-card-solo-center aura-wrap aura-white">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#e31b23">
-              <div class="flip-front-photo">
-                <img src="assets/images/wyatt.mcu.jpeg" alt="Wyatt Ewart" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#e31b23"></div>
-                <div class="flip-front-initials" style="color:#e31b23">WE</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">President</div>
-                  <div class="flip-front-name">Wyatt Ewart</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#e31b23">
-              <div>
-                <div class="flip-back-role">President</div>
-                <div class="flip-back-name">Wyatt Ewart</div>
-                <p class="flip-back-bio">Hello friends! My name is Wyatt and I'm your MCU Prez Jawn for the year. We did amazing work last year and it's time for us to expand on all of the services and events we pioneered before. My main focuses for the year will be expanding upon our academic advocacy, academic services, and community engagement. Fun facts about me: I LOVE Playing card games with my friends, (Euchre, Briscola, Cribbage, etc) and I LOVE Playing outside with my friends. #MCUonTop</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ 02 VPs ══ -->
-      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
-        <div class="tm-tier-left">
-          <span class="mono tm-tier-tag">02</span>
-          <h2 class="tm-tier-title">Vice Presidents</h2>
-        </div>
-        <div class="tm-tier-line"></div>
-      </div>
-
-      <div class="tm-grid tm-grid-three">
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/muadh.mcu.jpg" alt="Muadh Ghori" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">MG</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Academics</div>
-                  <div class="flip-front-name">Muadh Ghori</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Academics</div>
-                <div class="flip-back-name">Muadh Ghori</div>
-                <p class="flip-back-bio">Wsg. I am acting as your VP Academic this year. Come to me or any of the directors with your Academic Concerns and we gotchu. 🗿</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/qamber.mcu.jpg" alt="Qamber Rizvi" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">QR</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Operations</div>
-                  <div class="flip-front-name">Qamber Rizvi</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Operations</div>
-                <div class="flip-back-name">Qamber Rizvi</div>
-                <p class="flip-back-bio">Hey everyone! I'm Qamber, and I am incredibly excited to serve as your VP Operations for the term. To me, being VP Ops is all about building a strong behind-the-scenes foundation so our team can turn massive ideas into reality. This year, I am entirely focused on elevating the student experience, with my biggest milestone being the launch of a first of its kind, dedicated large-scale Mechatronics conference where Tron students can connect, innovate, and grow. Working together with our amazing logistics team and the rest of the execs, I want to ensure everything runs flawlessly so we can deliver an unforgettable year for our community!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/hassan.mcu.png" alt="Hassan Iqbal" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">HI</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Finance</div>
-                  <div class="flip-front-name">Hassan Iqbal</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Finance</div>
-                <div class="flip-back-name">Hassan Iqbal</div>
-                <p class="flip-back-bio">Hi everyone, I'm Hassan, and I'm excited to be returning to the MCU executive team as your Vice President Finance this year. I'm proud of what we've accomplished so far and look forward to building on that momentum in the year ahead. As VP Finance, I'll be responsible for managing MCU's finances, supporting our teams, and helping turn ideas into impactful initiatives for Mechatronics students. Looking forward to working with the team and making this another successful year for our community.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/prince.mcu.jpeg" alt="Muhammad Prince" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">MP</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Comms</div>
-                  <div class="flip-front-name">Muhammad Prince</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Communications</div>
-                <div class="flip-back-name">Muhammad Prince</div>
-                <p class="flip-back-bio">Hey everyone! My name is Muhammad and I'm thrilled to be your MCU VP Comms for the year! The MCU  team set a massive precedent last year, and I'm here to make sure our messaging, branding, and outreach are louder and better than ever. My main focuses for the year will be keeping you all perfectly in the loop, leveling up our social media presence, and making sure our Mechatronics community feels more connected than ever.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/angelo.mcu.jpeg" alt="Angelo Koukopoulos" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">AK</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Events</div>
-                  <div class="flip-front-name">Angelo Koukopoulos</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Events</div>
-                <div class="flip-back-name">Angelo Koukopoulos</div>
-                <p class="flip-back-bio">Good morning, afternoon, evening! I am Angelo, the VP Events for MCU's 26-27 term. You'll often find me at events, not just the MCU ones, as I enjoy meeting new people and discovering new things. As VP Events, I work alongside my team to organise and plan social and technical events for Tron students and the engineering community. My goal is to make this year memorable by collaborating with many student groups, giving students a taste of everything engineering has to offer.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-green">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#1a8f4a">
-              <div class="flip-front-photo">
-                <img src="assets/images/dar.mcu.jpg" alt="Mohammed Dar" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#1a8f4a"></div>
-                <div class="flip-front-initials" style="color:#1a8f4a">MD</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">VP Corps</div>
-                  <div class="flip-front-name">Mohammed Dar</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#1a8f4a">
-              <div>
-                <div class="flip-back-role">VP Corps</div>
-                <div class="flip-back-name">Mohammed Dar</div>
-                <p class="flip-back-bio">I am too nonchalant to write this.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ 03 DIRECTORS ══ -->
-      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
-        <div class="tm-tier-left">
-          <span class="mono tm-tier-tag">03</span>
-          <h2 class="tm-tier-title">Directors</h2>
-        </div>
-        <div class="tm-tier-line"></div>
-      </div>
-
-      <!-- Row 1: 3 directors -->
-      <div class="tm-grid tm-grid-three" style="margin-bottom:24px;">
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/ahesha.mcu.jpg" alt="Ahesha Saseenthiran" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">AS</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Media / Comms</div>
-                  <div class="flip-front-name">Ahesha Saseenthiran</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Media / Comms Engagement</div>
-                <div class="flip-back-name">Ahesha Saseenthiran</div>
-                <p class="flip-back-bio">I am too nonchalant to write this.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/laith.mcu.jpg" alt="Laith Sabri" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">LS</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Academics</div>
-                  <div class="flip-front-name">Laith Sabri</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Academics</div>
-                <div class="flip-back-name">Laith Sabri</div>
-                <p class="flip-back-bio">Hello everyone! I'm Laith, I will be a 2nd year student this upcoming academic year, and I'm very excited to be your Director of Academics for this year. As a member of the Academics team, my team and I will work to support students through their academic journey by advocating for their needs, organizing study and review sessions, and helping connect students with resources that contribute to their success. I look forward to seeing and working with y'all!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/jedi.mcu.jpg" alt="Jedi An Ballesteros" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">JB</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Logistics</div>
-                  <div class="flip-front-name">Jedi An Ballesteros</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Logistics</div>
-                <div class="flip-back-name">Jedi An Ballesteros</div>
-                <p class="flip-back-bio">Hola everyone! My name is Jedi, and I'm excited to be serving as the Director of Logistics this year. My role involves helping coordinate events, managing resources, organizing schedules, and making sure everything runs smoothly behind the scenes so our team can focus on creating great experiences for students. Happy to be part of MCU and looking forward to a great year!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 2: 3 directors -->
-      <div class="tm-grid tm-grid-three" style="margin-bottom:24px;">
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/aryan.mcu.jpeg" alt="Aryan Billava" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">AB</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Logistics</div>
-                  <div class="flip-front-name">Aryan Billava</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Logistics</div>
-                <div class="flip-back-name">Aryan Billava</div>
-                <p class="flip-back-bio">Hey everyone! I'm Aryan, and I am one of the Directors of Logistics for the MCU 2026-2027 term. As Director of Logistics, I'll be helping coordinate the behind the scenes planning that keeps MCU events and initiatives running smoothly. I'm excited to work alongside the team to create valuable opportunities and experiences for Mechatronics students throughout the year.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/aashir.mcu.jpeg" alt="Aashir Ahmed" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">AA</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Finance</div>
-                  <div class="flip-front-name">Aashir Ahmed</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Finance</div>
-                <div class="flip-back-name">Aashir Ahmed</div>
-                <p class="flip-back-bio">Hi everyone! I'm Aashir, returning as Finance Director for this year's MCU! I'll be continuing to assist with all financial responsibilities and making sure our team is well-equipped to run the greatest events all year round!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/brandon.mcu.png" alt="Brandon Penafiel-Velez" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">BP</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Academics</div>
-                  <div class="flip-front-name">Brandon Penafiel-Velez</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Academics</div>
-                <div class="flip-back-name">Brandon Penafiel-Velez</div>
-                <p class="flip-back-bio">Hello! My name is Brandon, and I am a 4th year mechatronics student. As a newly elected Director of Academics, I will be representing tron students and ensuring all of our voices and concerns regarding these new courses are heard and worked on. I'm excited to showcase all of the things we have planned soon, but until then, good luck on your studies!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 3: 3 directors -->
-      <div class="tm-grid tm-grid-three" style="margin-bottom:24px;">
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/yasir.mcu.jpg" alt="Yasir Saeed" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">YS</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Sponsors</div>
-                  <div class="flip-front-name">Yasir Saeed</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Sponsors</div>
-                <div class="flip-back-name">Yasir Saeed</div>
-                <p class="flip-back-bio">Hi I'm Yasir, I'm a 4th year tron student and will be serving as the Director of Sponsorships this year. I'll be working alongside the corporate relations team to secure sponsorships and external funding and resources to support our exciting events and initiatives this year. Looking forward to another great year for the MCU!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/alvina.mcu.jpeg" alt="Alvina Usmani" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">SH</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Events</div>
-                  <div class="flip-front-name">Alvina Usmani</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Events</div>
-                <div class="flip-back-name">Alvina Usmani</div>
-                <p class="flip-back-bio">Heyo! I’m Alvina and I'm thrilled to be one of your Directors of Events this year! My goal is to put together events that match what you want to see and give everyone a chance to relax when the semester starts... semester things… I hope our events can be something you look forward to throughout the year. I also love talking to new people, so if you ever spot me on campus, come say hi! It could end up as a fun little sidequest!!</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/avishan.mcu.jpg" alt="Avishan Ketheswaran" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">AK</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Events</div>
-                  <div class="flip-front-name">Avishan Ketheswaran</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Events</div>
-                <div class="flip-back-name">Avishan Ketheswaran</div>
-                <p class="flip-back-bio">I am too nonchalant to write this.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 4: 3 directors -->
-      <div class="tm-grid tm-grid-three">
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/alliyah.mcu.jpg" alt="Alliyah Davy" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">AD</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Events</div>
-                  <div class="flip-front-name">Alliyah Davy</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Events</div>
-                <div class="flip-back-name">Alliyah Davy</div>
-                <p class="flip-back-bio">Hi everyone, my name is Alliyah. I'm entering into my 3rd year of Tron, and I'm excited to be one of your Directors of Events for this year. I will be dedicated to putting together unforgettable events and workshops throughout the year to bring the Eng community together outside of the classroom. I look forward to meeting and working with all of you to create an amazing experience for all students this coming year.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/patrick.mcu.png" alt="Patrick" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">P</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Academics</div>
-                  <div class="flip-front-name">Patrick</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Academics</div>
-                <div class="flip-back-name">Patrick</div>
-                <p class="flip-back-bio">I am too nonchalant to write this.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="flip-card aura-wrap aura-orange">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#c46200">
-              <div class="flip-front-photo">
-                <img src="assets/images/suling.mcu.jpg" alt="Suling He" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#c46200"></div>
-                <div class="flip-front-initials" style="color:#c46200">RH</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Dir. Logistics</div>
-                  <div class="flip-front-name">Suling He</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#c46200">
-              <div>
-                <div class="flip-back-role">Director of Logistics</div>
-                <div class="flip-back-name">Suling He</div>
-                <p class="flip-back-bio">Hi everyone! I am Suling, I will be a 3rd year tron student as of Sept 2026 plus one of the new Directors of Logistics for this year's MCU term. I am a part of a team that works behind the scenes to ensure MCU's amazing events and initiatives run smoothly. I cannot wait to see our plans roll into action~</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- ══ 04 WEBMASTER ══ -->
-      <div class="tm-tier-label reveal-up" style="margin-top:80px;">
-        <div class="tm-tier-left">
-          <span class="mono tm-tier-tag">04</span>
-          <h2 class="tm-tier-title">Webmaster</h2>
-        </div>
-        <div class="tm-tier-line"></div>
-      </div>
-
-      <div class="tm-grid tm-grid-solo">
-        <div class="flip-card flip-card-solo-center aura-wrap aura-red">
-          <div class="flip-card-inner">
-            <div class="flip-front" style="--fc:#e31b23">
-              <div class="flip-front-photo">
-                <img src="assets/images/dwij.mcu.jpg" alt="Dwij Joshi" class="flip-front-img" onerror="this.remove()" />
-                <div class="flip-front-glow" style="--fc:#e31b23"></div>
-                <div class="flip-front-initials" style="color:#e31b23">DJ</div>
-                <div class="flip-front-info">
-                  <div class="flip-front-bar">Webmaster</div>
-                  <div class="flip-front-name">Dwij Joshi</div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-back" style="--fc:#e31b23">
-              <div>
-                <div class="flip-back-role">Webmaster</div>
-                <div class="flip-back-name">Dwij Joshi</div>
-                <p class="flip-back-bio">Hola folks, I am the person behind what you're seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji.</p>
-              </div>
-              </div>
-          </div>
-        </div>
-      </div>
+      <!-- tiers and cards are generated from the TEAM data in the script below -->
+      <div id="tm-root"></div>
+      <div class="mc-empty mono" id="mc-empty" hidden>NO MATCHES. TRY ANOTHER NAME OR ROLE.</div>
 
     </div>
   </section>
+
+  <!-- ═══════════════════ PROFILE DIALOG ═══════════════════ -->
+  <dialog id="dossier" class="dossier" aria-labelledby="ds-name">
+    <div class="ds-shell" id="ds-shell">
+      <button class="ds-close" id="ds-close" type="button" aria-label="Close profile">&times;</button>
+      <div class="ds-photo" id="ds-photo">
+        <span class="ds-initials" id="ds-initials" aria-hidden="true"></span>
+        <img id="ds-img" alt="" decoding="async" />
+        <span class="evf-corner evf-tl"></span><span class="evf-corner evf-tr"></span>
+        <span class="evf-corner evf-bl"></span><span class="evf-corner evf-br"></span>
+      </div>
+      <div class="ds-body" id="ds-body">
+        <div class="ds-tag mono" id="ds-tag"></div>
+        <h3 class="ds-name" id="ds-name"></h3>
+        <div class="ds-role mono" id="ds-role"></div>
+        <p class="ds-bio" id="ds-bio"></p>
+        <a class="btn-ghost btn-sm ds-li" id="ds-li" target="_blank" rel="noopener noreferrer" hidden>LinkedIn</a>
+        <div class="ds-nav">
+          <button type="button" id="ds-prev" aria-label="Previous member">&larr; Prev</button>
+          <span class="mono ds-count" id="ds-count"></span>
+          <button type="button" id="ds-next" aria-label="Next member">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <!-- ═══════════════════ RECRUITMENT STATUS ═══════════════════ -->
   <section id="open-roles" class="section-dark">
@@ -1091,57 +612,426 @@
     </div>
   </footer>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       TEAM DATA + PAGE LOGIC
+       This script runs BEFORE main.js on purpose, so the cards and
+       tier labels exist when main.js wires up scroll reveal and the
+       custom cursor.
+
+       TO ADD A NEW HIRE: copy one line inside the right tier's
+       "members" list and change the fields.
+         n  = full name
+         r  = short label shown on the card
+         f  = (optional) longer role title shown in the profile
+         p  = photo file name inside assets/images/ (initials show if missing)
+         li = (optional) LinkedIn URL, adds a button in the profile
+         b  = bio text
+       TO ADD A NEW TIER: copy a whole tier block in TIERS.
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* The fixed background canvas sits behind fully opaque sections on this
+       page, so it can't be seen but still burns CPU every frame. Removing it
+       here makes main.js skip it (it returns early when the canvas is missing). */
+    var bgc = document.getElementById('bg-canvas');
+    if (bgc) bgc.remove();
+
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine   = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var IMG    = 'assets/images/';
+
+    var TIERS = [
+      {
+        id: 'president', title: 'President', short: 'President', color: '#e31b23', solo: true,
+        members: [
+          { n: 'Wyatt Ewart', r: 'President', p: 'wyatt.mcu.jpeg',
+            b: "Hello friends! My name is Wyatt and I'm your MCU Prez Jawn for the year. We did amazing work last year and it's time for us to expand on all of the services and events we pioneered before. My main focuses for the year will be expanding upon our academic advocacy, academic services, and community engagement. Fun facts about me: I LOVE Playing card games with my friends, (Euchre, Briscola, Cribbage, etc) and I LOVE Playing outside with my friends. #MCUonTop" }
+        ]
+      },
+      {
+        id: 'vps', title: 'Vice Presidents', short: 'VPs', color: '#1a8f4a', cols: 3,
+        members: [
+          { n: 'Muadh Ghori', r: 'VP Academics', p: 'muadh.mcu.jpg',
+            b: "Wsg. I am acting as your VP Academic this year. Come to me or any of the directors with your Academic Concerns and we gotchu. 🗿" },
+          { n: 'Qamber Rizvi', r: 'VP Operations', p: 'qamber.mcu.jpg',
+            b: "Hey everyone! I'm Qamber, and I am incredibly excited to serve as your VP Operations for the term. To me, being VP Ops is all about building a strong behind-the-scenes foundation so our team can turn massive ideas into reality. This year, I am entirely focused on elevating the student experience, with my biggest milestone being the launch of a first of its kind, dedicated large-scale Mechatronics conference where Tron students can connect, innovate, and grow. Working together with our amazing logistics team and the rest of the execs, I want to ensure everything runs flawlessly so we can deliver an unforgettable year for our community!" },
+          { n: 'Hassan Iqbal', r: 'VP Finance', p: 'hassan.mcu.png',
+            b: "Hi everyone, I'm Hassan, and I'm excited to be returning to the MCU executive team as your Vice President Finance this year. I'm proud of what we've accomplished so far and look forward to building on that momentum in the year ahead. As VP Finance, I'll be responsible for managing MCU's finances, supporting our teams, and helping turn ideas into impactful initiatives for Mechatronics students. Looking forward to working with the team and making this another successful year for our community." },
+          { n: 'Muhammad Prince', r: 'VP Comms', f: 'VP Communications', p: 'prince.mcu.jpeg',
+            b: "Hey everyone! My name is Muhammad and I'm thrilled to be your MCU VP Comms for the year! The MCU  team set a massive precedent last year, and I'm here to make sure our messaging, branding, and outreach are louder and better than ever. My main focuses for the year will be keeping you all perfectly in the loop, leveling up our social media presence, and making sure our Mechatronics community feels more connected than ever." },
+          { n: 'Angelo Koukopoulos', r: 'VP Events', p: 'angelo.mcu.jpeg',
+            b: "Good morning, afternoon, evening! I am Angelo, the VP Events for MCU's 26-27 term. You'll often find me at events, not just the MCU ones, as I enjoy meeting new people and discovering new things. As VP Events, I work alongside my team to organise and plan social and technical events for Tron students and the engineering community. My goal is to make this year memorable by collaborating with many student groups, giving students a taste of everything engineering has to offer." },
+          { n: 'Mohammed Dar', r: 'VP Corps', p: 'dar.mcu.jpg',
+            b: "I am too nonchalant to write this." }
+        ]
+      },
+      {
+        id: 'directors', title: 'Directors', short: 'Directors', color: '#c46200', cols: 4,
+        members: [
+          { n: 'Ahesha Saseenthiran', r: 'Dir. Media / Comms', f: 'Director of Media / Comms Engagement', p: 'ahesha.mcu.jpg',
+            b: "I am too nonchalant to write this." },
+          { n: 'Laith Sabri', r: 'Dir. Academics', f: 'Director of Academics', p: 'laith.mcu.jpg',
+            b: "Hello everyone! I'm Laith, I will be a 2nd year student this upcoming academic year, and I'm very excited to be your Director of Academics for this year. As a member of the Academics team, my team and I will work to support students through their academic journey by advocating for their needs, organizing study and review sessions, and helping connect students with resources that contribute to their success. I look forward to seeing and working with y'all!" },
+          { n: 'Jedi An Ballesteros', r: 'Dir. Logistics', f: 'Director of Logistics', p: 'jedi.mcu.jpg',
+            b: "Hola everyone! My name is Jedi, and I'm excited to be serving as the Director of Logistics this year. My role involves helping coordinate events, managing resources, organizing schedules, and making sure everything runs smoothly behind the scenes so our team can focus on creating great experiences for students. Happy to be part of MCU and looking forward to a great year!" },
+          { n: 'Aryan Billava', r: 'Dir. Logistics', f: 'Director of Logistics', p: 'aryan.mcu.jpeg',
+            b: "Hey everyone! I'm Aryan, and I am one of the Directors of Logistics for the MCU 2026-2027 term. As Director of Logistics, I'll be helping coordinate the behind the scenes planning that keeps MCU events and initiatives running smoothly. I'm excited to work alongside the team to create valuable opportunities and experiences for Mechatronics students throughout the year." },
+          { n: 'Aashir Ahmed', r: 'Dir. Finance', f: 'Director of Finance', p: 'aashir.mcu.jpeg',
+            b: "Hi everyone! I'm Aashir, returning as Finance Director for this year's MCU! I'll be continuing to assist with all financial responsibilities and making sure our team is well-equipped to run the greatest events all year round!" },
+          { n: 'Brandon Penafiel-Velez', r: 'Dir. Academics', f: 'Director of Academics', p: 'brandon.mcu.png',
+            b: "Hello! My name is Brandon, and I am a 4th year mechatronics student. As a newly elected Director of Academics, I will be representing tron students and ensuring all of our voices and concerns regarding these new courses are heard and worked on. I'm excited to showcase all of the things we have planned soon, but until then, good luck on your studies!" },
+          { n: 'Yasir Saeed', r: 'Dir. Sponsors', f: 'Director of Sponsors', p: 'yasir.mcu.jpg',
+            b: "Hi I'm Yasir, I'm a 4th year tron student and will be serving as the Director of Sponsorships this year. I'll be working alongside the corporate relations team to secure sponsorships and external funding and resources to support our exciting events and initiatives this year. Looking forward to another great year for the MCU!" },
+          { n: 'Alvina Usmani', r: 'Dir. Events', f: 'Director of Events', p: 'alvina.mcu.jpeg',
+            b: "Heyo! I’m Alvina and I'm thrilled to be one of your Directors of Events this year! My goal is to put together events that match what you want to see and give everyone a chance to relax when the semester starts... semester things… I hope our events can be something you look forward to throughout the year. I also love talking to new people, so if you ever spot me on campus, come say hi! It could end up as a fun little sidequest!!" },
+          { n: 'Avishan Ketheswaran', r: 'Dir. Events', f: 'Director of Events', p: 'avishan.mcu.jpg',
+            b: "I am too nonchalant to write this." },
+          { n: 'Alliyah Davy', r: 'Dir. Events', f: 'Director of Events', p: 'alliyah.mcu.jpg',
+            b: "Hi everyone, my name is Alliyah. I'm entering into my 3rd year of Tron, and I'm excited to be one of your Directors of Events for this year. I will be dedicated to putting together unforgettable events and workshops throughout the year to bring the Eng community together outside of the classroom. I look forward to meeting and working with all of you to create an amazing experience for all students this coming year." },
+          { n: 'Patrick', r: 'Dir. Academics', f: 'Director of Academics', p: 'patrick.mcu.png',
+            b: "I am too nonchalant to write this." },
+          { n: 'Suling He', r: 'Dir. Logistics', f: 'Director of Logistics', p: 'suling.mcu.jpg',
+            b: "Hi everyone! I am Suling, I will be a 3rd year tron student as of Sept 2026 plus one of the new Directors of Logistics for this year's MCU term. I am a part of a team that works behind the scenes to ensure MCU's amazing events and initiatives run smoothly. I cannot wait to see our plans roll into action~" }
+        ]
+      },
+      {
+        id: 'webmaster', title: 'Webmaster', short: 'Webmaster', color: '#e31b23', solo: true,
+        members: [
+          { n: 'Dwij Joshi', r: 'Webmaster', p: 'dwij.mcu.jpg',
+            b: "Hola folks, I am the person behind what you're seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji." }
+        ]
+      }
+    ];
+
+    /* ───────── helpers ───────── */
+    function $(s, r) { return (r || document).querySelector(s); }
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function hexRgb(h) { var n = parseInt(h.slice(1), 16); return (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255); }
+    function initials(name) {
+      var p = name.trim().split(/\s+/);
+      return (p[0].charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
+    }
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function safeUrl(u) { return /^https?:\/\//i.test(u) ? u : ''; }
+
+    /* ───────── build tiers + cards (once) ───────── */
+    var root = $('#tm-root');
+    var ALL = [];
+
+    TIERS.forEach(function (t, ti) {
+      t.rgb = hexRgb(t.color);
+
+      var sec = document.createElement('section');
+      sec.className = 'tm-tier';
+      sec.setAttribute('aria-label', t.title);
+      sec.innerHTML =
+        '<div class="tm-tier-label reveal-up">' +
+          '<div class="tm-tier-left">' +
+            '<span class="mono tm-tier-tag">' + pad(ti + 1) + '</span>' +
+            '<h2 class="tm-tier-title" data-t="' + esc(t.title) + '" aria-label="' + esc(t.title) + '">' + esc(t.title) + '</h2>' +
+          '</div>' +
+          '<div class="tm-tier-line"></div>' +
+        '</div>';
+
+      var ul = document.createElement('ul');
+      ul.className = 'mc-grid' + (t.solo ? ' solo' : '');
+      if (t.cols) ul.style.setProperty('--cols', t.cols);
+
+      t.members.forEach(function (m) {
+        var li = document.createElement('li');
+        li.className = 'mc-cell' + (t.solo ? ' feature' : '');
+        li.style.setProperty('--fc', t.color);
+        li.style.setProperty('--rgb', t.rgb);
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mc';
+        btn.setAttribute('aria-haspopup', 'dialog');
+        btn.setAttribute('aria-label', m.n + ', ' + (m.f || m.r) + '. Open profile');
+        btn.innerHTML =
+          '<span class="mc-photo"><span class="mc-initials" aria-hidden="true">' + esc(initials(m.n)) + '</span></span>' +
+          '<span class="mc-glow"></span>' +
+          '<span class="mc-plus" aria-hidden="true">+</span>' +
+          '<span class="evf-corner evf-tl"></span><span class="evf-corner evf-tr"></span>' +
+          '<span class="evf-corner evf-bl"></span><span class="evf-corner evf-br"></span>' +
+          '<span class="mc-info"><span class="mc-role">' + esc(m.r) + '</span><span class="mc-name">' + esc(m.n) + '</span></span>';
+
+        if (m.p) {
+          var img = document.createElement('img');
+          img.className = 'mc-img';
+          img.alt = '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.addEventListener('load', function () { btn.classList.add('has-img'); });
+          img.addEventListener('error', function () { img.remove(); });
+          img.src = IMG + m.p;
+          $('.mc-photo', btn).appendChild(img);
+        }
+
+        li.appendChild(btn);
+        ul.appendChild(li);
+
+        m.tier = t;
+        m.tierIndex = ti;
+        m.cell = li;
+        m.btn = btn;
+        m.hay = (m.n + ' ' + m.r + ' ' + (m.f || '') + ' ' + t.title).toLowerCase();
+        m.wasHidden = false;
+        ALL.push(m);
+      });
+
+      sec.appendChild(ul);
+      root.appendChild(sec);
+      t.el = sec;
+    });
+
+    /* ───────── reveal (roll-in) ───────── */
+    var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' }) : null;
+
+    function reveal(cell) {
+      if (!io || reduce) { cell.classList.add('in'); return; }
+      io.observe(cell);
+    }
+
+    /* ───────── tier title scramble (text only, once) ───────── */
+    var GL = '!<>-_/[]{}=+*^?#%$01';
+    function scramble(el) {
+      var txt = el.getAttribute('data-t') || el.textContent;
+      var t0 = performance.now(), dur = 650;
+      (function tick(now) {
+        var p = Math.min((now - t0) / dur, 1);
+        if (p >= 1) { el.textContent = txt; return; }
+        el.textContent = txt.split('').map(function (c, i) {
+          return (c === ' ' || i / txt.length < p * 1.3) ? c : GL.charAt(Math.random() * GL.length | 0);
+        }).join('');
+        requestAnimationFrame(tick);
+      })(t0);
+    }
+    if (!reduce && 'IntersectionObserver' in window) {
+      var tio = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { scramble(e.target); tio.unobserve(e.target); }
+        });
+      }, { threshold: 0.6 });
+      document.querySelectorAll('.tm-tier-title').forEach(function (el) { tio.observe(el); });
+    }
+
+    /* ───────── tilt + spotlight (mouse only, one rAF per move) ───────── */
+    if (fine && !reduce) {
+      ALL.forEach(function (m) {
+        var btn = m.btn, rect = null, raf = 0, ev = null;
+        btn.addEventListener('pointerenter', function (e) {
+          if (e.pointerType === 'mouse') rect = btn.getBoundingClientRect();
+        });
+        btn.addEventListener('pointermove', function (e) {
+          if (e.pointerType !== 'mouse' || !rect) return;
+          ev = e;
+          if (raf) return;
+          raf = requestAnimationFrame(function () {
+            raf = 0;
+            var x = (ev.clientX - rect.left) / rect.width;
+            var y = (ev.clientY - rect.top) / rect.height;
+            btn.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+            btn.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+            btn.style.transform = 'perspective(800px) rotateX(' + ((0.5 - y) * 8).toFixed(2) + 'deg) rotateY(' + ((x - 0.5) * 10).toFixed(2) + 'deg)';
+          });
+        });
+        btn.addEventListener('pointerleave', function () {
+          rect = null; btn.style.transform = '';
+        });
+      });
+    }
+
+    /* ───────── filter tabs + search ───────── */
+    var state = { tier: 'all', q: '' };
+    var tabsEl = $('#tmf-tabs');
+    var emptyEl = $('#mc-empty');
+
+    [{ id: 'all', label: 'All' }].concat(TIERS.map(function (t) { return { id: t.id, label: t.short }; }))
+      .forEach(function (tab) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'tmf-btn';
+        b.textContent = tab.label;
+        b.setAttribute('aria-pressed', tab.id === 'all' ? 'true' : 'false');
+        b.addEventListener('click', function () {
+          state.tier = tab.id;
+          tabsEl.querySelectorAll('.tmf-btn').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+          tabsEl.scrollTo({ left: b.offsetLeft - (tabsEl.clientWidth - b.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+          apply();
+          var main = $('#team-main');
+          var y = main.getBoundingClientRect().top + window.scrollY - 72 - $('#tm-filter').offsetHeight;
+          if (window.scrollY > y) window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' });
+        });
+        tabsEl.appendChild(b);
+      });
+
+    var st;
+    $('#tm-search').addEventListener('input', function (e) {
+      var v = e.target.value;
+      clearTimeout(st);
+      st = setTimeout(function () { state.q = v.trim().toLowerCase(); apply(); }, 150);
+    });
+
+    function visibleList() { return ALL.filter(function (m) { return !m.cell.hidden; }); }
+
+    function apply() {
+      var vis = 0;
+      TIERS.forEach(function (t) {
+        var k = 0;
+        t.members.forEach(function (m) {
+          var ok = (state.tier === 'all' || state.tier === t.id) && (!state.q || m.hay.indexOf(state.q) > -1);
+          if (ok) {
+            m.cell.style.setProperty('--i', k % (t.cols || 1));
+            k++; vis++;
+            if (m.wasHidden) {            /* re-run the roll-in when a card comes back */
+              m.cell.classList.remove('in');
+              m.cell.hidden = false;
+              reveal(m.cell);
+            } else if (m.cell.hidden) {
+              m.cell.hidden = false;
+            }
+          } else {
+            m.cell.hidden = true;
+          }
+          m.wasHidden = !ok;
+        });
+        t.el.hidden = (k === 0);
+      });
+      $('#tmf-count').textContent = 'SHOWING ' + pad(vis) + ' / ' + pad(ALL.length);
+      emptyEl.hidden = vis !== 0;
+    }
+
+    /* first paint: set stagger indexes, then observe everything */
+    apply();
+    ALL.forEach(function (m) { reveal(m.cell); });
+
+    /* ───────── hero readouts (count-up after the loader) ───────── */
+    (function () {
+      var ro = $('#tm-readouts');
+      var items = [{ l: 'Members', v: ALL.length }];
+      TIERS.forEach(function (t) { if (!t.solo) items.push({ l: t.short, v: t.members.length }); });
+      ro.innerHTML = items.map(function (it) {
+        return '<div class="tm-ro"><b data-to="' + it.v + '">' + (reduce ? it.v : 0) + '</b><span class="mono">' + esc(it.l) + '</span></div>';
+      }).join('');
+      if (reduce) return;
+
+      var started = false;
+      function go() {
+        if (started) return; started = true;
+        ro.querySelectorAll('b').forEach(function (b) {
+          var to = +b.getAttribute('data-to'), t0 = performance.now(), dur = 1300;
+          (function tick(now) {
+            var p = Math.min((now - t0) / dur, 1);
+            b.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+            if (p < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }
+      var loader = document.getElementById('loader');
+      if (!loader || loader.classList.contains('hidden')) { go(); return; }
+      new MutationObserver(function (_, obs) {
+        if (loader.classList.contains('hidden')) { obs.disconnect(); go(); }
+      }).observe(loader, { attributes: true, attributeFilter: ['class'] });
+      setTimeout(go, 5000); /* safety net */
+    })();
+
+    /* ───────── profile dialog ───────── */
+    var dlg = $('#dossier'), shell = $('#ds-shell'), photo = $('#ds-photo'), dImg = $('#ds-img');
+    var body = $('#ds-body'), cur = null, lastFocus = null;
+
+    dImg.addEventListener('load',  function () { photo.classList.add('has-img'); });
+    dImg.addEventListener('error', function () { photo.classList.remove('has-img'); });
+
+    function fill(m) {
+      cur = m;
+      shell.style.setProperty('--fc', m.tier.color);
+      shell.style.setProperty('--rgb', m.tier.rgb);
+      $('#ds-tag').textContent = pad(m.tierIndex + 1) + ' / ' + m.tier.title;
+      $('#ds-name').textContent = m.n;
+      $('#ds-role').textContent = m.f || m.r;
+      $('#ds-bio').textContent = m.b || '';
+      $('#ds-initials').textContent = initials(m.n);
+      photo.classList.remove('has-img');
+      if (m.p) { dImg.src = IMG + m.p; } else { dImg.removeAttribute('src'); }
+      var li = $('#ds-li'), url = m.li ? safeUrl(m.li) : '';
+      if (url) { li.href = url; li.hidden = false; } else { li.hidden = true; }
+      var list = visibleList(), i = list.indexOf(m);
+      $('#ds-count').textContent = pad(i + 1) + ' / ' + pad(list.length);
+      body.scrollTop = 0;
+      body.classList.remove('swap'); void body.offsetWidth; body.classList.add('swap');
+    }
+    function openDlg(m) {
+      fill(m);
+      if (!dlg.open) {
+        lastFocus = document.activeElement;
+        if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+        document.documentElement.classList.add('modal-open');
+      }
+    }
+    function step(d) {
+      var list = visibleList(); if (!list.length) return;
+      var i = list.indexOf(cur);
+      fill(list[(i + d + list.length) % list.length]);
+    }
+    ALL.forEach(function (m) { m.btn.addEventListener('click', function () { openDlg(m); }); });
+
+    $('#ds-close').addEventListener('click', function () { dlg.close(); });
+    $('#ds-prev').addEventListener('click', function () { step(-1); });
+    $('#ds-next').addEventListener('click', function () { step(1); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () {
+      document.documentElement.classList.remove('modal-open');
+      if (cur && cur.btn && cur.btn.focus) cur.btn.focus({ preventScroll: true });
+      else if (lastFocus && lastFocus.focus) lastFocus.focus();
+    });
+    dlg.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft')  step(-1);
+    });
+    /* swipe left / right on phones */
+    (function () {
+      var x0 = 0, y0 = 0;
+      shell.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      shell.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+
+    /* ───────── hero mascot video: desktop only, pauses off screen ───────── */
+    (function () {
+      var v = document.querySelector('#tmVideoFrame video');
+      if (!v) return;
+      if (reduce || !matchMedia('(min-width: 901px)').matches) return; /* phones never download it */
+      var s = document.createElement('source');
+      s.src = 'assets/images/mom.team.webm'; s.type = 'video/webm';
+      v.appendChild(s);
+      v.load();
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          if (es[0].isIntersecting) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } else { v.pause(); }
+        }).observe(v);
+      }
+    })();
+  })();
+  </script>
+
   <script src="js/main.js"></script>
   <script>
     const fy = document.getElementById('footer-year');
     if (fy) fy.textContent = new Date().getFullYear();
-
-    (function() {
-      const section = document.getElementById('team-main');
-      if (!section) return;
-      const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-      section.insertBefore(canvas, section.firstChild);
-      const ctx = canvas.getContext('2d');
-      let W, H, t = Math.random() * 1000;
-      const dots = Array.from({ length: 30 }, () => ({
-        x: Math.random(), y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.0004,
-        vy: (Math.random() - 0.5) * 0.0004,
-        r: Math.random() * 1.3 + 0.4
-      }));
-      function resize() { W = canvas.width = section.offsetWidth; H = canvas.height = section.offsetHeight; }
-      resize();
-      new ResizeObserver(resize).observe(section);
-      function draw() {
-        ctx.clearRect(0, 0, W, H); t += 0.006;
-        const cx1 = W*(0.2+0.18*Math.sin(t*0.22)), cy1 = H*(0.35+0.2*Math.cos(t*0.17));
-        const g1 = ctx.createRadialGradient(cx1,cy1,0,cx1,cy1,Math.min(W,H)*0.45);
-        g1.addColorStop(0,'rgba(227,27,35,0.08)'); g1.addColorStop(1,'rgba(227,27,35,0)');
-        ctx.fillStyle=g1; ctx.fillRect(0,0,W,H);
-        const cx2 = W*(0.78+0.15*Math.cos(t*0.19)), cy2 = H*(0.65+0.18*Math.sin(t*0.28));
-        const g2 = ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,Math.min(W,H)*0.35);
-        g2.addColorStop(0,'rgba(227,27,35,0.06)'); g2.addColorStop(1,'rgba(227,27,35,0)');
-        ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
-        dots.forEach(d => {
-          d.x+=d.vx; d.y+=d.vy;
-          if(d.x<0)d.x=1; if(d.x>1)d.x=0; if(d.y<0)d.y=1; if(d.y>1)d.y=0;
-        });
-        dots.forEach((a,i) => {
-          dots.slice(i+1).forEach(b => {
-            const dx=(a.x-b.x)*W,dy=(a.y-b.y)*H,dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<130){
-              ctx.beginPath(); ctx.moveTo(a.x*W,a.y*H); ctx.lineTo(b.x*W,b.y*H);
-              ctx.strokeStyle=`rgba(227,27,35,${0.08*(1-dist/130)})`; ctx.lineWidth=0.5; ctx.stroke();
-            }
-          });
-          ctx.beginPath(); ctx.arc(a.x*W,a.y*H,a.r,0,Math.PI*2);
-          ctx.fillStyle='rgba(227,27,35,0.25)'; ctx.fill();
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
 
     /* Bend-in entrance for the team-hero video panel */
     (function() {
@@ -1159,27 +1049,5 @@
     })();
   </script>
   <script src="js/animations.js"></script>
-  <script>
-  (function() {
-    const cards = document.querySelectorAll('.flip-card');
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.flip-card'));
-          const idx = siblings.indexOf(entry.target);
-          setTimeout(() => entry.target.classList.add('in-view'), idx * 80);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    cards.forEach(c => obs.observe(c));
-
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        card.classList.toggle('flipped');
-      });
-    });
-  })();
-  </script>
 </body>
 </html>
