@@ -1187,7 +1187,7 @@
       /* parallax: one rAF per scroll, only while the frame is on screen */
       function initParallax() {
         var vis = false, ticking = false;
-        new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) upd(); }).observe(frame);
+        new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) upd(); }).observe(frame.parentNode);
         function upd() {
           ticking = false;
           var r = frame.getBoundingClientRect();
@@ -1207,8 +1207,8 @@
         if (!('IntersectionObserver' in window) || reduce) { frame.classList.add('in'); cnt.textContent = total; return; }
         var o = new IntersectionObserver(function (es) {
           if (es[0].isIntersecting) { frame.classList.add('in'); countUp(); o.disconnect(); }
-        }, { threshold: 0.25 });
-        o.observe(frame);
+        }, { threshold: 0.15 });
+        o.observe(frame.parentNode);
         initParallax();
       }
       im.addEventListener('load', ready);
