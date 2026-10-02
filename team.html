@@ -373,6 +373,115 @@
       .dossier[open] .ds-photo::after { animation: none; }
       .tm-tier-line { transform: none; transition: none; }
     }
+
+    /* ════════════════════════════════════════════════
+       TEAM PHOTO SECTION
+       ════════════════════════════════════════════════ */
+    #team-photo { position: relative; z-index: 5; background: #1a1818; padding: clamp(56px, 8vw, 110px) 0 clamp(40px, 6vw, 80px); overflow: hidden; }
+    #team-photo[hidden] { display: none; }
+    #team-photo::before {
+      content: ""; position: absolute; left: 50%; top: 55%; width: min(1100px, 120%); height: 600px;
+      transform: translate(-50%, -50%); pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(227,27,35,0.16) 0%, transparent 65%);
+    }
+    .tp-container { position: relative; z-index: 1; }
+
+    .tp-frame {
+      --mx: 50%; --my: 40%; --py: 0px;
+      position: relative; margin: 0; border-radius: 18px; overflow: hidden;
+      aspect-ratio: 16 / 9; background: #0e0c10;
+      box-shadow: 0 0 0 1px rgba(227,27,35,0.35), 0 40px 90px -30px rgba(0,0,0,0.9), 0 0 90px -35px rgba(227,27,35,0.55);
+      clip-path: inset(0 100% 0 0 round 18px);
+    }
+    .tp-frame.in { clip-path: inset(0 0 0 0 round 18px); transition: clip-path 1.5s var(--ease-out-expo); }
+
+    .tp-media { position: absolute; inset: 0; transform: scale(1.3); }
+    .tp-frame.in .tp-media { animation: tp-settle 2.4s var(--ease-out-expo) forwards; }
+    @keyframes tp-settle { to { transform: scale(1); } }
+    .tp-media img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      transform: scale(1.1) translate3d(0, var(--py), 0);
+      will-change: transform;
+    }
+
+    /* darkening + vignette so any photo sits inside the site's look */
+    .tp-frame::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        linear-gradient(to top, rgba(8,6,10,0.92) 0%, rgba(8,6,10,0.55) 22%, transparent 48%),
+        radial-gradient(ellipse at center, transparent 55%, rgba(8,6,10,0.45) 100%);
+    }
+    .tp-spot { display: none; }
+    .tp-scan {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 2px; z-index: 4; opacity: 0; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, var(--red), transparent);
+      box-shadow: 0 0 22px 4px rgba(227,27,35,0.7);
+    }
+    .tp-frame.in .tp-scan { animation: tp-scan 1.5s 0.1s var(--ease-in-out) 1; }
+    @keyframes tp-scan { 0% { left: 0; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { left: calc(100% - 2px); opacity: 0; } }
+
+    .tp-frame .evf-corner { z-index: 5; width: 22px; height: 22px; }
+    .tp-frame .evf-corner::before, .tp-frame .evf-corner::after { background: var(--red); }
+    .tp-frame .evf-tl { top: 14px; left: 14px; } .tp-frame .evf-tr { top: 14px; right: 14px; }
+    .tp-frame .evf-bl { bottom: 14px; left: 14px; } .tp-frame .evf-br { bottom: 14px; right: 14px; }
+
+    .tp-cap {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+      padding: clamp(18px, 3vw, 36px) clamp(22px, 3.4vw, 44px);
+    }
+    .tp-cap-k { display: block; font-size: 10px; letter-spacing: 0.22em; color: var(--red); margin-bottom: 8px; }
+    .tp-cap-t { font-family: var(--font-display); font-size: clamp(30px, 5vw, 60px); line-height: 0.95; letter-spacing: 0.02em; }
+    .tp-cap-r { display: flex; align-items: center; gap: 22px; flex: none; }
+    .tp-stat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 4.5vw, 52px); line-height: 1; font-variant-numeric: tabular-nums; }
+    .tp-stat span { display: block; margin-top: 4px; font-size: 9px; letter-spacing: 0.2em; color: var(--steel-light); text-transform: uppercase; }
+    .tp-open { cursor: pointer; background: rgba(0,0,0,0.35); }
+
+    @media (hover: hover) and (pointer: fine) {
+      .tp-spot {
+        display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 0.4s;
+        background: radial-gradient(380px circle at var(--mx) var(--my), rgba(227,27,35,0.26), transparent 65%);
+        mix-blend-mode: screen;
+      }
+      .tp-frame:hover .tp-spot { opacity: 1; }
+    }
+
+    /* name ticker */
+    .tp-ticker {
+      margin-top: clamp(22px, 3vw, 36px); overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.07); border-bottom: 1px solid rgba(255,255,255,0.07);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .tp-track { display: flex; width: max-content; animation: tp-run 70s linear infinite; }
+    .tp-ticker:hover .tp-track { animation-play-state: paused; }
+    .tp-track span {
+      display: inline-flex; align-items: center; gap: 14px; padding: 16px 22px 16px 0;
+      font-family: var(--font-cond); font-weight: 600; font-size: 15px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--steel-light); white-space: nowrap;
+    }
+    .tp-track span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+    @keyframes tp-run { to { transform: translateX(-50%); } }
+
+    /* full-size lightbox */
+    dialog.tp-box { border: 0; padding: 0; margin: 0; background: transparent; max-width: none; max-height: none; width: 100%; height: 100%; overflow: hidden; }
+    dialog.tp-box[open] { display: grid; place-items: center; padding: 16px; }
+    dialog.tp-box::backdrop { background: rgba(6,5,7,0.94); }
+    .tp-box img { max-width: min(96vw, 1700px); max-height: 92vh; max-height: 92dvh; border-radius: 12px; box-shadow: 0 0 0 1px rgba(227,27,35,0.4), 0 30px 80px rgba(0,0,0,0.8); animation: ds-in 0.45s var(--ease-out-expo); }
+
+    @media (max-width: 700px) {
+      .tp-frame { aspect-ratio: 4 / 3; border-radius: 14px; }
+      .tp-cap { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .tp-cap-r { width: 100%; justify-content: space-between; }
+      .tp-frame .evf-corner { width: 16px; height: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tp-frame, .tp-frame.in { clip-path: none; transition: none; }
+      .tp-media, .tp-frame.in .tp-media { transform: none; animation: none; }
+      .tp-frame.in .tp-scan { animation: none; }
+      .tp-track { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -463,6 +572,46 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════ TEAM PHOTO ═══════════════════ -->
+  <!-- Hidden until assets/images/team.mcu.jpg actually loads. If the file is
+       missing, the section stays hidden and nothing looks broken. -->
+  <section id="team-photo" hidden aria-label="Team photo">
+    <div class="container tp-container">
+      <div class="tm-tier-label reveal-up">
+        <div class="tm-tier-left">
+          <span class="mono tm-tier-tag">FIG. 01</span>
+          <h2 class="tm-tier-title">The Whole Crew</h2>
+        </div>
+        <div class="tm-tier-line"></div>
+      </div>
+
+      <figure class="tp-frame" id="tpFrame">
+        <div class="tp-media"><img id="tpImg" alt="The MCU 2026-27 team together" decoding="async" /></div>
+        <div class="tp-spot"></div>
+        <div class="tp-scan"></div>
+        <span class="evf-corner evf-tl"></span><span class="evf-corner evf-tr"></span>
+        <span class="evf-corner evf-bl"></span><span class="evf-corner evf-br"></span>
+        <figcaption class="tp-cap">
+          <div>
+            <span class="mono tp-cap-k">MCU · 2026–27</span>
+            <span class="tp-cap-t">One team. One union.</span>
+          </div>
+          <div class="tp-cap-r">
+            <div class="tp-stat"><b id="tpCount">0</b><span class="mono">Members</span></div>
+            <button type="button" class="btn-ghost btn-sm tp-open" id="tpOpen">View full</button>
+          </div>
+        </figcaption>
+      </figure>
+
+      <div class="tp-ticker" aria-hidden="true"><div class="tp-track" id="tpTrack"></div></div>
+    </div>
+  </section>
+
+  <dialog id="tpBox" class="tp-box" aria-label="Team photo, full size">
+    <button class="ds-close" id="tpBoxClose" type="button" aria-label="Close photo">&times;</button>
+    <img id="tpBoxImg" alt="The MCU 2026-27 team together" />
+  </dialog>
 
   <!-- ═══════════════════ STICKY FILTER ═══════════════════ -->
   <div id="tm-filter">
@@ -1007,6 +1156,85 @@
         var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
         if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
       }, { passive: true });
+    })();
+
+    /* ───────── team photo ───────── */
+    (function () {
+      var sec = $('#team-photo'), frame = $('#tpFrame'), im = $('#tpImg');
+      if (!sec || !frame || !im) return;
+      /* Browsers other than Safari cannot show HEIC, so convert the photo to
+         JPG or WebP and save it under this name. */
+      var SRC = IMG + 'team.mcu.jpg';
+
+      /* ticker: every member, tier-coloured dot, doubled for a seamless loop */
+      var names = ALL.map(function (m) {
+        return '<span style="--c:' + m.tier.color + '">' + esc(m.n) + '</span>';
+      }).join('');
+      $('#tpTrack').innerHTML = names + names;
+
+      /* count-up */
+      var cnt = $('#tpCount'), total = ALL.length;
+      function countUp() {
+        if (reduce) { cnt.textContent = total; return; }
+        var t0 = performance.now(), dur = 1400;
+        (function tick(now) {
+          var p = Math.min((now - t0) / dur, 1);
+          cnt.textContent = Math.round(total * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+      }
+
+      /* parallax: one rAF per scroll, only while the frame is on screen */
+      function initParallax() {
+        var vis = false, ticking = false;
+        new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) upd(); }).observe(frame);
+        function upd() {
+          ticking = false;
+          var r = frame.getBoundingClientRect();
+          var p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+          frame.style.setProperty('--py', (p * -26).toFixed(1) + 'px');
+        }
+        addEventListener('scroll', function () {
+          if (vis && !ticking) { ticking = true; requestAnimationFrame(upd); }
+        }, { passive: true });
+      }
+
+      /* reveal once the image has really loaded; hide the section if it fails */
+      var shown = false;
+      function ready() {
+        if (shown) return; shown = true;
+        sec.hidden = false;
+        if (!('IntersectionObserver' in window) || reduce) { frame.classList.add('in'); cnt.textContent = total; return; }
+        var o = new IntersectionObserver(function (es) {
+          if (es[0].isIntersecting) { frame.classList.add('in'); countUp(); o.disconnect(); }
+        }, { threshold: 0.25 });
+        o.observe(frame);
+        initParallax();
+      }
+      im.addEventListener('load', ready);
+      im.addEventListener('error', function () { sec.hidden = true; });
+      im.src = SRC;
+      if (im.complete && im.naturalWidth) ready();
+
+      /* spotlight follows the mouse (CSS only shows it on real mice) */
+      if (fine && !reduce) {
+        frame.addEventListener('pointermove', function (e) {
+          var r = frame.getBoundingClientRect();
+          frame.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+          frame.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+        });
+      }
+
+      /* full-size lightbox */
+      var box = $('#tpBox'), boxImg = $('#tpBoxImg');
+      $('#tpOpen').addEventListener('click', function () {
+        boxImg.src = SRC;
+        if (typeof box.showModal === 'function') box.showModal(); else box.setAttribute('open', '');
+        document.documentElement.classList.add('modal-open');
+      });
+      $('#tpBoxClose').addEventListener('click', function () { box.close(); });
+      box.addEventListener('click', function (e) { if (e.target !== boxImg) box.close(); });
+      box.addEventListener('close', function () { document.documentElement.classList.remove('modal-open'); });
     })();
 
     /* ───────── hero mascot video: desktop only, pauses off screen ───────── */
