@@ -321,6 +321,11 @@
     .oh-slot-prof { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 500; line-height: 1.35; }
     .oh-slot-meta { font-family: var(--font-body); font-size: 11px; color: var(--steel); font-weight: 300; margin-top: 2px; }
     .oh-empty-state { text-align: center; padding: 30px 20px; font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; margin: 0 auto; }
+    .oh-flex-list { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .oh-flex-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); margin-bottom: 2px; }
+    .oh-flex-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-left: 2px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 10px 14px; font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 300; line-height: 1.5; }
+    .oh-flex-item strong { color: var(--white); font-weight: 600; }
+    .oh-flex-item .oh-flex-course { font-family: var(--font-mono); font-size: 10.5px; color: var(--red); margin-left: 6px; }
     .oh-bio-card { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; max-width: 640px; }
     .oh-bio-card.active { display: block; }
     .oh-bio-name { font-family: var(--font-cond); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
@@ -489,12 +494,13 @@
         </div>
         <div class="oh-search-wrap">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="oh-search-input" placeholder="Or search by first or last name…" autocomplete="off">
+          <input type="text" id="oh-search-input" placeholder="Or search by name or course code…" autocomplete="off">
         </div>
       </div>
 
       <div id="oh-bio-card" class="oh-bio-card"></div>
       <div class="oh-cal-grid" id="oh-cal-grid"></div>
+      <div class="oh-flex-list" id="oh-flex-list"></div>
 
       <div class="oh-cal-footer">
         <p>Official source may be more current, but might not always be updated or accurate — that's exactly why we're building this calendar.</p>
@@ -513,28 +519,37 @@
   </section>
 
   <script>
-    // Office hours data — one entry per professor. "slots" is a list of
-    // recurring weekly blocks; "bio" fields are optional but recommended.
-    // day must be one of: Monday, Tuesday, Wednesday, Thursday, Friday.
     const officeHoursData = [
-      {
-        name: "Prof. Fisseh",
+      { name: "Prof. Fisseh", email: "lfisseha@torontomu.ca", courses: ["MTH425"], year: "Year 2",
+        slots: [ { day: "Friday", time: "11:00 AM – 1:00 PM", course: "MTH425", room: "VIC 703" } ] },
+      { name: "Dr. Robin", email: "robin.chhabra@torontomu.ca", courses: ["MTE301"], year: "Year 2",
+        note: "By appointment only — email to book. Office: EPH415.", slots: [] },
+      { name: "Dr. Papini", email: "mpapini@torontomu.ca", courses: ["MEC323"], year: "Year 2",
         slots: [
-          { day: "Friday", time: "11:00 AM – 1:00 PM", course: "", room: "VIC 703" }
-        ]
-      },
-      {
-        name: "Dr. Robin",
-        note: "By appointment only — email to book. Office: EPH415.",
-        slots: []
-      },
-      {
-        name: "Dr. Papini",
-        slots: [
-          { day: "Monday", time: "12:00 – 2:00 PM", course: "", room: "EPH327" },
-          { day: "Wednesday", time: "2:00 – 4:00 PM", course: "", room: "EPH327" }
-        ]
-      },
+          { day: "Monday", time: "12:00 – 2:00 PM", course: "MEC323", room: "EPH327" },
+          { day: "Wednesday", time: "2:00 – 4:00 PM", course: "MEC323", room: "EPH327" }
+        ] },
+      { name: "Dr. Neumann", email: "pneumann@torontomu.ca", courses: ["MEC325"], year: "Year 2",
+        note: "Virtual, 2:10 – 3:00 PM (day not confirmed yet — email to check).", slots: [] },
+      { name: "Dr. Sadeem M. Qureshi", email: "s1qureshi@torontomu.ca", courses: ["MEC325", "MEC713"], year: "Year 2 & 3",
+        note: "MEC325: virtual, 2:10 – 3:00 PM (day not confirmed yet). MEC713: hours TBA.", slots: [] },
+      { name: "Hossein Hassani", courses: ["MEC617"], year: "Year 4",
+        slots: [ { day: "Tuesday", time: "9:00 – 10:00 AM", course: "MEC617", room: "" } ] },
+      { name: "Dr. Kandasamy Illanko", courses: ["MTE792"], year: "Year 3–4",
+        note: "Office hours over Zoom, by appointment only.", slots: [] },
+      { name: "Dr. Gelareh Hajian", email: "Gelareh.hajian@torontomu.ca", courses: ["MTE712"], year: "Year 4",
+        note: "Office hours TBD.", slots: [] },
+      { name: "Dr. Ehsan Hallaji", email: "ehallaji@torontomu.ca", courses: ["MTE502"], year: "Year 3",
+        slots: [ { day: "Wednesday", time: "11:00 AM – 12:00 PM", course: "MTE502", room: "EPH417" } ] },
+      { name: "Md Waselul Haque Sadid", email: "whsadid@torontomu.ca", courses: ["MTE501"], year: "Year 3",
+        slots: [ { day: "Wednesday", time: "9:00 – 10:00 AM", course: "MTE501", room: "" } ] },
+      { name: "Dr. Katrin Rohlf", email: "krohlf@torontomu.ca", courses: ["MTH510"], year: "Year 3",
+        note: "Also available by appointment.",
+        slots: [ { day: "Tuesday", time: "12:00 – 2:00 PM", course: "MTH510", room: "ENG 240" } ] },
+      { name: "Dr. Richard Cheung", email: "cheung@torontomu.ca", courses: ["EES612"], year: "Year 3",
+        slots: [ { day: "Tuesday", time: "3:45 – 5:45 PM", course: "EES612", room: "ENG330" } ] },
+      { name: "Dr. Surinder Jassar", email: "jassar@torontomu.ca", courses: ["EES612"], year: "Year 3",
+        slots: [ { day: "Thursday", time: "3:00 – 5:00 PM", course: "EES612", room: "Virtual" } ] },
     ];
 
     (function () {
@@ -554,35 +569,36 @@
         select.appendChild(opt);
       });
 
+      function matches(p, q) {
+        const name = p.name.toLowerCase();
+        return name.split(/\s+/).some(part => part.startsWith(q)) || name.includes(q) ||
+          (p.courses || []).some(c => c.toLowerCase().startsWith(q));
+      }
+
       function getActivePerson() {
         if (select.value !== '') return officeHoursData[Number(select.value)];
         const q = input.value.trim().toLowerCase();
         if (!q) return null;
-        const matches = officeHoursData.filter(p => {
-          const parts = p.name.toLowerCase().split(/\s+/);
-          return parts.some(part => part.startsWith(q)) || p.name.toLowerCase().includes(q);
-        });
-        return matches.length === 1 ? matches[0] : null;
+        const found = officeHoursData.filter(p => matches(p, q));
+        return found.length === 1 ? found[0] : null;
       }
 
       function getVisiblePeople() {
         const q = input.value.trim().toLowerCase();
         if (select.value !== '') return [officeHoursData[Number(select.value)]];
         if (!q) return officeHoursData;
-        return officeHoursData.filter(p => {
-          const parts = p.name.toLowerCase().split(/\s+/);
-          return parts.some(part => part.startsWith(q)) || p.name.toLowerCase().includes(q);
-        });
+        return officeHoursData.filter(p => matches(p, q));
       }
 
       function renderBio() {
         const person = getActivePerson();
-        if (!person || (!person.email && !person.profileUrl && !person.research && !person.note)) {
+        if (!person || (!person.email && !person.profileUrl && !person.research && !person.note && !(person.courses || []).length)) {
           bioCard.classList.remove('active');
           bioCard.innerHTML = '';
           return;
         }
         let rows = '';
+        if ((person.courses || []).length) rows += `<div class="oh-bio-row"><span>Teaches</span><span>${person.courses.join(', ')}${person.year ? ' · ' + person.year : ''}</span></div>`;
         if (person.note) rows += `<div class="oh-bio-row"><span>Note</span><span>${person.note}</span></div>`;
         if (person.profileUrl) rows += `<div class="oh-bio-row"><span>TMU Profile</span><a href="${person.profileUrl}" target="_blank" rel="noopener">View page →</a></div>`;
         if (person.email) rows += `<div class="oh-bio-row"><span>Email</span><a href="mailto:${person.email}">${person.email}</a></div>`;
@@ -591,8 +607,18 @@
         bioCard.classList.add('active');
       }
 
+      const flexList = document.getElementById('oh-flex-list');
+      function renderFlex(visible) {
+        if (!flexList) return;
+        const flex = visible.filter(p => !(p.slots || []).length);
+        if (!flex.length) { flexList.innerHTML = ''; return; }
+        flexList.innerHTML = '<div class="oh-flex-title">No fixed weekly time</div>' + flex.map(p =>
+          `<div class="oh-flex-item"><strong>${p.name}</strong><span class="oh-flex-course">${(p.courses || []).join(', ')}</span><br>${p.note || 'Hours not posted yet — email to ask.'}</div>`).join('');
+      }
+
       function renderGrid() {
         const visible = getVisiblePeople();
+        renderFlex(visible);
 
         if (!officeHoursData.length) {
           grid.innerHTML = '<div class="oh-empty-state">Office hours haven\'t been added yet — check the official source below in the meantime.</div>';
@@ -638,7 +664,9 @@
           let body = '<h2>MCU Office Hours</h2>';
           visible.forEach(person => {
             body += `<h3>${person.name}</h3>`;
+            if ((person.courses || []).length) body += `<p>Teaches: ${person.courses.join(', ')}${person.year ? ' (' + person.year + ')' : ''}</p>`;
             if (person.email) body += `<p>Email: ${person.email}</p>`;
+            if (person.note) body += `<p>Note: ${person.note}</p>`;
             if (person.research) body += `<p>Studies: ${person.research}</p>`;
             body += '<table border="1" cellpadding="6" style="border-collapse:collapse;"><tr><th>Day</th><th>Time</th><th>Course</th><th>Room</th></tr>';
             (person.slots || []).forEach(s => {
