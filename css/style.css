@@ -1449,34 +1449,6 @@ em { font-style: italic; color: var(--red); }
   pointer-events: none;
 }
 
-/* ─── CUSTOM CURSOR ─── */
-#cursor-ring {
-  position: fixed;
-  pointer-events: none;
-  z-index: 99999;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  width: 28px; height: 28px;
-  border: 1px solid rgba(227, 27, 35, 0.5);
-  transition:
-    width 0.2s cubic-bezier(0.16,1,0.3,1),
-    height 0.2s cubic-bezier(0.16,1,0.3,1),
-    opacity 0.2s,
-    border-color 0.2s;
-  will-change: left, top;
-}
-#cursor-dot {
-  position: fixed;
-  pointer-events: none;
-  z-index: 99999;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  width: 4px; height: 4px;
-  background: var(--red);
-  transition: width 0.15s, height 0.15s;
-  will-change: left, top;
-}
-
 /* ─── HERO HEADLINE — glitch clone transitions ─── */
 .hero-headline {
   transition: clip-path 0.04s steps(1);
@@ -1584,8 +1556,6 @@ em { font-style: italic; color: var(--red); }
 /* ─── REDUCED MOTION — safety net ─── */
 @media (prefers-reduced-motion: reduce) {
   #scroll-progress-bar,
-  #cursor-ring,
-  #cursor-dot,
   .stat-sweep,
   .role-badge,
   .hbp-logo-svg,
@@ -1759,3 +1729,24 @@ em { font-style: italic; color: var(--red); }
     opacity: 1;
   }
 }
+
+
+/* ─── LITE MODE (weak devices / user toggle) ─── */
+.perf-toggle {
+  background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--steel);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 14px; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.perf-toggle:hover, .perf-toggle[aria-pressed="true"] { border-color: var(--red); color: var(--white); }
+html.lite #bg-canvas { display: none; }
+html.lite *, html.lite *::before, html.lite *::after {
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+html.lite #nav.scrolled { background: rgba(14,12,12,0.97); }
+html.lite .reveal-up, html.lite .reveal-right { transform: none !important; transition: opacity 0.3s ease !important; }
+html.lite .section-title-inner { transform: none !important; transition: none !important; }
+html.lite .marquee-track, html.lite .badge-dot, html.lite .orbit, html.lite .mascot-svg,
+html.lite .hbp-logo-svg, html.lite .role-badge, html.lite .stat-sweep { animation: none !important; }
+html.lite .btn-primary::before, html.lite .nav-cta::before { display: none; }
+@media (max-width: 800px) { .footer-bottom .perf-toggle { align-self: center; } }
