@@ -21,7 +21,7 @@
 
   var ctx = canvas.getContext('2d');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = 0, h = 0, dpr = (window.MCU && window.MCU.lite) ? 1 : Math.min(window.devicePixelRatio || 1, 2);
   var paths = [];
   var visible = true;
   var raf = null;
