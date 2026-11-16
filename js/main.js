@@ -5,6 +5,78 @@
 
 'use strict';
 
+/* ─── PERFORMANCE MODE ───
+   Auto-detects weak devices and switches heavy effects off ("lite" mode).
+   - Starts lite for: reduced-motion, data-saver, <=2GB RAM or <=2 CPU cores
+   - Also measures real frame rate shortly after load and drops to lite if it's choppy
+   - Visitors can force it either way with the footer toggle (or ?lite=1 / ?lite=0)       */
+window.MCU = (function () {
+  const root = document.documentElement;
+  const KEY = 'mcu_perf';        // 'lite' | 'full'  (explicit choice)
+  const AUTO = 'mcu_perf_auto';  // 'lite' (set by the frame-rate probe)
+  const mq = q => window.matchMedia && window.matchMedia(q).matches;
+  const nav = navigator, conn = nav.connection || {};
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  const qp = new URLSearchParams(location.search).get('lite');
+  if (qp === '1') store.set(KEY, 'lite');
+  if (qp === '0') store.set(KEY, 'full');
+
+  const pref = store.get(KEY);
+  const weak = mq('(prefers-reduced-motion: reduce)') || conn.saveData ||
+               (nav.deviceMemory && nav.deviceMemory <= 2) ||
+               (nav.hardwareConcurrency && nav.hardwareConcurrency <= 2);
+  const api = { lite: pref === 'lite' || (pref !== 'full' && (weak || store.get(AUTO) === 'lite')) };
+
+  function apply() {
+    root.classList.toggle('lite', api.lite);
+    document.querySelectorAll('.perf-toggle').forEach(b => {
+      b.textContent = 'Lite mode: ' + (api.lite ? 'On' : 'Off');
+      b.setAttribute('aria-pressed', api.lite ? 'true' : 'false');
+    });
+    document.dispatchEvent(new CustomEvent('mcu:perfchange', { detail: { lite: api.lite } }));
+  }
+  api.set = function (on, persist) {
+    api.lite = !!on;
+    if (persist) store.set(KEY, on ? 'lite' : 'full');
+    apply();
+  };
+  root.classList.toggle('lite', api.lite);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const bottom = document.querySelector('.footer-bottom');
+    if (bottom) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'perf-toggle mono';
+      b.title = 'Turn heavy animations off for smoother scrolling';
+      b.addEventListener('click', () => api.set(!api.lite, true));
+      bottom.appendChild(b);
+    }
+    apply();
+  });
+
+  /* Frame-rate probe: only when the visitor hasn't chosen and we're not already lite */
+  if (!api.lite && pref !== 'full') {
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        const dts = []; let last = performance.now();
+        (function frame(now) {
+          if (document.hidden) { last = now; return requestAnimationFrame(frame); }
+          dts.push(now - last); last = now;
+          if (dts.length < 60) return requestAnimationFrame(frame);
+          dts.sort((a, b) => a - b);
+          const median = dts[dts.length >> 1];
+          if (median > 30) { store.set(AUTO, 'lite'); api.set(true, false); }  // under ~33 fps
+        })(last);
+      }, 1800);
+    });
+  }
+  return api;
+})();
+
 /* ─── LOADER ─── */
 (function initLoader() {
   const loader   = document.getElementById('loader');
@@ -13,8 +85,12 @@
   if (!loader) return;
 
   let progress = 0;
+  const t0 = performance.now();
   const interval = setInterval(() => {
-    progress += Math.random() * 18 + 4;
+    progress += Math.random() * 20 + 10;
+    /* Don't hit 100% until the page has really loaded (or 2.5s passed) */
+    const ready = document.readyState === 'complete' || performance.now() - t0 > 2500;
+    if (!ready) progress = Math.min(progress, 92);
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
@@ -22,11 +98,11 @@
         loader.classList.add('hidden');
         document.body.style.overflow = '';
         triggerHeroReveal();
-      }, 300);
+      }, 200);
     }
-    fill.style.width = progress + '%';
-    pct.textContent  = Math.floor(progress) + '%';
-  }, 80);
+    if (fill) fill.style.width = progress + '%';
+    if (pct)  pct.textContent  = Math.floor(progress) + '%';
+  }, 60);
 
   document.body.style.overflow = 'hidden';
 })();
@@ -86,205 +162,110 @@ function triggerHeroReveal() {
   bar.id = 'scroll-progress-bar';
   bar.style.cssText = [
     'position:fixed', 'top:0', 'left:0', 'z-index:9999',
-    'height:2px', 'width:0%',
+    'height:2px', 'width:100%',
     'background:var(--red)',
     'box-shadow:0 0 8px var(--red)',
-    'transition:width 0.1s linear',
-    'pointer-events:none'
+    'transform-origin:left center', 'transform:scaleX(0)',
+    'pointer-events:none', 'will-change:transform'
   ].join(';');
   document.body.appendChild(bar);
 
-  window.addEventListener('scroll', () => {
-    const scrollTop  = window.scrollY;
-    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-    const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    bar.style.width  = pct + '%';
-  }, { passive: true });
-})();
-
-/* ─── CUSTOM CURSOR ─── */
-(function initCursor() {
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  const ring = document.createElement('div');
-  const dot  = document.createElement('div');
-  ring.id = 'cursor-ring';
-  dot.id  = 'cursor-dot';
-
-  const baseStyle = 'position:fixed;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%);';
-  ring.style.cssText = baseStyle + 'width:28px;height:28px;border:1px solid rgba(227,27,35,0.5);transition:width 0.2s,height 0.2s,opacity 0.2s,border-color 0.2s;';
-  dot.style.cssText  = baseStyle + 'width:4px;height:4px;background:var(--red);transition:width 0.15s,height 0.15s;';
-
-  document.body.appendChild(ring);
-  document.body.appendChild(dot);
-
-  let mx = -100, my = -100;
-  let rx = -100, ry = -100;
-  let raf;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-  });
-
-  function lerpCursor() {
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    raf = requestAnimationFrame(lerpCursor);
+  let ticking = false;
+  function update() {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (docHeight > 0 ? Math.min(1, window.scrollY / docHeight) : 0) + ')';
+    ticking = false;
   }
-  lerpCursor();
-
-  /* Scale ring on hoverable elements */
-  document.querySelectorAll('a, button, .pillar-card, .event-card, .ev-card, .tm-card, .gc').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width        = '44px';
-      ring.style.height       = '44px';
-      ring.style.borderColor  = 'rgba(227,27,35,0.9)';
-      dot.style.width         = '6px';
-      dot.style.height        = '6px';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width        = '28px';
-      ring.style.height       = '28px';
-      ring.style.borderColor  = 'rgba(227,27,35,0.5)';
-      dot.style.width         = '4px';
-      dot.style.height        = '4px';
-    });
-  });
-
-  document.addEventListener('mouseleave', () => { ring.style.opacity = '0'; dot.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { ring.style.opacity = '1'; dot.style.opacity = '1'; });
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
 })();
 
-/* ─── CANVAS BACKGROUND — Engineering Grid + Particles ─── */
+/* ─── CANVAS BACKGROUND — Engineering Grid + Particles ───
+   The static circuit grid is drawn once into an offscreen canvas; only the
+   particles animate. Capped at 30fps, paused when the tab is hidden or in lite mode. */
 (function initCanvas() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [], nodes = [], animFrame;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
+  const PARTICLES = 36, NODES = 26, LINK2 = 100 * 100;
+  let W = 0, H = 0, particles = [], grid = null, raf = null, last = 0;
 
   class Particle {
     constructor() { this.reset(); }
     reset() {
-      this.x  = Math.random() * W;
-      this.y  = Math.random() * H;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-      this.r  = Math.random() * 1.5 + 0.3;
-      this.a  = Math.random() * 0.4 + 0.1;
-      this.life = 1;
-      this.decay = Math.random() * 0.001 + 0.0003;
+      this.x = Math.random() * W; this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.8; this.vy = (Math.random() - 0.5) * 0.8; /* per-frame at 30fps */
+      this.r = Math.random() * 1.5 + 0.3; this.a = Math.random() * 0.4 + 0.1;
+      this.life = 1; this.decay = Math.random() * 0.002 + 0.0006;
     }
     update() {
-      this.x += this.vx; this.y += this.vy;
-      this.life -= this.decay;
-      if (this.life <= 0 || this.x < 0 || this.x > W || this.y < 0 || this.y > H) {
-        this.reset(); this.life = 1;
-      }
+      this.x += this.vx; this.y += this.vy; this.life -= this.decay;
+      if (this.life <= 0 || this.x < 0 || this.x > W || this.y < 0 || this.y > H) { this.reset(); this.life = 1; }
     }
     draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(227, 27, 35, ${this.a * this.life})`;
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, 6.2832);
+      ctx.fillStyle = 'rgba(227,27,35,' + (this.a * this.life) + ')'; ctx.fill();
     }
   }
 
-  class Node {
-    constructor() {
-      this.x = Math.random() * W;
-      this.y = Math.random() * H;
-      this.connections = [];
-      this.pulsePhase = Math.random() * Math.PI * 2;
-    }
-  }
-
-  function buildNodes(count) {
-    nodes = [];
-    for (let i = 0; i < count; i++) nodes.push(new Node());
+  function buildGrid() {
+    grid = document.createElement('canvas'); grid.width = W; grid.height = H;
+    const g = grid.getContext('2d');
+    const nodes = Array.from({ length: NODES }, () => ({ x: Math.random() * W, y: Math.random() * H }));
+    g.lineWidth = 0.5;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) nodes[i].connections.push({ node: nodes[j], dist });
-      }
-    }
-  }
-
-  let t = 0;
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    t += 0.008;
-
-    for (const node of nodes) {
-      for (const conn of node.connections) {
-        const opacity = Math.max(0, 0.06 - (conn.dist / 200) * 0.06);
-        const pulse   = Math.sin(t + node.pulsePhase) * 0.5 + 0.5;
-        ctx.beginPath();
-        ctx.moveTo(node.x, node.y);
-        const mx = (node.x + conn.node.x) / 2;
-        ctx.lineTo(mx, node.y);
-        ctx.lineTo(mx, conn.node.y);
-        ctx.lineTo(conn.node.x, conn.node.y);
-        ctx.strokeStyle = `rgba(227, 27, 35, ${opacity + pulse * 0.03})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    }
-
-    for (const node of nodes) {
-      const pulse = Math.sin(t * 1.5 + node.pulsePhase) * 0.5 + 0.5;
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(227, 27, 35, ${0.1 + pulse * 0.25})`;
-      ctx.fill();
-    }
-
-    for (const p of particles) { p.update(); p.draw(); }
-
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < 100) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(227, 27, 35, ${(1 - d / 100) * 0.06})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 200) {
+          const mx = (nodes[i].x + nodes[j].x) / 2;
+          g.beginPath(); g.moveTo(nodes[i].x, nodes[i].y); g.lineTo(mx, nodes[i].y); g.lineTo(mx, nodes[j].y); g.lineTo(nodes[j].x, nodes[j].y);
+          g.strokeStyle = 'rgba(227,27,35,' + (0.03 + (1 - d / 200) * 0.05) + ')'; g.stroke();
         }
       }
     }
-
-    animFrame = requestAnimationFrame(draw);
+    g.fillStyle = 'rgba(227,27,35,0.22)';
+    nodes.forEach(n => { g.beginPath(); g.arc(n.x, n.y, 1.5, 0, 6.2832); g.fill(); });
   }
 
-  function init() {
-    resize();
-    particles = Array.from({ length: 60 }, () => new Particle());
-    buildNodes(30);
-    if (animFrame) cancelAnimationFrame(animFrame);
-    draw();
+  function resize(force) {
+    const w = window.innerWidth, h = window.innerHeight;
+    /* Ignore tiny height changes (mobile address bar) so scrolling never rebuilds the canvas */
+    if (!force && w === W && Math.abs(h - H) < 150) return;
+    W = canvas.width = w; H = canvas.height = h;
+    buildGrid();
+    particles = Array.from({ length: PARTICLES }, () => new Particle());
   }
 
-  window.addEventListener('resize', () => { resize(); buildNodes(30); }, { passive: true });
-  init();
+  function draw(now) {
+    raf = requestAnimationFrame(draw);
+    if (now - last < 33) return;           /* ~30fps */
+    last = now;
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(grid, 0, 0);
+    for (const p of particles) { p.update(); p.draw(); }
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < LINK2) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(227,27,35,' + ((1 - Math.sqrt(d2) / 100) * 0.06) + ')'; ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function start() { if (raf === null && !document.hidden && !window.MCU.lite) { resize(true); raf = requestAnimationFrame(draw); } }
+  function stop()  { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } ctx.clearRect(0, 0, W, H); }
+
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (raf !== null) resize(false); }, 200); }, { passive: true });
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  document.addEventListener('mcu:perfchange', e => { e.detail.lite ? stop() : start(); });
+  start();
 })();
 
 /* ─── SCROLL REVEAL ─── */
@@ -360,12 +341,14 @@ function triggerHeroReveal() {
   const mfEls = document.querySelectorAll('.mech-float');
   if (!mfEls.length) return;
   const speeds = [0.04, -0.06, 0.03, -0.05];
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    mfEls.forEach((el, i) => {
-      el.style.transform = `translateY(${scrollY * (speeds[i] || 0.03)}px)`;
-    });
-  }, { passive: true });
+  let ticking = false;
+  function update() {
+    ticking = false;
+    if (window.MCU.lite) return;
+    const y = window.scrollY;
+    mfEls.forEach((el, i) => { el.style.transform = 'translateY(' + (y * (speeds[i] || 0.03)) + 'px)'; });
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
 })();
 
 /* ─── NAV ACTIVE STATE ─── */
@@ -447,7 +430,7 @@ function triggerHeroReveal() {
 
   function runGlitch() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced || window.MCU.lite || document.hidden) return;
 
     /* Phase 1 — channel split (160ms) */
     redClone.style.opacity   = '1';
@@ -506,23 +489,6 @@ function triggerHeroReveal() {
   if (!track || !strip) return;
   strip.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
   strip.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
-})();
-
-/* ─── PILLAR CARDS: magnetic effect ─── */
-(function initMagneticCards() {
-  document.querySelectorAll('.pillar-card, .event-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const dx   = (e.clientX - (rect.left + rect.width  / 2)) / rect.width;
-      const dy   = (e.clientY - (rect.top  + rect.height / 2)) / rect.height;
-      card.style.transform  = `perspective(600px) rotateX(${dy * -4}deg) rotateY(${dx * 4}deg) translateZ(4px)`;
-      card.style.transition = 'transform 0.1s ease';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform  = '';
-      card.style.transition = 'transform 0.4s ease, background 0.3s';
-    });
-  });
 })();
 
 /* ─── KEYBOARD: Konami easter egg ─── */
