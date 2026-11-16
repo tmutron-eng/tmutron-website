@@ -6,6 +6,10 @@
 
 'use strict';
 
+/* Effects that cost frames check this at event time (set in main.js) */
+const isLite = () => !!(window.MCU && window.MCU.lite);
+const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
 /* ─── 1. SMOOTH SCROLL REVEALS ─── */
 (function initReveal() {
   const style = document.createElement('style');
@@ -27,6 +31,9 @@
       transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
     }
     .section-title-inner.visible { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up, .reveal-right, .section-title-inner { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
   `;
   document.head.appendChild(style);
 
@@ -71,8 +78,10 @@
   `;
   document.head.appendChild(style);
 
+  if (!hasHover) return;
   document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta').forEach(el => {
     el.addEventListener('mousemove', e => {
+      if (isLite()) return;
       const r  = el.getBoundingClientRect();
       const dx = (e.clientX - (r.left + r.width  / 2)) * 0.22;
       const dy = (e.clientY - (r.top  + r.height / 2)) * 0.22;
@@ -87,11 +96,10 @@
 (function initCardTilt() {
   const style = document.createElement('style');
   style.textContent = `
-    .pillar-card, .event-card, .ev-card, .tm-card, .role-card {
-      transform-style: preserve-3d; will-change: transform;
-    }
+    .pillar-card, .event-card, .ev-card, .tm-card, .role-card { transform-style: preserve-3d; }
   `;
   document.head.appendChild(style);
+  if (!hasHover) return;
 
   document.querySelectorAll('.pillar-card, .event-card, .ev-card, .tm-card, .role-card').forEach(card => {
     let raf, cx = 0, cy = 0, tx = 0, ty = 0;
@@ -104,6 +112,7 @@
       if (Math.abs(cx - tx) > 0.01 || Math.abs(cy - ty) > 0.01) raf = requestAnimationFrame(loop);
     }
     card.addEventListener('mousemove', e => {
+      if (isLite()) return;
       const r = card.getBoundingClientRect();
       ty =  ((e.clientX - r.left) / r.width  - 0.5) * 6;
       tx = -((e.clientY - r.top)  / r.height - 0.5) * 6;
@@ -140,7 +149,7 @@
   if (!blobs.length) return;
   let ticking = false;
   function update() {
-    const scrollY = window.scrollY;
+    if (isLite()) { ticking = false; return; }
     blobs.forEach((blob, i) => {
       const parent = blob.parentElement;
       if (!parent) return;
@@ -201,14 +210,23 @@
 })();
 
 
-/* ─── 9. SMOOTH ANCHOR SCROLLING ─── */
+/* ─── 9. SMOOTH ANCHOR SCROLLING ───
+   Offset = nav + any sticky sub-bar (e.g. the Academics year tabs). */
 (function initSmoothAnchors() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      let target = null;
+      try { target = document.querySelector(href); } catch (err) { return; }
       if (!target) return;
       e.preventDefault();
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      const nav = document.getElementById('nav');
+      const bar = document.getElementById('year-tab-bar');
+      const offset = (nav ? nav.offsetHeight : 0) + (bar ? bar.offsetHeight : 0) + 8;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: reduce ? 'auto' : 'smooth' });
     });
   });
 })();
@@ -248,11 +266,13 @@
 
   document.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('http') || a.target === '_blank') return;
+    if (!href || /^(#|mailto:|tel:|javascript:|https?:|\/\/)/i.test(href) || a.target === '_blank' || a.hasAttribute('download')) return;
     a.addEventListener('click', e => {
+      /* let new-tab / modified clicks work normally, and skip the fade on weak devices */
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button || isLite()) return;
       e.preventDefault();
       overlay.classList.add('active');
-      setTimeout(() => { window.location.href = href; }, 280);
+      setTimeout(() => { window.location.href = href; }, 220);
     });
   });
 
@@ -287,27 +307,6 @@
   style.textContent = `
     .role-badge {
       animation: role-pulse 2.4s ease-in-out infinite;
-    }
-    /* role-pulse defined in style-additions.css — using that one */ @keyframes role-pulse-noop {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
-      50%       { box-shadow: 0 0 0 4px rgba(74,222,128,0.15); }
-    }
-  `;
-  document.head.appendChild(style);
-})();
-
-
-/* ─── 14. CURSOR — body class for CSS overrides ─── */
-(function initCursorBodyClass() {
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.body.classList.add('has-custom-cursor');
-  }
-  const style = document.createElement('style');
-  style.textContent = `
-    .has-custom-cursor,
-    .has-custom-cursor * { cursor: none !important; }
-    #cursor-ring, #cursor-dot {
-      transition: width 0.2s cubic-bezier(0.16,1,0.3,1), height 0.2s cubic-bezier(0.16,1,0.3,1), opacity 0.2s, border-color 0.2s;
     }
   `;
   document.head.appendChild(style);
