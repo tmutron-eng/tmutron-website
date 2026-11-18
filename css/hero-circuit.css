@@ -61,21 +61,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 24px;
   perspective: 1400px;
 }
 
-/* soft ambient bloom behind the whole cluster */
-.cluster-glow {
-  position: absolute;
-  inset: -90px -110px -60px -170px;
-  background:
-    radial-gradient(ellipse 65% 60% at 60% 42%, rgba(227,27,35,0.20) 0%, rgba(227,27,35,0.09) 38%, rgba(227,27,35,0.02) 68%, transparent 100%);
-  filter: blur(6px);
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: screen;
-}
 
 /* the console — everything sits inside this, tilts together on mousemove */
 #heroCluster {
@@ -96,7 +85,7 @@
   position: relative;
   width: 100%;
   max-width: 360px;
-  padding: 22px 26px 16px;
+  padding: 24px 24px 16px;
   border: 1px solid rgba(227, 27, 35, 0.28);
   border-radius: 6px;
   background: linear-gradient(180deg, rgba(227, 27, 35, 0.055), rgba(255, 255, 255, 0.015));
@@ -108,7 +97,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   transition: box-shadow 0.6s ease;
 }
 
@@ -200,7 +189,7 @@
   border: 1px solid rgba(227, 27, 35, 0.2);
   border-radius: 3px;
   overflow: hidden;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 .readout-panels-v2 .readout-panel {
   border: none;
@@ -217,7 +206,7 @@
 @media (max-width: 900px) {
   .hero-inner-v2 {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
     padding: 40px clamp(20px, 5vw, 60px) 60px;
   }
   .hero-left-v2 .hero-headline { margin-right: 0; }
