@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academics — MCU | Mechatronics Course Union · TMU</title>
-  <meta name="description" content="Course guides, student reviews, video resources, and tutoring support — curated by MCU students who've been there." />
+  <title>Academics | MCU | Mechatronics Course Union · TMU</title>
+  <meta name="description" content="Course guides, student reviews, video resources, and tutoring support | curated by MCU students who've been there." />
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -31,7 +31,7 @@
     .ac-hud-panel {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(227,27,35,0.3);
-      padding: 28px 32px;
+      padding: 24px 32px;
       font-family: var(--font-mono);
       font-size: 11px;
       color: var(--steel);
@@ -40,7 +40,7 @@
       position: relative;
     }
     .ac-hud-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), transparent); }
-    .ac-hud-row { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .ac-hud-row { display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .ac-hud-row:last-child { border-bottom: none; }
     .ac-hud-num { font-size: 28px; color: var(--red); font-family: var(--font-display); letter-spacing: 0; line-height: 1; }
     .ac-hud-label { font-size: 10px; color: var(--steel); }
@@ -48,7 +48,7 @@
       background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%);
       border-top: 1px solid rgba(255,255,255,0.06);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 28px 0;
+      padding: 24px 0;
       position: relative;
     }
     .oh-strip-inner {
@@ -58,7 +58,7 @@
       gap: 24px;
       flex-wrap: wrap;
     }
-    .oh-left { display: flex; align-items: center; gap: 18px; }
+    .oh-left { display: flex; align-items: center; gap: 16px; }
     .oh-icon {
       width: 44px; height: 44px;
       border-radius: 10px;
@@ -69,7 +69,7 @@
     }
     .oh-text h3 {
       font-family: var(--font-cond); font-size: 16px; font-weight: 700;
-      letter-spacing: 0.04em; color: var(--white); text-transform: uppercase; margin-bottom: 3px;
+      letter-spacing: 0.04em; color: var(--white); text-transform: uppercase; margin-bottom: 4px;
     }
     .oh-text p { font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; }
     .oh-link-btn {
@@ -77,7 +77,7 @@
       font-family: var(--font-cond); font-size: 12px; font-weight: 600;
       letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--white); background: var(--red);
-      padding: 12px 22px; text-decoration: none; border-radius: 6px;
+      padding: 12px 24px; text-decoration: none; border-radius: 6px;
       transition: background 0.2s, transform 0.2s; flex-shrink: 0; white-space: nowrap;
     }
     .oh-link-btn:hover { background: #ff2530; transform: translateY(-1px); }
@@ -103,18 +103,18 @@
     .year-section { padding: var(--section-pad) 0; position: relative; overflow: hidden; }
     .year-section:nth-child(odd) { background: #222020; }
     .year-section:nth-child(even) { background: #1a1818; }
-    .year-section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 56px; }
+    .year-section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
     .year-badge {
       font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em;
       color: var(--red); background: rgba(227,27,35,0.1);
-      border: 1px solid rgba(227,27,35,0.3); padding: 6px 12px; text-transform: uppercase;
+      border: 1px solid rgba(227,27,35,0.3); padding: 4px 12px; text-transform: uppercase;
     }
     .year-title-block { flex: 1; }
     .year-title-block h2 { font-family: var(--font-display); font-size: clamp(36px,5vw,56px); color: var(--white); line-height: 1; margin-bottom: 4px; }
     .year-title-block p { font-family: var(--font-body); font-size: 14px; color: var(--steel); font-weight: 300; }
     .semester-label {
       font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--steel); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: var(--steel); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .semester-label span { color: var(--red); margin-right: 8px; }
     .courses-grid {
@@ -126,7 +126,7 @@
     .course-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: border-color 0.25s; }
     .course-card:hover { border-color: rgba(227,27,35,0.25); }
     .course-card.has-content { cursor: pointer; }
-    .course-header { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; cursor: pointer; user-select: none; position: relative; }
+    .course-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 24px; cursor: pointer; user-select: none; position: relative; }
     .course-header::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: var(--red); transform: scaleY(0);
@@ -141,14 +141,14 @@
     .course-coming-tag {
       font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
       color: var(--steel); background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.08); padding: 4px 8px; text-transform: uppercase;
     }
     .course-body { max-height: 0; overflow: hidden; transition: max-height 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
     .course-body.open { max-height: 4000px; }
-    .course-body-inner { padding: 0 24px 28px; }
+    .course-body-inner { padding: 0 24px 24px; }
     .course-overview {
       font-family: var(--font-body); font-size: 14px; color: var(--steel-light);
-      font-weight: 300; line-height: 1.75; margin-bottom: 20px;
+      font-weight: 300; line-height: 1.75; margin-bottom: 16px;
       padding: 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(227,27,35,0.3);
     }
     .review-section { margin-bottom: 24px; }
@@ -156,37 +156,35 @@
     .review-text { font-family: var(--font-body); font-size: 14.5px; color: var(--steel-light); font-weight: 300; line-height: 1.85; }
     .review-text ul { margin: 8px 0 8px 16px; display: flex; flex-direction: column; gap: 4px; }
     .review-text li::marker { color: var(--red); }
-    .course-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .course-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
     .weeks-table { margin-top: 16px; }
     .weeks-table-header {
       display: grid; grid-template-columns: 70px 1fr; gap: 16px;
       padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
       font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; color: var(--steel); text-transform: uppercase;
     }
-    .week-row { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start; }
+    .week-row { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start; }
     .week-row:last-child { border-bottom: none; }
     .week-num { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.1em; }
     .week-topic { font-family: var(--font-body); font-size: 14px; color: var(--steel-light); font-weight: 300; line-height: 2; }
     .prof-chip {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 4px;
       font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
       color: var(--steel); background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08); padding: 4px 10px; margin-bottom: 14px;
+      border: 1px solid rgba(255,255,255,0.08); padding: 4px 8px; margin-bottom: 12px;
     }
     .prof-chip span { color: var(--steel-light); }
-    .coming-soon-card { background: rgba(255,255,255,0.015); border: 1px dashed rgba(255,255,255,0.1); padding: 32px 24px; text-align: center; }
-    .coming-soon-card .cs-icon { font-family: var(--font-mono); font-size: 24px; color: rgba(255,255,255,0.08); margin-bottom: 12px; }
-    .coming-soon-card p { font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; margin-bottom: 14px; }
+    .coming-soon-card { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+    .coming-soon-card p { font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; margin: 0; }
     #ac-tutoring { background: #1e1c1a; padding: var(--section-pad) 0; position: relative; overflow: hidden; }
-    .tutoring-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 20px; margin-top: 48px; }
-    .tutoring-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); padding: 28px; position: relative; overflow: hidden; }
-    .tutoring-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), transparent); }
-    .tutoring-card h4 { font-family: var(--font-display); font-size: 22px; color: var(--white); margin-bottom: 8px; }
+    .tutoring-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 16px; margin-top: 48px; }
+    .tutoring-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); padding: 24px; position: relative; overflow: hidden; }
+        .tutoring-card h4 { font-family: var(--font-display); font-size: 22px; color: var(--white); margin-bottom: 8px; }
     .tutoring-card .tc-detail { font-family: var(--font-mono); font-size: 11px; color: var(--red); letter-spacing: 0.1em; margin-bottom: 12px; text-transform: uppercase; }
     .tutoring-card p { font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; line-height: 1.6; }
     .contribute-strip {
       background: rgba(227,27,35,0.08); border: 1px solid rgba(227,27,35,0.2);
-      padding: 28px 32px; display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 32px; display: flex; align-items: center; justify-content: space-between;
       gap: 24px; margin-top: 48px; flex-wrap: wrap;
     }
     .contribute-strip p { font-family: var(--font-body); font-size: 15px; color: var(--steel-light); font-weight: 300; }
@@ -200,14 +198,14 @@
     }
     @media (max-width: 600px) {
       .year-tab-bar-inner { gap: 0; padding: 0 16px; }
-      .yr-tab { padding: 14px 16px; font-size: 12px; }
+      .yr-tab { padding: 12px 16px; font-size: 12px; }
       .contribute-strip { flex-direction: column; align-items: flex-start; }
       .ac-hud-panel { grid-template-columns: 1fr; }
       .ac-hud-row { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
     }
     .ac-likes-note {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      padding: 10px 0; margin-top: 2px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: 8px 0; margin-top: 2px;
     }
     .ac-likes-note svg { color: var(--red); flex-shrink: 0; width: 14px; height: 14px; }
     .ac-likes-note span {
@@ -219,25 +217,25 @@
     .review-block-header {
       display: flex; align-items: center; justify-content: space-between;
       gap: 12px 16px; flex-wrap: wrap;
-      margin-top: 28px; padding-top: 20px;
+      margin-top: 24px; padding-top: 16px;
       border-top: 1px solid rgba(255,255,255,0.07);
     }
     .review-block:first-child .review-block-header,
     .review-block-header.rb-first {
       margin-top: 0; padding-top: 0; border-top: none;
     }
-    .rb-header-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+    .rb-header-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
     .rb-title {
       font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
       color: var(--red); text-transform: uppercase; font-weight: 600; white-space: nowrap;
     }
     .review-block-header .prof-chip { margin: 0; }
     .rb-favorite-tag {
-      display: none; align-items: center; gap: 5px;
+      display: none; align-items: center; gap: 4px;
       font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
       color: var(--red); background: rgba(227,27,35,0.12);
       border: 1px solid rgba(227,27,35,0.35);
-      padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 20px; text-transform: uppercase;
       white-space: nowrap; flex-shrink: 0;
     }
     .rb-favorite-tag::before { content: '★'; font-size: 10px; line-height: 1; }
@@ -247,7 +245,7 @@
       font-family: var(--font-cond); font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
       color: var(--steel-light); background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.14); border-radius: 20px;
-      padding: 7px 15px 7px 12px; cursor: pointer; flex-shrink: 0;
+      padding: 8px 16px 8px 12px; cursor: pointer; flex-shrink: 0;
       transition: background 0.2s var(--ease-out-expo), border-color 0.2s, color 0.2s, transform 0.15s;
     }
     .like-btn:hover:not(:disabled) { border-color: rgba(227,27,35,0.55); color: var(--white); background: rgba(227,27,35,0.09); transform: translateY(-1px); }
@@ -264,7 +262,7 @@
     .like-btn.like-error { border-color: #ff5555; color: #ff8080; animation: like-shake 0.4s; }
     @keyframes like-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
     @media (max-width: 480px) {
-      .review-block-header { gap: 10px; }
+      .review-block-header { gap: 8px; }
       .rb-header-left { width: 100%; justify-content: space-between; }
     }
     .course-header { flex-wrap: wrap; row-gap: 8px; }
@@ -281,7 +279,7 @@
 
     /* ══ QUICK-JUMP STRIP ══ */
     #ac-quicklinks { background: #14120f; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 0; }
-    .ql-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .ql-inner { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .ql-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--steel); text-transform: uppercase; margin-right: 4px; }
     .ql-btn {
       font-family: var(--font-cond); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
@@ -292,9 +290,9 @@
 
     /* ══ OFFICE HOURS ══ */
     #office-hours { background: linear-gradient(180deg, #1c1a1a 0%, #181616 100%); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: var(--section-pad) 0; }
-    .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+    .oh-cal-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
     .oh-cal-header p { font-family: var(--font-body); font-size: 13.5px; color: var(--steel); font-weight: 300; max-width: 560px; line-height: 1.6; margin-top: 8px; }
-    .oh-tip { display: flex; align-items: flex-start; gap: 10px; background: rgba(227,27,35,0.07); border: 1px solid rgba(227,27,35,0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; max-width: 720px; }
+    .oh-tip { display: flex; align-items: flex-start; gap: 8px; background: rgba(227,27,35,0.07); border: 1px solid rgba(227,27,35,0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; max-width: 720px; }
     .oh-tip svg { flex-shrink: 0; color: var(--red); margin-top: 1px; }
     .oh-tip p { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 300; line-height: 1.5; }
     .oh-tip strong { color: var(--white); font-weight: 600; }
@@ -305,7 +303,7 @@
     .oh-select-wrap svg, .oh-search-wrap svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
     #oh-prof-select, #oh-search-input {
       width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px;
-      padding: 12px 18px 12px 42px; font-family: var(--font-body); font-size: 13.5px; color: var(--white); outline: none;
+      padding: 12px 16px 12px 48px; font-family: var(--font-body); font-size: 13.5px; color: var(--white); outline: none;
       transition: border-color 0.2s, background 0.2s; appearance: none;
     }
     #oh-prof-select { cursor: pointer; color-scheme: dark; }
@@ -313,22 +311,22 @@
     #oh-prof-select option:checked, #oh-prof-select option:hover { background-color: #e31b23; color: #fff; }
     #oh-search-input::placeholder { color: var(--steel); }
     #oh-prof-select:focus, #oh-search-input:focus { border-color: var(--red); background: rgba(255,255,255,0.06); }
-    .oh-cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+    .oh-cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
     .oh-day-col { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; overflow: hidden; min-height: 100px; }
-    .oh-day-head { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(227,27,35,0.12); padding: 10px 12px; border-bottom: 1px solid rgba(227,27,35,0.25); }
-    .oh-day-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .oh-slot { background: rgba(255,255,255,0.04); border-left: 2px solid var(--red); border-radius: 4px; padding: 8px 10px; cursor: pointer; transition: background 0.15s; }
+    .oh-day-head { font-family: var(--font-cond); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(227,27,35,0.12); padding: 8px 12px; border-bottom: 1px solid rgba(227,27,35,0.25); }
+    .oh-day-body { padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+    .oh-slot { background: rgba(255,255,255,0.04); border-left: 2px solid var(--red); border-radius: 4px; padding: 8px 8px; cursor: pointer; transition: background 0.15s; }
     .oh-slot:hover { background: rgba(227,27,35,0.1); }
-    .oh-slot-time { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.05em; margin-bottom: 3px; }
+    .oh-slot-time { font-family: var(--font-mono); font-size: 10px; color: var(--red); letter-spacing: 0.05em; margin-bottom: 4px; }
     .oh-slot-prof { font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 500; line-height: 1.35; }
     .oh-slot-meta { font-family: var(--font-body); font-size: 11px; color: var(--steel); font-weight: 300; margin-top: 2px; }
-    .oh-empty-state { text-align: center; padding: 30px 20px; font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; margin: 0 auto; }
-    .oh-flex-list { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .oh-empty-state { text-align: center; padding: 32px 16px; font-family: var(--font-body); font-size: 13px; color: var(--steel); font-weight: 300; max-width: 480px; margin: 0 auto; }
+    .oh-flex-list { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
     .oh-flex-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); margin-bottom: 2px; }
-    .oh-flex-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-left: 2px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 10px 14px; font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 300; line-height: 1.5; }
+    .oh-flex-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-left: 2px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 8px 12px; font-family: var(--font-body); font-size: 12.5px; color: var(--steel-light); font-weight: 300; line-height: 1.5; }
     .oh-flex-item strong { color: var(--white); font-weight: 600; }
-    .oh-flex-item .oh-flex-course { font-family: var(--font-mono); font-size: 10.5px; color: var(--red); margin-left: 6px; }
-    .oh-bio-card { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; max-width: 640px; }
+    .oh-flex-item .oh-flex-course { font-family: var(--font-mono); font-size: 10.5px; color: var(--red); margin-left: 4px; }
+    .oh-bio-card { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid var(--red); border-radius: 8px; padding: 16px 16px; margin-bottom: 16px; max-width: 640px; }
     .oh-bio-card.active { display: block; }
     .oh-bio-name { font-family: var(--font-cond); font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
     .oh-bio-row { display: flex; gap: 8px; font-family: var(--font-body); font-size: 12.5px; margin-bottom: 4px; }
@@ -336,13 +334,13 @@
     .oh-bio-row a { color: var(--red); text-decoration: none; }
     .oh-bio-row a:hover { text-decoration: underline; }
     .oh-bio-row span:last-child { color: var(--steel-light); font-weight: 300; }
-    .oh-cal-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 8px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .oh-cal-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 8px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
     .oh-cal-footer p { font-family: var(--font-mono); font-size: 10px; color: var(--steel); letter-spacing: 0.03em; max-width: 420px; }
-    .oh-footer-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .oh-footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
     .oh-btn-secondary {
-      display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-cond); font-size: 11.5px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-cond); font-size: 11.5px; font-weight: 600;
       letter-spacing: 0.04em; text-transform: uppercase; color: var(--steel-light); background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.14); padding: 9px 16px; border-radius: 20px; text-decoration: none; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.14); padding: 8px 16px; border-radius: 20px; text-decoration: none; cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
     .oh-btn-secondary:hover { border-color: var(--red); color: var(--white); }
@@ -351,20 +349,20 @@
 
     /* ══ COURSE ROADMAP ══ */
     #course-roadmap { background: #1e1c1a; padding: var(--section-pad) 0; position: relative; overflow: hidden; }
-    .roadmap-track { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
-    .roadmap-year-row { display: flex; align-items: flex-start; gap: 20px; }
+    .roadmap-track { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+    .roadmap-year-row { display: flex; align-items: flex-start; gap: 16px; }
     .roadmap-year-tag { flex-shrink: 0; width: 92px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase; padding-top: 12px; }
-    .roadmap-sems { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-    .roadmap-sem { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .roadmap-sems { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .roadmap-sem { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .roadmap-sem-label { font-family: var(--font-mono); font-size: 9.5px; color: var(--steel); letter-spacing: 0.08em; text-transform: uppercase; width: 66px; flex-shrink: 0; }
     .roadmap-chip {
       font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--steel-light);
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;
-      padding: 6px 10px; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s;
+      padding: 4px 8px; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
     .roadmap-chip:hover { border-color: var(--red); color: var(--white); background: rgba(227,27,35,0.1); }
     .roadmap-chip.rc-pending { color: var(--steel); border-style: dashed; font-style: italic; }
-    .roadmap-note { font-family: var(--font-body); font-size: 12.5px; color: var(--steel); font-weight: 300; margin-top: 24px; padding: 14px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(227,27,35,0.3); max-width: 720px; }
+    .roadmap-note { font-family: var(--font-body); font-size: 12.5px; color: var(--steel); font-weight: 300; margin-top: 24px; padding: 12px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(227,27,35,0.3); max-width: 720px; }
     @media (max-width: 700px) {
       .roadmap-year-row { flex-direction: column; gap: 8px; }
       .roadmap-year-tag { width: auto; padding-top: 0; }
@@ -373,40 +371,32 @@
 
     /* ══ ADDITIONS: deep-link offsets, ghost button, contribute section ══ */
     .course-card { scroll-margin-top: 150px; }
+    #year-tab-bar.is-hidden { visibility: hidden; }
     .oh-link-btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.28); color: var(--white); }
     .oh-link-btn.ghost:hover { background: rgba(255,255,255,0.08); border-color: var(--red); }
     #ac-contribute { padding: var(--section-pad) 0; border-top: 1px solid rgba(255,255,255,0.06); background: linear-gradient(180deg, #181616 0%, #1c1a1a 100%); }
-    .cb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
-    .cb-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 28px 26px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.25s, transform 0.25s; }
-    .cb-card:hover { border-color: rgba(227,27,35,0.45); transform: translateY(-3px); }
-    .cb-card .cb-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--red); }
-    .cb-card h4 { font-family: var(--font-cond); font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: 0.04em; text-transform: uppercase; margin: 0; }
-    .cb-card p { font-family: var(--font-body); font-size: 14px; color: var(--steel-light); font-weight: 300; line-height: 1.6; flex: 1; margin: 0; }
-    .cb-card .oh-link-btn { align-self: flex-start; margin-top: 6px; }
-    @media (prefers-reduced-motion: reduce) { .cb-card, .cb-card:hover { transition: none; transform: none; } }
+    .cb-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+    .cb-main h4 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 48px); font-weight: 400; color: var(--white); line-height: 1; margin: 0 0 16px; }
+    .cb-main p { font-family: var(--font-body); font-size: 16px; font-weight: 300; line-height: 1.6; color: var(--steel-light); max-width: 460px; margin: 0 0 24px; }
+    .cb-side { list-style: none; margin: 0; padding: 0; }
+    .cb-side li { border-top: 1px solid rgba(255,255,255,0.12); }
+    .cb-side li:last-child { border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .cb-side a { display: block; padding: 24px 0; text-decoration: none; transition: padding-left 0.2s; }
+    .cb-side a:hover { padding-left: 12px; }
+    .cb-side strong { display: block; font-family: var(--font-cond); font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--white); margin-bottom: 4px; }
+    .cb-side span { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--steel-light); }
+    .cb-side a:hover strong { color: var(--red); }
+    @media (max-width: 800px) { .cb-layout { grid-template-columns: 1fr; gap: 32px; } }
   </style>
 </head>
 <body>
-  <div id="loader">
-    <div class="loader-inner">
-      <svg class="loader-hex" viewBox="0 0 100 116" fill="none">
-        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
-        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
-      </svg>
-      <div class="loader-text">
-        <span class="mono">INITIALIZING</span>
-        <div class="loader-bar"><div class="loader-fill"></div></div>
-        <span class="loader-pct mono">0%</span>
-      </div>
-    </div>
-  </div>
 
   <canvas id="bg-canvas"></canvas>
 
   <nav id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
-        <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="nav-logo-img" />
+      <a href="index.html" class="nav-logo" aria-label="MCU, Mechatronics Course Union">
+        <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="nav-logo-img" />
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
@@ -416,7 +406,7 @@
         <li><a href="academics.html" class="nav-link active">Academics</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
-      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop">🛒 Shop</a>
+      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a>
       <a href="contact.html" class="nav-cta">Join Us</a>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
@@ -428,38 +418,34 @@
         <li><a href="team.html">Team</a></li>
         <li><a href="academics.html">Academics</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta">🛒 Shop</a></li>
+        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a></li>
         <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section id="academics-hero">
+  <section id="academics-hero" data-reveal>
     <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
     <div class="container" style="position:relative;z-index:1;">
       <div class="ac-hero-inner">
         <div class="ac-hero-left">
-          <div class="hero-badge reveal-up">
-            <span class="badge-dot"></span>
-            <span class="mono" style="font-size:11px;letter-spacing:0.15em;">05 — ACADEMICS</span>
-          </div>
-          <div class="line-wrap" style="overflow:hidden;margin-top:24px;">
-            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--white);line-height:0.95;margin:0;">THE RESOURCE</h1>
+          <div class="line-wrap" style="overflow:hidden;margin-top: 24px;">
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--white);line-height:0.95;margin: 0;">THE RESOURCE</h1>
           </div>
           <div class="line-wrap" style="overflow:hidden;">
-            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--red);line-height:0.95;margin:0;">DRIVE.</h1>
+            <h1 class="hero-line" style="font-family:var(--font-display);font-size:clamp(56px,9vw,110px);color:var(--red);line-height:0.95;margin: 0;">DRIVE.</h1>
           </div>
-          <p class="reveal-up delay-2" style="font-family:var(--font-body);font-size:clamp(15px,2vw,18px);color:var(--steel-light);font-weight:300;max-width:480px;line-height:1.6;margin-top:24px;">
-            Past exams, lecture slides, and mock finals — all found in our centralized drive, and constantly updated. Organized by course and ready to open, this is the fastest way to get ahead.
+          <p class="reveal-up delay-2" style="font-family:var(--font-body);font-size:clamp(15px,2vw,18px);color:var(--steel-light);font-weight:300;max-width:480px;line-height:1.6;margin-top: 24px;">
+            Past exams, lecture slides and mock finals, organized by course in one shared drive.
           </p>
-          <div class="reveal-up delay-3" style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;">
-            <a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener" class="oh-link-btn" style="padding:16px 28px;font-size:13px;">
+          <div class="reveal-up delay-3" style="margin-top: 32px;display:flex;gap: 12px;flex-wrap:wrap;">
+            <a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener" class="oh-link-btn" style="padding: 16px 24px;font-size:13px;">
               Open the Resource Drive
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
-            <a href="https://forms.gle/FZHc3XCTvAjBExw76" target="_blank" rel="noopener" class="oh-link-btn ghost" style="padding:16px 28px;font-size:13px;">
+            <a href="https://forms.gle/FZHc3XCTvAjBExw76" target="_blank" rel="noopener" class="oh-link-btn ghost" style="padding: 16px 24px;font-size:13px;">
               Submit Exams &amp; Notes
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </a>
@@ -497,15 +483,14 @@
     <div class="container">
       <div class="oh-cal-header">
         <div>
-          <div class="year-badge" style="margin-bottom:10px;">Weekly Calendar</div>
           <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--white);line-height:1;">OFFICE HOURS</h2>
-          <p>A manually-maintained calendar of office hours for profs teaching MCU core courses this term, pulled from Fall course outlines. This is kept up by the MCU team — <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
+          <p>A manually-maintained calendar of office hours for profs teaching MCU core courses this term, pulled from Fall course outlines. This is kept up by the MCU team: <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
         </div>
       </div>
 
       <div class="oh-tip">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        <p><strong>Tip:</strong> most profs won't just see you if you show up unannounced — email them ahead of time to book a specific office-hours slot. A lot of students don't realize this until later.</p>
+        <p><strong>Tip:</strong> Most profs won't see you if you show up unannounced. Email them ahead of time to book a specific office-hours slot. A lot of students don't realize this until later.</p>
       </div>
 
       <div class="oh-controls">
@@ -524,7 +509,7 @@
       <div class="oh-flex-list" id="oh-flex-list"></div>
 
       <div class="oh-cal-footer">
-        <p>Official source may be more current, but might not always be updated or accurate — that's exactly why we're building this calendar.</p>
+        <p>The official source may be more current, but it isn't always updated or accurate. That's why we're building this calendar.</p>
         <div class="oh-footer-links">
           <button type="button" id="oh-export-btn" class="oh-btn-secondary">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -713,12 +698,11 @@
   </script>
 
   <!-- ═══════ COURSE ROADMAP ═══════ -->
-  <section id="course-roadmap">
+  <section id="course-roadmap" data-reveal>
     <div class="container" style="position:relative;z-index:1;">
       <div class="section-header reveal-up">
-        <div class="section-tag">Program Map</div>
         <h2 class="section-title">COURSE ROADMAP</h2>
-        <p class="section-desc">The Mechatronics sequence at a glance — click any course to jump straight to its card below.</p>
+        <p class="section-desc">The Mechatronics sequence at a glance. Click any course to jump to its card below.</p>
       </div>
       <div class="roadmap-track">
         <div class="roadmap-year-row reveal-up">
@@ -774,7 +758,7 @@
   <div class="container">
     <div class="ac-likes-note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
-      <span>Like the reviews you find most helpful — <strong>most-liked rises to the top</strong> of each course, marked <strong>★ Student Favorite</strong>.</span>
+      <span>Like the reviews you find most helpful: <strong>most-liked rises to the top</strong> of each course, marked <strong>★ Student Favorite</strong>.</span>
     </div>
   </div>
 
@@ -790,14 +774,13 @@
   <!-- YEAR 1 -->
   <section class="year-section" id="year-1" data-year="1">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="year-section-header reveal-up">
-        <div class="year-badge">Year 01</div>
-        <div class="year-title-block"><h2>FIRST YEAR</h2><p>Building the foundations — math, physics, chemistry, and your first taste of engineering</p></div>
+      <div class="year-section-header">
+        <div class="year-title-block"><h2>FIRST YEAR</h2><p>Math, physics, chemistry and your first engineering courses</p></div>
       </div>
-      <div class="semester-label reveal-up"><span>►</span> Semester 1</div>
+      <div class="semester-label"><span>►</span> Semester 1</div>
       <div class="courses-grid">
         <!-- MTH140 -->
-        <div class="course-card has-content reveal-up" id="course-MTH140">
+        <div class="course-card has-content" id="course-MTH140">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTH140</div><div class="course-name">Calculus I</div><div class="course-meta">Math · Semester 1 · 2 Student Reviews</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -815,7 +798,7 @@
 
             <div class="review-block" data-key="mth140-nelson">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Nelson</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Nelson</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth140-nelson" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -828,7 +811,7 @@
 
             <div class="review-block" data-key="mth140-aheseha">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Aheseha</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Aheseha</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth140-aheseha" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -843,56 +826,56 @@
           </div></div>
         </div>
         <!-- MTH141 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MTH141">
+        <div class="course-card has-content" id="course-MTH141">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTH141</div><div class="course-name">Linear Algebra</div><div class="course-meta">Math · Semester 1</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, MTH141 covers Euclidean spaces (dot product, norm, angles, projections), matrices, determinants, systems of linear equations, linear transformations, lines and planes in 3D space, bases and dimensions, eigenvalues and diagonalizability, complex numbers, and vector spaces. It runs 4 lecture hours and 1 lab hour per week, with no prerequisites.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
         <!-- CEN100 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-CEN100">
+        <div class="course-card has-content" id="course-CEN100">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">CEN100</div><div class="course-name">Introduction to Engineering</div><div class="course-meta">Engineering · Semester 1</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, CEN100 orients first-year students to the academic structure and expectations of the engineering program, covering public and worker safety, the impact of engineering activities on health, and safety codes/standards. It introduces the different undergraduate engineering programs at TMU and the professional and ethical responsibilities of engineers, using case studies to illustrate different engineering fields. It runs 2 lecture hours and 1 tutorial hour per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
         <!-- CHY102 -->
-        <div class="course-card has-content reveal-up delay-3" id="course-CHY102">
+        <div class="course-card has-content" id="course-CHY102">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">CHY102</div><div class="course-name">General Chemistry</div><div class="course-meta">Chemistry · Semester 1</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, CHY102 (listed as "General Chemistry" for engineering students) covers stoichiometry, gases/liquids/solids, chemical equilibria, thermodynamics, kinetics, nuclear chemistry, and electrochemistry, with an emphasis on problem solving and calculation. It runs 3 lecture hours and 1 lab hour per week, with no prerequisites.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
         <!-- PCS211 -->
-        <div class="course-card has-content reveal-up delay-4" id="course-PCS211">
+        <div class="course-card has-content" id="course-PCS211">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">PCS211</div><div class="course-name">Physics: Mechanics</div><div class="course-meta">Physics · Semester 1</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, PCS211 covers vector forces and coplanar force systems, moments and couples, free body diagrams and equilibrium, centre of mass and centroids, rectilinear and curvilinear motion kinematics, Newton's laws, friction, and work/energy and linear/angular momentum. It runs 3 lecture hours, 1 lab hour, and 1 tutorial hour per week, with no prerequisites.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
         <!-- CEN199 -->
-        <div class="course-card reveal-up delay-5" id="course-CEN199"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CEN199</div><div class="course-name">Writing Skills</div><div class="course-meta">Communications · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-CEN199"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CEN199</div><div class="course-name">Writing Skills</div><div class="course-meta">Communications · Semester 1</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
       </div>
-      <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 2</div>
+      <div class="semester-label" style="margin-top: 16px;"><span>►</span> Semester 2</div>
       <div class="courses-grid">
         <!-- MTH240 -->
-        <div class="course-card has-content reveal-up" id="course-MTH240">
+        <div class="course-card has-content" id="course-MTH240">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTH240</div><div class="course-name">Calculus II</div><div class="course-meta">Math · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -907,18 +890,18 @@
 
             <div class="review-block" data-key="mth240-hassan">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Hassan</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Hassan</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mth240-hassan" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">⚡ Student Review</div><div class="review-text">If you struggled in Calculus I, that's totally fine. I struggled with Calculus I (MTH140) and honestly hated it. Calc 2 is where I actually started seeing the use of math, and where it became more interesting and even kind of fun. In Calc 2, you focus on specific areas of calculus, especially integration and sequences and series, and you actually spend time understanding them instead of rushing through everything. These are the longest parts of the course, and with practice they get easier and easier. I never thought integrals or series could be fun, but once things start clicking, they actually are. This was especially true for me because I had a good professor, Dr. Saeid Samiezadeh. I never used the textbook at all. I only studied from his slides, and they were more than enough, especially when combined with past midterms and finals to prepare for the midterm and final.<br><br>The labs were easy as long as you were caught up with the material. If you understand the content, the lab quizzes are straightforward.<br><br>For integrals, which make up a big chunk of the course at the start, I'd honestly recommend doing reps whenever you're bored. As corny as it sounds, repetition is the best way to understand it. You should be able to look at an integral and instantly know what method to use. If you can't, you just need more reps. I had a friend who used to solve integrals at the gym. You don't need to be that locked in, but the idea is the same.<br><br>Since the course mainly focuses on integrals, sequences and series, first order differential equations, and a bit of multivariable calculus, it's easier to follow. There's a lot of repetition, and you eventually get into a flow, unlike Calc 1 where it felt like new concepts were being thrown at you all at once.</div></div>
+            <div class="review-section"><div class="review-section-title">Student Review</div><div class="review-text">If you struggled in Calculus I, that's totally fine. I struggled with Calculus I (MTH140) and honestly hated it. Calc 2 is where I actually started seeing the use of math, and where it became more interesting and even kind of fun. In Calc 2, you focus on specific areas of calculus, especially integration and sequences and series, and you actually spend time understanding them instead of rushing through everything. These are the longest parts of the course, and with practice they get easier and easier. I never thought integrals or series could be fun, but once things start clicking, they actually are. This was especially true for me because I had a good professor, Dr. Saeid Samiezadeh. I never used the textbook at all. I only studied from his slides, and they were more than enough, especially when combined with past midterms and finals to prepare for the midterm and final.<br><br>The labs were easy as long as you were caught up with the material. If you understand the content, the lab quizzes are straightforward.<br><br>For integrals, which make up a big chunk of the course at the start, I'd honestly recommend doing reps whenever you're bored. As corny as it sounds, repetition is the best way to understand it. You should be able to look at an integral and instantly know what method to use. If you can't, you just need more reps. I had a friend who used to solve integrals at the gym. You don't need to be that locked in, but the idea is the same.<br><br>Since the course mainly focuses on integrals, sequences and series, first order differential equations, and a bit of multivariable calculus, it's easier to follow. There's a lot of repetition, and you eventually get into a flow, unlike Calc 1 where it felt like new concepts were being thrown at you all at once.</div></div>
             </div>
           </div></div>
         </div>
         <!-- MEC222 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MEC222">
+        <div class="course-card has-content" id="course-MEC222">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MEC222</div><div class="course-name">Engineering Graphical Communication</div><div class="course-meta">Engineering · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -927,20 +910,20 @@
             <div class="course-overview">MEC222 introduces you to the basics of engineering graphical communication, mainly teaching the basics on engineering drawings on paper and drawings made with CAD (computer aided design), along with the basics of SolidWorks. SolidWorks is a 3D CAD software used in mechanical engineering and related fields to design parts and create assemblies using parts. The labs consist of 2 different sections, the manual studios labs, and the CAD/SolidWorks labs. In the manual studio labs you are required to complete different views of a model, or create new ones from scratch. In the CAD labs, you are required to create a 3D model based off a given drawing.</div>
             <div class="review-block" data-key="mec222-phelix">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Phelix</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Phelix</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mec222-phelix" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs are mandatory, the TAs are generally helpful in the labs if you are stuck on a feature that you do not know how to CAD/Sketch. Manual Studio Labs (Hand drawn) do have a take home component to them. There is a big sketching project that is due around the end of the semester, I recommend starting as soon as possible, as sketching is very time consuming and there is a lot to be done for the final assignment. The manual studio labs do not allow rulers or compasses to be used as a guide to draw straight lines/perfect circles, all lines must be done freehanded, the only use of rulers that is allowed is measuring out lengths.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">There are 2 midterms, one for CAD and one for manual studio, as long as you're doing fine in the labs you should be fine for the midterm.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">The final exam is a mix of sketching and MCQ on knowledge and terminology.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">Labs are mandatory, the TAs are generally helpful in the labs if you are stuck on a feature that you do not know how to CAD/Sketch. Manual Studio Labs (Hand drawn) do have a take home component to them. There is a big sketching project that is due around the end of the semester, I recommend starting as soon as possible, as sketching is very time consuming and there is a lot to be done for the final assignment. The manual studio labs do not allow rulers or compasses to be used as a guide to draw straight lines/perfect circles, all lines must be done freehanded, the only use of rulers that is allowed is measuring out lengths.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm</div><div class="review-text">There are 2 midterms, one for CAD and one for manual studio, as long as you're doing fine in the labs you should be fine for the midterm.</div></div>
+            <div class="review-section"><div class="review-section-title">Final</div><div class="review-text">The final exam is a mix of sketching and MCQ on knowledge and terminology.</div></div>
             </div>
           </div></div>
         </div>
         <!-- CPS188 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-CPS188">
+        <div class="course-card has-content" id="course-CPS188">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">CPS188</div><div class="course-name">Computer Programming Fundamentals</div><div class="course-meta">Computing · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -950,22 +933,22 @@
             <div class="course-overview">This course is your gateway into coding with C.</div>
             <div class="review-block" data-key="cps188-vannessa">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Vannessa</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Vannessa</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="cps188-vannessa" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">I recommend going to Professor Hamlin's lectures, he is great at explaining the fundamentals of coding especially if you don't know anything at the beginning of the semester.</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs aren't mandatory, but if you don't know how to code or struggle with coding, I'd highly recommend going to them because you are able to ask your TA's questions about the assignments and they can help debug your code with you. Matthew Ritchie was my TA and he was super helpful.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">The midterm is a technical one where you will be given a few questions, similar to the lab assignments you get, but a little bit harder. As long as you don't cheat/use ChatGPT to help you code all your assignments then the midterm will be relatively easy. My year was not allowed to have cheat sheets for this exam, so remember your syntax because if the code doesn't even compile then you will get a 0 automatically.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Exam</div><div class="review-text">You will not be expected to code during the exam. It is multiple choice however there are a lot of questions and not a lot of time. You'll have 1-2 minutes to complete each question or else you'll run out of time. Remember syntax and how to convert binary to other base numbers and the other way around. The exam was honestly much easier than the midterm, so you got this!</div></div>
+            <div class="review-section"><div class="review-section-title">General</div><div class="review-text">I recommend going to Professor Hamlin's lectures, he is great at explaining the fundamentals of coding especially if you don't know anything at the beginning of the semester.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">Labs aren't mandatory, but if you don't know how to code or struggle with coding, I'd highly recommend going to them because you are able to ask your TA's questions about the assignments and they can help debug your code with you. Matthew Ritchie was my TA and he was super helpful.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm</div><div class="review-text">The midterm is a technical one where you will be given a few questions, similar to the lab assignments you get, but a little bit harder. As long as you don't cheat/use ChatGPT to help you code all your assignments then the midterm will be relatively easy. My year was not allowed to have cheat sheets for this exam, so remember your syntax because if the code doesn't even compile then you will get a 0 automatically.</div></div>
+            <div class="review-section"><div class="review-section-title">Exam</div><div class="review-text">You will not be expected to code during the exam. It is multiple choice however there are a lot of questions and not a lot of time. You'll have 1-2 minutes to complete each question or else you'll run out of time. Remember syntax and how to convert binary to other base numbers and the other way around. The exam was honestly much easier than the midterm, so you got this!</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">N/A</div></div>
             </div>
           </div></div>
         </div>
         <!-- PCS125 -->
-        <div class="course-card has-content reveal-up delay-3" id="course-PCS125">
+        <div class="course-card has-content" id="course-PCS125">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">PCS125</div><div class="course-name">Physics: Waves and Fields</div><div class="course-meta">Physics · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -980,21 +963,21 @@
 
             <div class="review-block" data-key="pcs125-laith">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin-top:0;">Reviewed by: <span>Laith</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin-top: 0;">Reviewed by: <span>Laith</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="pcs125-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">In my opinion, the start of the course is not very hard, you learn about basic stuff like waves and oscillations which can be challenging in some way, depending on the lesson but overall not too bad. However once the course transitions to electricity and electric fields that's when the course picks up and becomes noticeably harder. It requires a lot more visualization and deeper understanding. It's just too many concepts all at once, and all are connected in some way, with so many formulas and different scenarios to consider it can be overwhelming, but with enough dedication and practice you can still do very well. Focus on the theory, the tests are often theory heavy, and in my year, nearly half of the midterm and final exam questions were theory. I would recommend looking at your professors slides for the theory portion as their slides often include many of the theories that you may encounter in your examination. Look for past exams as well because you may find that some questions are repeated or very similar.</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Most of the labs are easy and can be done within the given time period, but you need to make sure to do your due diligence as well by reading the lab manual and understanding what you will be required to do during the lab period. I would also recommend preparing anything you can before the lab starts, such as adding your name, student number, question numbers, and creating any required tables or graph outlines, as doing so during the lab is just wasting your lab time. Be careful not to include any data, calculations, or completed work beforehand, as this could be considered academic misconduct. You will be required to hand in your lab report by the end of the lab session. Your TA will explain the procedure and demonstrate how to use the equipment provided. TA's will often write important notes and formulas to use on the board, so pay attention to those.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">Study everything you have been assigned, such as lecture slides, some of the assigned textbook work (doing the entire question set from the textbook is possible, but it takes a lot of time. Just do a couple of questions from each section, check which concepts you struggle with the most and focus on those), and Webassign, then proceed to past midterms. The past midterms should give you an idea of what the theory questions may look like and will prepare you to question yourself if you truly understood a concept or not. For my year, I do not believe the study hall was that helpful, the TA just went through the past midterm provided. I guess it would be beneficial if you have done the past midterm and you struggled with it. Since you're required to get at least 50% in the theory (examination) portion of the course, performing well on the midterm can take a significant amount of pressure off the final exam, since generally the material covered up to the midterm is easier than that of the final.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">It's a cumulative final so everything is included, but the focus would be on the stuff covered after the midterm, as in you will get fewer questions about past midterm material than that of the post midterm. Just repeat whatever you did for the midterm, but keeping your focus on the post midterm material, past finals were externally helpful because some questions were directly taken from some of them. I did not attend the study hall, so I do not really know how that went but I would guess it followed a typical format to the midterm. Attending a professor's exam review is highly encouraged because you can ask them questions, and they will point out some mistakes that most students fall into.</div></div>
+            <div class="review-section"><div class="review-section-title">General</div><div class="review-text">In my opinion, the start of the course is not very hard, you learn about basic stuff like waves and oscillations which can be challenging in some way, depending on the lesson but overall not too bad. However once the course transitions to electricity and electric fields that's when the course picks up and becomes noticeably harder. It requires a lot more visualization and deeper understanding. It's just too many concepts all at once, and all are connected in some way, with so many formulas and different scenarios to consider it can be overwhelming, but with enough dedication and practice you can still do very well. Focus on the theory, the tests are often theory heavy, and in my year, nearly half of the midterm and final exam questions were theory. I would recommend looking at your professors slides for the theory portion as their slides often include many of the theories that you may encounter in your examination. Look for past exams as well because you may find that some questions are repeated or very similar.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">Most of the labs are easy and can be done within the given time period, but you need to make sure to do your due diligence as well by reading the lab manual and understanding what you will be required to do during the lab period. I would also recommend preparing anything you can before the lab starts, such as adding your name, student number, question numbers, and creating any required tables or graph outlines, as doing so during the lab is just wasting your lab time. Be careful not to include any data, calculations, or completed work beforehand, as this could be considered academic misconduct. You will be required to hand in your lab report by the end of the lab session. Your TA will explain the procedure and demonstrate how to use the equipment provided. TA's will often write important notes and formulas to use on the board, so pay attention to those.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm</div><div class="review-text">Study everything you have been assigned, such as lecture slides, some of the assigned textbook work (doing the entire question set from the textbook is possible, but it takes a lot of time. Just do a couple of questions from each section, check which concepts you struggle with the most and focus on those), and Webassign, then proceed to past midterms. The past midterms should give you an idea of what the theory questions may look like and will prepare you to question yourself if you truly understood a concept or not. For my year, I do not believe the study hall was that helpful, the TA just went through the past midterm provided. I guess it would be beneficial if you have done the past midterm and you struggled with it. Since you're required to get at least 50% in the theory (examination) portion of the course, performing well on the midterm can take a significant amount of pressure off the final exam, since generally the material covered up to the midterm is easier than that of the final.</div></div>
+            <div class="review-section"><div class="review-section-title">Final</div><div class="review-text">It's a cumulative final so everything is included, but the focus would be on the stuff covered after the midterm, as in you will get fewer questions about past midterm material than that of the post midterm. Just repeat whatever you did for the midterm, but keeping your focus on the post midterm material, past finals were externally helpful because some questions were directly taken from some of them. I did not attend the study hall, so I do not really know how that went but I would guess it followed a typical format to the midterm. Attending a professor's exam review is highly encouraged because you can ask them questions, and they will point out some mistakes that most students fall into.</div></div>
             </div>
           </div></div>
         </div>
         <!-- MTL200 -->
-        <div class="course-card has-content reveal-up delay-4" id="course-MTL200">
+        <div class="course-card has-content" id="course-MTL200">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTL200</div><div class="course-name">Materials Science Fundamentals</div><div class="course-meta">Materials · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1004,32 +987,32 @@
             <div class="course-overview">MTL200 is an introductory materials science and engineering course that focuses on understanding the relationship between the structure of materials and their properties. In order to understand why materials act the way they do, students study atomic structure and bonding, crystal structures, material defects, diffusion, and phase diagrams throughout the semester. The course also looks at the mechanical, physical, and chemical characteristics of the main kinds of engineering materials, such as metals, ceramics, polymers, and composites. In order to show how materials are selected and utilised in actual engineering applications, the course introduces topics such as corrosion, material failure, material strengthening mechanisms, and material selection. While there are some calculations involved, much of the course focuses on conceptual understanding and the ability to apply material science principles to different scenarios. Since many topics build upon one another, it's important that you stay on top of things throughout the semester because understanding the foundations early on will make later concepts so much easier to understand.</div>
             <div class="review-block" data-key="mtl200-laith">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Laith</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Laith</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mtl200-laith" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">This course is all about memorising and understanding a large amount of information. My professor did not provide lecture slides, so I relied heavily on the textbook for studying. If your professor is similar, get comfortable with reading the textbook because it will likely be your primary study resource. I would strongly recommend using AI, flashcards, or any study method that helps break down large amounts of content into manageable study sessions. PLEASE stay on top of things, once you're done a chapter make a summary of that chapter and the information it provided, because it piles up quickly. Last minute studying is not viable for the course, it is just vast amounts of information that you have to stuff down your brain in a short amount of time, avoid this as much as you can, please take my word for it. I'm speaking from experience.</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">The labs were pretty easy, just make sure to read the lab manual. There isn't anything you need to prepare beside that from what I recall. Your TA will explain the procedure for you and your group, then you just have to complete it while recording whatever data is necessary for your lab report later. The lab manuals are also easy as long as you divide the work evenly, otherwise it may overwhelm you. Also hold your group members accountable if they aren't doing their portion of the report.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm</div><div class="review-text">Once you're done with the course material, do past midterms. The midterm is MCQ style with mostly theory questions and some calculations at the end. The calculation questions are weighted more compared to the theory questions. The majority of the questions are repeated and can be on an old midterm, so making sure to do past midterm should be your top priority. For my year it was 90% identical to the past midterm, with few theory questions different, but for the calculations it was just different numbers. Make sure to attend the study hall done by the TA Nikolai Sydorenko (if he's doing one), he does a comprehensive review of the material covered, although it's long, around 4 hours ish, but it is entirely worth it. You are given a formula sheet but you have to know your symbols. Now although in recent years, the midterms looked similar, just to be safe do not rely on the past midterms as your only study source.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Final</div><div class="review-text">Do the same as what you did to the midterm. The final follows a format of MCQ (around 60ish) and long answer questions (around 7ish). All of the MCQ are required to be done while for the long answer question, you only had to pick 5 of the 7 provided, making sure to clearly indicate them. You had to show your work in a legible manner, while also including your units. You will be penalized if you did not include your units. Past finals are not given, so you may not be able to find any unfortunately. Make sure to attend the study hall conducted by the TA Nikolai Sydorenko, the long answer questions on his document are what you often see in your final, this was the case for my years final. So attending his study hall not only will prepare you for the MCQ, but also the long answer as some of what he does are almost identical.</div></div>
+            <div class="review-section"><div class="review-section-title">General</div><div class="review-text">This course is all about memorising and understanding a large amount of information. My professor did not provide lecture slides, so I relied heavily on the textbook for studying. If your professor is similar, get comfortable with reading the textbook because it will likely be your primary study resource. I would strongly recommend using AI, flashcards, or any study method that helps break down large amounts of content into manageable study sessions. PLEASE stay on top of things, once you're done a chapter make a summary of that chapter and the information it provided, because it piles up quickly. Last minute studying is not viable for the course, it is just vast amounts of information that you have to stuff down your brain in a short amount of time, avoid this as much as you can, please take my word for it. I'm speaking from experience.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">The labs were pretty easy, just make sure to read the lab manual. There isn't anything you need to prepare beside that from what I recall. Your TA will explain the procedure for you and your group, then you just have to complete it while recording whatever data is necessary for your lab report later. The lab manuals are also easy as long as you divide the work evenly, otherwise it may overwhelm you. Also hold your group members accountable if they aren't doing their portion of the report.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm</div><div class="review-text">Once you're done with the course material, do past midterms. The midterm is MCQ style with mostly theory questions and some calculations at the end. The calculation questions are weighted more compared to the theory questions. The majority of the questions are repeated and can be on an old midterm, so making sure to do past midterm should be your top priority. For my year it was 90% identical to the past midterm, with few theory questions different, but for the calculations it was just different numbers. Make sure to attend the study hall done by the TA Nikolai Sydorenko (if he's doing one), he does a comprehensive review of the material covered, although it's long, around 4 hours ish, but it is entirely worth it. You are given a formula sheet but you have to know your symbols. Now although in recent years, the midterms looked similar, just to be safe do not rely on the past midterms as your only study source.</div></div>
+            <div class="review-section"><div class="review-section-title">Final</div><div class="review-text">Do the same as what you did to the midterm. The final follows a format of MCQ (around 60ish) and long answer questions (around 7ish). All of the MCQ are required to be done while for the long answer question, you only had to pick 5 of the 7 provided, making sure to clearly indicate them. You had to show your work in a legible manner, while also including your units. You will be penalized if you did not include your units. Past finals are not given, so you may not be able to find any unfortunately. Make sure to attend the study hall conducted by the TA Nikolai Sydorenko, the long answer questions on his document are what you often see in your final, this was the case for my years final. So attending his study hall not only will prepare you for the MCQ, but also the long answer as some of what he does are almost identical.</div></div>
             </div>
           </div></div>
         </div>
         <!-- ECN801 -->
-        <div class="course-card has-content reveal-up delay-5" id="course-ECN801">
+        <div class="course-card has-content" id="course-ECN801">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">ECN801</div><div class="course-name">Principles of Engineering Economics</div><div class="course-meta">Economics · Semester 2</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, ECN801 covers investment decision-making and capital expenditure analysis, using discounted cash flow methods to evaluate projects. After building up the mathematics of cash flow equivalence, the course develops absolute and relative measures of project worth for individual and multiple projects, applied mainly to private-sector decisions with some public-sector examples. It runs 3 lecture hours per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
       </div>
-      <div class="contribute-strip reveal-up">
+      <div class="contribute-strip">
         <p><strong>Missing a Year 1 course?</strong> Help us build the most complete guide for incoming Mechatronics students at TMU.</p>
         <a href="contact.html" class="btn-ghost">Contribute a Review →</a>
       </div>
@@ -1038,14 +1021,13 @@
   <!-- YEAR 2 -->
   <section class="year-section" id="year-2" data-year="2">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="year-section-header reveal-up">
-        <div class="year-badge">Year 02</div>
-        <div class="year-title-block"><h2>SECOND YEAR</h2><p>Core mechatronics — dynamics, circuits, programming, and your first real engineering courses</p></div>
+      <div class="year-section-header">
+        <div class="year-title-block"><h2>SECOND YEAR</h2><p>Dynamics, circuits, programming and the first courses that feel like mechatronics</p></div>
       </div>
-      <div class="semester-label reveal-up"><span>►</span> Semester 3</div>
+      <div class="semester-label"><span>►</span> Semester 3</div>
       <div class="courses-grid">
         <!-- MTE301 -->
-        <div class="course-card has-content reveal-up" id="course-MTE301">
+        <div class="course-card has-content" id="course-MTE301">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE301</div><div class="course-name">Programming for Mechatronics Engineering</div><div class="course-meta">Computing · Semester 3</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1060,7 +1042,7 @@
 
             <div class="review-block" data-key="mte301-review">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mte301-review" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -1068,14 +1050,14 @@
             </div>
             <div class="review-section"><div class="review-section-title">General</div><div class="review-text">This course builds upon your existing minor experience with programming from CPS188 to make you proficient in C coding. The labs are very challenging, not just because you're tasked with making a virtual robot move, but also because there are no youtube videos or reddit posts you can copy solutions from. Additionally, I feel you get a very solid understanding of C programming from the assignments and labs. It's very easy to cheat on those, but keep in mind that if you cheat/chatGPT all of the course your understanding in later courses (ex MTE502) will be hampered significantly.</div></div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">It's important to ask questions as much as possible, Professor Chhabra can go rapidly through the slides but he's never afraid to explain topics when prompted. Professor Chhabra tends to go very in depth into minute details of abstract/unnecessary concepts that can be confusing. However, when you ask for clarification he has no qualms clearing things up. I recommend reading the textbook, unironically. It provides deeper insight into the purpose of the more complex OOP programming you do (inheritance, multithreading).</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">As mentioned above, the labs are extremely challenging. They are purposefully made in this way, to be uncheatable; you will not be able to ask ChatGPT, or Chegg, or find tutorials on youtube on how to do the labs. The best advice is to try and find an upper year mechatronics student who's taken the course, and ask for their advice on how best to complete the labs.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm and Exam</div><div class="review-text">Usually you're allowed a cheat sheet on the final, and it's best to make that with a mix of theoretical understanding (i.e. what the 4 pillars of OOP are, what inheritance means) as well as coding examples, as those are also asked on exams.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">As mentioned above, the labs are extremely challenging. They are purposefully made in this way, to be uncheatable; you will not be able to ask ChatGPT, or Chegg, or find tutorials on youtube on how to do the labs. The best advice is to try and find an upper year mechatronics student who's taken the course, and ask for their advice on how best to complete the labs.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm and Exam</div><div class="review-text">Usually you're allowed a cheat sheet on the final, and it's best to make that with a mix of theoretical understanding (i.e. what the 4 pillars of OOP are, what inheritance means) as well as coding examples, as those are also asked on exams.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">The final project allows for a lot of customization. Don't be afraid to pick an ambitious project. You have a lot of time to complete it, and it's worth quite a large amount. It's also just a great opportunity to choose something challenging, as you have multiple students and a large amount of time to complete the project. Choosing something physical (i.e. a dexterous hand or a block sorting robot) also acts as a really addition to your resume, for next year's coop race.</div></div>
             </div>
           </div></div>
         </div>
         <!-- MEC323 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MEC323">
+        <div class="course-card has-content" id="course-MEC323">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MEC323</div><div class="course-name">Statics &amp; Mechanics of Materials</div><div class="course-meta">Mechanics · Semester 3</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1090,20 +1072,20 @@
 
             <div class="review-block" data-key="mec323-alliyah">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Alliyah</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Alliyah</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mec323-alliyah" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
-            <div class="review-section"><div class="review-section-title">⚡ General</div><div class="review-text">MEC323 is an important foundation for MEC311 (Dynamics) which students will take next semester so it's crucial to understand the main concepts of Statics to better understand Mechanics which will give you a stronger foundation when going into Dynamics.</div></div>
+            <div class="review-section"><div class="review-section-title">General</div><div class="review-text">MEC323 is an important foundation for MEC311 (Dynamics) which students will take next semester so it's crucial to understand the main concepts of Statics to better understand Mechanics which will give you a stronger foundation when going into Dynamics.</div></div>
             <div class="review-section"><div class="review-section-title">Midterm / Exam</div><div class="review-text">Practice tutorial problems, as a large number of questions on the midterm/exam are very similar to these tutorial questions.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project</div><div class="review-text">Although there is no final project, there is a computer assignment worth 2.5% of your final mark that is due in Week 11.</div></div>
             </div>
           </div></div>
         </div>
         <!-- MEC325 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-MEC325">
+        <div class="course-card has-content" id="course-MEC325">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MEC325</div><div class="course-name">Introduction to Engineering Design</div><div class="course-meta">Design · Semester 3</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1112,7 +1094,7 @@
             <div class="course-overview">Per TMU's official course calendar, MEC325 (officially "Introduction to Engineering Design") covers the role of design in engineering, the design process, conceptual design and evaluation, human factors in design, systems thinking, design for product life cycle, occupational safety, and environmental impact. A semester-long, team-based design project ties the material together into a real design scenario. It runs 3 lecture hours and 2 lab hours per week.</div>
             <div class="review-block" data-key="mec325-review">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Anonymous</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mec325-review" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -1124,20 +1106,20 @@
           </div></div>
         </div>
         <!-- CMN432 -->
-        <div class="course-card reveal-up delay-3" id="course-CMN432"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CMN432</div><div class="course-name">Communication in the Engineering Professions</div><div class="course-meta">Communications · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-CMN432"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">CMN432</div><div class="course-name">Communication in the Engineering Professions</div><div class="course-meta">Communications · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
         <!-- MTH425 -->
-        <div class="course-card reveal-up delay-4" id="course-MTH425"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH425</div><div class="course-name">Differential Equations and Vector Calculus</div><div class="course-meta">Math · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-MTH425"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH425</div><div class="course-name">Differential Equations and Vector Calculus</div><div class="course-meta">Math · Semester 3</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
       </div>
-      <div class="semester-label reveal-up" style="margin-top:16px;"><span>►</span> Semester 4</div>
+      <div class="semester-label" style="margin-top: 16px;"><span>►</span> Semester 4</div>
       <div class="courses-grid">
         <!-- MTE401 -->
-        <div class="course-card has-content reveal-up" id="course-MTE401">
+        <div class="course-card has-content" id="course-MTE401">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE401</div><div class="course-name">Analysis of Electric Circuits</div><div class="course-meta">Electrical · Semester 4 · Week-by-Week Guide</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">MTE 401 is the core circuits course for Mechatronics students, covering the foundations of electrical engineering: DC analysis, nodal and mesh methods, Thevenin/Norton equivalents, capacitors and inductors, transient response, AC circuits, phasors, impedance, and power analysis. Students spend the term moving from resistive networks into RC/RL/RLC dynamics and sinusoidal steady-state behavior, while developing strong problem-solving habits and lab measurement skills using oscilloscopes, signal generators, and meters as outlined in the official course description. Assessment is split heavily between theory and labs, with a midterm, a comprehensive final, lab reports, quizzes, and two individual lab tests — all of which must be passed separately to clear the course.</div>
+            <div class="course-overview">MTE 401 is the core circuits course for Mechatronics students, covering the foundations of electrical engineering: DC analysis, nodal and mesh methods, Thevenin/Norton equivalents, capacitors and inductors, transient response, AC circuits, phasors, impedance, and power analysis. Students spend the term moving from resistive networks into RC/RL/RLC dynamics and sinusoidal steady-state behavior, while developing strong problem-solving habits and lab measurement skills using oscilloscopes, signal generators, and meters as outlined in the official course description. Assessment is split heavily between theory and labs, with a midterm, a comprehensive final, lab reports, quizzes, and two individual lab tests, all of which must be passed separately to clear the course.</div>
             <div class="course-links">
               <a href="https://youtube.com/playlist?list=PLGbSiamfWIH8ZZ6bvcqEyVOA6euTFWCB7" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>EES 512 Circuit Analysis Playlist</a>
             </div>
@@ -1146,24 +1128,24 @@
 
             <div class="review-block" data-key="mte401-qamber">
             <div class="review-block-header rb-first">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Reviews &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">Student Reviews &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mte401-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">MTE 401 is very formula-driven, but what really matters is process. You're constantly asked to convert a circuit into equations, pick the right method (nodal vs mesh vs Thevenin), and solve efficiently. Falling behind early — especially around nodal/mesh and source transformations — makes the rest of the term much harder.<br><br>Attend tutorials and try to stay on top of lecture material by working through the assigned and recommended problems each week. This keeps concepts fresh and directly helps with the in-lab quizzes.<br><br>Consistency is everything in this course. Weekly practice beats last-minute cramming.</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs focus on real circuits: Ohm's Law, nodal analysis, Thevenin equivalents, RC/RL step responses, resonance, and AC behavior as shown in the lab schedule.<br><br>Student tips: Prepare ahead of time — labs can be confusing on first pass, and most groups end up using the full two hours. Doing solid pre-lab analysis and simulations makes in-lab work much smoother. Labs build directly toward the lab tests near the end of the semester, so treat every session as practice. Simulate circuits in LTspice before coming in. Wiring errors eat time — double-check connections early. Keep organized notes and screenshots; they help massively when writing reports.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterms</div><div class="review-text">The midterm usually focuses on DC analysis and early energy-storage concepts.<br><br>How to prepare: Practice as much as you can — volume matters in this course. Focus on understanding how to approach a question rather than memorizing formulas. Build a routine: identify nodes → pick a method → write equations → solve → sanity-check. Once the conceptual structure clicks, most problems become very manageable.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Final Exam</div><div class="review-text">The final is comprehensive and emphasizes AC analysis, phasors, impedance, power calculations, resonance, and RC/RL transients alongside earlier DC topics.<br><br>Student advice: Keep practicing full problems under time pressure. Aim for conceptual mastery first — recognizing what a circuit is asking for makes the algebra much easier. Redo lab tests and tutorial problems. Drill phasor conversions and power-factor questions until they're automatic. Use external resources like the EES 512 playlist to reinforce difficult sections.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">Labs focus on real circuits: Ohm's Law, nodal analysis, Thevenin equivalents, RC/RL step responses, resonance, and AC behavior as shown in the lab schedule.<br><br>Student tips: Prepare ahead of time — labs can be confusing on first pass, and most groups end up using the full two hours. Doing solid pre-lab analysis and simulations makes in-lab work much smoother. Labs build directly toward the lab tests near the end of the semester, so treat every session as practice. Simulate circuits in LTspice before coming in. Wiring errors eat time — double-check connections early. Keep organized notes and screenshots; they help massively when writing reports.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterms</div><div class="review-text">The midterm usually focuses on DC analysis and early energy-storage concepts.<br><br>How to prepare: Practice as much as you can — volume matters in this course. Focus on understanding how to approach a question rather than memorizing formulas. Build a routine: identify nodes → pick a method → write equations → solve → sanity-check. Once the conceptual structure clicks, most problems become very manageable.</div></div>
+            <div class="review-section"><div class="review-section-title">Final Exam</div><div class="review-text">The final is comprehensive and emphasizes AC analysis, phasors, impedance, power calculations, resonance, and RC/RL transients alongside earlier DC topics.<br><br>Student advice: Keep practicing full problems under time pressure. Aim for conceptual mastery first — recognizing what a circuit is asking for makes the algebra much easier. Redo lab tests and tutorial problems. Drill phasor conversions and power-factor questions until they're automatic. Use external resources like the EES 512 playlist to reinforce difficult sections.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts from Students</div><div class="review-text">MTE 401 is challenging but very doable if you stay consistent. The students who perform best are the ones who practice weekly, attend tutorials, and treat labs seriously instead of leaving circuits until exam season.<br><br>If you master nodal and mesh early, prepare properly for labs, and keep up with lecture problems, this course becomes much smoother — and sets you up well for later mechatronics courses involving motors, machines, and power electronics.</div></div>
             </div>
 
-            <div class="review-section-title" style="margin-top:24px;">📅 Week-by-Week Video Roadmap</div>
-            <div class="review-text" style="margin-bottom:12px;">Curated by the MCU team — click any topic below to jump straight to the recommended video. "Ohm's Law" doesn't have a direct link yet; check the full playlist above or <a href="contact.html" style="color:var(--red);">send us the link</a> and we'll add it.</div>
+            <div class="review-section-title" style="margin-top: 24px;">Week-by-Week Video Roadmap</div>
+            <div class="review-text" style="margin-bottom: 12px;">Curated by the MCU team, click any topic below to jump straight to the recommended video. "Ohm's Law" doesn't have a direct link yet; check the full playlist above or <a href="contact.html" style="color:var(--red);">send us the link</a> and we'll add it.</div>
             <div class="weeks-table">
               <div class="weeks-table-header"><div>Week</div><div>Topic &amp; Recommended Videos</div></div>
-              <div class="week-row"><div class="week-num">WK 02</div><div class="week-topic"><strong style="color:var(--white)">Ohm's Law</strong> — "V = IR"<br><strong style="color:var(--white)">Kirchhoff's Voltage Law</strong> — <a href="https://www.youtube.com/watch?v=nbzWLzDPFBU" target="_blank" rel="noopener" style="color:var(--red);">"KVL Theory + Problem"</a> / <a href="https://www.youtube.com/watch?v=nbzWLzDPFBU" target="_blank" rel="noopener" style="color:var(--red);">"KCL and KVL Lots of Example Problems"</a><br><strong style="color:var(--white)">Kirchhoff's Current Law</strong> — <a href="https://www.youtube.com/watch?v=f2iCGcWShLE" target="_blank" rel="noopener" style="color:var(--red);">"KCL + KVL Theory + Problems"</a><br><strong style="color:var(--white)">Series and Parallel Circuits</strong></div></div>
+              <div class="week-row"><div class="week-num">WK 02</div><div class="week-topic"><strong style="color:var(--white)">Ohm's Law</strong> : "V = IR"<br><strong style="color:var(--white)">Kirchhoff's Voltage Law</strong> — <a href="https://www.youtube.com/watch?v=nbzWLzDPFBU" target="_blank" rel="noopener" style="color:var(--red);">"KVL Theory + Problem"</a> / <a href="https://www.youtube.com/watch?v=nbzWLzDPFBU" target="_blank" rel="noopener" style="color:var(--red);">"KCL and KVL Lots of Example Problems"</a><br><strong style="color:var(--white)">Kirchhoff's Current Law</strong> — <a href="https://www.youtube.com/watch?v=f2iCGcWShLE" target="_blank" rel="noopener" style="color:var(--red);">"KCL + KVL Theory + Problems"</a><br><strong style="color:var(--white)">Series and Parallel Circuits</strong></div></div>
               <div class="week-row"><div class="week-num">WK 03</div><div class="week-topic"><strong style="color:var(--white)">Resistors in Series vs. Parallel</strong> — <a href="https://www.youtube.com/watch?v=tnYQ_tQmYrM&t=343s" target="_blank" rel="noopener" style="color:var(--red);">"Resistor Series and Parallel Reduction"</a><br><strong style="color:var(--white)">Voltage Division</strong> — <a href="https://www.youtube.com/watch?v=JGXdi7XcQi8&t=1126s" target="_blank" rel="noopener" style="color:var(--red);">"Voltage Division Rule + Formula"</a><br><strong style="color:var(--white)">Current Division</strong> — <a href="https://www.youtube.com/watch?v=PpfOH_uBKCw" target="_blank" rel="noopener" style="color:var(--red);">"Current Division Rule + Formula"</a><br><strong style="color:var(--white)">Nodal Analysis</strong> — <a href="https://www.youtube.com/watch?v=JptsfzvKbuo" target="_blank" rel="noopener" style="color:var(--red);">"Nodal Analysis Example + Theory"</a></div></div>
               <div class="week-row"><div class="week-num">WK 04</div><div class="week-topic"><strong style="color:var(--white)">Mesh Analysis</strong> — <a href="https://www.youtube.com/watch?v=D92DjS43-Qw&t=387s" target="_blank" rel="noopener" style="color:var(--red);">"Mesh Analysis Example + Theory"</a><br><strong style="color:var(--white)">Superposition</strong> — <a href="https://www.youtube.com/watch?v=uoZ0E6zxoi0" target="_blank" rel="noopener" style="color:var(--red);">"Superposition Example + Theory"</a></div></div>
               <div class="week-row"><div class="week-num">WK 05</div><div class="week-topic"><strong style="color:var(--white)">Source Transformation</strong> — <a href="https://www.youtube.com/watch?v=C5kr0uDR_so" target="_blank" rel="noopener" style="color:var(--red);">"Source Transformation Example + Theory"</a></div></div>
@@ -1178,15 +1160,15 @@
           </div></div>
         </div>
         <!-- MEC311 -->
-        <div class="course-card reveal-up delay-1" id="course-MEC311"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC311</div><div class="course-name">Dynamics</div><div class="course-meta">Mechanics · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div><div class="course-links" style="margin-top:16px;"><a href="https://youtube.com/playlist?list=PLXePpKFSUW2ZXw_D5h0TTyac-KGlFRxnS&si=Da2Wk2UMolddq7b4" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Dynamics Playlist</a></div></div></div></div>
+        <div class="course-card" id="course-MEC311"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC311</div><div class="course-name">Dynamics</div><div class="course-meta">Mechanics · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Add yours →</a></div><div class="course-links" style="margin-top: 16px;"><a href="https://youtube.com/playlist?list=PLXePpKFSUW2ZXw_D5h0TTyac-KGlFRxnS&si=Da2Wk2UMolddq7b4" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.2 21.6 12 21.7 12 21.7s4.2 0 6.8-.3c.6-.1 1.9-.2 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>Dynamics Playlist</a></div></div></div></div>
         <!-- MEC511 -->
-        <div class="course-card reveal-up delay-2" id="course-MEC511"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC511</div><div class="course-name">Thermodynamics &amp; Fluid Mechanics</div><div class="course-meta">Thermal · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-MEC511"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC511</div><div class="course-name">Thermodynamics &amp; Fluid Mechanics</div><div class="course-meta">Thermal · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
         <!-- MTH410 -->
-        <div class="course-card reveal-up delay-3" id="course-MTH410"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH410</div><div class="course-name">Statistics</div><div class="course-meta">Math · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-MTH410"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MTH410</div><div class="course-name">Statistics</div><div class="course-meta">Math · Semester 4</div></div><span class="course-coming-tag">Content Coming</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>Week-by-week content and student review coming soon.</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
         <!-- MEC322 -->
-        <div class="course-card reveal-up delay-4" id="course-MEC322"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC322</div><div class="course-name">Manufacturing Fundamentals</div><div class="course-meta">Manufacturing · Semester 4</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><div class="cs-icon">◌</div><p>Student review coming soon.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div></div></div></div>
+        <div class="course-card" id="course-MEC322"><div class="course-header" onclick="toggleCourse(this)"><div><div class="course-code">MEC322</div><div class="course-name">Manufacturing Fundamentals</div><div class="course-meta">Manufacturing · Semester 4</div></div><span class="course-coming-tag">Coming Soon</span></div><div class="course-body"><div class="course-body-inner"><div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div></div></div></div>
       </div>
-      <div class="contribute-strip reveal-up">
+      <div class="contribute-strip">
         <p><strong>Have notes or reviews for MEC311, MEC511, MEC322, or MTH410?</strong> Help us build out the Year 2 guides.</p>
         <a href="contact.html" class="btn-ghost">Contribute →</a>
       </div>
@@ -1195,15 +1177,14 @@
   <!-- YEAR 3 -->
   <section class="year-section" id="year-3" data-year="3">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="year-section-header reveal-up">
-        <div class="year-badge">Year 03</div>
-        <div class="year-title-block"><h2>THIRD YEAR</h2><p>Signals, microprocessors, controls — where mechatronics starts to click</p></div>
+      <div class="year-section-header">
+        <div class="year-title-block"><h2>THIRD YEAR</h2><p>Signals, microprocessors and controls</p></div>
       </div>
-      <div class="semester-label reveal-up"><span>►</span> Semester 5</div>
+      <div class="semester-label"><span>►</span> Semester 5</div>
       <div class="courses-grid">
 
         <!-- MTE501 -->
-        <div class="course-card has-content reveal-up" id="course-MTE501">
+        <div class="course-card has-content" id="course-MTE501">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE501</div><div class="course-name">Signals and Systems</div><div class="course-meta">Signals · Semester 5</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1214,11 +1195,11 @@
               <a href="https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>MIT OCW – Signals & Systems</a>
               <a href="https://www.adampanagos.org/dt-signals-and-systems" target="_blank" rel="noopener" class="course-link-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Adam Panagos – DT Signals</a>
             </div>
-            <div class="review-text" style="margin-top:8px;">Also recommended: <em>3Blue1Brown</em> — their Fourier Series / Fourier Transform intuition videos (search their channel on YouTube).</div>
+            <div class="review-text" style="margin-top: 8px;">Also recommended: <em>3Blue1Brown</em> : their Fourier Series / Fourier Transform intuition videos (search their channel on YouTube).</div>
 
             <div class="review-block" data-key="mte501-qamber">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mte501-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
@@ -1226,15 +1207,15 @@
             </div>
             <div class="review-section"><div class="review-section-title">General Course Experience</div><div class="review-text">MTE 501 is concept-heavy but very rewarding. It's less about crunching numbers and more about recognizing what kind of problem you're looking at (time domain, frequency domain, z-domain), and choosing the right tool: convolution, Fourier, Laplace/z-transform, frequency response, etc.<br><br>The math itself isn't brutal (mostly algebra, complex numbers, and geometric series), but there are lots of new ideas stacked on top of each other. Lathi's textbook is dense but solid, use it as a reference and problem bank. If you keep up with the concepts and do practice problems by "type", the course feels manageable. If you cram purely from formulas, it feels rough.</div></div>
             <div class="review-section"><div class="review-section-title">General Study Advice</div><div class="review-text">Think in question types, not chapters: "Given a difference equation → find H(z) and h[n]", "Finite-length DT signal → DTFT via geometric series", "Periodic DT signal → DTFS via Euler", "Rational X(z) + ROC → inverse z and time support", etc.<br><br>Build a 1-page cheat sheet of recipes: how to recognise each type, step-by-step "do this, then this", and common traps (forgetting the δ[n] term, wrong ROC, off-by-one in convolution).<br><br>When using solved examples or solutions: first identify what type of problem it is. Then cover the solution and force yourself to say the next step out loud before checking.<br><br>Treat complex exponentials as your best friends: once you see that e^(jωn) is an eigenfunction, frequency-response questions get way easier.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterms & Exams</div><div class="review-text">Typical structure (may vary by year):<br><br><strong style="color:var(--white)">Midterm</strong> (one page single-sided cheat sheet allowed) — up to and including Laplace transform: continuous-time signals and systems, LTI properties, impulse/step response, convolution (CT/DT depending on offering), Laplace transform, properties, solving differential equations.<br><br><strong style="color:var(--white)">Final Exam</strong> (cumulative but heavier on later topics, one page double-sided cheat sheet allowed) — sampling and aliasing, discrete-time LTI systems and convolution, DTFS/DTFT and frequency response, z-transform, ROC, poles/zeros, inverse z, stability.<br><br>For the midterm, focus on: being able to go diff eq → Laplace → H(s) → y(t) or h(t) smoothly, recognising when convolution in time is easier vs transform methods, and understanding what poles mean for stability and transient behaviour.<br><br>For the final, spend extra time on: sampling diagrams and Nyquist-rate questions, DT convolution (especially with exponentials and finite pulses), DTFS/DTFT patterns (using geometric series and Euler), and ROC reasoning for z-transform (causal vs non-causal, stable vs unstable).</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">MTE 501 is usually more theory + problem-solving than a big hardware project. Labs are Python experiments: plotting time-domain signals and their spectra, visualising convolution and filtering, demonstrating sampling and aliasing by changing the sample rate.<br><br>They're a good chance to see what the math is doing: how a filter actually shapes a signal, what aliasing looks like, how poles/zeros move the frequency response. Don't treat labs as throwaway "marks only". If you pay attention, they'll make the exam questions feel way more intuitive.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterms & Exams</div><div class="review-text">Typical structure (may vary by year):<br><br><strong style="color:var(--white)">Midterm</strong> (one page single-sided cheat sheet allowed) — up to and including Laplace transform: continuous-time signals and systems, LTI properties, impulse/step response, convolution (CT/DT depending on offering), Laplace transform, properties, solving differential equations.<br><br><strong style="color:var(--white)">Final Exam</strong> (cumulative but heavier on later topics, one page double-sided cheat sheet allowed) — sampling and aliasing, discrete-time LTI systems and convolution, DTFS/DTFT and frequency response, z-transform, ROC, poles/zeros, inverse z, stability.<br><br>For the midterm, focus on: being able to go diff eq → Laplace → H(s) → y(t) or h(t) smoothly, recognising when convolution in time is easier vs transform methods, and understanding what poles mean for stability and transient behaviour.<br><br>For the final, spend extra time on: sampling diagrams and Nyquist-rate questions, DT convolution (especially with exponentials and finite pulses), DTFS/DTFT patterns (using geometric series and Euler), and ROC reasoning for z-transform (causal vs non-causal, stable vs unstable).</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">MTE 501 is usually more theory + problem-solving than a big hardware project. Labs are Python experiments: plotting time-domain signals and their spectra, visualising convolution and filtering, demonstrating sampling and aliasing by changing the sample rate.<br><br>They're a good chance to see what the math is doing: how a filter actually shapes a signal, what aliasing looks like, how poles/zeros move the frequency response. Don't treat labs as throwaway "marks only". If you pay attention, they'll make the exam questions feel way more intuitive.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts from Students</div><div class="review-text">"It's one of those courses that feels abstract while you're in it but suddenly makes sense when you hit control systems and DSP."<br><br>"Don't leave it to the last week. Even 1–2 hours a week of practice problems by type pays off huge."<br><br>"Having a clean, organised cheatsheet of patterns and ROCs was honestly more useful than memorising giant tables."<br><br>If I could only give one piece of advice, it would be to practice. Practice helps build intuition for problem solving, and most questions are similar in how you have to approach them.</div></div>
             </div>
           </div></div>
         </div>
 
         <!-- MTE502 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MTE502">
+        <div class="course-card has-content" id="course-MTE502">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE502</div><div class="course-name">Microprocessors</div><div class="course-meta">Embedded · Semester 5</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1249,16 +1230,16 @@
 
             <div class="review-block" data-key="mte502-qamber">
             <div class="review-block-header">
-              <div class="rb-header-left"><div class="prof-chip" style="margin:0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">⚡ Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
+              <div class="rb-header-left"><div class="prof-chip" style="margin: 0;">Reviewed by: <span>Qamber</span></div><div class="rb-title">Student Review &amp; Advice</div><span class="rb-favorite-tag">Student Favorite</span></div>
               <button class="like-btn" data-key="mte502-qamber" onclick="toggleLike(this, event)" aria-label="Like this review">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h6.29a2 2 0 0 1 1.94 2.5l-2.31 9A2 2 0 0 1 18 23H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <span class="like-count">–</span>
               </button>
             </div>
             <div class="review-section"><div class="review-section-title">General Advice</div><div class="review-text">This course is all about really understanding what the microcontroller is doing under the hood.<br><br>Assembly matters a lot. Don't just memorize instructions. Practice tracing small snippets line by line: track registers, SREG flags, and the stack.<br><br>Think like hardware, not just like a programmer. When you see C code, ask: "What bits and registers is this touching?" That mindset matches how the prof writes questions.<br><br>Build a smart cheat sheet. Organize it by topics (Registers/Flags, Digital I/O, Timers/PWM, ADC, Interrupts, Control) and only write things you actually understand: key formulas, typical register setups, common instruction patterns.<br><br>Practice bit math. Binary/hex conversions, masks, shifts, and flag logic appear constantly in this course and on tests.</div></div>
-            <div class="review-section"><div class="review-section-title">📋 Labs</div><div class="review-text">Labs are where the slides become real: you configure DDRx/PORTx/PINx, set up ADC, timers, PWM, and sometimes basic control on a robot or similar setup. But in practice, lab time is short (1 hour long) for how much you need to do.<br><br>Try to write and think through as much of the code as possible at home (using the slides and datasheet). Treat lab sessions mainly as demo + debugging time, not full development time. Come in with code that compiles and "should" work. Use your lab hours to test on actual hardware, fix wiring issues, and tune small details (pull-ups, pin mappings, delays). Many problems are simple things: wrong pin, wrong DDR/PORT settings, missing ground, or power issues. Check those first.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Midterm and Quiz</div><div class="review-text">The midterm and quiz are usually a mix of multiple choice, short answer, and longer written questions. They test both concepts and your ability to reason through small examples.<br><br>What they typically focus on: core architecture (CPU, registers, SREG flags, stack, and memory spaces — Flash vs SRAM vs EEPROM); assembly reasoning (trace what a short AVR assembly snippet does — register changes, flags, stack pushes/pops); digital I/O (how PINx/PORTx/DDRx work together, what SBI/CBI/IN/OUT/LD/ST do in context); basic control concepts (open-loop vs closed-loop, basic feedback ideas, and simple use of PWM).<br><br>For the midterm, expect questions that feel like "mini versions" of the final: still heavy on reasoning, but centered on earlier topics (architecture, assembly basics, I/O, simple control). The quiz covers post-midterm content and is a good prep for finals.<br><br>Advice: practice midterm-style questions by hand — trace code, compute flag results, explain what a configuration does, and write short, keyword-heavy explanations. Use any old quizzes/midterms (if available) to see how the prof phrases things — the style usually repeats.</div></div>
-            <div class="review-section"><div class="review-section-title">📝 Final Exam</div><div class="review-text">The final exam is cumulative, but tends to lean more on the later material while still expecting you to remember the basics.<br><br>Common focus areas: everything from the midterm, plus timer configuration, prescalers, and timing/PWM calculations; ADC setup and usage, converting between ADC readings, voltages, and physical units; interrupts (enabling/disabling, vector flow, what happens to PC/SREG/stack); control-style questions using the microcontroller (e.g., simple PID logic, block diagrams, error sources).<br><br>You are usually allowed one double-sided 8.5"×11" cheat sheet for the final. Treat it as a summary of your understanding, not just a wall of text: organize it by sections (Registers/Flags, Memory Map, Digital I/O, Timers/PWM, ADC, Interrupts, Control); include key formulas (timer periods, PWM duty, ADC conversion), the most important register names and bitfields, 1–2 common configuration "templates" for each peripheral, and a few small assembly patterns you can reuse (e.g., loop structure, bit set/clear, pointer-based load/store).<br><br>During studying, practice answering exam-type questions using only your cheat sheet so you know exactly where everything is on the page.</div></div>
+            <div class="review-section"><div class="review-section-title">Labs</div><div class="review-text">Labs are where the slides become real: you configure DDRx/PORTx/PINx, set up ADC, timers, PWM, and sometimes basic control on a robot or similar setup. But in practice, lab time is short (1 hour long) for how much you need to do.<br><br>Try to write and think through as much of the code as possible at home (using the slides and datasheet). Treat lab sessions mainly as demo + debugging time, not full development time. Come in with code that compiles and "should" work. Use your lab hours to test on actual hardware, fix wiring issues, and tune small details (pull-ups, pin mappings, delays). Many problems are simple things: wrong pin, wrong DDR/PORT settings, missing ground, or power issues. Check those first.</div></div>
+            <div class="review-section"><div class="review-section-title">Midterm and Quiz</div><div class="review-text">The midterm and quiz are usually a mix of multiple choice, short answer, and longer written questions. They test both concepts and your ability to reason through small examples.<br><br>What they typically focus on: core architecture (CPU, registers, SREG flags, stack, and memory spaces — Flash vs SRAM vs EEPROM); assembly reasoning (trace what a short AVR assembly snippet does — register changes, flags, stack pushes/pops); digital I/O (how PINx/PORTx/DDRx work together, what SBI/CBI/IN/OUT/LD/ST do in context); basic control concepts (open-loop vs closed-loop, basic feedback ideas, and simple use of PWM).<br><br>For the midterm, expect questions that feel like "mini versions" of the final: still heavy on reasoning, but centered on earlier topics (architecture, assembly basics, I/O, simple control). The quiz covers post-midterm content and is a good prep for finals.<br><br>Advice: practice midterm-style questions by hand — trace code, compute flag results, explain what a configuration does, and write short, keyword-heavy explanations. Use any old quizzes/midterms (if available) to see how the prof phrases things — the style usually repeats.</div></div>
+            <div class="review-section"><div class="review-section-title">Final Exam</div><div class="review-text">The final exam is cumulative, but tends to lean more on the later material while still expecting you to remember the basics.<br><br>Common focus areas: everything from the midterm, plus timer configuration, prescalers, and timing/PWM calculations; ADC setup and usage, converting between ADC readings, voltages, and physical units; interrupts (enabling/disabling, vector flow, what happens to PC/SREG/stack); control-style questions using the microcontroller (e.g., simple PID logic, block diagrams, error sources).<br><br>You are usually allowed one double-sided 8.5"×11" cheat sheet for the final. Treat it as a summary of your understanding, not just a wall of text: organize it by sections (Registers/Flags, Memory Map, Digital I/O, Timers/PWM, ADC, Interrupts, Control); include key formulas (timer periods, PWM duty, ADC conversion), the most important register names and bitfields, 1–2 common configuration "templates" for each peripheral, and a few small assembly patterns you can reuse (e.g., loop structure, bit set/clear, pointer-based load/store).<br><br>During studying, practice answering exam-type questions using only your cheat sheet so you know exactly where everything is on the page.</div></div>
             <div class="review-section"><div class="review-section-title">Final Project / Maze Robot</div><div class="review-text">Your final project will include an autonomous line following maze solving robot, which will bring together sensing, timers, PWM motor control, and decision logic on the microcontroller. This part of the course can be very fun but also time-consuming.<br><br>Key points: start early — you will need a lot of in-lab testing time with the real maze or environment, it rarely works perfectly the first time. There are many environment and hardware factors: friction, wheel slip, sensor noise, lighting, battery level, mechanical alignment, etc. These issues only show up when you run the robot on a real course. Try to get a simple version working as soon as possible: basic driving, turning, and sensing — then refine the logic and tuning. Use home time to clean up your code, structure your state logic, and tune thresholds in a rough way; use lab time to adjust the robot based on what you actually see it doing.</div></div>
             <div class="review-section"><div class="review-section-title">Final Thoughts / Recommendations from Students</div><div class="review-text">Don't fear assembly, just start early. The first few weeks can feel rough, but once you've done a handful of examples by hand, patterns start repeating. Small, regular practice beats cramming.<br><br>Use the datasheet and slides together. Treat the slides as the "map" and the ATmega328P datasheet as the "dictionary." When you see a register in the slides, look it up once in the datasheet so it sticks.<br><br>Build your cheat sheet as you go. Don't leave it for the night before the final. Add formulas, register setups, and small code patterns each week. If you use it while doing practice problems, you'll remember where everything is.<br><br>Take labs seriously and work ahead. Most students say there isn't enough time to write and debug everything during the lab slot. Do as much coding as you can at home and use lab time mainly to test and fine-tune on real hardware.<br><br>Start the project early and test on the actual maze. The robot almost never works perfectly on the first try. You'll need a lot of trial and error because of friction, sensor noise, battery levels, and alignment. The groups that start early and test often are the ones that finish calmly.<br><br>Ask questions when things don't make sense. If a timing formula, register field, or assembly snippet feels confusing, clear it up right away — with the prof, TA, or classmates. Small gaps add up fast in this course.<br><br>If you like robots or embedded systems, this course is worth the effort. It's a lot of work, but you walk away actually understanding how microcontrollers think and how to make them control real hardware, which pays off in upper-year projects and design teams.</div></div>
             </div>
@@ -1266,119 +1247,119 @@
         </div>
 
         <!-- EES612 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-EES612">
+        <div class="course-card has-content" id="course-EES612">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">EES612</div><div class="course-name">Electric Machines and Actuators</div><div class="course-meta">Electrical · Semester 5</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, EES612 covers single-phase transformers and their applications, DC and AC motor characteristics and their use in mechanical drives, power electronic circuits (H-bridges, PWM control, power amplifiers), DC servo and stepper motors, AC synchronous and induction motors, and an introduction to speed and torque control techniques for motors. Prerequisites: CEN199 and either EES512 or ELE202.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MEC713 -->
-        <div class="course-card has-content reveal-up delay-3" id="course-MEC713">
+        <div class="course-card has-content" id="course-MEC713">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MEC713</div><div class="course-name">Project Management</div><div class="course-meta">Management · Semester 5</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MEC713 examines project management fundamentals within a full project life-cycle — from idea generation through to project close — covering project screening and selection, evaluation methods, project structures and control, scheduling, resource management, life-cycle costing, and computer support for project management. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, ECN801, and MTH510.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MEC713 examines project management fundamentals within a full project life-cycle (from idea generation through to project close) covering project screening and selection, evaluation methods, project structures and control, scheduling, resource management, life-cycle costing, and computer support for project management. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, ECN801, and MTH510.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTH510 -->
-        <div class="course-card has-content reveal-up delay-4" id="course-MTH510">
+        <div class="course-card has-content" id="course-MTH510">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTH510</div><div class="course-name">Numerical Analysis</div><div class="course-meta">Math · Semester 5</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, MTH510 covers Taylor's formula and truncation/round-off error, solving non-linear equations in one variable, linear equations and LU-decomposition, eigenvalues and eigenvectors, Jacobi and Gauss-Seidel methods, interpolation and curve fitting, numerical integration, and numerical solutions to ordinary differential equations (initial value problems). It runs 3 lecture hours and 1 lab hour per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
       </div>
-      <div class="semester-label reveal-up"><span>►</span> Semester 6</div>
+      <div class="semester-label"><span>►</span> Semester 6</div>
       <div class="courses-grid">
 
         <!-- MEC709 -->
-        <div class="course-card has-content reveal-up" id="course-MEC709">
+        <div class="course-card has-content" id="course-MEC709">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MEC709</div><div class="course-name">Control Systems</div><div class="course-meta">Controls · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, MEC709 covers mathematical model representation of physical control systems involving mechanical, hydraulic, pneumatic, and electrical components, open- and closed-loop control system analysis, block diagram algebra, and stability analysis techniques for first-, second-, and higher-order systems (Bode diagrams, Routh-Hurwitz analysis, root locus), plus an introduction to system compensation such as lead-lag compensators. It runs 3 lecture hours, 1 lab hour, and 1 tutorial hour per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE601 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MTE601">
+        <div class="course-card has-content" id="course-MTE601">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE601</div><div class="course-name">Machine Mechanics and Design</div><div class="course-meta">Mechanical · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE601 covers the dynamics of complex, multi-component systems — gears and gear trains, power screws, belt drives, flywheels and gyroscopes — synthesis and analysis of mechanisms, a simple design-factor approach to stress analysis, variable loads and stress concentrations, bolted joints and springs, shaft and bearing design, brakes, welded joints, and vibration analysis and isolation. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, MEC311, MEC323, and CEN199.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE601 covers the dynamics of complex, multi-component systems (gears and gear trains, power screws, belt drives, flywheels and gyroscopes) synthesis and analysis of mechanisms, a simple design-factor approach to stress analysis, variable loads and stress concentrations, bolted joints and springs, shaft and bearing design, brakes, welded joints, and vibration analysis and isolation. It runs 3 lecture hours and 1 lab hour per week. Prerequisites: CMN432, MEC311, MEC323, and CEN199.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE602 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-MTE602">
+        <div class="course-card has-content" id="course-MTE602">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE602</div><div class="course-name">Introduction to Robotics</div><div class="course-meta">Robotics · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE602 is a brief introduction to robotics with an emphasis on mechanics — a review of relevant linear algebra, robot geometry, velocity Jacobians, theoretical kinematics and dynamics, equations of motion, inertia and compliance analysis, kinematic redundancy, multi-robot coordination, robot calibration and performance testing, and the fundamentals of robot programming and selection. It runs 3 lecture hours and 1 lab hour per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE602 is a brief introduction to robotics with an emphasis on mechanics, a review of relevant linear algebra, robot geometry, velocity Jacobians, theoretical kinematics and dynamics, equations of motion, inertia and compliance analysis, kinematic redundancy, multi-robot coordination, robot calibration and performance testing, and the fundamentals of robot programming and selection. It runs 3 lecture hours and 1 lab hour per week.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE603 -->
-        <div class="course-card has-content reveal-up delay-3" id="course-MTE603">
+        <div class="course-card has-content" id="course-MTE603">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE603</div><div class="course-name">Computer Structures and Real-Time Systems</div><div class="course-meta">Embedded · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE603 covers number systems, codes, and minimization techniques used in logic-system design, component specifications, an introduction to electronic digital computers and computer organization (hardware and software), and basic real-time concepts — process management, inter-process communication and synchronization, memory management, resource management, interrupt handling, concurrent programming, and file systems. It runs 3 lecture hours and 2 lab hours per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE603 covers number systems, codes, and minimization techniques used in logic-system design, component specifications, an introduction to electronic digital computers and computer organization (hardware and software), and basic real-time concepts, process management, inter-process communication and synchronization, memory management, resource management, interrupt handling, concurrent programming, and file systems. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE604 -->
-        <div class="course-card has-content reveal-up delay-4" id="course-MTE604">
+        <div class="course-card has-content" id="course-MTE604">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE604</div><div class="course-name">Electromechanical System Modelling and Design</div><div class="course-meta">Design · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, MTE604 covers electromechanical system modelling (including state-space formulation and time/frequency-domain solutions), design of motion transmission systems, sensing and measurement of mechanical motion, sensor selection, electromechanical actuator selection and specification, and control selection and implementation. A design project is assigned, typically involving a physical electromechanical prototype or a Gazebo-based simulation. It runs 3 lecture hours and 2 lab hours per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE751 -->
-        <div class="course-card has-content reveal-up" id="course-MTE751">
+        <div class="course-card has-content" id="course-MTE751">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE751</div><div class="course-name">Measurements, Sensors and Instruments</div><div class="course-meta">Measurement · Semester 6</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
             <div class="course-overview">Per TMU's official course calendar, MTE751 covers the application of modern instrumentation to experimental measurements of mechanical and thermal systems, reviewing fundamental concepts of static and dynamic measurement, and discussing transducers, signal conditioning, data transmission, and digital data acquisition systems. It runs 3 lecture hours and 1 lab hour per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
       </div>
-      <div class="contribute-strip reveal-up">
+      <div class="contribute-strip">
         <p><strong>Have reviews for other Year 3 courses?</strong> Help upper-year students navigate the toughest semester.</p>
         <a href="contact.html" class="btn-ghost">Contribute →</a>
       </div>
@@ -1387,69 +1368,68 @@
   <!-- YEAR 4 -->
   <section class="year-section" id="year-4" data-year="4">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="year-section-header reveal-up">
-        <div class="year-badge">Year 04</div>
-        <div class="year-title-block"><h2>FOURTH YEAR</h2><p>Capstone projects and advanced specialization — your final stretch</p></div>
+      <div class="year-section-header">
+        <div class="year-title-block"><h2>FOURTH YEAR</h2><p>Capstone, electives and the last stretch</p></div>
       </div>
-      <div class="semester-label reveal-up"><span>►</span> Semester 7 &amp; 8 — Required</div>
+      <div class="semester-label"><span>►</span> Semester 7 &amp; 8: Required</div>
       <div class="courses-grid">
 
         <!-- MTE70A/B -->
-        <div class="course-card has-content reveal-up" id="course-MTE70AB">
+        <div class="course-card has-content" id="course-MTE70AB">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE70A/B</div><div class="course-name">Mechatronics Capstone Design</div><div class="course-meta">Capstone · Semester 7 &amp; 8</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE70A/B uses mechatronic systems case studies to cover modelling, simulation, model validation, and control. Students work on individual design projects and also in teams on applied design problems — Part A (7th semester) focuses on design and simulation-based verification, while Part B (8th semester) focuses on prototyping and implementation. A technical report is submitted at the end of each term, along with an oral presentation. It runs 1 lecture hour and 3 lab hours per week across both terms. Prerequisites: MTE601, MTE751, MTE604, and MTE603.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE70A/B uses mechatronic systems case studies to cover modelling, simulation, model validation, and control. Students work on individual design projects and also in teams on applied design problems, Part A (7th semester) focuses on design and simulation-based verification, while Part B (8th semester) focuses on prototyping and implementation. A technical report is submitted at the end of each term, along with an oral presentation. It runs 1 lecture hour and 3 lab hours per week across both terms. Prerequisites: MTE601, MTE751, MTE604, and MTE603.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE701 -->
-        <div class="course-card has-content reveal-up delay-1" id="course-MTE701">
+        <div class="course-card has-content" id="course-MTE701">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE701</div><div class="course-name">Real-Time Digital Control Systems Design</div><div class="course-meta">Controls · Semester 7</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE701 covers the design and implementation of real-time digital control systems — discrete equivalents of continuous-time system representations (transfer function and state-space models), stability analysis, digital controller design via transform and state-space methods, real-time system concepts, and concurrent programming for real-time implementation of digital control algorithms and scheduling. Lab work covers real-time programming and implementing digital control algorithms on an embedded controller. It runs 3 lecture hours and 2 lab hours per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE701 covers the design and implementation of real-time digital control systems, discrete equivalents of continuous-time system representations (transfer function and state-space models), stability analysis, digital controller design via transform and state-space methods, real-time system concepts, and concurrent programming for real-time implementation of digital control algorithms and scheduling. Lab work covers real-time programming and implementing digital control algorithms on an embedded controller. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- CEN800 -->
-        <div class="course-card has-content reveal-up delay-2" id="course-CEN800">
+        <div class="course-card has-content" id="course-CEN800">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">CEN800</div><div class="course-name">Law and Ethics in Engineering Practice</div><div class="course-meta">Professional · Semester 8</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, CEN800 studies the legal and ethical aspects of engineering practice — the Canadian legal system and business organizations, tort liability, business contract law, intellectual and industrial property, arbitration and alternative dispute resolution, occupational health and safety, ethical dilemmas in project management, sustainable development, and international standards for ethical and social responsibility. It runs 3 lecture hours per week, with no prerequisites.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, CEN800 studies the legal and ethical aspects of engineering practice, the Canadian legal system and business organizations, tort liability, business contract law, intellectual and industrial property, arbitration and alternative dispute resolution, occupational health and safety, ethical dilemmas in project management, sustainable development, and international standards for ethical and social responsibility. It runs 3 lecture hours per week, with no prerequisites.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
         <!-- MTE801 -->
-        <div class="course-card has-content reveal-up delay-3" id="course-MTE801">
+        <div class="course-card has-content" id="course-MTE801">
           <div class="course-header" onclick="toggleCourse(this)">
             <div><div class="course-code">MTE801</div><div class="course-name">Hardware in the Loop and RCP</div><div class="course-meta">Controls · Semester 8</div></div>
             <svg class="course-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="course-body"><div class="course-body-inner">
-            <div class="course-overview">Per TMU's official course calendar, MTE801 assigns each student portable control hardware for the term. Students learn to interface it with industry-standard software via a data-acquisition device, build their own simulation models of the hardware, use those models to design a feedback controller, verify it in simulation, and then implement it on the hardware — refining the controller through a cycle of rapid control prototyping. It runs 3 lecture hours and 2 lab hours per week.</div>
-            <div class="coming-soon-card"><div class="cs-icon">◌</div><p>No student review yet — be the first to share how it went.</p><a href="contact.html" class="course-link-btn">Submit a Review →</a></div>
+            <div class="course-overview">Per TMU's official course calendar, MTE801 assigns each student portable control hardware for the term. Students learn to interface it with industry-standard software via a data-acquisition device, build their own simulation models of the hardware, use those models to design a feedback controller, verify it in simulation, and then implement it on the hardware, refining the controller through a cycle of rapid control prototyping. It runs 3 lecture hours and 2 lab hours per week.</div>
+            <div class="coming-soon-card"><p>No review yet. Taken this one?</p><a href="contact.html" class="course-link-btn">Add yours →</a></div>
           </div></div>
         </div>
 
       </div>
 
-      <div class="semester-label reveal-up"><span>►</span> Technical Electives (choose 2 per semester)</div>
-      <div class="course-overview" style="max-width:720px;margin:0 0 8px;">Per TMU's official course calendar, students pick 2 core electives in the 7th semester and 2 in the 8th. Exact offerings vary by year, so confirm availability with your academic advisor before selecting.</div>
-      <div class="oh-bio-row" style="margin-bottom:4px;"><span style="width:100px;">Semester 7</span><span>MEC617 Manufacturing System Controls · MTE711 Fundamentals of Microelectromechanical Systems · MTE712 Sensor Fusion · MTE792 Digital Signal Processing · MTE829 System Models and Identification</span></div>
-      <div class="oh-bio-row" style="margin-bottom:8px;"><span style="width:100px;">Semester 8</span><span>CEN810 Selected Topics in Engineering · MTE811 Design of Modern Control Systems · MTE812 Autonomous Robots and Vehicles · MTE819 Control of Robotic Manipulators · MTE882 Introduction to Digital Image Processing · MTE888 Intelligent Systems</span></div>
+      <div class="semester-label"><span>►</span> Technical Electives (choose 2 per semester)</div>
+      <div class="course-overview" style="max-width:720px;margin: 0 0 8px;">Per TMU's official course calendar, students pick 2 core electives in the 7th semester and 2 in the 8th. Exact offerings vary by year, so confirm availability with your academic advisor before selecting.</div>
+      <div class="oh-bio-row" style="margin-bottom: 4px;"><span style="width:100px;">Semester 7</span><span>MEC617 Manufacturing System Controls · MTE711 Fundamentals of Microelectromechanical Systems · MTE712 Sensor Fusion · MTE792 Digital Signal Processing · MTE829 System Models and Identification</span></div>
+      <div class="oh-bio-row" style="margin-bottom: 8px;"><span style="width:100px;">Semester 8</span><span>CEN810 Selected Topics in Engineering · MTE811 Design of Modern Control Systems · MTE812 Autonomous Robots and Vehicles · MTE819 Control of Robotic Manipulators · MTE882 Introduction to Digital Image Processing · MTE888 Intelligent Systems</span></div>
 
-      <div class="contribute-strip reveal-up">
+      <div class="contribute-strip">
         <p><strong>Taken one of the Year 4 electives?</strong> Yours could be the first review upper years see for it.</p>
         <a href="contact.html" class="btn-ghost">Contribute →</a>
       </div>
@@ -1459,15 +1439,20 @@
   <!-- CONTRIBUTE -->
   <section id="ac-contribute">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header reveal-up">
-        <div class="section-tag">Give Back</div>
+      <div class="section-header">
         <h2 class="section-title">HELP THE NEXT COHORT</h2>
-        <p class="section-desc">Everything on this page and in the drive comes from students. Add yours in a couple of minutes.</p>
+        <p class="section-desc">Everything on this page and in the drive comes from students. Adding yours takes a couple of minutes.</p>
       </div>
-      <div class="cb-grid">
-        <div class="cb-card reveal-up"><span class="cb-num">01</span><h4>Course Content Drop Box</h4><p>Got midterms, quizzes, exams, assignments or solid notes? Drop them in and we'll get them to the people who need them.</p><a href="https://forms.gle/FZHc3XCTvAjBExw76" target="_blank" rel="noopener" class="oh-link-btn">Open the Drop Box</a></div>
-        <div class="cb-card reveal-up delay-1"><span class="cb-num">02</span><h4>Write a Course Review</h4><p>Taken a course already? Tell future students what to expect, how to study and what to avoid.</p><a href="contact.html" class="oh-link-btn">Submit a Review</a></div>
-        <div class="cb-card reveal-up delay-2"><span class="cb-num">03</span><h4>Browse the Resource Drive</h4><p>Past exams, lecture slides and mock finals, organized by course.</p><a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener" class="oh-link-btn ghost">Open the Drive</a></div>
+      <div class="cb-layout">
+        <div class="cb-main">
+          <h4>Course Content Drop Box</h4>
+          <p>Midterms, quizzes, exams, assignments, solid notes. Drop them in and they go to the people who need them.</p>
+          <a href="https://forms.gle/FZHc3XCTvAjBExw76" target="_blank" rel="noopener" class="oh-link-btn">Open the Drop Box</a>
+        </div>
+        <ul class="cb-side">
+          <li><a href="contact.html"><strong>Write a course review</strong><span>Tell the next cohort what to expect and how to study for it.</span></a></li>
+          <li><a href="https://drive.google.com/drive/folders/1IYH_3oKZ9xxQHEKsciUeWlGd0ZxcA2xr?usp=sharing" target="_blank" rel="noopener"><strong>Browse the Resource Drive</strong><span>Past exams, slides and mock finals, organized by course.</span></a></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -1475,17 +1460,16 @@
   <!-- TUTORING -->
   <section id="ac-tutoring">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header reveal-up">
-        <div class="section-tag">Support</div>
+      <div class="section-header">
         <h2 class="section-title">NEED HELP?</h2>
         <p class="section-desc">MCU offers free academic support run by students who've already been through these courses.</p>
       </div>
       <div class="tutoring-grid">
-        <div class="tutoring-card reveal-up"><h4>Drop-In Tutoring</h4><div class="tc-detail"><a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">Check Discord for schedule</a></div><p>Walk in, get help. No booking required — bring your notes and questions and one of our tutors will work through it with you.</p></div>
-        <div class="tutoring-card reveal-up delay-1"><h4>1-on-1 Sessions</h4><div class="tc-detail">Book via email</div><p>Need focused time on a specific topic? Email us to book a private session with an upper-year tutor who's taken the course.</p></div>
-        <div class="tutoring-card reveal-up delay-2"><h4>Study Groups</h4><div class="tc-detail">Check Discord</div><p>Weekly study groups organized by course. Check the MCU Discord server for current schedules and meetup spots.</p></div>
+        <div class="tutoring-card"><h4>Drop-In Tutoring</h4><div class="tc-detail"><a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">Check Discord for schedule</a></div><p>Walk in, get help. No booking required. Bring your notes and questions and a tutor will work through them with you.</p></div>
+        <div class="tutoring-card"><h4>1-on-1 Sessions</h4><div class="tc-detail">Book via email</div><p>Need focused time on a specific topic? Email us to book a private session with an upper-year tutor who's taken the course.</p></div>
+        <div class="tutoring-card"><h4>Study Groups</h4><div class="tc-detail">Check Discord</div><p>Weekly study groups organized by course. Check the MCU Discord server for current schedules and meetup spots.</p></div>
       </div>
-      <div style="text-align:center;margin-top:48px;" class="reveal-up delay-3">
+      <div style="text-align:center;margin-top: 48px;" >
         <a href="contact.html" class="btn-primary" style="text-decoration:none;">Get Academic Help →</a>
       </div>
     </div>
@@ -1494,8 +1478,8 @@
   <!-- MARQUEE -->
   <div class="marquee-strip">
     <div class="marquee-track">
-      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>RESOURCE DRIVE</span><span class="mx">✦</span>
-      <span>MECHATRONICS</span><span class="mx">✦</span><span>COURSE GUIDES</span><span class="mx">✦</span><span>STUDENT REVIEWS</span><span class="mx">✦</span><span>PAST EXAMS</span><span class="mx">✦</span><span>VIDEO RESOURCES</span><span class="mx">✦</span><span>MCU ACADEMICS</span><span class="mx">✦</span><span>TMU ENGINEERING</span><span class="mx">✦</span><span>RESOURCE DRIVE</span><span class="mx">✦</span>
+      <span>MECHATRONICS</span><span class="mx">/</span><span>COURSE GUIDES</span><span class="mx">/</span><span>STUDENT REVIEWS</span><span class="mx">/</span><span>PAST EXAMS</span><span class="mx">/</span><span>VIDEO RESOURCES</span><span class="mx">/</span><span>MCU ACADEMICS</span><span class="mx">/</span><span>TMU ENGINEERING</span><span class="mx">/</span><span>RESOURCE DRIVE</span><span class="mx">/</span>
+      <span>MECHATRONICS</span><span class="mx">/</span><span>COURSE GUIDES</span><span class="mx">/</span><span>STUDENT REVIEWS</span><span class="mx">/</span><span>PAST EXAMS</span><span class="mx">/</span><span>VIDEO RESOURCES</span><span class="mx">/</span><span>MCU ACADEMICS</span><span class="mx">/</span><span>TMU ENGINEERING</span><span class="mx">/</span><span>RESOURCE DRIVE</span><span class="mx">/</span>
     </div>
   </div>
 
@@ -1505,9 +1489,9 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="MCU">
-            <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="footer-logo-img" />
+            <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="footer-logo-img" />
           </a>
-          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <p class="footer-tagline">Run by Mechatronics students at Toronto Metropolitan University.</p>
           <div class="footer-socials">
             <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
             <a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
@@ -1534,7 +1518,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union, TMU. All rights reserved.</span>
         <span class="mono footer-built">Built by MCU Web Team</span>
       </div>
     </div>
@@ -1560,14 +1544,19 @@
     window.openCourseCard = openCourseCard;
 
     /* Height of everything that sticks to the top (nav + year tab bar) */
-    function stickyOffset() {
+    function pastYears(el) {
+      const last = document.querySelector('.year-section:last-of-type') || document.getElementById('year-4');
+      return !!last && (el.getBoundingClientRect().top + window.scrollY) >= (last.getBoundingClientRect().bottom + window.scrollY - 1);
+    }
+    function stickyOffset(forEl) {
       const nav = document.getElementById('nav');
       const bar = document.getElementById('year-tab-bar');
-      return (nav ? nav.offsetHeight : 0) + (bar ? bar.offsetHeight : 0);
+      const useBar = bar && !(forEl && pastYears(forEl));
+      return (nav ? nav.offsetHeight : 0) + (useBar ? bar.offsetHeight : 0);
     }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function scrollToEl(el, extra) {
-      const top = el.getBoundingClientRect().top + window.scrollY - stickyOffset() - (extra || 12);
+      const top = el.getBoundingClientRect().top + window.scrollY - stickyOffset(el) - (extra || 12);
       window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
     }
     function scrollToYear(year) {
@@ -1611,6 +1600,8 @@
     function updateActiveTab() {
       tabTicking = false;
       const line = stickyOffset() + 20;
+      const lastSec = yearSections[yearSections.length - 1];
+      if (tabBar && lastSec) tabBar.classList.toggle('is-hidden', lastSec.getBoundingClientRect().bottom < stickyOffset() - 8);
       let active = null;
       for (const s of yearSections) {
         const r = s.getBoundingClientRect();
@@ -1816,7 +1807,7 @@
       const left = el('div', 'rb-header-left');
       const chip = el('div', 'prof-chip'); chip.style.margin = '0';
       chip.append('Reviewed by: ', el('span', null, name));
-      left.append(chip, el('div', 'rb-title', '⚡ Student Review & Advice'), el('span', 'rb-favorite-tag', 'Student Favorite'));
+      left.append(chip, el('div', 'rb-title', 'Student Review & Advice'), el('span', 'rb-favorite-tag', 'Student Favorite'));
       const btn = el('button', 'like-btn'); btn.type = 'button'; btn.dataset.key = key;
       btn.setAttribute('aria-label', 'Like this review');
       btn.innerHTML = THUMB; btn.append(el('span', 'like-count', '–'));
