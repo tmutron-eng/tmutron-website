@@ -82,7 +82,11 @@ window.MCU = (function () {
   const loader   = document.getElementById('loader');
   const fill     = document.querySelector('.loader-fill');
   const pct      = document.querySelector('.loader-pct');
-  if (!loader) return;
+  if (!loader) {
+    /* No splash screen: just let the hero animate in */
+    requestAnimationFrame(triggerHeroReveal);
+    return;
+  }
 
   let progress = 0;
   const t0 = performance.now();
