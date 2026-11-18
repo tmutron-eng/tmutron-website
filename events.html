@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events — MCU | Mechatronics Course Union · TMU</title>
-  <meta name="description" content="The full MCU event archive — workshops, socials, gaming tournaments, and more, all in one place." />
+  <title>Events | MCU | Mechatronics Course Union · TMU</title>
+  <meta name="description" content="The full MCU event archive | workshops, socials, gaming tournaments, and more, all in one place." />
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -17,29 +17,14 @@
 </head>
 <body>
 
-  <!-- ═══════════════════ LOADER ═══════════════════ -->
-  <div id="loader">
-    <div class="loader-inner">
-      <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
-        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
-      </svg>
-      <div class="loader-text">
-        <span class="mono">LOADING EVENTS</span>
-        <div class="loader-bar"><div class="loader-fill"></div></div>
-        <span class="loader-pct mono">0%</span>
-      </div>
-    </div>
-  </div>
-
   <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
   <canvas id="bg-canvas"></canvas>
 
   <!-- ═══════════════════ NAV ═══════════════════ -->
   <nav id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
-        <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="nav-logo-img" />
+      <a href="index.html" class="nav-logo" aria-label="MCU, Mechatronics Course Union">
+        <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="nav-logo-img" />
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
@@ -49,7 +34,7 @@
         <li><a href="academics.html" class="nav-link">Academics</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
-      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop">🛒 Shop</a>
+      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a>
       <a href="contact.html" class="nav-cta">Join Us</a>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -63,14 +48,14 @@
         <li><a href="team.html">Team</a></li>
         <li><a href="academics.html">Academics</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta">🛒 Shop</a></li>
+        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a></li>
         <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section id="events-hero">
+  <section id="events-hero" data-reveal>
     <div class="ev-hero-scan"></div>
     <div class="ev-hero-grid"></div>
     <div class="hud-corner hud-tl"></div>
@@ -79,16 +64,10 @@
     <div class="hud-corner hud-br"></div>
 
     <!-- decorative side rails -->
-    <div class="evx-rail evx-rail-left mono" aria-hidden="true">TORONTO METROPOLITAN UNIVERSITY</div>
-    <div class="evx-rail evx-rail-right mono" aria-hidden="true">MECHATRONICS COURSE UNION</div>
 
     <div class="container evx-hero-inner">
       <!-- Left: layered title + funding plaque -->
       <div class="evx-hero-left">
-        <div class="hero-badge reveal-up delay-1">
-          <span class="badge-dot"></span>
-          <span class="mono">03 — EVENT ARCHIVE</span>
-        </div>
 
         <div class="evx-title-wrap reveal-up delay-2">
           <span class="evx-title-ghost" aria-hidden="true">ARCHIVE</span>
@@ -96,12 +75,10 @@
             <span class="line-wrap"><span class="hero-line">EVENT</span></span>
             <span class="line-wrap"><span class="hero-line ev-title-accent">ARCHIVE.</span></span>
           </h1>
-          <div class="evx-title-tick mono">// LOG INDEX — ALL RECORDS</div>
         </div>
 
         <p class="ev-hero-sub reveal-up delay-3">
-          Every workshop, tournament, and social MCU has run so far — logged and catalogued
-          in one place. Open to all Mechatronics students at TMU.
+          Every workshop, tournament and social MCU has run, in one place. Open to all Mechatronics students at TMU.
         </p>
 
         <div class="evx-fund-plaque reveal-up delay-4">
@@ -114,7 +91,7 @@
           </div>
           <div class="evx-fund-text">
             <span class="evx-fund-num">$1,200<span class="evx-fund-plus">+</span></span>
-            <span class="evx-fund-label mono">RAISED FOR CAMH — MECH BULL NIGHT</span>
+            <span class="evx-fund-label mono">RAISED FOR CAMH: MECH BULL NIGHT</span>
           </div>
         </div>
       </div>
@@ -136,7 +113,7 @@
             </video>
             <div class="evx-video-tag">
               <span class="evx-video-dot"></span>
-              <span class="mono">MCU-CAM // ARCHIVE REEL</span>
+              
             </div>
           </div>
         </div>
@@ -146,16 +123,9 @@
 
   <!-- ═══════════════════ ARCHIVE GRID ═══════════════════ -->
   <section id="events-main" class="section-dark">
-    <div class="section-blob b1"></div>
-    <div class="section-blob b2"></div>
+
     <div class="evx-texture" aria-hidden="true"></div>
     <div class="container" style="position:relative;z-index:1;">
-
-      <div class="ev-section-label reveal-up">
-        <span class="mono ev-section-tag">FULL ARCHIVE</span>
-        <div class="ev-section-line"></div>
-        <span class="mono ev-archive-count">13 FILES ON RECORD</span>
-      </div>
 
       <div class="archive-frame">
         <span class="arcf-corner arcf-tl"></span>
@@ -165,7 +135,7 @@
       <div class="archive-grid" id="events-grid">
 
         <!-- 001: Marvel Rivals Tournament — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal">
+        <article class="arc-card arc-wide">
           <div class="arc-card-media" style="background-image:url('assets/images/marvel-rivals.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -178,12 +148,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Red Bull Gaming Hub · Catalyst Learning Centre
             </span>
-            <p class="arc-card-desc">MCU's very first event — catered with pita and hummus, 4 full teams battled through a mixed double-elimination bracket, with the Catalyst Learning Centre doubling as the spectators' lounge and a cooldown area between games. A great way to kick off the course union, and a staple event ever since.</p>
+            <p class="arc-card-desc">MCU's very first event, catered with pita and hummus, 4 full teams battled through a mixed double-elimination bracket, with the Catalyst Learning Centre doubling as the spectators' lounge and a cooldown area between games. A great way to kick off the course union, and a staple event ever since.</p>
           </div>
         </article>
 
         <!-- 002: ROS2 Tutorial -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/ros2.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -196,15 +166,15 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Engineering
             </span>
-            <p class="arc-card-desc">Led by Velocity TMU, this 2-hour hands-on session covered ROS2 fundamentals — nodes, interfaces, and real robot communication — and ended with students programming a moveable robot of their own.</p>
+            <p class="arc-card-desc">Led by Velocity TMU, this 2-hour hands-on session covered ROS2 fundamentals (nodes, interfaces, and real robot communication) and ended with students programming a moveable robot of their own.</p>
           </div>
         </article>
 
         <!-- 003: Big Hero 6 Movie Night -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media arc-media-icon eimg-social">
             <div class="ep-grid"></div>
-            <span class="ep-icon">🎬</span>
+            <span class="ep-icon"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M7 4l-3 5M13 4l-3 5M19 4l-3 5"/></svg></span>
             <div class="arc-scan"></div>
             <span class="arc-tag arc-tag-social mono">SOCIAL</span>
             <span class="arc-file mono">FILE Nº 003</span>
@@ -220,7 +190,7 @@
         </article>
 
         <!-- 004: SolidWorks Tutorials -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/solidworks.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -233,12 +203,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Engineering Labs
             </span>
-            <p class="arc-card-desc">A three-tier SolidWorks series — the first session covered the basics and sent every participant home with a free SolidWorks license, while the second and third built toward CSWA and CSWP certification prep respectively. Industry-standard CAD skills for your résumé.</p>
+            <p class="arc-card-desc">A three-tier SolidWorks series, the first session covered the basics and sent every participant home with a free SolidWorks license, while the second and third built toward CSWA and CSWP certification prep respectively. Industry-standard CAD skills for your résumé.</p>
           </div>
         </article>
 
         <!-- 005: Mech Bull Night — featured, full width -->
-        <article class="arc-card arc-feature arc-reveal">
+        <article class="arc-card arc-feature">
           <div class="arc-feature-media" style="background-image:url('assets/images/mechbull.jpg');background-size:cover;background-position:center;">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -253,7 +223,7 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Gould Street, TMU
             </span>
-            <p class="arc-card-desc">Run in collaboration with MECU, this carnival-style event on Gould Street raised money for CAMH — Canada's largest mental health teaching hospital. Inflatable games, refreshments, face painting, and our signature mechanical bull ran on a dollar-a-ticket system, with every cent going straight to the cause. The event was packed.</p>
+            <p class="arc-card-desc">Run in collaboration with MECU, this carnival-style event on Gould Street raised money for CAMH, Canada's largest mental health teaching hospital. Inflatable games, refreshments, face painting, and our signature mechanical bull ran on a dollar-a-ticket system, with every cent going straight to the cause. The event was packed.</p>
             <div class="arc-feature-stat">
               <span class="afs-num">$1,200<span class="afs-plus">+</span></span>
               <span class="afs-label mono">RAISED FOR CAMH</span>
@@ -262,7 +232,7 @@
         </article>
 
         <!-- 006: Arduino Workshop -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/arduino.png');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -275,12 +245,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Engineering Lab
             </span>
-            <p class="arc-card-desc">An evening full of prototyping, debugging, and learning the basics of electronics. Over 50 participants learned how basic circuitry works — from connecting and blinking an LED, to reading digital input through a push-button, to wiring an LCD for a visual text display.</p>
+            <p class="arc-card-desc">An evening full of prototyping, debugging, and learning the basics of electronics. Over 50 participants learned how basic circuitry works, from connecting and blinking an LED, to reading digital input through a push-button, to wiring an LCD for a visual text display.</p>
           </div>
         </article>
 
         <!-- 007: Sumobot Competition -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/sumobot.JPG');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -298,7 +268,7 @@
         </article>
 
         <!-- 008: Valentine's Day w/ MECU -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/valentine.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -311,15 +281,15 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Campus
             </span>
-            <p class="arc-card-desc">A collab with the Mechanical Engineering Course Union (MECU) for Valentine's Day. Engineers can absolutely be romantic — or at least try.</p>
+            <p class="arc-card-desc">A collab with the Mechanical Engineering Course Union (MECU) for Valentine's Day. Engineers can absolutely be romantic, or at least try.</p>
           </div>
         </article>
 
         <!-- 009: PCB Soldering Workshop -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media arc-media-icon eimg-workshop">
             <div class="ep-grid"></div>
-            <span class="ep-icon">🔧</span>
+            <span class="ep-icon"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span>
             <div class="arc-scan"></div>
             <span class="arc-tag arc-tag-workshop mono">WORKSHOP</span>
             <span class="arc-file mono">FILE Nº 009</span>
@@ -330,12 +300,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Kerr Hall Engineering Lab
             </span>
-            <p class="arc-card-desc">Hands-on soldering fundamentals — iron technique, component placement, and inspection. Students left with a working board they built themselves.</p>
+            <p class="arc-card-desc">Hands-on soldering fundamentals, iron technique, component placement, and inspection. Students left with a working board they built themselves.</p>
           </div>
         </article>
 
         <!-- 010: Jarvis Workshop — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal">
+        <article class="arc-card arc-wide">
           <div class="arc-card-media" style="background-image:url('assets/images/jarvis-build.JPG');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -348,12 +318,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Engineering
             </span>
-            <p class="arc-card-desc">A deep dive into building your own voice-activated AI assistant — hardware integration, natural language commands, and embedded control. Tony Stark would approve.</p>
+            <p class="arc-card-desc">A deep dive into building your own voice-activated AI assistant, hardware integration, natural language commands, and embedded control. Tony Stark would approve.</p>
           </div>
         </article>
 
         <!-- 011: Raspberry Pi Workshop -->
-        <article class="arc-card arc-reveal">
+        <article class="arc-card">
           <div class="arc-card-media" style="background-image:url('assets/images/raspberry.JPG');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -366,12 +336,12 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               TMU Engineering Lab
             </span>
-            <p class="arc-card-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing — the gateway to embedded Linux.</p>
+            <p class="arc-card-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing, the gateway to embedded Linux.</p>
           </div>
         </article>
 
         <!-- 012: International Design Team Showcase — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal">
+        <article class="arc-card arc-wide">
           <div class="arc-card-media" style="background-image:url('assets/images/tmfr.mcu.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -389,7 +359,7 @@
         </article>
 
         <!-- 013: Rocket League RBGH — wide, photo -->
-        <article class="arc-card arc-wide arc-reveal">
+        <article class="arc-card arc-wide">
           <div class="arc-card-media" style="background-image:url('assets/images/rlmcu.jpg');">
             <div class="arc-media-overlay"></div>
             <div class="arc-scan"></div>
@@ -416,7 +386,6 @@
   <section id="suggest-strip">
     <div class="container suggest-inner">
       <div class="suggest-text">
-        <p class="mono suggest-tag">GOT AN IDEA?</p>
         <h2 class="suggest-title">We want to hear it.</h2>
         <p class="suggest-sub">Have an event concept? A workshop idea? A collab you want us to run?</p>
       </div>
@@ -462,10 +431,10 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
-            <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="footer-logo-img" />
+          <a href="index.html" class="footer-logo" aria-label="MCU, Mechatronics Course Union">
+            <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="footer-logo-img" />
           </a>
-          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <p class="footer-tagline">Run by Mechatronics students at Toronto Metropolitan University.</p>
           <div class="footer-socials">
             <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -507,7 +476,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union — TMU. All rights reserved.</span>
+        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union, TMU. All rights reserved.</span>
         <span class="mono footer-built">Built by MCU Web Team</span>
       </div>
     </div>
@@ -523,7 +492,7 @@
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 56px;
+      gap: 48px;
       padding: 60px clamp(20px, 5vw, 60px);
       width: 100%; max-width: var(--max-w); margin: 0 auto;
     }
@@ -558,7 +527,7 @@
       user-select: none;
       z-index: 0;
     }
-    .evx-title-wrap .ev-hero-title { position: relative; z-index: 1; margin-bottom: 14px; }
+    .evx-title-wrap .ev-hero-title { position: relative; z-index: 1; margin-bottom: 12px; }
     .evx-title-tick {
       font-size: 10px; letter-spacing: 0.2em; color: rgba(227,27,35,0.55);
       margin-bottom: 24px; position: relative; z-index: 1;
@@ -574,11 +543,11 @@
       position: relative;
       display: inline-flex; align-items: center; gap: 16px;
       margin-top: 32px;
-      padding: 16px 22px;
+      padding: 16px 24px;
       border: 1px solid rgba(227,27,35,0.3);
       border-radius: 3px;
       background: rgba(227,27,35,0.045);
-      backdrop-filter: blur(3px);
+      
       width: fit-content;
     }
     .evx-fund-icon {
@@ -637,7 +606,7 @@
     .evx-video-glow {
       position: absolute; inset: -60%;
       background: radial-gradient(circle at 50% 40%, rgba(227,27,35,0.28) 0%, transparent 65%);
-      filter: blur(30px);
+      display: none;
       z-index: 0; pointer-events: none;
     }
     .evx-video-frame video {
@@ -667,10 +636,10 @@
     }
     .evx-video-tag {
       position: absolute; left: 12px; bottom: 12px; z-index: 3;
-      display: flex; align-items: center; gap: 7px;
+      display: flex; align-items: center; gap: 8px;
       font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.65);
       background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
-      padding: 5px 9px; border-radius: 3px; backdrop-filter: blur(3px);
+      padding: 4px 8px; border-radius: 3px; 
     }
     .evx-video-dot {
       width: 5px; height: 5px; border-radius: 50%;
@@ -694,7 +663,7 @@
        same "instrument panel" language as the video monitor + funding plaque */
     .archive-frame {
       position: relative;
-      padding: 22px;
+      padding: 24px;
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 6px;
     }
@@ -787,7 +756,7 @@
     .arc-tag {
       position: absolute; top: 12px; left: 12px; z-index: 3;
       font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 2px;
+      padding: 4px 8px; border-radius: 2px;
     }
     .arc-tag-workshop { background: rgba(227,27,35,0.18); color: var(--red); border: 1px solid rgba(227,27,35,0.35); }
     .arc-tag-social   { background: rgba(34,197,94,0.14); color: #4ade80; border: 1px solid rgba(34,197,94,0.28); }
@@ -795,20 +764,20 @@
       position: absolute; top: 12px; right: 12px; z-index: 3;
       font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.55);
       background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-      padding: 4px 9px; border-radius: 2px; backdrop-filter: blur(2px);
+      padding: 4px 8px; border-radius: 2px; 
     }
 
     /* Card body */
-    .arc-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
+    .arc-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
     .arc-card-title {
       font-family: var(--font-cond); font-size: 19px; font-weight: 700;
       letter-spacing: 0.03em; text-transform: uppercase;
-      color: var(--white); margin-bottom: 10px; line-height: 1.2;
+      color: var(--white); margin-bottom: 8px; line-height: 1.2;
     }
     .arc-card-loc {
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 4px;
       font-size: 11px; letter-spacing: 0.06em; color: var(--steel);
-      text-transform: uppercase; margin-bottom: 14px;
+      text-transform: uppercase; margin-bottom: 12px;
     }
     .arc-card-loc svg { opacity: 0.6; flex-shrink: 0; }
     .arc-card-desc {
@@ -829,17 +798,17 @@
       overflow: hidden; background-color: #180d08;
     }
     .arc-feature-media .ep-icon { font-size: 64px; position: relative; z-index: 1; }
-    .arc-feature-body { padding: 32px 36px; flex: 1; display: flex; flex-direction: column; }
+    .arc-feature-body { padding: 32px 32px; flex: 1; display: flex; flex-direction: column; }
     .arc-feature-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .arc-feature-top .arc-file {
       position: static; background: none; border: none; padding: 0;
       backdrop-filter: none; color: var(--steel);
     }
     .arc-feature .arc-card-title { font-size: 26px; margin-bottom: 8px; }
-    .arc-feature .arc-card-desc { max-width: 640px; margin-bottom: 20px; }
+    .arc-feature .arc-card-desc { max-width: 640px; margin-bottom: 16px; }
     .arc-feature-stat {
       display: flex; align-items: baseline; gap: 12px;
-      padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);
       margin-top: auto;
     }
     .afs-num { font-family: var(--font-display); font-size: 34px; color: var(--white); line-height: 1; }
@@ -850,7 +819,7 @@
        RESPONSIVE
        ─────────────────────────────────────── */
     @media (max-width: 1000px) {
-      .evx-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .evx-hero-inner { grid-template-columns: 1fr; gap: 32px; }
       .evx-hero-right { order: -1; }
       .evx-video-frame { max-width: 220px; }
       .evx-title-ghost { font-size: clamp(70px, 16vw, 130px); }
