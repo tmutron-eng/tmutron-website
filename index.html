@@ -27,7 +27,7 @@
   user-select: none;
   cursor: grab;
   touch-action: pan-y;
-  padding-bottom: 52px;
+  padding-bottom: 48px;
 }
 .gr-wrap:active { cursor: grabbing; }
 
@@ -47,7 +47,7 @@
   box-sizing: border-box;
   background: #272424;
   border: 1px solid rgba(255,255,255,.07);
-  padding: 28px 24px;
+  padding: 24px 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -138,33 +138,17 @@
   transition: none !important;
 }
 
-
 @media (max-width: 700px) {
   .gr-stage { height: 300px; }
-  .gc { width: 230px; padding: 22px 18px; }
+  .gc { width: 230px; padding: 24px 16px; }
 }
 @media (max-width: 480px) {
   .gr-stage { height: 320px; }
-  .gc { width: 200px; padding: 18px 16px; }
+  .gc { width: 200px; padding: 16px 16px; }
 }
 </style>
 </head>
 <body>
-
-  <!-- ═══════════════════ LOADER ═══════════════════ -->
-  <div id="loader">
-    <div class="loader-inner">
-      <svg class="loader-hex" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="50,2 98,28 98,88 50,114 2,88 2,28" stroke="#e31b23" stroke-width="1.5" fill="none" class="hex-stroke"/>
-        <polygon points="50,15 85,34 85,82 50,101 15,82 15,34" stroke="#e31b23" stroke-width="0.5" fill="none" opacity="0.4"/>
-      </svg>
-      <div class="loader-text">
-        <span class="mono">INITIALIZING</span>
-        <div class="loader-bar"><div class="loader-fill"></div></div>
-        <span class="loader-pct mono">0%</span>
-      </div>
-    </div>
-  </div>
 
   <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
   <canvas id="bg-canvas"></canvas>
@@ -172,8 +156,8 @@
   <!-- ═══════════════════ NAV ═══════════════════ -->
   <nav id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="MCU — Mechatronics Course Union">
-        <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="nav-logo-img" />
+      <a href="index.html" class="nav-logo" aria-label="MCU, Mechatronics Course Union">
+        <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="nav-logo-img" />
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link active">Home</a></li>
@@ -183,7 +167,7 @@
         <li><a href="academics.html" class="nav-link">Academics</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
-      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop">🛒 Shop</a>
+      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a>
       <a href="contact.html" class="nav-cta">Join Us</a>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -197,22 +181,19 @@
         <li><a href="team.html">Team</a></li>
         <li><a href="academics.html">Academics</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta">🛒 Shop</a></li>
+        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a></li>
         <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- ═══════════════════ HERO (v2 — circuit + console layout) ═══════════════════ -->
-  <section id="hero" class="hero-v2">
+  <section id="hero" data-reveal class="hero-v2">
 
-    <div class="hero-scan-line"></div>
-    <div class="hero-grid-overlay"></div>
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div>
     <div class="hud-corner hud-br"></div>
-    <div class="hud-label hud-label-bot"><span class="mono">LAT: 43.6577° N &nbsp;|&nbsp; LONG: 79.3788° W &nbsp;|&nbsp; STATUS: ACTIVE</span></div>
 
     <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
 
@@ -220,20 +201,15 @@
 
       <!-- LEFT COLUMN -->
       <div class="hero-left-v2">
-        <div class="hero-badge reveal-up delay-1">
-          <span class="badge-dot"></span>
-          <span class="mono">TORONTO METROPOLITAN UNIVERSITY</span>
-        </div>
 
         <h1 class="hero-headline reveal-up delay-2">
-          <span class="line-wrap"><span class="hero-line">ENGINEER</span></span>
-          <span class="line-wrap"><span class="hero-line hero-line-accent">THE</span></span>
-          <span class="line-wrap"><span class="hero-line">FUTURE.</span></span>
+          <span class="line-wrap"><span class="hero-line">STUDY.</span></span>
+          <span class="line-wrap"><span class="hero-line hero-line-accent">BUILD.</span></span>
+          <span class="line-wrap"><span class="hero-line">HANG OUT.</span></span>
         </h1>
 
         <p class="hero-sub reveal-up delay-3">
-          The Mechatronics Course Union unites engineers, creators, and innovators at TMU.
-          We build community through academics, hands-on workshops, and relentless ambition.
+          The Mechatronics Course Union at TMU. Study halls and mock exams for the hard courses, hands-on workshops, and a Discord where upper years actually answer.
         </p>
 
         <div class="hero-actions reveal-up delay-4">
@@ -246,21 +222,14 @@
           </a>
         </div>
 
-        <div class="scroll-indicator reveal-up delay-5">
-          <div class="scroll-line"></div>
-          <span class="mono">SCROLL</span>
-        </div>
       </div>
 
       <!-- RIGHT COLUMN — the console cluster -->
       <div class="hero-right-v2 reveal-right delay-2">
 
-        <div class="cluster-glow"></div>
-
         <div id="heroCluster">
 
           <div class="cluster-panel">
-            <div class="cluster-scan"></div>
 
             <div class="hbp-bracket hbp-tl"></div>
             <div class="hbp-bracket hbp-tr"></div>
@@ -270,27 +239,11 @@
             <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
             <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
 
-            <div class="hbp-hud-label mono">MECHATRONICS COURSE UNION · TMU</div>
           </div>
 
           <div class="cluster-mascot">
             <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
             <video id="mcuMascotSrcVideo" src="assets/images/home.mascots.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-          </div>
-
-          <div class="readout-panels readout-panels-v2">
-            <div class="readout-panel">
-              <span class="mono rp-label">DEPT</span>
-              <span class="rp-val">MECHATRONICS</span>
-            </div>
-            <div class="readout-panel">
-              <span class="mono rp-label">YEAR</span>
-              <span class="rp-val" id="current-year">2025</span>
-            </div>
-            <div class="readout-panel">
-              <span class="mono rp-label">STATUS</span>
-              <span class="rp-val rp-active">● ACTIVE</span>
-            </div>
           </div>
 
         </div><!-- /#heroCluster -->
@@ -301,51 +254,46 @@
 
   <!-- ═══════════════════ STATS ═══════════════════ -->
   <section id="stats" class="section-dark">
-    <div class="section-blob b1"></div>
-    <div class="section-blob b2"></div>
+
     <div class="container">
-      <div class="stats-label"><span class="mono">// IMPACT AT A GLANCE</span></div>
       <div class="stats-grid stats-grid-3">
         <div class="stat-item" data-target="300" data-suffix="+">
           <div class="stat-bar"></div>
           <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
           <div class="stat-name">Active Members</div>
-          <div class="stat-desc mono">Engineers & innovators</div>
+          
         </div>
         <div class="stat-item" data-target="10" data-suffix="+">
           <div class="stat-bar"></div>
           <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
           <div class="stat-name">Events Per Year</div>
-          <div class="stat-desc mono">Workshops, socials & more</div>
+          
         </div>
-        <div class="stat-item" data-target="1" data-suffix="">
+        <div class="stat-item">
           <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">0</span><span class="stat-suffix"></span></div>
-          <div class="stat-name">Year Active</div>
-          <div class="stat-desc mono">Founded April 2025</div>
+          <div class="stat-number"><span class="count">2025</span></div> <div class="stat-name">Founded</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══ WHAT WE DO ═══ -->
-  <section id="what-we-do" class="section-light">
-    <div class="section-blob b1"></div><div class="section-blob b2"></div><div class="section-blob b3"></div>
+  <section id="what-we-do" data-reveal class="section-light">
+    
     <div class="container">
       <div class="section-header reveal-up">
-        <div class="section-tag"><span class="mono">02 / WHAT WE DO</span></div>
-        <h2 class="section-title">Built for <em>Engineers</em>,<br/>By Engineers.</h2>
-        <p class="section-desc">Drag to spin through everything MCU is built on.</p>
+        <h2 class="section-title">What We <em>Run</em>.</h2>
+        <p class="section-desc">Drag the ring to browse, or use the arrows.</p>
       </div>
       <div class="gr-wrap" id="grw" tabindex="0">
         <div class="gr-stage" id="grs">
           <div class="gr-ring" id="grr">
-          <div class="gc" data-i="0"><span class="gc-n mono">01</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32L20 20l8 6 8-12" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Academic Support</h3><p class="gc-d">Study halls, mock exams, and course guides created by students who've been through it.</p><a href="academics.html" class="gc-l">Explore Resources →</a></div>
-          <div class="gc" data-i="1"><span class="gc-n mono">02</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24l4 4 12-10" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="gc-t">Social Events</h3><p class="gc-d">Marvel Rivals tournaments, movie nights, and mechanical bull riding. We work hard and celebrate just as hard.</p><a href="events.html" class="gc-l">See Events →</a></div>
-          <div class="gc" data-i="2"><span class="gc-n mono">03</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Workshops</h3><p class="gc-d">PCB soldering, SolidWorks, ROS2, and Raspberry Pi. Hands-on skill building for real engineers.</p><a href="events.html" class="gc-l">View Workshops →</a></div>
-          <div class="gc" data-i="3"><span class="gc-n mono">04</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div><h3 class="gc-t">Gaming & Socials</h3><p class="gc-d">Mechatronics students are competitive in everything, not just circuits.</p><a href="events.html" class="gc-l">See What's On →</a></div>
-          <div class="gc" data-i="4"><span class="gc-n mono">05</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div><h3 class="gc-t">Course Resources</h3><p class="gc-d">Past exams, lecture slides, and mock finals, all found in our centralized drive, and constantly updated.</p><a href="academics.html" class="gc-l">Open Resources →</a></div>
-          <div class="gc" data-i="5"><span class="gc-n mono">06</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3 class="gc-t">Community</h3><p class="gc-d">A tight-knit Discord community where every Mechatronics student at TMU looks out for each other.</p><a href="contact.html" class="gc-l">Get Involved →</a></div>
+          <div class="gc" data-i="0"><span class="gc-n mono">01</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32L20 20l8 6 8-12" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Academic Support</h3><p class="gc-d">Study halls and mock exams before midterms, plus course guides written by students who just took the course.</p><a href="academics.html" class="gc-l">Explore Resources →</a></div>
+          <div class="gc" data-i="1"><span class="gc-n mono">02</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24l4 4 12-10" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="gc-t">Social Events</h3><p class="gc-d">Movie nights, and a mechanical bull night that raised money for CAMH.</p><a href="events.html" class="gc-l">See Events →</a></div>
+          <div class="gc" data-i="2"><span class="gc-n mono">03</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Workshops</h3><p class="gc-d">PCB soldering, SolidWorks, ROS2 and Raspberry Pi. Short hands-on sessions run by students and other TMU clubs.</p><a href="events.html" class="gc-l">View Workshops →</a></div>
+          <div class="gc" data-i="3"><span class="gc-n mono">04</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div><h3 class="gc-t">Game Nights</h3><p class="gc-d">Marvel Rivals tournaments and more. Mechatronics students are competitive about everything, not just circuits.</p><a href="events.html" class="gc-l">See What's On →</a></div>
+          <div class="gc" data-i="4"><span class="gc-n mono">05</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div><h3 class="gc-t">Course Resources</h3><p class="gc-d">Past exams, lecture slides and mock finals in one shared drive, organized by course.</p><a href="academics.html" class="gc-l">Open Resources →</a></div>
+          <div class="gc" data-i="5"><span class="gc-n mono">06</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3 class="gc-t">Community</h3><p class="gc-d">Our Discord is where announcements, study groups and event sign-ups happen.</p><a href="contact.html" class="gc-l">Get Involved →</a></div>
           </div>
         </div>
         <div class="gr-nav">
@@ -359,19 +307,17 @@
 
     <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
   <section id="events-preview" class="section-dark">
-    <div class="section-blob b1"></div>
-    <div class="section-blob b2"></div>
+
     <div class="container">
       <div class="section-header flex-header">
         <div>
-          <div class="section-tag"><span class="mono">03 / PAST HIGHLIGHTS</span></div>
           <h2 class="section-title">What We've <em>Built</em>.</h2>
         </div>
         <a href="events.html" class="btn-ghost btn-sm">View All Events</a>
       </div>
 
       <div class="events-grid">
-        <article class="event-card ec-featured reveal-up" data-index="0">
+        <article class="event-card ec-featured" data-index="0">
           <div class="event-img-wrap">
             <div style="background-image:url('assets/images/marvel-rivals.jpg');background-size:cover;background-position:center;width:100%;height:100%;"></div>
             <div class="event-badge badge-social">Social</div>
@@ -388,7 +334,7 @@
           </div>
         </article>
 
-        <article class="event-card reveal-up" data-index="1">
+        <article class="event-card" data-index="1">
           <div class="event-img-wrap">
             <div style="background-image:url('assets/images/raspberry.JPG');background-size:cover;background-position:center top;width:100%;height:100%;"></div>
             <div class="event-badge badge-workshop">Workshop</div>
@@ -405,7 +351,7 @@
           </div>
         </article>
 
-        <article class="event-card reveal-up" data-index="2">
+        <article class="event-card" data-index="2">
           <div class="event-img-wrap">
             <div style="background-image:url('assets/images/jarvis-build.JPG');background-size:cover;background-position:center;width:100%;height:100%;"></div>
             <div class="event-badge badge-workshop">Workshop</div>
@@ -424,7 +370,7 @@
       </div>
 
       <!-- Past events ticker -->
-      <div class="events-also-ran reveal-up">
+      <div class="events-also-ran">
         <span class="mono events-also-label">ALSO THIS YEAR:</span>
         <div class="events-also-list">
           <span class="events-also-chip">ROS2 Tutorial</span>
@@ -462,7 +408,7 @@
   </div>
 
   <!-- ═══════════════════ CTA BANNER ═══════════════════ -->
-  <section id="cta-banner" class="section-red">
+  <section id="cta-banner" data-reveal class="section-red">
     <div class="cta-grid-overlay"></div>
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
@@ -471,9 +417,8 @@
     <div class="container">
       <div class="cta-inner">
         <div class="cta-content reveal-up">
-          <span class="mono cta-eyebrow">READY TO BUILD SOMETHING GREAT?</span>
           <h2 class="cta-headline">Join <strong>MCU</strong> Today.</h2>
-          <p class="cta-sub">Whether you're a first-year finding your footing or a fourth-year levelling up, there's a place for you here.</p>
+          <p class="cta-sub">First year or fourth year, the Discord is the quickest way in. Events and study halls are open to every Mechatronics student.</p>
         </div>
         <div class="cta-actions reveal-up delay-1">
           <a href="contact.html" class="btn-white">
@@ -502,10 +447,10 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a href="index.html" class="footer-logo" aria-label="MCU — Mechatronics Course Union">
-            <img src="assets/images/mcu-tmu-logo.png" alt="MCU — Mechatronics Course Union" class="footer-logo-img" />
+          <a href="index.html" class="footer-logo" aria-label="MCU, Mechatronics Course Union">
+            <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="footer-logo-img" />
           </a>
-          <p class="footer-tagline">Engineering excellence at Toronto Metropolitan University.</p>
+          <p class="footer-tagline">Run by Mechatronics students at Toronto Metropolitan University.</p>
           <div class="footer-socials">
             <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -714,7 +659,7 @@
       color: rgba(255,255,255,0.55);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 2px;
-      padding: 3px 10px;
+      padding: 4px 8px;
       white-space: nowrap;
       transition: color 0.2s, border-color 0.2s;
     }
@@ -816,10 +761,10 @@
     }
     .cta-badge {
       position: relative; z-index: 1;
-      display: flex; align-items: center; gap: 14px;
+      display: flex; align-items: center; gap: 12px;
       border: 1.5px solid rgba(255,255,255,0.6);
       background: rgba(0,0,0,0.12);
-      padding: 16px 20px;
+      padding: 16px 16px;
       border-radius: 2px;
       white-space: nowrap;
     }
