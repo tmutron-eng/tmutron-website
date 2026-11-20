@@ -1,0 +1,82 @@
+/* MCU home page. Loads AFTER style.css (nav, footer, buttons, tokens come from there).
+   Only transform/opacity ever animate. No canvases, no blur, no animated shadows. */
+:root{--ink:#0e0d0d;--bone:#efeae3;--dim:#a39d98;--line:rgba(239,234,227,.14);--disc:var(--red)}
+body{background:var(--ink);color:var(--bone)}
+.hm-h2{font-family:var(--font-display);font-weight:400;font-size:clamp(48px,6.5vw,96px);line-height:.92;letter-spacing:.01em}
+
+/* ---------- HERO: the one bold moment ---------- */
+.hm-hero{min-height:100svh;padding:calc(var(--nav-h) + 24px) 0 48px;display:flex;align-items:center;overflow:hidden}
+.hm-hero .container{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(16px,4vw,64px);width:100%}
+.hm-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(76px,12.5vw,176px);line-height:.86;letter-spacing:.005em;margin-bottom:28px}
+.hm-mask{display:block;overflow:hidden}
+.hm-mask>span{display:block;transform:translateY(105%);animation:hm-rise 1s var(--ease-out-expo) forwards;animation-delay:calc(.1s + var(--i) * .12s)}
+@keyframes hm-rise{to{transform:none}}
+.hm-sub{max-width:44ch;font-size:clamp(16px,1.5vw,19px);font-weight:300;line-height:1.6;color:var(--dim);margin-bottom:32px}
+.hm-in{opacity:0;animation:hm-fade .9s var(--ease-out-expo) forwards;animation-delay:var(--d,.6s)}
+@keyframes hm-fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hm-actions{display:flex;gap:16px;flex-wrap:wrap}
+
+.hm-visual{position:relative;display:grid;place-items:center;aspect-ratio:1;width:100%;max-width:600px;justify-self:center}
+.hm-disc{position:absolute;inset:4%;border-radius:50%;background:var(--disc);opacity:0;transform:scale(.8);animation:hm-pop .9s var(--ease-out-expo) .35s forwards}
+@keyframes hm-pop{to{opacity:1;transform:none}}
+.hm-pop{position:relative;width:96%;opacity:0;animation:hm-fade 1s var(--ease-out-expo) .7s forwards}
+.hm-pop video{display:block;width:100%;height:auto;will-change:transform}
+
+/* ---------- STATEMENT ---------- */
+.hm-band{padding:clamp(56px,8vw,112px) 0;border-top:1px solid var(--line)}
+.hm-statement{font-family:var(--font-display);font-size:clamp(36px,5.6vw,84px);line-height:1;letter-spacing:.01em;color:#6f6a66;max-width:18em}
+.hm-statement b{font-weight:400;color:var(--bone)}
+
+/* ---------- WHAT WE RUN ---------- */
+.hm-run{padding:0 0 var(--section-pad)}
+.hm-run .container{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,6vw,96px)}
+.hm-head{position:sticky;top:calc(var(--nav-h) + 32px);align-self:start}
+.hm-head p{margin-top:20px;max-width:32ch;font-weight:300;line-height:1.65;color:var(--dim)}
+.hm-list{list-style:none;border-top:1px solid var(--line)}
+.hm-row{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:8px 32px;padding:28px 0;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.hm-row>*{transition:transform .4s var(--ease-out-expo)}
+.hm-row::before{content:"";position:absolute;left:0;top:-1px;bottom:-1px;width:3px;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease-out-expo)}
+.hm-rt{font-family:var(--font-display);font-size:clamp(28px,3vw,40px);line-height:1;letter-spacing:.02em}
+.hm-rd{font-size:15px;font-weight:300;line-height:1.6;color:var(--dim)}
+@media (hover:hover){.hm-row:hover>*,.hm-row:focus-visible>*{transform:translateX(18px)}.hm-row:hover::before,.hm-row:focus-visible::before{transform:scaleY(1)}}
+
+/* ---------- EVENTS ---------- */
+.hm-built{padding:0 0 var(--section-pad)}
+.hm-bh{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+.hm-evs{display:grid;grid-template-columns:1.35fr 1fr;grid-template-rows:repeat(2,minmax(260px,1fr));gap:12px}
+.hm-ev{position:relative;display:block;overflow:hidden;min-height:260px;background:#1b1918;color:#fff;text-decoration:none}
+.hm-ev-big{grid-row:span 2;min-height:540px}
+.hm-ev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-out-expo)}
+.hm-ev::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,9,.9),rgba(10,9,9,.05) 62%)}
+.hm-ev-t{position:absolute;z-index:1;left:24px;right:24px;bottom:22px}
+.hm-ev-meta{font-size:13px;color:#cfc9c3;margin-bottom:6px}
+.hm-ev-t h3{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.4vw,52px);line-height:.95;letter-spacing:.015em}
+.hm-ev-big h3{font-size:clamp(40px,5vw,76px)}
+.hm-ev-t p{margin-top:10px;max-width:46ch;font-size:15px;font-weight:300;line-height:1.55;color:#ddd7d1}
+@media (hover:hover){.hm-ev:hover img,.hm-ev:focus-visible img{transform:scale(1.045)}}
+.hm-also{margin-top:28px;max-width:70ch;font-size:15px;font-weight:300;line-height:1.7;color:var(--dim)}
+
+/* ---------- JOIN ---------- */
+.hm-join{background:var(--red);color:var(--ink);padding:var(--section-pad) 0}
+.hm-join-h{font-family:var(--font-display);font-weight:400;font-size:clamp(72px,15vw,240px);line-height:.84;letter-spacing:.005em;margin-bottom:28px}
+.hm-join p{max-width:44ch;font-size:clamp(16px,1.5vw,19px);line-height:1.55;margin-bottom:32px}
+.hm-join .btn-primary{background:var(--ink);color:var(--bone)}
+.hm-join .btn-primary:hover{background:var(--bone);color:var(--ink)}
+.hm-join .btn-ghost{color:var(--ink);border-color:rgba(14,13,13,.55)}
+.hm-join .btn-ghost:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  .hm-hero .container{grid-template-columns:1fr}
+  .hm-visual{max-width:min(78vw,420px);order:2}
+  .hm-run .container{grid-template-columns:1fr}
+  .hm-head{position:static}
+  .hm-evs{grid-template-columns:1fr;grid-template-rows:none}
+  .hm-ev-big{grid-row:auto;min-height:420px}
+  .hm-ev{min-height:300px}
+}
+@media (max-width:560px){.hm-row{grid-template-columns:1fr}}
+
+/* ---------- LITE MODE / REDUCED MOTION ---------- */
+html.lite .hm-mask>span,html.lite .hm-in,html.lite .hm-disc,html.lite .hm-pop{animation:none;opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.hm-mask>span,.hm-in,.hm-disc,.hm-pop{animation:none;opacity:1;transform:none}.hm-row>*,.hm-ev img{transition:none}}
