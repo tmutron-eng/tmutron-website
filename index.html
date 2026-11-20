@@ -1,1417 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCU | Mechatronics Course Union, TMU</title>
-  <meta name="description" content="The Mechatronics Course Union at Toronto Metropolitan University. Engineering excellence, innovation, and community." />
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/hero-circuit.css" />
-<style>
-/* ══════════════════════════════════════════════════
-   MCU CAROUSEL — replaces the existing carousel
-   <style> block in index.html (test)
-   ══════════════════════════════════════════════════ */
-
-.gr-wrap {
-  outline: none;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: grab;
-  touch-action: pan-y;
-  padding-bottom: 48px;
-}
-.gr-wrap:active { cursor: grabbing; }
-
-.gr-stage {
-  position: relative;
-  height: 320px;
-  overflow: visible;
-  perspective: 1000px;
-  perspective-origin: 50% 40%;
-}
-
-/* Cards always face forward — no rotateY ever */
-.gc {
-  position: absolute;
-  width: 260px;
-  top: 0; left: 50%;
-  box-sizing: border-box;
-  background: #272424;
-  border: 1px solid rgba(255,255,255,.07);
-  padding: 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  will-change: transform, opacity;
-  pointer-events: none;
-  user-select: none;
-  transition:
-    opacity 0.38s cubic-bezier(0.16,1,0.3,1),
-    transform 0.38s cubic-bezier(0.16,1,0.3,1);
-}
-.gc::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.gc.gca {
-  border-color: rgba(227,27,35,.35);
-  box-shadow: 0 0 32px rgba(227,27,35,.12), 0 16px 48px rgba(0,0,0,.5);
-  pointer-events: all;
-}
-.gc.gca::before { transform: scaleX(1); }
-
-.gc-n {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: .2em;
-  color: var(--red);
-}
-.gc-ico { width: 36px; height: 36px; color: var(--steel-light); }
-.gc-ico svg { width: 100%; height: 100%; }
-.gc-t {
-  font-family: var(--font-cond);
-  font-size: 16px; font-weight: 700;
-  letter-spacing: .05em; text-transform: uppercase;
-  color: var(--white); line-height: 1.1;
-}
-.gc-d {
-  font-size: 13px; font-weight: 300;
-  line-height: 1.6; color: var(--steel-light); flex: 1;
-}
-.gc-l {
-  font-family: var(--font-cond);
-  font-size: 11px; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase;
-  text-decoration: none; color: var(--red);
-  margin-top: auto;
-  transition: letter-spacing .2s;
-}
-.gc-l:hover { letter-spacing: .22em; }
-
-/* Nav controls */
-.gr-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 24px;
-}
-.gr-btn {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: none;
-  color: var(--steel-light);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: border-color .2s, color .2s, transform .15s;
-  flex-shrink: 0;
-}
-.gr-btn:hover { border-color: var(--red); color: var(--white); transform: scale(1.08); }
-.gr-btn svg { width: 14px; height: 14px; pointer-events: none; }
-
-.gr-dots { display: flex; gap: 8px; align-items: center; }
-.gd {
-  height: 4px; border-radius: 2px;
-  background: rgba(255,255,255,.15);
-  border: none; padding: 0; cursor: pointer;
-  transition: background .3s, width .35s cubic-bezier(.34,1.56,.64,1);
-  width: 6px;
-}
-.gd.ga { background: var(--red); width: 22px; }
-
-.gr-wrap.dragging .gc {
-  transition: none !important;
-}
-
-@media (max-width: 700px) {
-  .gr-stage { height: 300px; }
-  .gc { width: 230px; padding: 24px 16px; }
-}
-@media (max-width: 480px) {
-  .gr-stage { height: 320px; }
-  .gc { width: 200px; padding: 16px 16px; }
-}
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MCU | Mechatronics Course Union, TMU</title>
+<meta name="description" content="The Mechatronics Course Union at Toronto Metropolitan University. Study halls, workshops, and a community that actually helps." />
+<meta name="theme-color" content="#0e0d0d" />
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════ CANVAS BG ═══════════════════ -->
-  <canvas id="bg-canvas"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></symbol></svg>
 
-  <!-- ═══════════════════ NAV ═══════════════════ -->
-  <nav id="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="MCU, Mechatronics Course Union">
-        <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="nav-logo-img" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link active">Home</a></li>
-        <li><a href="events.html" class="nav-link">Events</a></li>
-        <li><a href="calendar.html" class="nav-link">Calendar</a></li>
-        <li><a href="team.html" class="nav-link">Team</a></li>
-        <li><a href="academics.html" class="nav-link">Academics</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
-      <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a>
-      <a href="contact.html" class="nav-cta">Join Us</a>
-      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobile-menu">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="academics.html">Academics</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right: 4px" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Shop</a></li>
-        <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
-      </ul>
-    </div>
-  </nav>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="MCU, Mechatronics Course Union"><img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="nav-logo-img" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="events.html" class="nav-link">Events</a></li>
+      <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+      <li><a href="team.html" class="nav-link">Team</a></li>
+      <li><a href="academics.html" class="nav-link">Academics</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="nav-cta nav-shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><use href="#cart"/></svg>Shop</a>
+    <a href="contact.html" class="nav-cta">Join Us</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer" class="mobile-cta">Shop</a></li>
+      <li><a href="contact.html" class="mobile-cta">Join Us</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- ═══════════════════ HERO (v2 — circuit + console layout) ═══════════════════ -->
-  <section id="hero" data-reveal class="hero-v2">
-
-    <div class="hud-corner hud-tl"></div>
-    <div class="hud-corner hud-tr"></div>
-    <div class="hud-corner hud-bl"></div>
-    <div class="hud-corner hud-br"></div>
-
-    <canvas id="circuitCanvas" class="circuit-canvas" aria-hidden="true"></canvas>
-
-    <div class="hero-inner-v2">
-
-      <!-- LEFT COLUMN -->
-      <div class="hero-left-v2">
-
-        <h1 class="hero-headline reveal-up delay-2">
-          <span class="line-wrap"><span class="hero-line">STUDY.</span></span>
-          <span class="line-wrap"><span class="hero-line hero-line-accent">BUILD.</span></span>
-          <span class="line-wrap"><span class="hero-line">HANG OUT.</span></span>
+<main>
+  <!-- HERO -->
+  <section class="hm-hero" id="top">
+    <div class="container">
+      <div>
+        <h1 class="hm-h1" aria-label="Study. Build. Hang out.">
+          <span class="hm-mask" aria-hidden="true"><span style="--i:0">STUDY.</span></span>
+          <span class="hm-mask" aria-hidden="true"><span style="--i:1">BUILD.</span></span>
+          <span class="hm-mask" aria-hidden="true"><span style="--i:2">HANG OUT.</span></span>
         </h1>
-
-        <p class="hero-sub reveal-up delay-3">
-          The Mechatronics Course Union at TMU. Study halls and mock exams for the hard courses, hands-on workshops, and a Discord where upper years actually answer.
-        </p>
-
-        <div class="hero-actions reveal-up delay-4">
-          <a href="events.html" class="btn-primary">
-            <span>Explore Events</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="team.html" class="btn-ghost">
-            <span>Meet the Team</span>
-          </a>
+        <p class="hm-sub hm-in" style="--d:.55s">The Mechatronics Course Union at TMU. Study halls and mock exams for the hard courses, hands-on workshops, and a Discord where upper years actually answer.</p>
+        <div class="hm-actions hm-in" style="--d:.7s">
+          <a href="events.html" class="btn-primary"><span>Explore events</span></a>
+          <a href="team.html" class="btn-ghost"><span>Meet the team</span></a>
         </div>
-
       </div>
-
-      <!-- RIGHT COLUMN — the console cluster -->
-      <div class="hero-right-v2 reveal-right delay-2">
-
-        <div id="heroCluster">
-
-          <div class="cluster-panel">
-
-            <div class="hbp-bracket hbp-tl"></div>
-            <div class="hbp-bracket hbp-tr"></div>
-            <div class="hbp-bracket hbp-bl"></div>
-            <div class="hbp-bracket hbp-br"></div>
-
-            <canvas class="hbp-logo-svg" id="mcuLogoCanvas" width="560" height="354" aria-hidden="true"></canvas>
-            <video id="mcuLogoSrcVideo" src="assets/images/mcu-tmu-logo-glitch-src.mp4" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-
-          </div>
-
-          <div class="cluster-mascot">
-            <canvas class="mascot-svg" id="mcuMascotCanvas" width="520" height="506" aria-hidden="true"></canvas>
-            <video id="mcuMascotSrcVideo" src="assets/images/home.mascots.webm" muted loop playsinline autoplay preload="auto" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></video>
-          </div>
-
-        </div><!-- /#heroCluster -->
-
-      </div><!-- /.hero-right-v2 -->
-    </div><!-- /.hero-inner-v2 -->
-  </section>
-
-  <!-- ═══════════════════ STATS ═══════════════════ -->
-  <section id="stats" class="section-dark">
-
-    <div class="container">
-      <div class="stats-grid stats-grid-3">
-        <div class="stat-item" data-target="300" data-suffix="+">
-          <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-name">Active Members</div>
-          
-        </div>
-        <div class="stat-item" data-target="10" data-suffix="+">
-          <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-name">Events Per Year</div>
-          
-        </div>
-        <div class="stat-item">
-          <div class="stat-bar"></div>
-          <div class="stat-number"><span class="count">2025</span></div> <div class="stat-name">Founded</div>
+      <div class="hm-visual" id="hmVisual">
+        <div class="hm-disc"></div>
+        <div class="hm-pop">
+          <video id="hmVideo" src="assets/images/home.mascots.webm" muted loop playsinline autoplay preload="metadata" disablepictureinpicture aria-hidden="true"></video>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ WHAT WE DO ═══ -->
-  <section id="what-we-do" data-reveal class="section-light">
-    
+  <!-- STATEMENT -->
+  <section class="hm-band">
     <div class="container">
-      <div class="section-header reveal-up">
-        <h2 class="section-title">What We <em>Run</em>.</h2>
-        <p class="section-desc">Drag the ring to browse, or use the arrows.</p>
-      </div>
-      <div class="gr-wrap" id="grw" tabindex="0">
-        <div class="gr-stage" id="grs">
-          <div class="gr-ring" id="grr">
-          <div class="gc" data-i="0"><span class="gc-n mono">01</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 32L20 20l8 6 8-12" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Academic Support</h3><p class="gc-d">Study halls and mock exams before midterms, plus course guides written by students who just took the course.</p><a href="academics.html" class="gc-l">Explore Resources →</a></div>
-          <div class="gc" data-i="1"><span class="gc-n mono">02</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 24l4 4 12-10" stroke="#e31b23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="gc-t">Social Events</h3><p class="gc-d">Movie nights, and a mechanical bull night that raised money for CAMH.</p><a href="events.html" class="gc-l">See Events →</a></div>
-          <div class="gc" data-i="2"><span class="gc-n mono">03</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="32" y="18" width="10" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="22" x2="22" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="32" y2="22" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="#e31b23"/></svg></div><h3 class="gc-t">Workshops</h3><p class="gc-d">PCB soldering, SolidWorks, ROS2 and Raspberry Pi. Short hands-on sessions run by students and other TMU clubs.</p><a href="events.html" class="gc-l">View Workshops →</a></div>
-          <div class="gc" data-i="3"><span class="gc-n mono">04</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="25" x2="22" y2="25" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="22" x2="19" y2="28" stroke="#e31b23" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="23" r="2" fill="currentColor" opacity="0.5"/><circle cx="34" cy="27" r="2" fill="currentColor" opacity="0.5"/></svg></div><h3 class="gc-t">Game Nights</h3><p class="gc-d">Marvel Rivals tournaments and more. Mechatronics students are competitive about everything, not just circuits.</p><a href="events.html" class="gc-l">See What's On →</a></div>
-          <div class="gc" data-i="4"><span class="gc-n mono">05</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="16" x2="32" y2="16" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><line x1="16" y1="28" x2="26" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg></div><h3 class="gc-t">Course Resources</h3><p class="gc-d">Past exams, lecture slides and mock finals in one shared drive, organized by course.</p><a href="academics.html" class="gc-l">Open Resources →</a></div>
-          <div class="gc" data-i="5"><span class="gc-n mono">06</span><div class="gc-ico"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="16" r="6" stroke="#e31b23" stroke-width="1.5"/><path d="M6 40C6 30 30 30 30 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36C30 30 44 30 44 40" stroke="#e31b23" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3 class="gc-t">Community</h3><p class="gc-d">Our Discord is where announcements, study groups and event sign-ups happen.</p><a href="contact.html" class="gc-l">Get Involved →</a></div>
-          </div>
-        </div>
-        <div class="gr-nav">
-          <button class="gr-btn" id="grp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <div class="gr-dots" id="grd"><button class="gd  ga" data-i="0"></button><button class="gd" data-i="1"></button><button class="gd" data-i="2"></button><button class="gd" data-i="3"></button><button class="gd" data-i="4"></button><button class="gd" data-i="5"></button></div>
-          <button class="gr-btn" id="grn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
-        </div>
-      </div>
+      <p class="hm-statement"><b>300+</b> active members. <b>10+</b> events a year. One union, founded in <b>2025</b>.</p>
     </div>
   </section>
 
-    <!-- ═══════════════════ EVENTS PREVIEW ═══════════════════ -->
-  <section id="events-preview" class="section-dark">
-
+  <!-- WHAT WE RUN -->
+  <section class="hm-run" id="run">
     <div class="container">
-      <div class="section-header flex-header">
-        <div>
-          <h2 class="section-title">What We've <em>Built</em>.</h2>
-        </div>
-        <a href="events.html" class="btn-ghost btn-sm">View All Events</a>
+      <div class="hm-head">
+        <h2 class="hm-h2">What we run</h2>
+        <p>Everything here is run by Mechatronics students, for Mechatronics students.</p>
       </div>
-
-      <div class="events-grid">
-        <article class="event-card ec-featured" data-index="0">
-          <div class="event-img-wrap">
-            <div style="background-image:url('assets/images/marvel-rivals.jpg');background-size:cover;background-position:center;width:100%;height:100%;"></div>
-            <div class="event-badge badge-social">Social</div>
-            <div class="event-date-chip">
-              <span class="edc-day">FEB</span>
-              <span class="edc-mon">2025</span>
-            </div>
-          </div>
-          <div class="event-body">
-            <h3 class="event-title">Marvel Rivals Tournament</h3>
-            <p class="event-meta mono">TMU · ONLINE</p>
-            <p class="event-desc">MCU's first gaming tournament brought the community together. Turns out mechatronics engineers are also very competitive gamers.</p>
-            <a href="events.html" class="event-cta">See All Events →</a>
-          </div>
-        </article>
-
-        <article class="event-card" data-index="1">
-          <div class="event-img-wrap">
-            <div style="background-image:url('assets/images/raspberry.JPG');background-size:cover;background-position:center top;width:100%;height:100%;"></div>
-            <div class="event-badge badge-workshop">Workshop</div>
-            <div class="event-date-chip">
-              <span class="edc-day">APR</span>
-              <span class="edc-mon">2025</span>
-            </div>
-          </div>
-          <div class="event-body">
-            <h3 class="event-title">Raspberry Pi Workshop</h3>
-            <p class="event-meta mono">TMU ENGINEERING LAB</p>
-            <p class="event-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing, this is the gateway to embedded Linux.</p>
-            <a href="events.html" class="event-cta">See All Events →</a>
-          </div>
-        </article>
-
-        <article class="event-card" data-index="2">
-          <div class="event-img-wrap">
-            <div style="background-image:url('assets/images/jarvis-build.JPG');background-size:cover;background-position:center;width:100%;height:100%;"></div>
-            <div class="event-badge badge-workshop">Workshop</div>
-            <div class="event-date-chip">
-              <span class="edc-day">MAR</span>
-              <span class="edc-mon">2025</span>
-            </div>
-          </div>
-          <div class="event-body">
-            <h3 class="event-title">Jarvis Workshop</h3>
-            <p class="event-meta mono">TMU ENGINEERING</p>
-            <p class="event-desc">Build your own voice-activated AI assistant from scratch, with hardware integration, natural language commands, and embedded control.</p>
-            <a href="events.html" class="event-cta">See All Events →</a>
-          </div>
-        </article>
-      </div>
-
-      <!-- Past events ticker -->
-      <div class="events-also-ran">
-        <span class="mono events-also-label">ALSO THIS YEAR:</span>
-        <div class="events-also-list">
-          <span class="events-also-chip">ROS2 Tutorial</span>
-          <span class="events-also-chip">Big Hero 6 Movie Night</span>
-          <span class="events-also-chip">SolidWorks CSWA &amp; CSWP</span>
-          <span class="events-also-chip">Mech Bull Night</span>
-          <span class="events-also-chip">Valentine's Day w/ MECU</span>
-          <span class="events-also-chip">Jarvis Workshop</span>
-          <span class="events-also-chip">Raspberry Pi Workshop</span>
-        </div>
-      </div>
+      <ul class="hm-list">
+        <li><a class="hm-row" href="academics.html"><span class="hm-rt">Academic support</span><span class="hm-rd">Study halls and mock exams before midterms, plus course guides written by students who just took the course.</span></a></li>
+        <li><a class="hm-row" href="events.html"><span class="hm-rt">Workshops</span><span class="hm-rd">PCB soldering, SolidWorks, ROS2 and Raspberry Pi. Short hands-on sessions run by students and other TMU clubs.</span></a></li>
+        <li><a class="hm-row" href="academics.html"><span class="hm-rt">Course resources</span><span class="hm-rd">Past exams, lecture slides and mock finals in one shared drive, organized by course.</span></a></li>
+        <li><a class="hm-row" href="events.html"><span class="hm-rt">Social events</span><span class="hm-rd">Movie nights, and a mechanical bull night that raised money for CAMH.</span></a></li>
+        <li><a class="hm-row" href="events.html"><span class="hm-rt">Game nights</span><span class="hm-rd">Marvel Rivals tournaments and more. Mechatronics students are competitive about everything, not just circuits.</span></a></li>
+        <li><a class="hm-row" href="contact.html"><span class="hm-rt">Community</span><span class="hm-rd">Our Discord is where announcements, study groups and event sign-ups happen.</span></a></li>
+      </ul>
     </div>
   </section>
 
-  <!-- ═══════════════════ MARQUEE STRIP ═══════════════════ -->
-  <div class="marquee-strip">
-    <div class="marquee-track">
-      <span class="mono">MECHATRONICS &nbsp;/&nbsp;</span>
-      <span class="mono">ROBOTICS &nbsp;/&nbsp;</span>
-      <span class="mono">CONTROLS &nbsp;/&nbsp;</span>
-      <span class="mono">EMBEDDED SYSTEMS &nbsp;/&nbsp;</span>
-      <span class="mono">SIGNAL PROCESSING &nbsp;/&nbsp;</span>
-      <span class="mono">MACHINE DESIGN &nbsp;/&nbsp;</span>
-      <span class="mono">PCB DESIGN &nbsp;/&nbsp;</span>
-      <span class="mono">AUTOMATION &nbsp;/&nbsp;</span>
-      <span class="mono">MECHATRONICS &nbsp;/&nbsp;</span>
-      <span class="mono">ROBOTICS &nbsp;/&nbsp;</span>
-      <span class="mono">CONTROLS &nbsp;/&nbsp;</span>
-      <span class="mono">EMBEDDED SYSTEMS &nbsp;/&nbsp;</span>
-      <span class="mono">SIGNAL PROCESSING &nbsp;/&nbsp;</span>
-      <span class="mono">MACHINE DESIGN &nbsp;/&nbsp;</span>
-      <span class="mono">PCB DESIGN &nbsp;/&nbsp;</span>
-      <span class="mono">AUTOMATION &nbsp;/&nbsp;</span>
+  <!-- EVENTS -->
+  <section class="hm-built" id="events-preview">
+    <div class="container">
+      <div class="hm-bh">
+        <h2 class="hm-h2">What we've built</h2>
+        <a href="events.html" class="btn-ghost btn-sm"><span>View all events</span></a>
+      </div>
+      <div class="hm-evs">
+        <a class="hm-ev hm-ev-big" href="events.html">
+          <img src="assets/images/marvel-rivals.jpg" alt="Marvel Rivals tournament" loading="lazy" decoding="async" />
+          <div class="hm-ev-t"><div class="hm-ev-meta">Social, February 2025</div><h3>Marvel Rivals Tournament</h3><p>MCU's first gaming tournament brought the community together. Turns out mechatronics engineers are also very competitive gamers.</p></div>
+        </a>
+        <a class="hm-ev" href="events.html">
+          <img src="assets/images/raspberry.JPG" alt="Raspberry Pi workshop" loading="lazy" decoding="async" style="object-position:center top" />
+          <div class="hm-ev-t"><div class="hm-ev-meta">Workshop, April 2025</div><h3>Raspberry Pi Workshop</h3></div>
+        </a>
+        <a class="hm-ev" href="events.html">
+          <img src="assets/images/jarvis-build.JPG" alt="Jarvis workshop build" loading="lazy" decoding="async" />
+          <div class="hm-ev-t"><div class="hm-ev-meta">Workshop, March 2025</div><h3>Jarvis Workshop</h3></div>
+        </a>
+      </div>
+      <p class="hm-also">Also this year: ROS2 tutorial, Big Hero 6 movie night, SolidWorks CSWA &amp; CSWP, Mech Bull Night, and Valentine's Day with MECU.</p>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="hm-join">
+    <div class="container">
+      <h2 class="hm-join-h">Join<br/>the union.</h2>
+      <p>First year or fourth year, the Discord is the quickest way in. Events and study halls are open to every Mechatronics student.</p>
+      <div class="hm-actions">
+        <a href="contact.html" class="btn-primary"><span>Get involved</span></a>
+        <a href="team.html" class="btn-ghost"><span>Meet the team</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo" aria-label="MCU, Mechatronics Course Union"><img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="footer-logo-img" /></a>
+        <p class="footer-tagline">Run by Mechatronics students at Toronto Metropolitan University.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Discord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></a>
+          <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-nav-col">
+        <h4 class="footer-col-title mono">NAVIGATE</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="academics.html">Academics</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer">Shop</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4 class="footer-col-title mono">RESOURCES</h4>
+        <ul class="footer-links">
+          <li><a href="academics.html">Course Guides</a></li>
+          <li><a href="events.html">Event Archive</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact-col">
+        <h4 class="footer-col-title mono">CONTACT</h4>
+        <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
+        <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union, TMU. All rights reserved.</span>
+      <span class="mono footer-built">Built by MCU Web Team</span>
     </div>
   </div>
+</footer>
 
-  <!-- ═══════════════════ CTA BANNER ═══════════════════ -->
-  <section id="cta-banner" data-reveal class="section-red">
-    <div class="cta-grid-overlay"></div>
-    <div class="hud-corner hud-tl"></div>
-    <div class="hud-corner hud-tr"></div>
-    <div class="hud-corner hud-bl"></div>
-    <div class="hud-corner hud-br"></div>
-    <div class="container">
-      <div class="cta-inner">
-        <div class="cta-content reveal-up">
-          <h2 class="cta-headline">Join <strong>MCU</strong> Today.</h2>
-          <p class="cta-sub">First year or fourth year, the Discord is the quickest way in. Events and study halls are open to every Mechatronics student.</p>
-        </div>
-        <div class="cta-actions reveal-up delay-1">
-          <a href="contact.html" class="btn-white">
-            <span>Get Involved</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="team.html" class="btn-outline-white">Meet the Team</a>
-        </div>
-        <div class="cta-deco reveal-up delay-2">
-          <div class="cta-badge">
-            <span class="cta-badge-mcu">MCU</span>
-            <span class="cta-badge-div"></span>
-            <span class="cta-badge-sub">TORONTO<br/>METROPOLITAN<br/>UNIVERSITY</span>
-          </div>
-          <svg class="cta-badge-rings" viewBox="0 0 400 400" fill="none">
-            <circle cx="200" cy="200" r="190" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-            <circle cx="200" cy="200" r="150" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="6 10"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
-  <footer id="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="index.html" class="footer-logo" aria-label="MCU, Mechatronics Course Union">
-            <img src="assets/images/mcu-tmu-logo.png" alt="MCU, Mechatronics Course Union" class="footer-logo-img" />
-          </a>
-          <p class="footer-tagline">Run by Mechatronics students at Toronto Metropolitan University.</p>
-          <div class="footer-socials">
-            <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Discord">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-            </a>
-            <a href="mailto:tmutron@torontomu.ca" class="social-link" aria-label="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-nav-col">
-          <h4 class="footer-col-title mono">NAVIGATE</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="academics.html">Academics</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="https://muesshop.square.site/shop/mcu/72XB3E2Q3XRV5HVXAL7HP7TK?page=1&limit=30&sort_by=category_order&sort_order=asc" target="_blank" rel="noopener noreferrer">Shop</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-nav-col">
-          <h4 class="footer-col-title mono">RESOURCES</h4>
-          <ul class="footer-links">
-            <li><a href="academics.html">Course Guides</a></li>
-            <li><a href="events.html">Event Archive</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-contact-col">
-          <h4 class="footer-col-title mono">CONTACT</h4>
-          <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
-          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union, TMU. All rights reserved.</span>
-        <span class="mono footer-built">Built by MCU Web Team</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-  <script src="js/hero-circuit.js"></script>
-  <script>
-    /* ── Animated section background canvases ──
-       PERF FIX: each section's animation loop now pauses via
-       IntersectionObserver when scrolled out of view, instead of
-       running requestAnimationFrame forever regardless of visibility. */
-    (function() {
-      const sections = [
-        { id: 'stats',           color: '227,27,35',    speed: 0.18 },
-        { id: 'what-we-do',      color: '200,205,215',  speed: 0.13 },
-        { id: 'events-preview',  color: '227,27,35',    speed: 0.16 }
-      ];
-
-      sections.forEach(({ id, color, speed }) => {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        const canvas = document.createElement('canvas');
-        canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-        section.insertBefore(canvas, section.firstChild);
-
-        const ctx = canvas.getContext('2d');
-        let W, H, t = Math.random() * 1000;
-        let visible = false;
-        let raf = null;
-
-        const DOTS = 32;
-        const dots = Array.from({ length: DOTS }, () => ({
-          x: Math.random(), y: Math.random(),
-          vx: (Math.random() - 0.5) * speed * 0.003,
-          vy: (Math.random() - 0.5) * speed * 0.003,
-          r: Math.random() * 1.4 + 0.4
-        }));
-
-        function resize() {
-          W = canvas.width  = section.offsetWidth;
-          H = canvas.height = section.offsetHeight;
-        }
-        resize();
-        new ResizeObserver(resize).observe(section);
-
-        function draw() {
-          if (!visible) { raf = null; return; } // stop the loop entirely when off-screen
-
-          ctx.clearRect(0, 0, W, H);
-          t += 0.007;
-
-          const cx1 = W * (0.3 + 0.25 * Math.sin(t * 0.28));
-          const cy1 = H * (0.4 + 0.22 * Math.cos(t * 0.19));
-          const g1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, Math.min(W,H) * 0.5);
-          g1.addColorStop(0,   `rgba(${color},0.10)`);
-          g1.addColorStop(0.5, `rgba(${color},0.03)`);
-          g1.addColorStop(1,   `rgba(${color},0)`);
-          ctx.fillStyle = g1; ctx.fillRect(0,0,W,H);
-
-          const cx2 = W * (0.7 + 0.22 * Math.cos(t * 0.22));
-          const cy2 = H * (0.6 + 0.20 * Math.sin(t * 0.31));
-          const g2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, Math.min(W,H) * 0.38);
-          g2.addColorStop(0,   `rgba(${color},0.07)`);
-          g2.addColorStop(1,   `rgba(${color},0)`);
-          ctx.fillStyle = g2; ctx.fillRect(0,0,W,H);
-
-          dots.forEach(d => {
-            d.x += d.vx; d.y += d.vy;
-            if (d.x < 0) d.x = 1; if (d.x > 1) d.x = 0;
-            if (d.y < 0) d.y = 1; if (d.y > 1) d.y = 0;
-          });
-
-          dots.forEach((a, i) => {
-            dots.slice(i + 1).forEach(b => {
-              const dx = (a.x - b.x) * W, dy = (a.y - b.y) * H;
-              const dist = Math.sqrt(dx*dx + dy*dy);
-              if (dist < 140) {
-                ctx.beginPath();
-                ctx.moveTo(a.x*W, a.y*H);
-                ctx.lineTo(b.x*W, b.y*H);
-                ctx.strokeStyle = `rgba(${color},${0.10 * (1 - dist/140)})`;
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-              }
-            });
-            ctx.beginPath();
-            ctx.arc(a.x*W, a.y*H, a.r, 0, Math.PI*2);
-            ctx.fillStyle = `rgba(${color},0.30)`;
-            ctx.fill();
-          });
-
-          raf = requestAnimationFrame(draw);
-        }
-
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            visible = entry.isIntersecting;
-            if (visible && raf === null) raf = requestAnimationFrame(draw);
-          });
-        }, { threshold: 0.01 });
-        io.observe(section);
-      });
-    })();
-
-    /* Footer & hero year */
-    const fy = document.getElementById('footer-year');
-    if (fy) fy.textContent = new Date().getFullYear();
-    const cy = document.getElementById('current-year');
-    if (cy) cy.textContent = new Date().getFullYear();
-  </script>
-
-  <!-- ═══════════════════ STATS GRID 3 + EVENT CHIPS CSS ═══════════════════ -->
-  <style>
-    /* 3-column stat grid, stepping down for tablet/phone widths so the
-       stat-number's clamp(52px,6vw,80px) floor never gets squeezed into
-       a too-narrow column. Was a single 640px cut straight to 1 column —
-       left 641-1100px (most tablets) stuck at 3 cramped columns. */
-    .stats-grid-3 {
-      grid-template-columns: repeat(3, 1fr) !important;
-    }
-    @media (max-width: 900px) {
-      .stats-grid-3 {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-    }
-    @media (max-width: 480px) {
-      .stats-grid-3 {
-        grid-template-columns: 1fr !important;
-      }
-    }
-
-    /* Event "also ran" chips below the cards */
-    .events-also-ran {
-      margin-top: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .events-also-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.35);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .events-also-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .events-also-chip {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 2px;
-      padding: 4px 8px;
-      white-space: nowrap;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .events-also-chip:hover {
-      color: rgba(255,255,255,0.85);
-      border-color: rgba(227,27,35,0.5);
-    }
-
-    /* ══════════════════════════════════════════
-       CANVAS LOGO + MASCOT
-       The logo canvas still uses the live chroma-key JS (see bottom
-       script) because its source is a plain mp4 with no transparency
-       info at all — <video> elements can't show alpha, so a hidden
-       <video> plays it and a visible <canvas> paints it frame-by-frame
-       with white keyed out.
-
-       The mascot no longer needs any of that: its clip is an
-       alpha-channel WebM with real per-pixel transparency baked in by
-       the video itself, so the canvas just draws its frames directly —
-       see renderAlphaVideo() in the script below.
-
-       NOTE: the sizing/positioning rules below for .ring-system,
-       .ring-center, .mascot-wrap are leftover from the old hero
-       layout and no longer match anything in the DOM (that markup
-       was replaced by #heroCluster / .cluster-panel / .cluster-mascot
-       in css/hero-circuit.css). They're harmless dead weight — left
-       here only so this diff stays a pure addition and nothing above
-       gets touched. Safe to delete whenever you tidy this file up.
-       ══════════════════════════════════════════ */
-
-    /* Hero big logo canvas — sizing now controlled by
-       .cluster-panel .hbp-logo-svg in hero-circuit.css (higher
-       specificity), this stays as a fallback only. */
-    canvas.hbp-logo-svg {
-      display: block;
-      width: clamp(220px, 26vw, 340px);
-      height: auto;
-      object-fit: contain;
-      background: transparent;
-      border-radius: 2px;
-    }
-
-    /* Mascot canvas — sizing now controlled by
-       .cluster-mascot .mascot-svg in hero-circuit.css (higher
-       specificity + unique keyframe name), this stays as a fallback
-       only and no longer actually applies once hero-circuit.css loads. */
-    .ring-system { width: 300px !important; height: 300px !important; }
-    .ring-center { width: 160px !important; height: 160px !important; }
-    .mascot-wrap { width: 160px !important; height: 160px !important; }
-    canvas.mascot-svg {
-      display: block;
-      width: 170px !important;
-      height: 204px !important;
-      object-fit: contain;
-      background: transparent;
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      filter: drop-shadow(0 0 16px rgba(91,200,232,0.2)) drop-shadow(0 6px 20px rgba(0,0,0,0.55));
-      animation: mascot-bob-v2 3s ease-in-out infinite;
-    }
-    @keyframes mascot-bob-v2 {
-      0%,100% { transform: translate(-50%,-50%) translateY(0); }
-      50%      { transform: translate(-50%,-50%) translateY(-8px); }
-    }
-    @media (max-width: 1100px) {
-      .ring-system { width: 250px !important; height: 250px !important; }
-    }
-
-    /* Nav/footer logo images already have brightness(0) invert(1) applied
-       via .nav-logo-img / .footer-logo-img in style.css — this keeps them
-       crisp white marks consistent with the old inline SVG treatment. */
-
-    /* ══ CTA BANNER REDESIGN ══ */
-    #cta-banner { position: relative; }
-    .cta-grid-overlay {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black, transparent);
-      pointer-events: none;
-      z-index: 0;
-    }
-    #cta-banner .hud-corner::before,
-    #cta-banner .hud-corner::after { background: rgba(255,255,255,0.4); }
-    #cta-banner .cta-inner { position: relative; z-index: 1; }
-
-    .cta-deco {
-      position: relative;
-      width: 220px; height: 220px;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cta-badge-rings {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-    .cta-badge {
-      position: relative; z-index: 1;
-      display: flex; align-items: center; gap: 12px;
-      border: 1.5px solid rgba(255,255,255,0.6);
-      background: rgba(0,0,0,0.12);
-      padding: 16px 16px;
-      border-radius: 2px;
-      white-space: nowrap;
-    }
-    .cta-badge-mcu {
-      font-family: var(--font-display);
-      font-size: 32px;
-      color: var(--white);
-      line-height: 1;
-      letter-spacing: 0.02em;
-    }
-    .cta-badge-div {
-      width: 1px; align-self: stretch;
-      background: rgba(255,255,255,0.35);
-    }
-    .cta-badge-sub {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.8);
-      text-transform: uppercase;
-    }
-    @media (max-width: 900px) {
-      .cta-deco { display: none; }
-    }
-
-    /* ══ MOBILE FIX: bring back the logo/mascot on phones ══
-       hero-circuit.css handles the mobile scale-down for the new
-       .hero-right-v2 layout directly (see its own @media blocks),
-       so nothing extra is needed here for the v2 hero. */
-  </style>
-
+<script src="js/main.js"></script>
 <script>
 (function () {
-  'use strict';
+  var v = document.getElementById('hmVideo'), vis = document.getElementById('hmVisual');
+  if (!v || !vis) return;
+  var lite = function () { return !!(window.MCU && window.MCU.lite); };
+  var play = function () { try { var p = v.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {} };
 
-  var wrap  = document.getElementById('grw');
-  var stage = document.getElementById('grs');
-  var ring  = document.getElementById('grr');
-  if (!wrap || !stage || !ring) return;
-
-  var cards = Array.from(ring.querySelectorAll('.gc'));
-  var dots  = Array.from(document.querySelectorAll('#grd .gd'));
-  var btnP  = document.getElementById('grp');
-  var btnN  = document.getElementById('grn');
-  var N     = cards.length;
-
-  /* ── Layout config ── */
-  var SPREAD  = 290;   /* px between card centres */
-  var Z_SIDE  = -140;  /* z-depth of adjacent cards */
-  var Z_FAR   = -220;  /* z-depth of far cards */
-
-  /* ── State ── */
-  var target = 0;
-  var pos    = 0.0;
-  var active = 0;
-  var raf    = null;
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function wi(i) { return ((i % N) + N) % N; }
-
-  /* shortest signed arc between two fractional positions */
-  function shortArc(from, to) {
-    var d = ((to - from) % N + N) % N;
-    return d > N / 2 ? d - N : d;
+  /* Video only plays while the hero is on screen and lite mode is off */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) { (e[0].isIntersecting && !lite()) ? play() : v.pause(); }, { threshold: 0.05 }).observe(vis);
   }
+  document.addEventListener('mcu:perfchange', function () { lite() ? v.pause() : play(); });
 
-  /* visual params for a card at fractional offset from centre */
-  function params(offset) {
-    var a = Math.abs(offset);
-    var scale, opacity, z;
-
-    if (a < 1) {
-      scale   = lerp(1.00, 0.80, a);
-      opacity = lerp(1.00, 0.52, a);
-      z       = lerp(0,    Z_SIDE, a);
-    } else if (a < 2) {
-      var t = a - 1;
-      scale   = lerp(0.80, 0.64, t);
-      opacity = lerp(0.52, 0.22, t);
-      z       = lerp(Z_SIDE, Z_FAR, t);
-    } else {
-      scale   = 0.64;
-      opacity = Math.max(0, 0.22 - (a - 2) * 0.18);
-      z       = Z_FAR;
-    }
-
-    return {
-      x:  offset * SPREAD,
-      z:  z,
-      sc: scale,
-      op: opacity
-    };
-  }
-
-  function render() {
-    var front = wi(Math.round(pos));
-    if (front !== active) {
-      active = front;
-      cards.forEach(function (c, i) { c.classList.toggle('gca', i === active); });
-      dots.forEach(function (d, i)  { d.classList.toggle('ga',  i === active); });
-    }
-
-    cards.forEach(function (card, i) {
-      /* offset = shortest arc from current float pos to this card index */
-      var off = i - pos;
-      /* wrap to [-N/2, N/2] */
-      while (off >  N / 2) off -= N;
-      while (off < -N / 2) off += N;
-
-      var p  = params(off);
-      var zi = Math.round(50 - Math.abs(off) * 8);
-
-      card.style.zIndex     = String(zi);
-      card.style.visibility = p.op < 0.02 ? 'hidden' : 'visible';
-      card.style.opacity    = String(p.op);
-      /* cards only move on X and Z — never rotate, never skew */
-      card.style.transform  =
-        'translateX(calc(-50% + ' + p.x.toFixed(2) + 'px))' +
-        ' translateZ(' + p.z.toFixed(2) + 'px)' +
-        ' scale(' + p.sc.toFixed(4) + ')';
-    });
-  }
-
-  function animate() {
-    /* lerp pos toward target via shortest arc */
-    var arc = shortArc(pos, target);
-    pos += arc * 0.1;
-    render();
-    if (Math.abs(arc) > 0.005) {
-      raf = requestAnimationFrame(animate);
-    } else {
-      pos = target % N;
-      if (pos < 0) pos += N;
-      render();
-    }
-  }
-
-  function go(to) {
-    /* keep pos and target in sync via shortest arc so we never spin the long way */
-    var arc = shortArc(wi(Math.round(pos)), wi(to));
-    target  = pos + arc;
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(animate);
-  }
-
-  /* ── Drag ── */
-  var dragging = false, sx = 0, sp = 0, lx = 0, lt = 0, vx = 0;
-
-  function dn(e) {
-    dragging = true;
-    wrap.classList.add('dragging');
-    var cx = e.touches ? e.touches[0].clientX : e.clientX;
-    sx = cx; sp = pos; lx = cx; lt = Date.now(); vx = 0;
-    cancelAnimationFrame(raf);
-    e.preventDefault();
-  }
-  function mv(e) {
-    if (!dragging) return;
-    var cx  = e.touches ? e.touches[0].clientX : e.clientX;
-    var now = Date.now();
-    var dt  = Math.max(1, now - lt);
-    vx = (cx - lx) / dt * 14;
-    lx = cx; lt = now;
-    pos = sp - (cx - sx) / SPREAD;
-    render();
-    e.preventDefault();
-  }
-  function up() {
-    if (!dragging) return;
-    dragging = false;
-    wrap.classList.remove('dragging');
-    var flung   = pos - vx * 0.28;
-    var nearest = Math.round(flung);
-    pos    = flung;
-    target = nearest;
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(animate);
-  }
-
-  wrap.addEventListener('mousedown',  dn, { passive: false });
-  wrap.addEventListener('touchstart', dn, { passive: false });
-  window.addEventListener('mousemove',  mv, { passive: false });
-  window.addEventListener('touchmove',  mv, { passive: false });
-  window.addEventListener('mouseup',  up);
-  window.addEventListener('touchend', up);
-
-  /* ── Mouse wheel ── */
-  var wt;
-  wrap.addEventListener('wheel', function (e) {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaX) < 8) return;
-    e.preventDefault();
-    pos -= (e.deltaX || e.deltaY) * 0.007;
-    render();
-    clearTimeout(wt);
-    wt = setTimeout(function () {
-      target = Math.round(pos);
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(animate);
-    }, 130);
-  }, { passive: false });
-
-  /* ── Buttons ── */
-  if (btnP) btnP.addEventListener('click', function () { go(wi(Math.round(pos)) - 1); });
-  if (btnN) btnN.addEventListener('click', function () { go(wi(Math.round(pos)) + 1); });
-
-  /* ── Dots ── */
-  dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { go(i); });
-  });
-
-  /* ── Keyboard ── */
-  wrap.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); go(wi(Math.round(pos)) - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); go(wi(Math.round(pos)) + 1); }
-  });
-
-  /* ── Init ── */
-  pos = 0; target = 0;
-  cards[0].classList.add('gca');
-  if (dots[0]) dots[0].classList.add('ga');
-  render();
-})();
-</script>
-
-<!-- ═══════════════════════════════════════════════════
-     LOGO CHROMA-KEY + MASCOT ALPHA-VIDEO RENDERERS
-
-     The logo clip (mcu-tmu-logo-glitch-src.mp4) is a plain mp4 with no
-     transparency info, so it still goes through the flood-fill
-     chroma-key pipeline below: <video> elements can't show alpha in any
-     browser, so it plays hidden and gets painted frame-by-frame onto a
-     canvas with connected-to-edge white pixels keyed out (flood fill
-     from the border, so isolated white "MCU"/"TMU" lettering enclosed
-     by red never gets keyed out).
-
-     The mascot clip (mcu-robot-mascot-src.webm) is different: it's an
-     alpha-channel WebM with genuine per-pixel transparency baked in by
-     the video encode itself. It doesn't need any chroma-keying — the
-     canvas just draws its frames directly via renderAlphaVideo(), and
-     the transparency comes along for free wherever the browser decodes
-     WebM alpha (Chrome/Edge reliably, Firefox mostly; Safari doesn't
-     support WebM alpha and will show an opaque frame there, same
-     ceiling the old approach had anyway since Safari couldn't handle
-     the old flood-fill canvas trick well either).
-
-     PERF FIXES vs a naive per-pixel version (logo path):
-       1. Processing happens on a small OFFSCREEN work canvas at
-          `scale` (default 0.5 = 1/4 the pixels) instead of full
-          resolution, then the result is scaled up into the visible
-          canvas. Visual size on screen is unaffected (CSS controls
-          display size), only internal processing resolution drops.
-       2. Only every (skip+1)th video frame is actually re-keyed
-          (default skip=1 → ~30fps instead of 60fps for the effect).
-       3. Typed-array buffers (visited/distBuf/stack) are allocated
-          ONCE per canvas and reused every frame — no per-frame GC churn.
-       4. The whole loop pauses while the tab is hidden, AND while the
-          hero section is scrolled off-screen (IntersectionObserver) —
-          this was the main perf/lag culprit: previously the per-pixel
-          chroma-key loop kept running at full tilt no matter where
-          you'd scrolled to on the page. The mascot's simpler
-          renderAlphaVideo() shares this same visibility gate.
-       5. TEMPORAL ALPHA SMOOTHING (streak-gated, logo path only):
-          compression noise on reflective/glitchy areas makes individual
-          pixels flicker just across the keying threshold from frame to
-          frame, even though nothing is actually moving there. A plain
-          even blend still let a single noisy frame yank a pixel toward
-          transparent; a slow blend fixed that but smeared real motion
-          into a ghost trail instead. The fix: each pixel becoming MORE
-          opaque updates fast (a real reveal shouldn't lag). Each pixel
-          becoming MORE transparent only counts if it reads that way for
-          2 processed frames in a row — a single noisy frame barely
-          moves it at all, but a real, sustained transition is
-          recognized within a couple of frames and resolves quickly,
-          instead of dragging out into a smudge.
-     ═══════════════════════════════════════════════════ -->
-<script>
-(function () {
-  'use strict';
-
-  // Shared visibility gate for both hero canvases — pauses all the
-  // expensive per-pixel work whenever the hero section isn't on screen.
-  var heroVisible = true;
-  var heroEl = document.getElementById('hero');
-  if (heroEl && 'IntersectionObserver' in window) {
-    heroVisible = false;
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) { heroVisible = entry.isIntersecting; });
-    }, { threshold: 0.01 }).observe(heroEl);
-  }
-
-  function chromaKeyFlood(video, canvas, opts) {
-    opts = opts || {};
-    var threshold = opts.threshold != null ? opts.threshold : 80;   // start of keying (0-441.7)
-    var softness  = opts.softness  != null ? opts.softness  : 40;   // feather range
-    var scale     = opts.scale     != null ? opts.scale     : 0.75; // internal render scale (perf)
-    var skip      = opts.skip      != null ? opts.skip      : 1;    // process every (skip+1)th frame
-
-    var w = Math.max(1, Math.round(canvas.width  * scale));
-    var h = Math.max(1, Math.round(canvas.height * scale));
-
-    // Small offscreen buffer we actually do the expensive per-pixel work on.
-    var work = document.createElement('canvas');
-    work.width = w; work.height = h;
-    var wctx = work.getContext('2d', { willReadFrequently: true });
-
-    var outCtx = canvas.getContext('2d');
-    // Flat graphics (the logo) read as crisper with a hard nearest-neighbor
-    // upscale than a blurred smooth one — costs nothing extra, just a draw
-    // setting, so we can keep internal resolution (and therefore perf) low
-    // without the logo looking soft.
-    outCtx.imageSmoothingEnabled = opts.finalSmoothing !== false;
-
-    var maxDist = threshold + softness;
-    var n = w * h;
-
-    // Reusable buffers — allocated once, reused every frame (no per-frame GC churn)
-    var visited = new Uint8Array(n);
-    var distBuf = new Float32Array(n);
-    var stack   = new Int32Array(n);
-    var alphaBuf = new Uint8Array(n); // holds computed alpha pre-despeckle, reused every frame
-    var blurBuf  = new Uint8Array(n * 3); // smoothed RGB used ONLY for the keying decision
-    var alphaBlur = new Uint8Array(n); // spatially-smoothed alpha, reused every frame
-    // Asymmetric (attack/release) temporal smoothing state — the previous
-    // frame's post-smoothing alpha for every pixel, seeded fully opaque.
-    var prevAlpha = new Float32Array(n).fill(255);
-    // Consecutive-frame "this pixel looks like background" counter, used to
-    // tell a single noisy frame apart from a genuine transition. Reused
-    // every frame, never reallocated.
-    var lowStreak = new Uint8Array(n);
-
-    var frameCount = 0;
-
-    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
-    var rect = { x: 0, y: 0, w: w, h: h };
-    function updateRect() {
-      var vw = video.videoWidth, vh = video.videoHeight;
-      if (!vw || !vh) { rect = { x: 0, y: 0, w: w, h: h }; return; }
-      var canvasAspect = w / h;
-      var vidAspect = vw / vh;
-      var dw, dh;
-      if (vidAspect > canvasAspect) { dw = w; dh = w / vidAspect; }
-      else                          { dh = h; dw = h * vidAspect; }
-      rect = {
-        x: Math.round((w - dw) / 2),
-        y: Math.round((h - dh) / 2),
-        w: Math.round(dw),
-        h: Math.round(dh)
-      };
-    }
-    video.addEventListener('loadedmetadata', updateRect);
-    updateRect();
-
-    function process() {
-      wctx.clearRect(0, 0, w, h);
-      wctx.drawImage(video, rect.x, rect.y, rect.w, rect.h);
-
-      var imgData = wctx.getImageData(0, 0, w, h);
-      var d = imgData.data;
-
-      visited.fill(0);
-
-      var rx0 = rect.x, ry0 = rect.y;
-      var rx1 = rect.x + rect.w - 1, ry1 = rect.y + rect.h - 1;
-
-      // 1a) smooth RGB (3x3 average) for the keying decision only — the
-      //     visible pixel colors in `d` are left completely untouched.
-      //     Reflective surfaces carry compression noise/dither that
-      //     flickers right around the threshold pixel-by-pixel;
-      //     averaging it out first means a patch of surface reads as
-      //     one consistent value instead of scattering into speckle.
-      var bx, by, bdx, bdy, byy, bxx, oi, rs, gs, bs, cnt;
-      for (by = 0; by < h; by++) {
-        for (bx = 0; bx < w; bx++) {
-          idx = by * w + bx;
-          o = idx * 4;
-          if (d[o + 3] === 0) {
-            blurBuf[idx * 3] = 255; blurBuf[idx * 3 + 1] = 255; blurBuf[idx * 3 + 2] = 255;
-            continue;
-          }
-          rs = 0; gs = 0; bs = 0; cnt = 0;
-          for (bdy = -1; bdy <= 1; bdy++) {
-            byy = by + bdy; if (byy < 0 || byy >= h) continue;
-            for (bdx = -1; bdx <= 1; bdx++) {
-              bxx = bx + bdx; if (bxx < 0 || bxx >= w) continue;
-              oi = (byy * w + bxx) * 4;
-              rs += d[oi]; gs += d[oi + 1]; bs += d[oi + 2]; cnt++;
-            }
-          }
-          blurBuf[idx * 3] = rs / cnt;
-          blurBuf[idx * 3 + 1] = gs / cnt;
-          blurBuf[idx * 3 + 2] = bs / cnt;
-        }
-      }
-
-      // 1b) distance-from-white using the smoothed values (letterbox padding marked far)
-      var idx, o;
-      for (idx = 0; idx < n; idx++) {
-        o = idx * 4;
-        if (d[o + 3] === 0) { distBuf[idx] = 9999; continue; }
-        var dr = 255 - blurBuf[idx * 3], dg = 255 - blurBuf[idx * 3 + 1], db = 255 - blurBuf[idx * 3 + 2];
-        distBuf[idx] = Math.sqrt(dr * dr + dg * dg + db * db);
-      }
-
-      // 2) seed the flood fill from the video content rect's own border
-      var sp = 0, x, y, idx0;
-      for (x = rx0; x <= rx1; x++) {
-        idx0 = ry0 * w + x;
-        if (distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-        idx0 = ry1 * w + x;
-        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-      }
-      for (y = ry0; y <= ry1; y++) {
-        idx0 = y * w + rx0;
-        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-        idx0 = y * w + rx1;
-        if (!visited[idx0] && distBuf[idx0] < maxDist) { visited[idx0] = 1; stack[sp++] = idx0; }
-      }
-
-      // 3) flood fill through connected background-ish pixels
-      while (sp > 0) {
-        var cur = stack[--sp];
-        var cx = cur % w;
-        var cy = (cur - cx) / w;
-        var nIdx;
-
-        if (cx > rx0) { nIdx = cur - 1; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
-        if (cx < rx1) { nIdx = cur + 1; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
-        if (cy > ry0) { nIdx = cur - w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
-        if (cy < ry1) { nIdx = cur + w; if (!visited[nIdx] && distBuf[nIdx] < maxDist) { visited[nIdx] = 1; stack[sp++] = nIdx; } }
-      }
-
-      // 4) compute alpha for visited pixels into alphaBuf (keep everything
-      //    else at its current opaque alpha so we have a full buffer to
-      //    despeckle against in step 5)
-      for (idx = 0; idx < n; idx++) {
-        o = idx * 4;
-        if (!visited[idx]) { alphaBuf[idx] = d[o + 3]; continue; }
-        var dist = distBuf[idx];
-        if (dist < threshold) {
-          alphaBuf[idx] = 0;
-        } else {
-          var a = Math.round(255 * (dist - threshold) / softness);
-          alphaBuf[idx] = a < 40 ? 0 : a;
-        }
-      }
-
-      // 5) DESPECKLE PASS — cleans up stray white flecks that land just
-      //    outside the flood-fill's connected path (specular
-      //    highlights/compression noise) by treating any pixel mostly
-      //    surrounded by already-transparent neighbors as background too,
-      //    regardless of whether the flood fill technically reached it.
-      for (y = ry0 + 1; y < ry1; y++) {
-        for (x = rx0 + 1; x < rx1; x++) {
-          idx = y * w + x;
-          if (alphaBuf[idx] < 60) continue; // already background/near-background
-          var tn = 0;
-          if (alphaBuf[idx - 1]     < 40) tn++;
-          if (alphaBuf[idx + 1]     < 40) tn++;
-          if (alphaBuf[idx - w]     < 40) tn++;
-          if (alphaBuf[idx + w]     < 40) tn++;
-          if (alphaBuf[idx - w - 1] < 40) tn++;
-          if (alphaBuf[idx - w + 1] < 40) tn++;
-          if (alphaBuf[idx + w - 1] < 40) tn++;
-          if (alphaBuf[idx + w + 1] < 40) tn++;
-          if (tn >= 6) alphaBuf[idx] = 0;
-        }
-      }
-
-      // 6) SPATIAL ALPHA BLUR — a plain 3x3 average of the despeckled
-      //    alpha values. This is pure spatial math with no frame-to-frame
-      //    state, so it can't introduce timing bugs: any single noisy
-      //    pixel gets pulled toward its neighbors' values instead of
-      //    standing out on its own.
-      var abx, aby, abdx, abdy, abyy, abxx, aidx, asum, acnt;
-      for (aby = 0; aby < h; aby++) {
-        for (abx = 0; abx < w; abx++) {
-          aidx = aby * w + abx;
-          asum = 0; acnt = 0;
-          for (abdy = -1; abdy <= 1; abdy++) {
-            abyy = aby + abdy; if (abyy < 0 || abyy >= h) continue;
-            for (abdx = -1; abdx <= 1; abdx++) {
-              abxx = abx + abdx; if (abxx < 0 || abxx >= w) continue;
-              asum += alphaBuf[abyy * w + abxx]; acnt++;
-            }
-          }
-          alphaBlur[aidx] = Math.round(asum / acnt);
-        }
-      }
-
-      // 7) STREAK-GATED TEMPORAL SMOOTHING — a per-pixel counter
-      //    (lowStreak) tracks how many PROCESSED frames in a row a pixel
-      //    has read as "background-leaning". A single noisy frame barely
-      //    moves the pixel at all — it's held almost exactly at its
-      //    previous value. Only once a pixel reads low for 2 frames
-      //    running (real, sustained motion — not one-off compression
-      //    noise) does it switch into a normal, fast-converging blend, so
-      //    genuine transitions resolve within a couple of frames instead
-      //    of dragging out into a trail. Rising alpha (becoming more
-      //    opaque) is always fast — that direction never caused the
-      //    problem.
-      var LOW_ALPHA_THRESH = 140;
-      for (idx = 0; idx < n; idx++) {
-        var prev = prevAlpha[idx];
-        var raw  = alphaBlur[idx];
-        var smoothed;
-        if (raw >= prev) {
-          smoothed = prev * 0.15 + raw * 0.85;   // fast attack (opacity rising)
-          lowStreak[idx] = 0;
-        } else {
-          if (raw < LOW_ALPHA_THRESH) {
-            if (lowStreak[idx] < 255) lowStreak[idx]++;
-          } else {
-            lowStreak[idx] = 0;
-          }
-          if (lowStreak[idx] >= 2) {
-            smoothed = prev * 0.30 + raw * 0.70;  // confirmed transition — resolve quickly
-          } else {
-            smoothed = prev * 0.95 + raw * 0.05;  // first low reading — likely noise, barely move
-          }
-        }
-        prevAlpha[idx] = smoothed;
-        d[idx * 4 + 3] = smoothed < 20 ? 0 : Math.round(smoothed);
-      }
-
-      wctx.putImageData(imgData, 0, 0);
-
-      outCtx.clearRect(0, 0, canvas.width, canvas.height);
-      outCtx.drawImage(work, 0, 0, canvas.width, canvas.height);
-    }
-
-    function frame() {
-      // Pause entirely when tab is hidden OR hero is scrolled off-screen —
-      // this is the main fix for site-wide lag from this effect.
-      if (document.hidden || !heroVisible) { requestAnimationFrame(frame); return; }
-
-      if (video.readyState >= 2 && !video.paused && !video.ended) {
-        frameCount++;
-        if (frameCount % (skip + 1) === 0) {
-          try { process(); } catch (e) { /* ignore a dropped frame */ }
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-
-    var tryPlay = function () {
-      var p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
-    };
-    tryPlay();
-    video.addEventListener('loadedmetadata', tryPlay);
-    document.addEventListener('click', tryPlay, { once: true });
-
-    requestAnimationFrame(frame);
-  }
-
-  // Simple alpha-preserving video-to-canvas renderer — used for clips
-  // that already carry real per-pixel transparency (alpha-channel
-  // WebM), so no chroma-key/flood-fill/despeckle work is needed at all.
-  // Canvas drawImage() from a <video> element preserves that alpha
-  // natively wherever the browser decodes WebM alpha (Chrome/Edge
-  // reliably, Firefox mostly; Safari doesn't support it and will just
-  // show an opaque frame there).
-  function renderAlphaVideo(video, canvas, opts) {
-    opts = opts || {};
-    var skip = opts.skip != null ? opts.skip : 0;
-    var ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-
-    // ── Aspect-ratio-correct draw rect (like object-fit: contain) ──
-    var rect = { x: 0, y: 0, w: canvas.width, h: canvas.height };
-    function updateRect() {
-      var vw = video.videoWidth, vh = video.videoHeight;
-      if (!vw || !vh) { rect = { x: 0, y: 0, w: canvas.width, h: canvas.height }; return; }
-      var cw = canvas.width, ch = canvas.height;
-      var canvasAspect = cw / ch, vidAspect = vw / vh;
-      var dw, dh;
-      if (vidAspect > canvasAspect) { dw = cw; dh = cw / vidAspect; }
-      else                          { dh = ch; dw = ch * vidAspect; }
-      rect = {
-        x: Math.round((cw - dw) / 2),
-        y: Math.round((ch - dh) / 2),
-        w: Math.round(dw),
-        h: Math.round(dh)
-      };
-    }
-    video.addEventListener('loadedmetadata', updateRect);
-    updateRect();
-
-    var frameCount = 0;
-    function frame() {
-      if (document.hidden || !heroVisible) { requestAnimationFrame(frame); return; }
-      if (video.readyState >= 2 && !video.paused && !video.ended) {
-        frameCount++;
-        if (frameCount % (skip + 1) === 0) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(video, rect.x, rect.y, rect.w, rect.h);
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-
-    var tryPlay = function () {
-      var p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(function () { /* retried on user interaction elsewhere */ });
-    };
-    tryPlay();
-    video.addEventListener('loadedmetadata', tryPlay);
-    document.addEventListener('click', tryPlay, { once: true });
-    requestAnimationFrame(frame);
-  }
-
-  var logoVideo  = document.getElementById('mcuLogoSrcVideo');
-  var logoCanvas = document.getElementById('mcuLogoCanvas');
-  var mascotVideo  = document.getElementById('mcuMascotSrcVideo');
-  var mascotCanvas = document.getElementById('mcuMascotCanvas');
-
-  // MOBILE PERF: the logo's per-pixel flood-fill + blur pipeline is
-  // expensive on phone-class CPUs/GPUs — dropping internal render scale
-  // and processing fewer frames/sec keeps the rest of the page (scroll,
-  // carousel drag) responsive on mobile without changing how big
-  // anything looks on screen (CSS still controls display size).
-  var isNarrowViewport = window.matchMedia('(max-width: 700px)').matches;
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var mobileSkipBump = isNarrowViewport ? 2 : 0;
-  var mobileScaleCut = isNarrowViewport ? 0.7 : 1;
-
-  // Logo: flat text/shapes — kept crisp with nearest-neighbor upscale.
-  // Still needs the full chroma-key pipeline since it's a plain mp4.
-  if (logoVideo && logoCanvas) {
-    chromaKeyFlood(logoVideo, logoCanvas, {
-      threshold: 130, softness: 25,
-      scale: 0.55 * mobileScaleCut,
-      skip: prefersReducedMotion ? 999 : 3 + mobileSkipBump,
-      finalSmoothing: false
-    });
-  }
-
-  // Mascot: alpha-channel WebM — just draw its frames straight through,
-  // no keying needed. A light frame-skip on mobile is still worthwhile
-  // for perf (drawImage + clearRect every frame at 60fps adds up on
-  // phones), but there's no chroma-key math to tune here anymore.
-  if (mascotVideo && mascotCanvas) {
-    renderAlphaVideo(mascotVideo, mascotCanvas, {
-      skip: prefersReducedMotion ? 999 : mobileSkipBump
-    });
+  /* Desktop only: mascot drifts a few px against the pointer */
+  if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  var hero = document.getElementById('top'), tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    tx = (e.clientX - r.left) / r.width - 0.5; ty = (e.clientY - r.top) / r.height - 0.5;
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: true });
+  function step() {
+    if (lite()) { raf = 0; return; }
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    v.style.transform = 'translate3d(' + (cx * -22).toFixed(1) + 'px,' + (cy * -14).toFixed(1) + 'px,0)';
+    raf = (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) ? requestAnimationFrame(step) : 0;
   }
 })();
 </script>
