@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MCU | Mechatronics Course Union, TMU</title>
-<meta name="description" content="The Mechatronics Course Union at Toronto Metropolitan University. Study halls, workshops, and a community that actually helps." />
+<meta name="description" content="The Mechatronics Course Union at Toronto Metropolitan University. Engineer the future with study halls, workshops, and a community that actually helps." />
 <meta name="theme-color" content="#0b0506" />
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -13,7 +13,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/home.css" />
 <script type="importmap">
 {"imports":{
   "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -28,30 +27,52 @@ body{background:#0b0506}
 #veil b{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,10vw,120px);letter-spacing:.08em}
 #veil i{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--red);transform:scaleX(.15);transform-origin:left;transition:transform 1.2s var(--ease-out-expo)}
 #veil.go i{transform:scaleX(.85)}
-#story{position:relative;z-index:1;height:720vh}
+#story{position:relative;z-index:1;height:760vh}
 .stage{position:sticky;top:0;height:100vh;overflow:hidden;pointer-events:none}
 .stage::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 38%,rgba(8,3,3,.72) 100%)}
-.sc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 16px) clamp(20px,5vw,64px) 40px;visibility:hidden;text-shadow:0 2px 24px rgba(0,0,0,.65)}
+.sc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 20px) clamp(20px,5vw,64px) 28px;visibility:hidden;text-shadow:0 2px 24px rgba(0,0,0,.7)}
 .sc a{pointer-events:auto}
 .px{opacity:0;will-change:transform,opacity}
-.big{font-family:var(--font-display);font-weight:400;font-size:clamp(64px,12.5vw,200px);line-height:.88;letter-spacing:.005em}
-.sub{max-width:44ch;font-size:clamp(16px,1.5vw,19px);font-weight:300;line-height:1.6;color:#d8cfca;margin:24px 0 28px}
+.big{font-family:var(--font-display);font-weight:400;font-size:clamp(44px,min(11vw,17vh),190px);line-height:.9;letter-spacing:.005em}
+.sub{max-width:44ch;font-size:clamp(15px,min(1.5vw,2.4vh),19px);font-weight:300;line-height:1.6;color:#e2d9d3;margin:20px 0 24px}
 .acts{display:flex;gap:16px;flex-wrap:wrap}
 #a{align-items:center;text-align:center;justify-content:flex-end;padding-bottom:9vh}
-#a p{font-family:var(--font-cond);font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#d8cfca}
+#a p{font-family:var(--font-cond);font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#e2d9d3}
 .bar{width:120px;height:2px;background:rgba(255,255,255,.18);margin:14px auto 0;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:var(--red);transform:scaleX(0);transform-origin:left}
 .nums{display:flex;gap:clamp(24px,7vw,120px);flex-wrap:wrap}
-.nums b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(84px,16vw,260px);line-height:.85}
-.nums span{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:#d8cfca}
-.run{display:grid;gap:clamp(10px,1.6vh,18px)}
-.run a{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4px 32px;align-items:baseline;border-top:1px solid rgba(239,234,227,.18);padding-top:clamp(8px,1.4vh,14px);color:inherit;text-decoration:none}
-.run h3{font-family:var(--font-display);font-weight:400;font-size:clamp(28px,3.4vw,50px);line-height:1;letter-spacing:.02em}
-.run p{font-size:clamp(13px,1.1vw,15px);font-weight:300;line-height:1.5;color:#d8cfca}
-@media(hover:hover){.run a{transition:color .3s}.run a:hover h3{color:var(--red)}}
-@media(max-width:700px){.run a{grid-template-columns:1fr}.run p{display:none}}
-.after{position:relative;z-index:2;background:var(--ink,#0e0d0d)}
-.after .hm-built{padding-top:var(--section-pad)}
+.nums b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(72px,min(15vw,26vh),240px);line-height:.85}
+.nums span{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:#e2d9d3}
+.tag{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;color:var(--red);display:block;margin-bottom:6px}
+.h2{font-family:var(--font-display);font-weight:400;font-size:clamp(40px,min(6vw,9vh),88px);line-height:.95;margin-bottom:clamp(10px,2vh,22px)}
+/* technical module cards */
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.6vh,16px)}
+.mod{position:relative;display:flex;flex-direction:column;gap:8px;padding:clamp(12px,2vh,20px);color:inherit;text-decoration:none;background:linear-gradient(155deg,rgba(227,27,35,.16),rgba(12,6,6,.8) 60%);border:1px solid rgba(227,27,35,.5);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));transition:border-color .3s,background .3s}
+.mod::before{content:"";position:absolute;left:6px;top:6px;width:10px;height:10px;border-left:2px solid var(--red);border-top:2px solid var(--red)}
+.mod svg{width:clamp(26px,4.4vh,42px);height:auto;stroke:var(--red);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.mod h3{font-family:var(--font-cond);font-weight:700;font-size:clamp(16px,2.4vh,22px);letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.mod p{font-size:clamp(12px,1.7vh,14px);font-weight:300;line-height:1.5;color:#e2d9d3}
+.mod .st{margin-top:auto;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:#a89c96;display:flex;align-items:center;gap:6px}
+.mod .st i{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:bl 2s steps(2) infinite}
+@keyframes bl{50%{opacity:.25}}
+@media(hover:hover){.mod:hover{border-color:var(--red);background:linear-gradient(155deg,rgba(227,27,35,.34),rgba(12,6,6,.85) 60%)}}
+@media(max-width:900px){.mods{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.mod p{display:none}.mod{padding:12px}}
+@media(max-height:640px){.mod p{display:none}}
+/* join: full screen */
+.glow{position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 90% 70% at 50% 105%,rgba(227,27,35,.6),transparent 70%)}
+.mega{font-family:var(--font-display);font-weight:400;font-size:clamp(60px,min(17vw,30vh),320px);line-height:.86;display:flex;justify-content:space-between;width:100%}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.6vh,16px);margin:clamp(14px,3vh,32px) 0 clamp(14px,3vh,28px)}
+@media(max-width:700px){.mega{flex-direction:column;font-size:27vw}.mega span:nth-child(2){align-self:flex-end}.ways{display:none}}
+@media(max-height:560px){.ways{display:none}}
+/* old events section (restored) */
+.after{position:relative;z-index:2;background:#0e0d0d}
+.events-also-ran{margin-top:2.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.events-also-label{font-size:.7rem;letter-spacing:.12em;color:rgba(255,255,255,.35);white-space:nowrap;flex-shrink:0}
+.events-also-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.events-also-chip{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:4px 8px;white-space:nowrap;transition:color .2s,border-color .2s}
+.events-also-chip:hover{color:rgba(255,255,255,.85);border-color:rgba(227,27,35,.5)}
+.event-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 @media(prefers-reduced-motion:reduce){#veil{transition:none}}
 </style>
 </head>
@@ -87,7 +108,6 @@ body{background:#0b0506}
 </nav>
 
 <main>
-<!-- The whole intro is one pinned stage; scroll scrubs the camera and the scenes -->
 <section id="story">
  <div class="stage">
 
@@ -97,10 +117,9 @@ body{background:#0b0506}
   </div>
 
   <div class="sc" id="b">
-    <h1 class="big" aria-label="Study. Build. Hang out.">
-      <span class="px" style="display:block">STUDY.</span>
-      <span class="px" style="display:block">BUILD.</span>
-      <span class="px" style="display:block">HANG OUT.</span>
+    <h1 class="big" aria-label="Engineer the future.">
+      <span class="px" style="display:block">ENGINEER</span>
+      <span class="px" style="display:block">THE FUTURE.</span>
     </h1>
     <p class="sub px">The Mechatronics Course Union at TMU. Study halls and mock exams for the hard courses, hands-on workshops, and a Discord where upper years actually answer.</p>
     <div class="acts px"><a href="events.html" class="btn-primary"><span>Explore events</span></a><a href="team.html" class="btn-ghost"><span>Meet the team</span></a></div>
@@ -115,20 +134,37 @@ body{background:#0b0506}
   </div>
 
   <div class="sc" id="d">
-    <h2 class="hm-h2 px" style="margin-bottom:20px">What we run</h2>
-    <div class="run">
-      <a class="px" href="academics.html"><h3>Academic support</h3><p>Study halls and mock exams before midterms, plus course guides written by students who just took the course.</p></a>
-      <a class="px" href="events.html"><h3>Workshops</h3><p>PCB soldering, SolidWorks, ROS2 and Raspberry Pi. Short hands-on sessions run by students and other TMU clubs.</p></a>
-      <a class="px" href="academics.html"><h3>Course resources</h3><p>Past exams, lecture slides and mock finals in one shared drive, organized by course.</p></a>
-      <a class="px" href="events.html"><h3>Social events</h3><p>Movie nights, and a mechanical bull night that raised money for CAMH.</p></a>
-      <a class="px" href="events.html"><h3>Game nights</h3><p>Marvel Rivals tournaments and more. Mechatronics students are competitive about everything.</p></a>
-      <a class="px" href="contact.html"><h3>Community</h3><p>Our Discord is where announcements, study groups and event sign-ups happen.</p></a>
+    <div class="px"><span class="tag">// SYSTEMS ONLINE: 06</span><h2 class="h2">What we run</h2></div>
+    <div class="mods">
+      <a class="mod px" href="academics.html">
+        <svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+        <h3>Academic support</h3><p>Study halls and mock exams before midterms, plus course guides written by students who just took the course.</p><span class="st"><i></i>ONLINE</span></a>
+      <a class="mod px" href="events.html">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        <h3>Workshops</h3><p>PCB soldering, SolidWorks, ROS2 and Raspberry Pi. Short hands-on sessions run by students and other TMU clubs.</p><span class="st"><i></i>ONLINE</span></a>
+      <a class="mod px" href="academics.html">
+        <svg viewBox="0 0 24 24"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg>
+        <h3>Course resources</h3><p>Past exams, lecture slides and mock finals in one shared drive, organized by course.</p><span class="st"><i></i>ONLINE</span></a>
+      <a class="mod px" href="events.html">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6M15 15c3 0 6 2 6 5"/></svg>
+        <h3>Social events</h3><p>Movie nights, and a mechanical bull night that raised money for CAMH.</p><span class="st"><i></i>ONLINE</span></a>
+      <a class="mod px" href="events.html">
+        <svg viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 014 4v2a3 3 0 01-5 2l-1-2H8l-1 2a3 3 0 01-5-2v-2a4 4 0 014-4z"/><path d="M8 11v3M6.5 12.5h3M16 12h.01M18 13h.01"/></svg>
+        <h3>Game nights</h3><p>Marvel Rivals tournaments and more. Mechatronics students are competitive about everything.</p><span class="st"><i></i>ONLINE</span></a>
+      <a class="mod px" href="contact.html">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <h3>Community</h3><p>Our Discord is where announcements, study groups and event sign-ups happen.</p><span class="st"><i></i>ONLINE</span></a>
     </div>
   </div>
 
   <div class="sc" id="e">
-    <h2 class="big px">Join<br/>the union.</h2>
-    <p class="sub px">First year or fourth year, the Discord is the quickest way in. Events and study halls are open to every Mechatronics student.</p>
+    <div class="px glow"></div>
+    <h2 class="mega px" aria-label="Join the union."><span>JOIN</span><span>THE</span><span>UNION.</span></h2>
+    <div class="ways px">
+      <a class="mod" href="https://discord.gg/5hYv4qEW" target="_blank" rel="noopener noreferrer"><h3>Join the Discord</h3><p>The quickest way in. Announcements, study groups and event sign-ups.</p><span class="st"><i></i>OPEN TO ALL</span></a>
+      <a class="mod" href="events.html"><h3>Come to an event</h3><p>Workshops, game nights and study halls open to every Mechatronics student.</p><span class="st"><i></i>OPEN TO ALL</span></a>
+      <a class="mod" href="team.html"><h3>Help run it</h3><p>Meet the team and see which roles are open this year.</p><span class="st"><i></i>OPEN TO ALL</span></a>
+    </div>
     <div class="acts px"><a href="contact.html" class="btn-primary"><span>Get involved</span></a><a href="team.html" class="btn-ghost"><span>Meet the team</span></a></div>
   </div>
 
@@ -136,27 +172,60 @@ body{background:#0b0506}
 </section>
 
 <div class="after">
-  <section class="hm-built" id="events-preview">
+  <!-- EVENTS: the original layout and colors from the old site -->
+  <section id="events-preview" class="section-dark">
     <div class="container">
-      <div class="hm-bh">
-        <h2 class="hm-h2">What we've built</h2>
-        <a href="events.html" class="btn-ghost btn-sm"><span>View all events</span></a>
+      <div class="section-header flex-header">
+        <div><h2 class="section-title">What We <em>Built</em>.</h2></div>
+        <a href="events.html" class="btn-ghost btn-sm">View All Events</a>
       </div>
-      <div class="hm-evs">
-        <a class="hm-ev hm-ev-big" href="events.html">
-          <img src="assets/images/marvel-rivals.jpg" alt="Marvel Rivals tournament" loading="lazy" decoding="async" />
-          <div class="hm-ev-t"><div class="hm-ev-meta">Social, February 2025</div><h3>Marvel Rivals Tournament</h3><p>MCU's first gaming tournament brought the community together. Turns out mechatronics engineers are also very competitive gamers.</p></div>
-        </a>
-        <a class="hm-ev" href="events.html">
-          <img src="assets/images/raspberry.JPG" alt="Raspberry Pi workshop" loading="lazy" decoding="async" style="object-position:center top" />
-          <div class="hm-ev-t"><div class="hm-ev-meta">Workshop, April 2025</div><h3>Raspberry Pi Workshop</h3></div>
-        </a>
-        <a class="hm-ev" href="events.html">
-          <img src="assets/images/jarvis-build.JPG" alt="Jarvis workshop build" loading="lazy" decoding="async" />
-          <div class="hm-ev-t"><div class="hm-ev-meta">Workshop, March 2025</div><h3>Jarvis Workshop</h3></div>
-        </a>
+      <div class="events-grid">
+        <article class="event-card ec-featured" data-index="0">
+          <div class="event-img-wrap">
+            <img src="assets/images/marvel-rivals.jpg" alt="Marvel Rivals tournament" loading="lazy" decoding="async" />
+            <div class="event-badge badge-social">Social</div>
+            <div class="event-date-chip"><span class="edc-day">FEB</span><span class="edc-mon">2025</span></div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">Marvel Rivals Tournament</h3>
+            <p class="event-meta mono">TMU · ONLINE</p>
+            <p class="event-desc">MCU's first gaming tournament brought the community together. Turns out mechatronics engineers are also very competitive gamers.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
+          </div>
+        </article>
+        <article class="event-card" data-index="1">
+          <div class="event-img-wrap">
+            <img src="assets/images/raspberry.JPG" alt="Raspberry Pi workshop" loading="lazy" decoding="async" style="object-position:center top" />
+            <div class="event-badge badge-workshop">Workshop</div>
+            <div class="event-date-chip"><span class="edc-day">APR</span><span class="edc-mon">2025</span></div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">Raspberry Pi Workshop</h3>
+            <p class="event-meta mono">TMU ENGINEERING LAB</p>
+            <p class="event-desc">Getting started with Linux, GPIO, Python, and real hardware on the Raspberry Pi. From blinking LEDs to sensor interfacing, this is the gateway to embedded Linux.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
+          </div>
+        </article>
+        <article class="event-card" data-index="2">
+          <div class="event-img-wrap">
+            <img src="assets/images/jarvis-build.JPG" alt="Jarvis workshop build" loading="lazy" decoding="async" />
+            <div class="event-badge badge-workshop">Workshop</div>
+            <div class="event-date-chip"><span class="edc-day">MAR</span><span class="edc-mon">2025</span></div>
+          </div>
+          <div class="event-body">
+            <h3 class="event-title">Jarvis Workshop</h3>
+            <p class="event-meta mono">TMU ENGINEERING</p>
+            <p class="event-desc">Build your own voice-activated AI assistant from scratch, with hardware integration, natural language commands, and embedded control.</p>
+            <a href="events.html" class="event-cta">See All Events →</a>
+          </div>
+        </article>
       </div>
-      <p class="hm-also">Also this year: ROS2 tutorial, Big Hero 6 movie night, SolidWorks CSWA &amp; CSWP, Mech Bull Night, and Valentine's Day with MECU.</p>
+      <div class="events-also-ran">
+        <span class="mono events-also-label">ALSO THIS YEAR:</span>
+        <div class="events-also-list">
+          <span class="events-also-chip">ROS2 Tutorial</span><span class="events-also-chip">Big Hero 6 Movie Night</span><span class="events-also-chip">SolidWorks CSWA &amp; CSWP</span><span class="events-also-chip">Mech Bull Night</span><span class="events-also-chip">Valentine's Day w/ MECU</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -192,13 +261,13 @@ body{background:#0b0506}
 
 <script src="js/main.js"></script>
 
-<!-- Scroll scenes: plain script, works even if WebGL or the CDN is unavailable -->
+<!-- Scroll scenes: plain script, keeps working even if WebGL or the CDN fails -->
 <script>
 (function(){
   var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
   var ss=function(a,b,x){x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x)};
   var story=document.getElementById('story'), veil=document.getElementById('veil');
-  var S=[['b',.10,.34,.07],['c',.37,.52,.1],['d',.55,.83,.1],['e',.85,1,.08,1]].map(function(s){
+  var S=[['b',.10,.33,.07],['c',.36,.50,.1],['d',.53,.82,.085],['e',.84,1,.07,1]].map(function(s){
     var el=document.getElementById(s[0]);return{el:el,a:s[1],b:s[2],step:s[3],keep:s[4],k:[].slice.call(el.querySelectorAll('.px'))}});
   var A=document.getElementById('a'), hud=document.getElementById('hud'), bar=document.getElementById('hudbar'), aK=[].slice.call(A.querySelectorAll('.px'));
   window.__scene={p:0,t:0,placed:0,total:1};
@@ -208,7 +277,7 @@ body{background:#0b0506}
     var done=W.placed>=W.total, t=W.t;
     var av=clamp(ss(.2,.6,t)*(1-ss(.025,.09,p)),0,1);
     A.style.visibility=av>.01?'visible':'hidden';
-    aK.forEach(function(e,i){put(e,av,(1-av)*20)});
+    aK.forEach(function(e){put(e,av,(1-av)*20)});
     hud.textContent=done?'MCU online. Scroll to enter':'Assembling '+W.placed+' / '+W.total;
     bar.style.transform='scaleX('+clamp(W.placed/W.total,0,1)+')';
     S.forEach(function(s){
@@ -219,7 +288,7 @@ body{background:#0b0506}
     requestAnimationFrame(tick);
   }
   tick();
-  setTimeout(function(){veil.classList.add('off')},6000); // safety net
+  setTimeout(function(){veil.classList.add('off')},6500); // safety net
 })();
 </script>
 
@@ -236,8 +305,7 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,t)=>a+(b-a)*t, rnd=Mat
 veil.classList.add('go');
 
 /* ---------- renderer, camera, light ---------- */
-const canvas=document.getElementById('gl');
-const R=new THREE.WebGLRenderer({canvas,antialias:!lite,powerPreference:'high-performance'});
+const R=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),antialias:!lite,powerPreference:'high-performance'});
 const dpr=Math.min(devicePixelRatio,lite?1:1.5); R.setPixelRatio(dpr);
 R.toneMapping=THREE.ACESFilmicToneMapping; R.toneMappingExposure=1.05;
 const scene=new THREE.Scene(); scene.background=new THREE.Color(0x0b0506);
@@ -246,12 +314,9 @@ scene.environment=new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(),.0
 const sun=new THREE.DirectionalLight(0xffffff,1.1); sun.position.set(3,5,6); scene.add(sun);
 const glow=new THREE.PointLight(0xe31b23,45,16,2); glow.position.set(0,.4,2.5); scene.add(glow);
 let composer=null;
-if(!lite){
-  composer=new EffectComposer(R); composer.addPass(new RenderPass(scene,cam));
-  composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.5,.55,.3));
-}
+if(!lite){composer=new EffectComposer(R);composer.addPass(new RenderPass(scene,cam));composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.5,.55,.3))}
 
-/* ---------- red elliptical galaxy field ---------- */
+/* ---------- red elliptical galaxy ---------- */
 const COUNT=lite?18000:(innerWidth<700?30000:60000), K=70, SP=12;
 const gp=new Float32Array(COUNT*3), gs=new Float32Array(COUNT), gz=new Float32Array(COUNT), gi=new Float32Array(COUNT);
 const frames=Array.from({length:K},()=>({m:new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(rnd()*Math.PI,rnd()*Math.PI,rnd()*Math.PI)),
@@ -284,99 +349,138 @@ float tex=1.-smoothstep(.5,1.,length(2.*gl_PointCoord-1.));
 gl_FragColor=vec4(col*tex,tex*vF);}`}));
 galaxy.frustumCulled=false; scene.add(galaxy);
 
-/* ---------- the rig: block-letter logo + two robot arms ---------- */
+/* ---------- the real MCU logo, voxelised from the PNG ---------- */
 const rig=new THREE.Group(); scene.add(rig);
-const G={M:['10001','11011','10101','10101','10001','10001','10001'],C:['01111','10000','10000','10000','10000','10000','01111'],U:['10001','10001','10001','10001','10001','10001','01110']};
-const CELL=.36,GAP=1.2,DUR=.85;
-const pcs=[]; 'MCU'.split('').forEach((ch,li)=>G[ch].forEach((row,r)=>[...row].forEach((v,c)=>{if(v==='1')pcs.push({li,r,c})})));
-pcs.sort((a,b)=>a.li-b.li||b.r-a.r||a.c-b.c);
-const N=pcs.length, totalW=(15+2*GAP)*CELL; W.total=N;
-pcs.forEach((p,i)=>{p.tx=-totalW/2+(p.li*(5+GAP)+p.c+.5)*CELL; p.ty=(3-p.r)*CELL+.3; p.tz=0; p.arm=i%2; p.t0=.9+i*(4.4/N);
-  p.o=new THREE.Vector3(rnd()-.5,rnd()*1.2,rnd()); p.cur=new THREE.Vector3(); p.done=0});
-const cubes=new THREE.InstancedMesh(new THREE.BoxGeometry(CELL*.9,CELL*.9,CELL*.9),
-  new THREE.MeshStandardMaterial({color:0xffffff,metalness:.85,roughness:.3,envMapIntensity:.8}),N);
+const COLS=lite?44:58, SS=4;
+const img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src='assets/images/mcu-tmu-logo.png'});
+const ROWS=Math.max(8,Math.round(COLS*(img?img.height/img.width:.4)));
+const cells=[];
+{
+  const cv=document.createElement('canvas'); cv.width=COLS*SS; cv.height=ROWS*SS;
+  const cx=cv.getContext('2d',{willReadFrequently:true});
+  if(img) cx.drawImage(img,0,0,cv.width,cv.height);
+  else {cx.fillStyle='#fff';cx.font=`${cv.height*1.1}px "Bebas Neue",Impact,sans-serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('MCU',cv.width/2,cv.height/2)}
+  const d=cx.getImageData(0,0,cv.width,cv.height).data, opaque=!!img&&d[3]>200;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    let on=0;
+    for(let y=0;y<SS;y++)for(let x=0;x<SS;x++){const i=((r*SS+y)*cv.width+c*SS+x)*4;
+      on+=opaque?(Math.abs(d[i]-d[0])+Math.abs(d[i+1]-d[1])+Math.abs(d[i+2]-d[2])>150?1:0):(d[i+3]>128?1:0)}
+    if(on/(SS*SS)>.4)cells.push([c,r]);
+  }
+}
+let LW=7.4; if(LW*ROWS/COLS>5) LW=5*COLS/ROWS;
+const CW=LW/COLS, LH=CW*ROWS;
+const pcs=cells.map(([c,r])=>({tx:(c+.5-COLS/2)*CW,ty:(ROWS/2-r-.5)*CW+.25,tz:0,key:c+rnd()*9,o:new THREE.Vector3(rnd()-.5,rnd(),rnd()),cur:new THREE.Vector3(),done:0}));
+pcs.sort((a,b)=>a.key-b.key);
+const N=pcs.length, DUR=.85, BUILD=5.2; W.total=N;
+pcs.forEach((p,i)=>{p.t0=.9+i*(BUILD/N); p.arm=(p.tx>0?1:0)+(p.ty>.25?2:0)});
+const doneAt=pcs[N-1].t0+DUR+1;
+const cubes=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshStandardMaterial({color:0xffffff,metalness:.85,roughness:.3,envMapIntensity:.8}),N);
 cubes.frustumCulled=false; rig.add(cubes);
-const steel=new THREE.Color(0xb7bcc6), hot=new THREE.Color(0xff5a3c), dummy=new THREE.Object3D(), col=new THREE.Color();
+const back=new THREE.Mesh(new THREE.PlaneGeometry(LW*1.03,LH*1.03),new THREE.MeshBasicMaterial({color:0xe31b23,transparent:true,opacity:0,depthWrite:false}));
+back.position.set(0,.25,-CW*1.2); rig.add(back);
+const steel=new THREE.Color(0xc4c8d0), hot=new THREE.Color(0xff5a3c), dummy=new THREE.Object3D(), col=new THREE.Color();
 
-const darkM=new THREE.MeshStandardMaterial({color:0x2b2e35,metalness:.8,roughness:.4}), redM=new THREE.MeshStandardMaterial({color:0xe31b23,emissive:0xe31b23,emissiveIntensity:.7});
-const Y=new THREE.Vector3(0,1,0), _d=new THREE.Vector3(), _u=new THREE.Vector3(), _n=new THREE.Vector3(), _E=new THREE.Vector3(), _T=new THREE.Vector3();
-function seg(m,a,b){_d.subVectors(b,a);const l=_d.length();m.position.copy(a).addScaledVector(_d,.5);m.quaternion.setFromUnitVectors(Y,_d.normalize());m.scale.y=l}
-const arms=[0,1].map(side=>{
-  const A={side,L:5,base:new THREE.Vector3(),tg:new THREE.Vector3(),rest:new THREE.Vector3(),q:pcs.filter(p=>p.arm===side)};
-  A.u=new THREE.Mesh(new THREE.BoxGeometry(.34,1,.34),darkM); A.f=new THREE.Mesh(new THREE.BoxGeometry(.24,1,.24),darkM);
-  A.j=new THREE.Mesh(new THREE.SphereGeometry(.26,16,12),redM); A.j0=new THREE.Mesh(new THREE.SphereGeometry(.34,16,12),redM);
-  A.g=new THREE.Mesh(new THREE.BoxGeometry(.3,.22,.3),redM);
-  A.b=new THREE.Mesh(new THREE.CylinderGeometry(.55,.7,.5,24),darkM);
-  rig.add(A.u,A.f,A.j,A.j0,A.g,A.b); return A;
+/* ---------- four articulated robot arms ---------- */
+const darkM=new THREE.MeshStandardMaterial({color:0x2b2e35,metalness:.8,roughness:.4,flatShading:true});
+const steelM=new THREE.MeshStandardMaterial({color:0x9aa0aa,metalness:1,roughness:.18});
+const redM=new THREE.MeshStandardMaterial({color:0xe31b23,emissive:0xe31b23,emissiveIntensity:.9});
+const mk=(g,m,x=0,y=0,z=0)=>{const o=new THREE.Mesh(g,m);o.position.set(x,y,z);return o};
+const L=5, Y=new THREE.Vector3(0,1,0), Z=new THREE.Vector3(0,0,1);
+const _u=new THREE.Vector3(),_n=new THREE.Vector3(),_E=new THREE.Vector3(),_T=new THREE.Vector3(),_a=new THREE.Vector3(),_h=new THREE.Vector3(),_d=new THREE.Vector3();
+function limb(){
+  const g=new THREE.Group();
+  g.add(mk(new THREE.CylinderGeometry(.2,.3,L-1.1,6),darkM,0,L/2,0));
+  for(const s of[-1,1]){g.add(mk(new THREE.CylinderGeometry(.05,.05,L*.55,8),steelM,s*.36,L*.58,0),mk(new THREE.CylinderGeometry(.1,.1,L*.3,10),darkM,s*.36,L*.3,0))}
+  g.add(mk(new THREE.BoxGeometry(.05,L*.6,.05),redM,0,L/2,.27),mk(new THREE.BoxGeometry(.05,L*.6,.05),redM,0,L/2,-.27));
+  for(let k=1;k<4;k++)g.add(mk(new THREE.TorusGeometry(.31,.03,6,16).rotateX(Math.PI/2),steelM,0,L*k/4,0));
+  return g;
+}
+const arms=[0,1,2,3].map(i=>{
+  const A={sx:i&1?1:-1,dy:i&2?-1:1,base:new THREE.Vector3(),tg:new THREE.Vector3(),rest:new THREE.Vector3(),open:.3,ptr:0,q:[]};
+  A.u=limb(); A.f=limb();
+  A.sh=new THREE.Group(); A.sh.add(mk(new THREE.SphereGeometry(.42,16,12),darkM)); A.shr=mk(new THREE.TorusGeometry(.5,.05,8,28),redM); A.sh.add(A.shr);
+  A.el=new THREE.Group(); A.el.add(mk(new THREE.SphereGeometry(.36,16,12),darkM)); A.elr=mk(new THREE.TorusGeometry(.43,.05,8,28),redM); A.el.add(A.elr);
+  A.g=new THREE.Group(); A.g.add(mk(new THREE.BoxGeometry(.34,.26,.34),darkM,0,-.13,0),mk(new THREE.CylinderGeometry(.14,.14,.12,12),redM,0,-.3,0));
+  A.fa=mk(new THREE.BoxGeometry(.07,.46,.16),steelM,0,.2,0); A.fb=mk(new THREE.BoxGeometry(.07,.46,.16),steelM,0,.2,0); A.g.add(A.fa,A.fb);
+  A.b=new THREE.Group(); A.b.add(mk(new THREE.BoxGeometry(1.1,.5,1.1),darkM,0,0,0),mk(new THREE.CylinderGeometry(.62,.7,.3,24),steelM,0,.3*A.dy,0),mk(new THREE.TorusGeometry(.66,.04,8,32).rotateX(Math.PI/2),redM,0,.46*A.dy,0));
+  rig.add(A.u,A.f,A.sh,A.el,A.g,A.b); return A;
 });
+pcs.forEach(p=>arms[p.arm].q.push(p));
+function place(g,a,d){g.position.copy(a);g.quaternion.setFromUnitVectors(Y,d)}
+function ik(A,T){
+  const B=A.base; _u.subVectors(T,B); const d=clamp(_u.length(),1,2*L-.05); _u.normalize();
+  const h=Math.sqrt(Math.max(L*L-d*d/4,0)); _n.set(0,A.dy,.5); _n.sub(_a.copy(_u).multiplyScalar(_n.dot(_u))).normalize();
+  _E.copy(B).addScaledVector(_u,d/2).addScaledVector(_n,h); _T.copy(B).addScaledVector(_u,d);
+  place(A.u,B,_d.subVectors(_E,B).normalize()); place(A.f,_E,_d.subVectors(_T,_E).normalize());
+  A.sh.position.copy(B); A.el.position.copy(_E); place(A.g,_T,_d);
+  _h.crossVectors(_u,_n).normalize(); A.shr.quaternion.setFromUnitVectors(Z,_h); A.elr.quaternion.setFromUnitVectors(Z,_h);
+  A.b.rotation.y=Math.atan2(_u.x,_u.z);
+  A.fa.position.x=-A.open; A.fb.position.x=A.open;
+}
 function layout(){
   const aspect=innerWidth/innerHeight;
-  W.z0=Math.max(11,9.8/Math.min(aspect,1.6));
-  const half=W.z0*.414*aspect, bx=Math.min(6.5,Math.max(3.4,half*.88));
-  arms.forEach(A=>{A.base.set(A.side?bx:-bx,-3.4,-.4);A.rest.set(A.side?1.4:-1.4,-2.2,1.6);A.b.position.set(A.base.x,A.base.y-.1,A.base.z);A.tg.copy(A.rest);ik(A,A.rest)});
+  W.z0=Math.max(11,(LW*1.3)/(2*.414*Math.min(aspect,1.6)));
+  const half=W.z0*.414*aspect, bx=Math.min(6.5,Math.max(3.4,half*.9));
+  arms.forEach(A=>{A.base.set(A.sx*bx,A.dy>0?-3.4:3.9,-.4);A.b.position.copy(A.base);A.rest.set(A.sx*1.8,A.dy>0?-2.4:2.9,1.6);A.tg.copy(A.rest);A.open=.3;ik(A,A.rest)});
 }
-function ik(A,T){
-  const B=A.base; _u.subVectors(T,B); let d=clamp(_u.length(),1,2*A.L-.05); _u.normalize();
-  const h=Math.sqrt(Math.max(A.L*A.L-d*d/4,0)); _n.set(0,1,.5); _n.sub(_d.copy(_u).multiplyScalar(_n.dot(_u))).normalize();
-  _E.copy(B).addScaledVector(_u,d/2).addScaledVector(_n,h); _T.copy(B).addScaledVector(_u,d);
-  seg(A.u,B,_E); seg(A.f,_E,_T); A.j.position.copy(_E); A.j0.position.copy(B); A.g.position.copy(_T);
-}
+const start=(A,p,v)=>v.set(A.base.x-A.sx*1.2+p.o.x*1.4,A.base.y+A.dy*(1+p.o.y),A.base.z+1+p.o.z);
 
 /* sparks */
-const SN=260, sp=new Float32Array(SN*3).fill(-999), sv=new Float32Array(SN*3), sl=new Float32Array(SN); let si=0;
+const SN=400, sp=new Float32Array(SN*3).fill(-999), sv=new Float32Array(SN*3), sl=new Float32Array(SN); let si=0;
 const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
-const sparks=new THREE.Points(sg,new THREE.PointsMaterial({size:.08,color:0xff8a50,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false})); sparks.frustumCulled=false; rig.add(sparks);
-function spawn(x,y,z,n){for(let k=0;k<n;k++){const i=(si++)%SN;sp.set([x,y,z],i*3);sv.set([(rnd()-.5)*3,rnd()*2.5,(rnd()-.2)*3],i*3);sl[i]=.5+rnd()*.5}}
+const sparks=new THREE.Points(sg,new THREE.PointsMaterial({size:.07,color:0xff8a50,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false})); sparks.frustumCulled=false; rig.add(sparks);
+function spawn(x,y,z,n){for(let k=0;k<n;k++){const i=(si++)%SN;sp.set([x,y,z],i*3);sv.set([(rnd()-.5)*3,rnd()*2.5,(rnd()-.2)*3],i*3);sl[i]=.4+rnd()*.5}}
 
-/* ---------- size, pointer ---------- */
 function resize(){R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();composer&&composer.setSize(innerWidth,innerHeight);layout()}
 addEventListener('resize',resize); resize();
 let mx=0,my=0; addEventListener('pointermove',e=>{mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1},{passive:true});
-
-/* ---------- smooth scroll (Lenis, optional) ---------- */
 let lenis=null;
 if(!reduce){try{const m=await import('https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.mjs');lenis=new m.default({smoothWheel:true})}catch(e){}}
 
 /* ---------- loop ---------- */
-let last=performance.now(), time=0, t0=null, pc=0, started=false;
+let last=performance.now(), time=0, t0=null, pc=0, started=false, built=false;
 function frame(now){
   requestAnimationFrame(frame);
   const dt=Math.min(.05,(now-last)/1000); last=now; time+=dt; lenis&&lenis.raf(now);
-  const storyH=document.getElementById('story').offsetHeight;
-  if(scrollY>storyH+50 && started) return;            // story is off screen: stop drawing entirely
+  if(scrollY>document.getElementById('story').offsetHeight+50&&started) return;   // story off screen: draw nothing
   if(!started){started=true;t0=now;veil.classList.add('off')}
   const t=reduce?99:(now-t0)/1000-.7; W.t=Math.max(t,0);
   pc+=(W.p-pc)*.08;
-  /* galaxy */
-  gu.uT.value=time; gu.uA.value=clamp(t/2.2,0,1); gu.uExp.value=1+pc*1;
+  gu.uT.value=time; gu.uA.value=clamp(t/2.2,0,1); gu.uExp.value=1+pc;
   const spin=.1*(1+pc*2.6)*dt; galaxy.rotation.y+=spin; galaxy.rotation.x+=spin*.35;
-  /* pieces */
-  let placed=0;
-  for(let i=0;i<N;i++){
-    const p=pcs[i], b=arms[p.arm].base, k=clamp((t-p.t0)/DUR,0,1), e=1-Math.pow(1-k,3);
-    p.cur.set(lerp(b.x+p.o.x*1.6,p.tx,e), lerp(b.y+1.2+p.o.y,p.ty,e)+Math.sin(Math.PI*k)*1.2, lerp(b.z+1+p.o.z,p.tz,e));
-    const s=t-p.t0-DUR;
-    if(s>0){placed++; if(!p.done){p.done=1;spawn(p.tx,p.ty,p.tz+.2,14)}}
-    const flash=s>0?Math.max(0,1-s/.7):(k>0?.35:0);
-    const sc=(t<p.t0-.4?0:Math.min(1,(t-p.t0+.4)/.4))*(1+.2*flash*flash);
-    dummy.position.copy(p.cur); dummy.rotation.set(p.o.x*(1-e)*6,p.o.y*(1-e)*5,p.o.z*(1-e)*4); dummy.scale.setScalar(sc); dummy.updateMatrix();
-    cubes.setMatrixAt(i,dummy.matrix); cubes.setColorAt(i,col.copy(steel).lerp(hot,flash));
+  /* pieces fly from the arms' bins into the logo */
+  if(!built){
+    let placed=0;
+    for(let i=0;i<N;i++){
+      const p=pcs[i], A=arms[p.arm], k=clamp((t-p.t0)/DUR,0,1), e=1-Math.pow(1-k,3);
+      start(A,p,_d);
+      p.cur.set(lerp(_d.x,p.tx,e),lerp(_d.y,p.ty,e)+Math.sin(Math.PI*k)*1.2,lerp(_d.z,p.tz,e));
+      const s=t-p.t0-DUR;
+      if(s>0){placed++;if(!p.done){p.done=1;if(i%3===0)spawn(p.tx,p.ty,.2,2)}}
+      const flash=s>0?Math.max(0,1-s/.7):(k>0?.35:0);
+      const sc=(t<p.t0-.4?0:Math.min(1,(t-p.t0+.4)/.4))*(1+.2*flash*flash);
+      dummy.position.copy(p.cur); dummy.rotation.set(p.o.x*(1-e)*6,p.o.y*(1-e)*5,p.o.z*(1-e)*4);
+      dummy.scale.set(CW*.93*sc,CW*.93*sc,CW*1.5*sc); dummy.updateMatrix();
+      cubes.setMatrixAt(i,dummy.matrix); cubes.setColorAt(i,col.copy(steel).lerp(hot,flash));
+    }
+    cubes.instanceMatrix.needsUpdate=true; cubes.instanceColor.needsUpdate=true; W.placed=placed;
+    back.material.opacity=.38*placed/N;
+    if(t>=doneAt){built=true;W.placed=N;back.material.opacity=.38}
   }
-  cubes.instanceMatrix.needsUpdate=true; cubes.instanceColor.needsUpdate=true; W.placed=placed;
-  /* arms follow the piece they are carrying */
+  /* arms track the piece they are carrying */
   arms.forEach(A=>{
-    let tg=A.rest, w=.06;
-    for(const p of A.q){ if(t>p.t0-.45&&t<p.t0+DUR+.2){ tg=t<p.t0?_d.set(A.base.x+p.o.x*1.6,A.base.y+1.2+p.o.y,A.base.z+1+p.o.z):p.cur; w=.3; break } }
-    A.tg.lerp(tg,w); ik(A,A.tg);
+    while(A.ptr<A.q.length-1&&t>A.q[A.ptr].t0+DUR+.15)A.ptr++;
+    const p=A.q[A.ptr]; let tg=A.rest,w=.06,grip=.3;
+    if(p&&t>p.t0-.45&&t<p.t0+DUR+.2){tg=t<p.t0?start(A,p,_h):p.cur;w=.35;grip=t<p.t0?.3:.07}
+    A.open=lerp(A.open,grip,.25); A.tg.lerp(tg,w); ik(A,A.tg);
   });
-  /* sparks */
-  for(let i=0;i<SN;i++){ if(sl[i]<=0){sp[i*3+1]=-999;continue} sl[i]-=dt; sv[i*3+1]-=5*dt; sp[i*3]+=sv[i*3]*dt; sp[i*3+1]+=sv[i*3+1]*dt; sp[i*3+2]+=sv[i*3+2]*dt }
+  for(let i=0;i<SN;i++){if(sl[i]<=0){sp[i*3+1]=-999;continue}sl[i]-=dt;sv[i*3+1]-=5*dt;sp[i*3]+=sv[i*3]*dt;sp[i*3+1]+=sv[i*3+1]*dt;sp[i*3+2]+=sv[i*3+2]*dt}
   sg.attributes.position.needsUpdate=true;
-  glow.intensity=45+12*Math.sin(time*2)*(placed>=N?1:.3);
+  glow.intensity=45+12*Math.sin(time*2)*(built?1:.3);
   rig.rotation.y=lerp(rig.rotation.y,mx*.18+Math.sin(time*.4)*.05,.05); rig.rotation.x=lerp(rig.rotation.x,my*.08,.05);
-  /* camera: dive through the logo and into the galaxy as you scroll */
   const e=pc*pc*(3-2*pc)*.65+pc*.35, z=lerp(W.z0,-7,e);
-  cam.position.set(lerp(cam.position.x,mx*.6,.05), .3+Math.sin(pc*3.1)*.7-my*.2, z);
+  cam.position.set(lerp(cam.position.x,mx*.6,.05),.3+Math.sin(pc*3.1)*.7-my*.2,z);
   cam.lookAt(mx*1.2+Math.sin(pc*4)*1.2,.2,z-10); cam.rotation.z+=Math.sin(pc*5)*.05;
   composer?composer.render():R.render(scene,cam);
 }
