@@ -22,19 +22,17 @@
 <style>
 body{background:#0b0506}
 #gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
-#veil{position:fixed;inset:0;z-index:2000;background:#0b0506;display:grid;place-items:center;transition:opacity .9s ease .1s}
-#veil.off{opacity:0;pointer-events:none}
-#veil b{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,10vw,120px);letter-spacing:.08em}
-#veil i{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--red);transform:scaleX(.15);transform-origin:left;transition:transform 1.2s var(--ease-out-expo)}
-#veil.go i{transform:scaleX(.85)}
+/* dark scrims behind the intro text so it always reads */
+.scrim{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(6,2,2,.9),rgba(6,2,2,.62) 52%,rgba(6,2,2,.12) 88%)}
+.scrim.c{background:radial-gradient(ellipse at 38% 50%,rgba(6,2,2,.88),rgba(6,2,2,.5) 65%,transparent 100%)}
 #story{position:relative;z-index:1;height:760vh}
 .stage{position:sticky;top:0;height:100vh;overflow:hidden;pointer-events:none}
 .stage::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 38%,rgba(8,3,3,.72) 100%)}
-.sc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 20px) clamp(20px,5vw,64px) 28px;visibility:hidden;text-shadow:0 2px 24px rgba(0,0,0,.7)}
+.sc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 20px) clamp(20px,5vw,64px) 28px;visibility:hidden;text-shadow:0 0 14px rgba(0,0,0,.95),0 2px 28px rgba(0,0,0,.85)}
 .sc a{pointer-events:auto}
 .px{opacity:0;will-change:transform,opacity}
 .big{font-family:var(--font-display);font-weight:400;font-size:clamp(44px,min(11vw,17vh),190px);line-height:.9;letter-spacing:.005em}
-.sub{max-width:44ch;font-size:clamp(15px,min(1.5vw,2.4vh),19px);font-weight:300;line-height:1.6;color:#e2d9d3;margin:20px 0 24px}
+.sub{max-width:44ch;font-size:clamp(16px,min(1.7vw,2.7vh),21px);font-weight:400;line-height:1.6;color:#fff;margin:20px 0 24px}
 .acts{display:flex;gap:16px;flex-wrap:wrap}
 #a{align-items:center;text-align:center;justify-content:flex-end;padding-bottom:9vh}
 #a p{font-family:var(--font-cond);font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#e2d9d3}
@@ -42,7 +40,7 @@ body{background:#0b0506}
 .bar i{display:block;height:100%;width:100%;background:var(--red);transform:scaleX(0);transform-origin:left}
 .nums{display:flex;gap:clamp(24px,7vw,120px);flex-wrap:wrap}
 .nums b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(72px,min(15vw,26vh),240px);line-height:.85}
-.nums span{font-size:clamp(15px,1.4vw,18px);font-weight:300;color:#e2d9d3}
+.nums span{font-size:clamp(17px,1.7vw,22px);font-weight:500;color:#fff;letter-spacing:.04em}
 .tag{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;color:var(--red);display:block;margin-bottom:6px}
 .h2{font-family:var(--font-display);font-weight:400;font-size:clamp(40px,min(6vw,9vh),88px);line-height:.95;margin-bottom:clamp(10px,2vh,22px)}
 /* technical module cards */
@@ -73,13 +71,11 @@ body{background:#0b0506}
 .events-also-chip{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:4px 8px;white-space:nowrap;transition:color .2s,border-color .2s}
 .events-also-chip:hover{color:rgba(255,255,255,.85);border-color:rgba(227,27,35,.5)}
 .event-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-@media(prefers-reduced-motion:reduce){#veil{transition:none}}
 </style>
 </head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
 
-<div id="veil"><b>MCU</b><i></i></div>
 <canvas id="gl" aria-hidden="true"></canvas>
 
 <nav id="nav">
@@ -117,6 +113,7 @@ body{background:#0b0506}
   </div>
 
   <div class="sc" id="b">
+    <div class="px scrim"></div>
     <h1 class="big" aria-label="Engineer the future.">
       <span class="px" style="display:block">ENGINEER</span>
       <span class="px" style="display:block">THE FUTURE.</span>
@@ -126,6 +123,7 @@ body{background:#0b0506}
   </div>
 
   <div class="sc" id="c">
+    <div class="px scrim c"></div>
     <div class="nums">
       <div class="px"><b>300+</b><span>active members</span></div>
       <div class="px"><b>10+</b><span>events a year</span></div>
@@ -266,7 +264,7 @@ body{background:#0b0506}
 (function(){
   var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
   var ss=function(a,b,x){x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x)};
-  var story=document.getElementById('story'), veil=document.getElementById('veil');
+  var story=document.getElementById('story');
   var S=[['b',.10,.33,.07],['c',.36,.50,.1],['d',.53,.82,.085],['e',.84,1,.07,1]].map(function(s){
     var el=document.getElementById(s[0]);return{el:el,a:s[1],b:s[2],step:s[3],keep:s[4],k:[].slice.call(el.querySelectorAll('.px'))}});
   var A=document.getElementById('a'), hud=document.getElementById('hud'), bar=document.getElementById('hudbar'), aK=[].slice.call(A.querySelectorAll('.px'));
@@ -288,7 +286,6 @@ body{background:#0b0506}
     requestAnimationFrame(tick);
   }
   tick();
-  setTimeout(function(){veil.classList.add('off')},6500); // safety net
 })();
 </script>
 
@@ -299,10 +296,9 @@ import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
-const W=window.__scene, veil=document.getElementById('veil');
+const W=window.__scene;
 const lite=!!(window.MCU&&window.MCU.lite), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,t)=>a+(b-a)*t, rnd=Math.random;
-veil.classList.add('go');
 
 /* ---------- renderer, camera, light ---------- */
 const R=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),antialias:!lite,powerPreference:'high-performance'});
@@ -351,7 +347,7 @@ galaxy.frustumCulled=false; scene.add(galaxy);
 
 /* ---------- the real MCU logo, voxelised from the PNG ---------- */
 const rig=new THREE.Group(); scene.add(rig);
-const COLS=lite?44:58, SS=4;
+const COLS=lite?60:(innerWidth<700?84:112), SS=3;
 const img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src='assets/images/mcu-tmu-logo.png'});
 const ROWS=Math.max(8,Math.round(COLS*(img?img.height/img.width:.4)));
 const cells=[];
@@ -444,7 +440,7 @@ function frame(now){
   requestAnimationFrame(frame);
   const dt=Math.min(.05,(now-last)/1000); last=now; time+=dt; lenis&&lenis.raf(now);
   if(scrollY>document.getElementById('story').offsetHeight+50&&started) return;   // story off screen: draw nothing
-  if(!started){started=true;t0=now;veil.classList.add('off')}
+  if(!started){started=true;t0=now}
   const t=reduce?99:(now-t0)/1000-.7; W.t=Math.max(t,0);
   pc+=(W.p-pc)*.08;
   gu.uT.value=time; gu.uA.value=clamp(t/2.2,0,1); gu.uExp.value=1+pc;
@@ -457,7 +453,7 @@ function frame(now){
       start(A,p,_d);
       p.cur.set(lerp(_d.x,p.tx,e),lerp(_d.y,p.ty,e)+Math.sin(Math.PI*k)*1.2,lerp(_d.z,p.tz,e));
       const s=t-p.t0-DUR;
-      if(s>0){placed++;if(!p.done){p.done=1;if(i%3===0)spawn(p.tx,p.ty,.2,2)}}
+      if(s>0){placed++;if(!p.done){p.done=1;if(i%12===0)spawn(p.tx,p.ty,.2,2)}}
       const flash=s>0?Math.max(0,1-s/.7):(k>0?.35:0);
       const sc=(t<p.t0-.4?0:Math.min(1,(t-p.t0+.4)/.4))*(1+.2*flash*flash);
       dummy.position.copy(p.cur); dummy.rotation.set(p.o.x*(1-e)*6,p.o.y*(1-e)*5,p.o.z*(1-e)*4);
