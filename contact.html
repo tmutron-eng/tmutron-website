@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | MCU | Mechatronics Course Union · TMU</title>
-  <meta name="description" content="Connect with MCU: join the Discord, follow on Instagram and LinkedIn, or reach the executive team directly. Kerr Hall, Toronto Metropolitan University." />
+  <meta name="description" content="Contact the Mechatronics Course Union at TMU. Discord, Instagram, LinkedIn, email and our office in EPH 117." />
   <meta name="theme-color" content="#0b0506" />
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -59,99 +59,18 @@
 
   <main>
 
-    <!-- ═══════════════════ HERO ═══════════════════ -->
-    <section id="cx-hero">
-      <div class="cx-scan" aria-hidden="true"></div>
-      <div class="hud-corner hud-tl"></div>
-      <div class="hud-corner hud-tr"></div>
-      <div class="hud-corner hud-bl"></div>
-      <div class="hud-corner hud-br"></div>
+    <!-- ═══════════════════ CARD DECK ═══════════════════ -->
+    <section id="cx-deck" aria-labelledby="deck-title">
+      <div class="cx-orb" data-glide="60" aria-hidden="true" style="left:62%;top:6%;width:520px;height:520px;background:radial-gradient(circle,rgba(88,101,242,.16),transparent 68%)"></div>
 
       <div class="container">
-        <div class="cx-hero-grid">
-
-          <div class="cx-hero-copy">
-            <span class="cx-eyebrow"><i></i>Uplink ready · 05 channels</span>
-
-            <h1 class="cx-title">
-              <span class="cx-ln"><span>GET</span></span>
-              <span class="cx-ln red"><span data-text="CONNECTED.">CONNECTED.</span></span>
-            </h1>
-
-            <p class="cx-lede">
-              Five ways into MCU. Discord is where everything actually happens — announcements,
-              study groups, event sign-ups and upper years who have already taken your course.
-              The rest is one tap away.
-            </p>
-
-            <div class="cx-actions">
-              <a href="https://discord.gg/zHs7e9KayC" target="_blank" rel="noopener" class="cx-btn cx-btn--primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.02.015.04.03.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                Join the Discord
-              </a>
-              <a href="#cx-transmit" class="cx-btn cx-btn--ghost">Send a message</a>
-            </div>
-
-            <div class="cx-status">
-              <span>Discord online</span>
-              <span>Reply within 24h</span>
-              <span class="dim">Kerr Hall · Toronto</span>
-            </div>
-          </div>
-
-          <!-- live uplink monitor -->
-          <aside class="cx-monitor" aria-label="Live uplink monitor">
-            <div class="cxm-head">
-              <span>Uplink monitor</span>
-              <span class="cxm-live"><i></i>Live</span>
-            </div>
-
-            <div class="cxm-radar" aria-hidden="true">
-              <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="47"></circle>
-                <circle cx="50" cy="50" r="33"></circle>
-                <circle cx="50" cy="50" r="19"></circle>
-                <line class="cxm-cross" x1="3" y1="50" x2="97" y2="50"></line>
-                <line class="cxm-cross" x1="50" y1="3" x2="50" y2="97"></line>
-              </svg>
-              <div class="cxm-sweep"></div>
-              <span class="cxm-blip blue" style="--x:63%;--y:31%;--d:0s"></span>
-              <span class="cxm-blip" style="--x:34%;--y:58%;--d:1.2s"></span>
-              <span class="cxm-blip" style="--x:57%;--y:70%;--d:2.1s"></span>
-              <span class="cxm-blip blue" style="--x:44%;--y:24%;--d:2.8s"></span>
-            </div>
-
-            <ul class="cxm-rows">
-              <li class="on"><span>Discord</span><span class="cxm-bars"><i></i><i></i><i></i><i></i></span><span class="cxm-ok">Open</span></li>
-              <li><span>Instagram</span><span class="cxm-bars"><i></i><i></i><i></i><i></i></span><span class="cxm-ok">Open</span></li>
-              <li><span>LinkedIn</span><span class="cxm-bars"><i></i><i></i><i></i><i></i></span><span class="cxm-ok">Open</span></li>
-              <li><span>Email</span><span class="cxm-bars"><i></i><i></i><i></i><i></i></span><span class="cxm-ok">Open</span></li>
-            </ul>
-
-            <div class="cxm-foot">
-              <span>TOR <b id="cx-clock">--:--:--</b></span>
-              <span>43.6577°N 79.3788°W</span>
-            </div>
-          </aside>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════ SIGNAL ARRAY ═══════════════════ -->
-    <section id="cx-array" aria-labelledby="arr-title">
-      <div class="container">
-        <div class="arr-head">
-          <div class="cx-section-head">
-            <span class="cx-eyebrow"><i></i>02 / Signal array</span>
-            <h2 class="cx-h2" id="arr-title">Pick a <em>channel</em>.</h2>
-            <p class="cx-lede">Drag the array to spin through every way to reach MCU. Open a card for the full brief.</p>
-          </div>
-          <p class="arr-hint">Drag · click · arrow keys</p>
+        <div class="deck-head">
+          <h1 id="deck-title">Get in <em>touch</em>.</h1>
+          <p class="deck-sub">Pick a card to open it. Discord is the fastest way to reach us.</p>
         </div>
       </div>
 
-      <div class="arr-stage" id="arr-stage" tabindex="0" role="group" aria-label="MCU contact channels. Use left and right arrow keys to spin, Enter to open a channel.">
+      <div class="arr-stage" id="arr-stage" tabindex="0" role="group" aria-label="MCU contact channels. Use left and right arrow keys to spin the cards.">
         <div class="arr-floor" aria-hidden="true"></div>
         <div class="arr-horizon" aria-hidden="true"></div>
         <div class="arr-ring" id="arr-ring"></div>
@@ -159,63 +78,37 @@
 
       <div class="container">
         <div class="arr-nav">
-          <button class="arr-btn" id="arr-prev" type="button" aria-label="Previous channel">
+          <button class="arr-btn" id="arr-prev" type="button" aria-label="Previous card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <div class="arr-dots" id="arr-dots" role="tablist" aria-label="Channels"></div>
-          <button class="arr-btn" id="arr-next" type="button" aria-label="Next channel">
+          <div class="arr-dots" id="arr-dots" aria-hidden="true"></div>
+          <button class="arr-btn" id="arr-next" type="button" aria-label="Next card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
           </button>
         </div>
 
         <noscript>
-          <ul class="cx-lede" style="margin-top:28px;display:flex;flex-direction:column;gap:10px;list-style:none">
-            <li><a href="https://discord.gg/zHs7e9KayC" style="color:#fff">Discord — discord.gg/zHs7e9KayC</a></li>
+          <ul style="margin-top:26px;display:flex;flex-direction:column;gap:10px;list-style:none;font-size:14px">
+            <li><a href="https://discord.gg/zHs7e9KayC" style="color:#fff">Discord</a></li>
             <li><a href="https://instagram.com/tmutron" style="color:#fff">Instagram — @tmutron</a></li>
             <li><a href="https://www.linkedin.com/company/mechatronics-course-union-mcu-tmu/" style="color:#fff">LinkedIn — MCU · TMU</a></li>
             <li><a href="mailto:tmutron@torontomu.ca" style="color:#fff">Email — tmutron@torontomu.ca</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=Eric+Palin+Hall+Toronto+Metropolitan+University" style="color:#fff">Office — EPH 117</a></li>
           </ul>
         </noscript>
       </div>
     </section>
 
-    <!-- ═══════════════════ STATS ═══════════════════ -->
-    <section aria-label="MCU at a glance" style="padding-bottom:clamp(50px,7vw,90px);position:relative;z-index:2">
-      <div class="container">
-        <div class="cx-stats reveal-up">
-          <div class="stat-item" data-target="300">
-            <div class="stat-value"><span class="count">0</span><span class="suffix">+</span></div>
-            <div class="stat-label">Active members</div>
-          </div>
-          <div class="stat-item" data-target="10">
-            <div class="stat-value"><span class="count">0</span><span class="suffix">+</span></div>
-            <div class="stat-label">Events a year</div>
-          </div>
-          <div class="stat-item" data-target="24">
-            <div class="stat-value"><span class="count">0</span><span class="suffix">h</span></div>
-            <div class="stat-label">Reply window</div>
-          </div>
-          <div class="stat-item" data-target="5">
-            <div class="stat-value"><span class="count">0</span></div>
-            <div class="stat-label">Channels to us</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════ DISCORD COMMAND CENTRE ═══════════════════ -->
+    <!-- ═══════════════════ DISCORD ═══════════════════ -->
     <section id="cx-discord" aria-labelledby="dc-title">
+      <div class="cx-orb" data-glide="70" aria-hidden="true" style="right:4%;top:12%;width:460px;height:460px;background:radial-gradient(circle,rgba(227,27,35,.16),transparent 68%)"></div>
       <div class="container">
         <div class="cx-discord-grid">
 
           <div class="dc-copy reveal-up">
-            <span class="cx-eyebrow"><i></i>Priority channel</span>
-            <h2 class="cx-h2" id="dc-title">The whole union<br>lives in <span>Discord</span>.</h2>
-            <p class="cx-lede">
-              Announcements land there first. Study groups form there before midterms. Event
-              sign-ups, workshop files, mock exams and the group chat all run through one server.
-              If you only do one thing on this page, make it this one.
-            </p>
+            <span class="cx-eyebrow"><i></i>Discord</span>
+            <h2 class="cx-h2" id="dc-title">Join the <span>Discord</span>.</h2>
+            <p class="cx-lede">Announcements, study groups and event sign-ups.</p>
 
             <ul class="dc-channels">
               <li><b>#</b>announcements</li>
@@ -231,11 +124,11 @@
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.02.015.04.03.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                 Join the server
               </a>
-              <span class="dc-live"><i></i>Invite open · free</span>
+              <span class="dc-live"><i></i>discord.gg/zHs7e9KayC</span>
             </div>
           </div>
 
-          <div class="dc-stage reveal-up delay-2">
+          <div class="dc-stage" data-glide="34">
             <div class="dc-glow" aria-hidden="true"></div>
             <svg class="dc-ring" viewBox="0 0 100 116" aria-hidden="true"><polygon points="50,2 98,28 98,88 50,114 2,88 2,28"/></svg>
             <svg class="dc-ring-2" viewBox="0 0 100 116" aria-hidden="true"><polygon points="50,2 98,28 98,88 50,114 2,88 2,28"/></svg>
@@ -244,38 +137,38 @@
                 <source src="assets/images/mom.contact.webm" type="video/webm">
               </video>
             </div>
-            <span class="dc-tag"><i></i>MCU bot · online</span>
+            <span class="dc-tag"><i></i>MCU bot</span>
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════ TRANSMIT ═══════════════════ -->
+    <!-- ═══════════════════ SEND A MESSAGE ═══════════════════ -->
     <section id="cx-transmit" aria-labelledby="tx-title">
+      <div class="cx-orb" data-glide="50" aria-hidden="true" style="left:-6%;top:26%;width:420px;height:420px;background:radial-gradient(circle,rgba(227,27,35,.14),transparent 70%)"></div>
       <div class="container">
-        <div class="cx-section-head reveal-up" style="margin-bottom:clamp(28px,4vw,46px)">
-          <span class="cx-eyebrow"><i></i>04 / Direct transmit</span>
+        <div class="cx-section-head reveal-up" style="margin-bottom:clamp(24px,3.5vw,40px)">
           <h2 class="cx-h2" id="tx-title">Send a <em>message</em>.</h2>
-          <p class="cx-lede">Sponsorships, collaborations, event ideas or a question you would rather not ask in the server. It goes straight to the executive team.</p>
+          <p class="cx-lede">Sponsorships, collaborations or anything official. It goes to the executive team.</p>
         </div>
 
         <div class="cx-transmit-grid">
 
           <div class="cxt-panel reveal-up">
             <div class="cxt-head">
-              <h3>Compose transmission</h3>
-              <span>Encrypted · no backend</span>
+              <h3>New message</h3>
+              <span>Opens your mail app</span>
             </div>
 
             <form class="cxt-form" id="cx-form" novalidate>
               <div class="cxt-row">
                 <label class="cx-field">
-                  <span class="cx-label">Your name</span>
-                  <input id="cx-name" name="name" type="text" placeholder="Ada Lovelace" autocomplete="name" />
+                  <span class="cx-label">Name</span>
+                  <input id="cx-name" name="name" type="text" placeholder="Your name" autocomplete="name" />
                 </label>
                 <label class="cx-field">
-                  <span class="cx-label">Reply to</span>
+                  <span class="cx-label">Email</span>
                   <input id="cx-reply" name="email" type="email" placeholder="you@torontomu.ca" autocomplete="email" />
                 </label>
               </div>
@@ -283,26 +176,26 @@
               <label class="cx-field">
                 <span class="cx-label">Reason</span>
                 <select id="cx-reason" name="reason">
-                  <option>Sponsorship / partnership</option>
+                  <option>Sponsorship</option>
+                  <option>Partnership</option>
                   <option>Workshop collaboration</option>
                   <option>Event idea</option>
                   <option>Join the team</option>
-                  <option>Course resources</option>
                   <option>Something else</option>
                 </select>
               </label>
 
               <label class="cx-field">
                 <span class="cx-label">Message</span>
-                <textarea id="cx-msg" name="message" rows="6" placeholder="What are you building, and how can MCU help?"></textarea>
+                <textarea id="cx-msg" name="message" rows="6" placeholder="What can we help with?"></textarea>
               </label>
 
               <div class="cxt-foot">
                 <button type="submit" class="cx-btn cx-btn--primary">
-                  Transmit
+                  Send
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
                 </button>
-                <p class="cxt-note" id="cx-form-note">Opens your mail app, fully prefilled.</p>
+                <p class="cxt-note" id="cx-form-note">Opens your mail app, filled in.</p>
               </div>
             </form>
           </div>
@@ -311,35 +204,35 @@
             <a class="cxi-card" href="mailto:tmutron@torontomu.ca">
               <div class="cxi-key">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2.5 6.5 9.5 7 9.5-7"/></svg>
-                Official email
+                Email
                 <span class="cxi-copy">Open →</span>
               </div>
               <div class="cxi-val">tmutron@torontomu.ca</div>
-              <div class="cxi-sub">Reaches the executive team. Answered within a business day during the school year.</div>
+              <div class="cxi-sub">Reaches the executive team.</div>
             </a>
 
-            <button class="cxi-card" type="button" data-copy="tmutron@torontomu.ca" style="text-align:left;font:inherit;cursor:pointer;width:100%">
+            <button class="cxi-card" type="button" data-copy="tmutron@torontomu.ca">
               <div class="cxi-key">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Clipboard
+                Copy
                 <span class="cxi-copy">Copy</span>
               </div>
-              <div class="cxi-val">Copy address</div>
-              <div class="cxi-sub">Drop it into an email, a sponsor deck or a group chat.</div>
+              <div class="cxi-val">Copy email address</div>
+              <div class="cxi-sub">For a sponsor deck or a group chat.</div>
             </button>
 
-            <div class="cxi-map" role="img" aria-label="Map marker for Kerr Hall, Toronto Metropolitan University">
-              <span class="cxi-map-label">Kerr Hall · 350 Victoria St</span>
+            <div class="cxi-map" role="img" aria-label="Map marker for EPH 117, Eric Palin Hall, Toronto Metropolitan University">
+              <span class="cxi-map-label">EPH 117 · Eric Palin Hall</span>
             </div>
 
-            <a class="cxi-card" href="https://www.google.com/maps/search/?api=1&query=Kerr+Hall+Toronto+Metropolitan+University" target="_blank" rel="noopener noreferrer">
+            <a class="cxi-card" href="https://www.google.com/maps/search/?api=1&query=Eric+Palin+Hall+Toronto+Metropolitan+University" target="_blank" rel="noopener noreferrer">
               <div class="cxi-key">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
-                On campus
+                Office
                 <span class="cxi-copy">Maps →</span>
               </div>
-              <div class="cxi-val">Kerr Hall, TMU</div>
-              <div class="cxi-sub">350 Victoria St, Toronto, ON M5B 2K3 — study halls and workshop drop-ins.</div>
+              <div class="cxi-val">EPH 117</div>
+              <div class="cxi-sub">Eric Palin Hall, Toronto Metropolitan University.</div>
             </a>
           </div>
 
@@ -353,44 +246,42 @@
         <div class="cx-join-grid">
 
           <div class="reveal-up">
-            <span class="cx-eyebrow"><i></i>05 / Getting in</span>
-            <h2 class="cx-h2" id="join-title" style="margin-top:14px">How to<br>join us</h2>
+            <h2 class="cx-h2" id="join-title">How to join</h2>
 
             <div class="join-steps">
               <div class="join-step">
                 <div class="join-step-num">01</div>
                 <div>
                   <div class="join-step-title">Join the Discord</div>
-                  <div class="join-step-desc">Start here. Announcements, study groups, event sign-ups and general chaos all live in the server.</div>
+                  <div class="join-step-desc">Start here. Announcements, study groups and event sign-ups all happen in the server.</div>
                 </div>
               </div>
               <div class="join-step">
                 <div class="join-step-num">02</div>
                 <div>
-                  <div class="join-step-title">Show up to events</div>
-                  <div class="join-step-desc">There is no membership process, just come through. Study halls, workshops and socials run all year.</div>
+                  <div class="join-step-title">Come to an event</div>
+                  <div class="join-step-desc">There is no membership process. Study halls, workshops and socials run all year.</div>
                 </div>
               </div>
               <div class="join-step">
                 <div class="join-step-num">03</div>
                 <div>
-                  <div class="join-step-title">Get on the team</div>
-                  <div class="join-step-desc">Want to help run events, write course guides or lead a workshop? Message us on Discord or email us.</div>
+                  <div class="join-step-title">Join the team</div>
+                  <div class="join-step-desc">Want to help run events, write course guides or lead a workshop? Message us.</div>
                 </div>
               </div>
               <div class="join-step">
                 <div class="join-step-num">04</div>
                 <div>
-                  <div class="join-step-title">Contribute academically</div>
-                  <div class="join-step-desc">Taken a course already? Write a review, or upload old exams and notes through the drop box on the Academics page.</div>
+                  <div class="join-step-title">Share your notes</div>
+                  <div class="join-step-desc">Taken a course already? Add a review or upload old exams on the Academics page.</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="reveal-up delay-2">
-            <span class="cx-eyebrow"><i></i>05 / Common questions</span>
-            <h2 class="cx-h2" style="margin-top:14px">Common<br>questions</h2>
+            <h2 class="cx-h2">Questions</h2>
 
             <div class="faq-list">
               <div class="faq-item">
@@ -406,7 +297,7 @@
                   <span class="faq-q-text">Do I have to pay to be part of MCU?</span>
                   <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Nope. Our resources, course guides, Discord server and most events are free. Some events have a small ticket cost to cover the venue or catering, but there is no membership fee.</div></div>
+                <div class="faq-a"><div class="faq-a-inner">No. Our resources, course guides, Discord server and most events are free. Some events have a small ticket cost to cover the venue or catering, but there is no membership fee.</div></div>
               </div>
 
               <div class="faq-item">
@@ -414,7 +305,7 @@
                   <span class="faq-q-text">How do I contribute a course review?</span>
                   <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">DM us on <a href="https://instagram.com/tmutron" target="_blank" rel="noopener">Instagram</a> or drop a message in the Discord server. We will share a template and add your review to the Academics page, credited to you. Old exams and notes go in the Course Content Drop Box on that page.</div></div>
+                <div class="faq-a"><div class="faq-a-inner">DM us on <a href="https://instagram.com/tmutron" target="_blank" rel="noopener">Instagram</a> or post in the Discord. We will send a template and add your review to the Academics page, credited to you. Old exams and notes go in the drop box on that page.</div></div>
               </div>
 
               <div class="faq-item">
@@ -422,7 +313,7 @@
                   <span class="faq-q-text">Can companies or clubs collaborate with MCU?</span>
                   <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Absolutely. We are open to sponsorships, workshop collaborations, recruitment events and more. Email <a href="mailto:tmutron@torontomu.ca">tmutron@torontomu.ca</a> with details about what you have in mind.</div></div>
+                <div class="faq-a"><div class="faq-a-inner">Yes. We do sponsorships, workshop collaborations and recruitment events. Email <a href="mailto:tmutron@torontomu.ca">tmutron@torontomu.ca</a> with the details.</div></div>
               </div>
 
               <div class="faq-item">
@@ -430,7 +321,7 @@
                   <span class="faq-q-text">I'm a first-year, is MCU useful this early?</span>
                   <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Especially then. First year is where people fall behind or get ahead. Our guides for MTH140, MEC222, CPS188 and the other Y1 courses are written by students who just took them. Jump in the Discord, connect with upper years, and use every resource we have.</div></div>
+                <div class="faq-a"><div class="faq-a-inner">Yes. First year is where people fall behind or get ahead. Our guides for MTH140, MEC222, CPS188 and the other Y1 courses are written by students who just took them. Ask questions in the Discord and use every resource we have.</div></div>
               </div>
             </div>
           </div>
@@ -446,13 +337,13 @@
         <span>JOIN DISCORD</span><span class="mx">/</span>
         <span>@TMUTRON</span><span class="mx">/</span>
         <span>MCU · TMU</span><span class="mx">/</span>
-        <span>GET CONNECTED</span><span class="mx">/</span>
+        <span>EPH 117</span><span class="mx">/</span>
         <span>TMUTRON@TORONTOMU.CA</span><span class="mx">/</span>
         <span>MECHATRONICS</span><span class="mx">/</span>
         <span>JOIN DISCORD</span><span class="mx">/</span>
         <span>@TMUTRON</span><span class="mx">/</span>
         <span>MCU · TMU</span><span class="mx">/</span>
-        <span>GET CONNECTED</span><span class="mx">/</span>
+        <span>EPH 117</span><span class="mx">/</span>
         <span>TMUTRON@TORONTOMU.CA</span><span class="mx">/</span>
       </div>
     </div>
@@ -508,7 +399,7 @@
         <div class="footer-contact-col">
           <h4 class="footer-col-title mono">CONTACT</h4>
           <a href="mailto:tmutron@torontomu.ca" class="footer-email">tmutron@torontomu.ca</a>
-          <p class="footer-address">Kerr Hall, Toronto Metropolitan University<br/>350 Victoria St, Toronto, ON M5B 2K3</p>
+          <p class="footer-address">EPH 117, Eric Palin Hall<br/>Toronto Metropolitan University</p>
         </div>
       </div>
 
@@ -519,7 +410,7 @@
     </div>
   </footer>
 
-  <!-- ═══════════════════ CHANNEL POPUP ═══════════════════ -->
+  <!-- ═══════════════════ CARD POPUP ═══════════════════ -->
   <div class="cx-modal" id="cx-modal" role="dialog" aria-modal="true" aria-labelledby="cx-mo-title" hidden>
     <div class="cx-modal-bg" id="cx-modal-bg"></div>
 
@@ -530,17 +421,12 @@
         <div class="mv-ring r2"></div>
         <div class="mv-ring r3"></div>
         <div class="mv-icon" id="cx-mo-icon"></div>
-        <div class="mv-readout">
-          <b id="cx-mo-readout-1">MEMBERS ONLINE</b>
-          <span id="cx-mo-readout-2">5 signals</span>
-        </div>
       </div>
 
       <div class="cx-modal-body">
         <div class="mo-top">
-          <span class="mo-badge" id="cx-mo-badge">Fastest reply</span>
-          <span class="mo-badge alt" id="cx-mo-kicker">Primary hub</span>
-          <button class="mo-close" id="cx-modal-close" type="button" aria-label="Close channel details">
+          <span class="mo-badge" id="cx-mo-badge">Primary</span>
+          <button class="mo-close" id="cx-modal-close" type="button" aria-label="Close">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
@@ -554,7 +440,7 @@
           <a class="mo-btn primary" id="cx-mo-primary" href="https://discord.gg/zHs7e9KayC" target="_blank" rel="noopener noreferrer"></a>
           <button class="mo-btn" type="button" id="cx-mo-copy" data-copy="https://discord.gg/zHs7e9KayC">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span id="cx-mo-copy-label">Copy channel link</span>
+            <span id="cx-mo-copy-label">Copy link</span>
             <span class="k">CLIP</span>
           </button>
         </div>
