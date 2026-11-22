@@ -387,6 +387,136 @@
     .cb-side span { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--steel-light); }
     .cb-side a:hover strong { color: var(--red); }
     @media (max-width: 800px) { .cb-layout { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ══════════════════════════════════════════════════
+       UPLIFT — hero atmosphere, shared section heads,
+       course finder, jump tracking, back-to-top
+       ══════════════════════════════════════════════════ */
+    #academics-hero {
+      background:
+        radial-gradient(ellipse 60% 70% at 16% 18%, rgba(227,27,35,0.16) 0%, transparent 62%),
+        linear-gradient(180deg, #0b0809 0%, #131010 100%);
+    }
+    .ac-hero-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 76px 76px;
+      -webkit-mask-image: radial-gradient(ellipse 62% 85% at 20% 45%, #000 5%, transparent 78%);
+      mask-image: radial-gradient(ellipse 62% 85% at 20% 45%, #000 5%, transparent 78%);
+    }
+    .ac-hero-glow {
+      position: absolute; z-index: 0; pointer-events: none;
+      width: 60vw; height: 60vw; max-width: 760px; max-height: 760px;
+      left: -14%; top: -22%;
+      background: radial-gradient(circle, rgba(227,27,35,0.20), transparent 66%);
+    }
+    .ac-hero-scan {
+      position: absolute; left: 0; right: 0; top: 0; height: 1px; z-index: 1; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(227,27,35,0.85), transparent);
+      box-shadow: 0 0 16px rgba(227,27,35,0.45);
+      animation: ac-sweep 9s cubic-bezier(0.4,0,0.2,1) infinite;
+      opacity: 0.7;
+    }
+    @keyframes ac-sweep {
+      0%   { transform: translateY(0); opacity: 0; }
+      10%  { opacity: 0.75; }
+      75%  { opacity: 0.5; }
+      100% { transform: translateY(60vh); opacity: 0; }
+    }
+    #academics-hero { border-bottom: 1px solid rgba(255,255,255,0.07); }
+
+    /* ── shared section head ── */
+    .ac-head {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: clamp(26px, 3.6vw, 42px);
+    }
+    .ac-kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+    .ac-kicker::before { content: ''; width: 18px; height: 1px; background: var(--red); }
+    .ac-head h2 {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(34px, 4.6vw, 58px); line-height: 0.92;
+      color: var(--white); margin: 0;
+    }
+    .ac-head p {
+      font-family: var(--font-body); font-size: 14.5px; font-weight: 300;
+      line-height: 1.6; color: var(--steel-light); max-width: 68ch; margin: 0;
+    }
+    .ac-head p strong { color: #fff; font-weight: 500; }
+
+    /* ── course finder ── */
+    .rd-tools { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px; }
+    .rd-search { position: relative; flex: 1; min-width: 240px; max-width: 420px; }
+    .rd-search svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
+    #course-search {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.14); border-radius: 24px;
+      padding: 11px 16px 11px 44px;
+      font-family: var(--font-body); font-size: 13.5px; color: #fff; outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #course-search::placeholder { color: var(--steel); }
+    #course-search:focus { border-color: var(--red); background: rgba(255,255,255,0.06); }
+    .rd-note { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel); }
+    .rd-note.is-empty { color: var(--red); }
+    .year-section[hidden], .year-section [hidden] { display: none !important; }
+
+    /* ── year tab counts ── */
+    .yr-count {
+      display: inline-block; margin-left: 7px; padding: 1px 6px;
+      font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.04em;
+      color: var(--steel); background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+      vertical-align: 1px;
+    }
+    .yr-tab.active .yr-count {
+      color: #fff; background: rgba(227,27,35,0.25); border-color: rgba(227,27,35,0.5);
+    }
+
+    /* ── jump strip ── */
+    .ql-btn { display: inline-flex; align-items: center; gap: 9px; }
+    .ql-btn i {
+      font-family: var(--font-mono); font-style: normal; font-size: 9.5px;
+      color: var(--red); letter-spacing: 0.06em; opacity: 0.85;
+    }
+    .ql-btn.on { border-color: var(--red); color: #fff; background: rgba(227,27,35,0.12); }
+
+    /* ── course cards: a little more depth ── */
+    .course-card { background: rgba(255,255,255,0.022); }
+    @media (hover: hover) {
+      .course-card { transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease-out-expo); }
+      .course-card:hover { background: rgba(255,255,255,0.035); transform: translateX(2px); }
+    }
+    .course-header { padding: 20px 22px; }
+
+    /* ── reading comfort: long review text gets a sane measure ── */
+    .course-overview, .review-text { max-width: 74ch; }
+
+    /* ── back to top ── */
+    #to-top {
+      position: fixed; right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 3vw, 32px);
+      z-index: 90; width: 44px; height: 44px; border-radius: 50%;
+      display: grid; place-items: center;
+      color: #fff; background: rgba(18,14,14,0.92);
+      border: 1px solid rgba(255,255,255,0.16);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      cursor: pointer; opacity: 0; visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.25s, transform 0.25s, visibility 0.25s, border-color 0.25s, background 0.25s;
+    }
+    #to-top.show { opacity: 1; visibility: visible; transform: none; }
+    #to-top:hover { border-color: var(--red); background: rgba(227,27,35,0.92); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ac-hero-scan { animation: none; opacity: 0; }
+      #to-top { transition: none; }
+    }
+    html.lite .ac-hero-scan { animation: none; opacity: 0; }
   </style>
 </head>
 <body>
@@ -426,6 +556,9 @@
 
   <!-- HERO -->
   <section id="academics-hero" data-reveal>
+    <div class="ac-hero-grid" aria-hidden="true"></div>
+    <div class="ac-hero-glow" aria-hidden="true"></div>
+    <div class="ac-hero-scan" aria-hidden="true"></div>
     <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
     <div class="container" style="position:relative;z-index:1;">
@@ -468,12 +601,12 @@
   <div id="ac-quicklinks">
     <div class="container">
       <div class="ql-inner">
-        <span class="ql-label">Jump to:</span>
-        <a href="#office-hours" class="ql-btn">Office Hours</a>
-        <a href="#course-roadmap" class="ql-btn">Course Roadmap</a>
-        <a href="#year-1" class="ql-btn">Course Reviews</a>
-        <a href="#ac-contribute" class="ql-btn">Contribute</a>
-        <a href="#ac-tutoring" class="ql-btn">Tutoring</a>
+        <span class="ql-label">On this page</span>
+        <a href="#office-hours" class="ql-btn"><i>01</i>Office hours</a>
+        <a href="#course-roadmap" class="ql-btn"><i>02</i>Course map</a>
+        <a href="#year-1" class="ql-btn"><i>03</i>Reviews</a>
+        <a href="#ac-contribute" class="ql-btn"><i>04</i>Contribute</a>
+        <a href="#ac-tutoring" class="ql-btn"><i>05</i>Tutoring</a>
       </div>
     </div>
   </div>
@@ -481,16 +614,15 @@
   <!-- ═══════ OFFICE HOURS ═══════ -->
   <section id="office-hours">
     <div class="container">
-      <div class="oh-cal-header">
-        <div>
-          <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--white);line-height:1;">OFFICE HOURS</h2>
-          <p>A manually-maintained calendar of office hours for profs teaching MCU core courses this term, pulled from Fall course outlines. This is kept up by the MCU team: <strong style="color:var(--steel-light);font-weight:500;">always confirm against the official source below before you go</strong>, since hours can shift week to week.</p>
-        </div>
+      <div class="ac-head reveal-up">
+        <span class="ac-kicker">Support</span>
+        <h2>OFFICE HOURS</h2>
+        <p>Who's available, when and where this term. Hours come from Fall course outlines and can shift week to week, so <strong>confirm with the official schedule</strong> below before you go.</p>
       </div>
 
       <div class="oh-tip">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        <p><strong>Tip:</strong> Most profs won't see you if you show up unannounced. Email them ahead of time to book a specific office-hours slot. A lot of students don't realize this until later.</p>
+        <p><strong>Tip:</strong> Email your prof first. Most won't see you if you show up unannounced.</p>
       </div>
 
       <div class="oh-controls">
@@ -509,7 +641,7 @@
       <div class="oh-flex-list" id="oh-flex-list"></div>
 
       <div class="oh-cal-footer">
-        <p>The official source may be more current, but it isn't always updated or accurate. That's why we're building this calendar.</p>
+        <p>Official schedules change mid-term. If something here looks off, check the source below.</p>
         <div class="oh-footer-links">
           <button type="button" id="oh-export-btn" class="oh-btn-secondary">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -700,9 +832,17 @@
   <!-- ═══════ COURSE ROADMAP ═══════ -->
   <section id="course-roadmap" data-reveal>
     <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header reveal-up">
-        <h2 class="section-title">COURSE ROADMAP</h2>
-        <p class="section-desc">The Mechatronics sequence at a glance. Click any course to jump to its card below.</p>
+      <div class="ac-head reveal-up">
+        <span class="ac-kicker">Curriculum</span>
+        <h2>COURSE ROADMAP</h2>
+        <p>Every core course, semester by semester. Click a code to open its review, or search by code or name.</p>
+      </div>
+      <div class="rd-tools reveal-up">
+        <div class="rd-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" id="course-search" placeholder="Search a course code or name…" autocomplete="off" aria-label="Search courses">
+        </div>
+        <span class="rd-note" id="course-search-note" role="status" aria-live="polite"></span>
       </div>
       <div class="roadmap-track">
         <div class="roadmap-year-row reveal-up">
@@ -1439,9 +1579,10 @@
   <!-- CONTRIBUTE -->
   <section id="ac-contribute">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header">
-        <h2 class="section-title">HELP THE NEXT COHORT</h2>
-        <p class="section-desc">Everything on this page and in the drive comes from students. Adding yours takes a couple of minutes.</p>
+      <div class="ac-head">
+        <span class="ac-kicker">Contribute</span>
+        <h2>HELP THE NEXT COHORT</h2>
+        <p>Everything here comes from students. Adding yours takes a couple of minutes.</p>
       </div>
       <div class="cb-layout">
         <div class="cb-main">
@@ -1460,14 +1601,15 @@
   <!-- TUTORING -->
   <section id="ac-tutoring">
     <div class="container" style="position:relative;z-index:1;">
-      <div class="section-header">
-        <h2 class="section-title">NEED HELP?</h2>
-        <p class="section-desc">MCU offers free academic support run by students who've already been through these courses.</p>
+      <div class="ac-head">
+        <span class="ac-kicker">Support</span>
+        <h2>NEED HELP?</h2>
+        <p>Free academic support, run by students who've already taken these courses.</p>
       </div>
       <div class="tutoring-grid">
-        <div class="tutoring-card"><h4>Drop-In Tutoring</h4><div class="tc-detail"><a href="https://discord.gg/zHs7e9KayC" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">Check Discord for schedule</a></div><p>Walk in, get help. No booking required. Bring your notes and questions and a tutor will work through them with you.</p></div>
-        <div class="tutoring-card"><h4>1-on-1 Sessions</h4><div class="tc-detail">Book via email</div><p>Need focused time on a specific topic? Email us to book a private session with an upper-year tutor who's taken the course.</p></div>
-        <div class="tutoring-card"><h4>Study Groups</h4><div class="tc-detail">Check Discord</div><p>Weekly study groups organized by course. Check the MCU Discord server for current schedules and meetup spots.</p></div>
+        <div class="tutoring-card"><h4>Drop-In Tutoring</h4><div class="tc-detail"><a href="https://discord.gg/zHs7e9KayC" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">Schedule in Discord</a></div><p>Walk in, no booking. Bring your notes and questions.</p></div>
+        <div class="tutoring-card"><h4>1-on-1 Sessions</h4><div class="tc-detail">Book via email</div><p>Email us for a private session with an upper-year tutor.</p></div>
+        <div class="tutoring-card"><h4>Study Groups</h4><div class="tc-detail">Check Discord</div><p>Weekly groups by course. Schedules and meetup spots are in Discord.</p></div>
       </div>
       <div style="text-align:center;margin-top: 48px;" >
         <a href="contact.html" class="btn-primary" style="text-decoration:none;">Get Academic Help →</a>
@@ -1889,6 +2031,121 @@
     var el = document.querySelector('.hud-video-float');
     if (!el) return;
     setTimeout(function () { el.classList.add('in-view'); }, 300);
+  })();
+  </script>
+
+  <button id="to-top" type="button" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
+  <script>
+  /* ── page helpers: year counts, course finder, jump tracking, back to top ── */
+  (function () {
+
+    /* how many courses in each year actually have reviews */
+    Array.prototype.forEach.call(document.querySelectorAll('.yr-tab'), function (tab) {
+      var sec = document.getElementById('year-' + tab.dataset.year);
+      if (!sec) return;
+      var reviewed = sec.querySelectorAll('.course-card.has-content').length;
+      var total = sec.querySelectorAll('.course-card').length;
+      var badge = document.createElement('span');
+      badge.className = 'yr-count';
+      badge.textContent = reviewed;
+      badge.title = reviewed + ' of ' + total + ' courses have reviews';
+      tab.appendChild(badge);
+      tab.setAttribute('aria-label', 'Year ' + tab.dataset.year + ', ' + reviewed + ' reviewed courses');
+    });
+
+    /* find a course by code or name */
+    var search = document.getElementById('course-search');
+    var note = document.getElementById('course-search-note');
+    if (search) {
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.year-section .course-card'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.year-section'));
+      var index = cards.map(function (c) {
+        var code = c.querySelector('.course-code');
+        var name = c.querySelector('.course-name');
+        return {
+          el: c,
+          text: ((code ? code.textContent : '') + ' ' + (name ? name.textContent : '')).toLowerCase()
+        };
+      });
+
+      var applyFilter = function () {
+        var q = search.value.trim().toLowerCase();
+        var shown = 0;
+        index.forEach(function (item) {
+          var hit = !q || item.text.indexOf(q) > -1;
+          item.el.hidden = !hit;
+          if (hit) shown++;
+        });
+        sections.forEach(function (sec) {
+          var any = Array.prototype.some.call(sec.querySelectorAll('.course-card'), function (c) { return !c.hidden; });
+          sec.hidden = !!q && !any;
+          Array.prototype.forEach.call(sec.querySelectorAll('.courses-grid'), function (grid) {
+            var has = Array.prototype.some.call(grid.querySelectorAll('.course-card'), function (c) { return !c.hidden; });
+            grid.hidden = !!q && !has;
+            var label = grid.previousElementSibling;
+            if (label && label.classList && label.classList.contains('semester-label')) label.hidden = !!q && !has;
+          });
+        });
+        if (!note) return;
+        if (!q) { note.textContent = ''; note.classList.remove('is-empty'); return; }
+        note.textContent = shown ? shown + (shown === 1 ? ' course matches' : ' courses match') : 'No courses match that search';
+        note.classList.toggle('is-empty', !shown);
+      };
+
+      search.addEventListener('input', applyFilter);
+      search.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { search.value = ''; applyFilter(); }
+      });
+    }
+
+    /* highlight the jump link for the section you're reading */
+    var jumpLinks = Array.prototype.slice.call(document.querySelectorAll('.ql-btn'));
+    var jumpTargets = jumpLinks.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var spyQueued = false;
+
+    function updateSpy() {
+      spyQueued = false;
+      var nav = document.getElementById('nav');
+      var line = (nav ? nav.offsetHeight : 72) + 140;
+      var best = -1;
+      jumpTargets.forEach(function (el, i) {
+        if (!el || el.hidden) return;
+        var r = el.getBoundingClientRect();
+        if (r.top <= line && r.bottom > 0) best = i;
+      });
+      jumpLinks.forEach(function (a, i) { a.classList.toggle('on', i === best); });
+    }
+    function queueSpy() {
+      if (spyQueued) return;
+      spyQueued = true;
+      requestAnimationFrame(updateSpy);
+    }
+    window.addEventListener('scroll', queueSpy, { passive: true });
+    window.addEventListener('resize', queueSpy);
+    updateSpy();
+
+    /* back to top */
+    var toTop = document.getElementById('to-top');
+    if (toTop) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var topQueued = false;
+      function updateTop() {
+        topQueued = false;
+        toTop.classList.toggle('show', (window.scrollY || 0) > 700);
+      }
+      window.addEventListener('scroll', function () {
+        if (topQueued) return;
+        topQueued = true;
+        requestAnimationFrame(updateTop);
+      }, { passive: true });
+      toTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      });
+      updateTop();
+    }
   })();
   </script>
 </body>
