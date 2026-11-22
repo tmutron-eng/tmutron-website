@@ -1,717 +1,608 @@
 /* ══════════════════════════════════════════════════
-   MCU: TEAM ROSTER
-   Reads window.MCU_GROUPS, window.MCU_TEAM and window.MCU_SERIES (team.html).
-   No libraries. SVG hand, CSS 3D cards. One rAF loop, running only while a
-   stack is open, visible and moving. It stops when the tab is hidden.
+   MCU — TEAM TUNNEL
+   Reads window.MCU_TEAM and window.MCU_TUNNEL (team.html).
+
+   Scroll walks a camera down a perspective tunnel. Each frame in the
+   tunnel is a team sector (execs, operations, events…). Clicking one
+   opens that sector's people. The tunnel dead-ends in a wall that IS
+   the team photo, so it grows to fill the screen as you arrive and
+   shrinks again as you scroll back.
+
+   No libraries. One canvas, one rAF loop that only runs while the
+   stage is on screen and the tab is visible.
    ══════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  var doc = document;
-  function $(s, r) { return (r || doc).querySelector(s); }
-  function $$(s, r) { return Array.prototype.slice.call((r || doc).querySelectorAll(s)); }
+  var TEAM = (window.MCU_TEAM || []).slice();
+  var ALL_CATS = (window.MCU_TUNNEL || []).slice();
+  if (!TEAM.length || !ALL_CATS.length) return;
+
+  var IMG = 'assets/images/';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function pad(n) { n = String(n); return n.length < 2 ? '0' + n : n; }
+  function pad4(n) { n = String(Math.max(0, n | 0)); while (n.length < 4) n = '0' + n; return n; }
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
-  function safeUrl(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
   function initials(n) {
     var p = String(n).trim().split(/\s+/);
     return (p[0].charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
   }
-  function wrap180(d) { return ((d % 360) + 540) % 360 - 180; }
-  /* seeded random: the same hand-tossed pile on every load */
-  function rng(seed) {
-    var a = seed >>> 0;
-    return function () {
-      a = (a + 0x6D2B79F5) | 0;
-      var t = Math.imul(a ^ (a >>> 15), 1 | a);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
+
+  /* ───────── who is in which frame ───────── */
+  var CATS = ALL_CATS.map(function (c) {
+    var copy = Object.assign({}, c);
+    copy.members = TEAM.filter(function (p) {
+      return (c.g && c.g.indexOf(p.g) > -1) ||
+             (c.port && p.port && c.port.indexOf(p.port) > -1);
+    });
+    return copy;
+  }).filter(function (c) { return c.members.length; });
+
+  if (!CATS.length) return;
+
+  /* ───────── cards (modal + fallback roster) ───────── */
+  function cardHTML(p, i, royal) {
+    var photo = p.p
+      ? '<img src="' + IMG + esc(p.p) + '" alt="' + esc(p.n) + '" loading="lazy" onerror="this.remove()">'
+      : '';
+    return '<article class="tm-card' + (royal ? ' royal' : '') + '">' +
+      '<div class="tm-card-photo">' +
+        '<span class="tm-mono" aria-hidden="true">' + esc(initials(p.n)) + '</span>' +
+        photo +
+        '<span class="tm-card-no mono">' + pad(i + 1) + '</span>' +
+      '</div>' +
+      '<div class="tm-card-body">' +
+        '<p class="tm-card-role">' + esc(p.r || 'Member') + '</p>' +
+        '<h4 class="tm-card-name">' + esc(p.n) + '</h4>' +
+        (p.b ? '<p class="tm-card-bio">' + esc(p.b) + '</p>' : '') +
+      '</div>' +
+    '</article>';
   }
 
-  var GROUPS = (window.MCU_GROUPS || []).slice();
-  var TEAM = (window.MCU_TEAM || []).slice();
-  var SERIES = window.MCU_SERIES || 'MCU';
-  var IMG = 'assets/images/';
-  var RAR = { foil: 'FOIL', holo: 'HOLO', chrome: 'CHROME', etched: 'ETCHED' };
-
-  var stage = $('#roster'), art = $('#hand-art'), tipsEl = $('#hand-tips'), deck = $('#deck');
-  var chipsEl = $('#chips'), intro = $('#intro'), hint = $('#st-hint');
-  var hud = $('#hud'), hudT = $('#hud-t'), flt = $('#flt'), bkBtn = $('#hud-bk'), flBtn = $('#hud-fl');
-  var legend = $('#legend'), live = $('#live');
-  if (!stage || !GROUPS.length || !TEAM.length) return;
-
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  var mqM = matchMedia('(max-width: 700px)');
-  function lite() { return !!(window.MCU && window.MCU.lite); }
-  function isFlow() { return mqM.matches || reduce.matches || lite(); }
-
-  var CAP = 8;          /* most cards on the orbit ring, the rest sit in the pile */
-  var PERIOD = 110;     /* seconds per orbit turn */
-  var SPEED = 360 / PERIOD;
-
-  var total = TEAM.length;
-  var GM = {};
-  GROUPS.forEach(function (g) { g.items = []; GM[g.id] = g; });
-  TEAM.forEach(function (p, i) {
-    p.no = i + 1;
-    var g = GM[p.g];
-    if (g) { p.grp = g; g.items.push(p); }
-  });
-  GROUPS = GROUPS.filter(function (g) { return g.items.length; });
-
-  /* ───────── the robotic hand (SVG) ───────── */
-  var VW = 720, VH = 380, OX = 65;
-  var CORE = { x: 375, y: 305 };
-  var FING = {
-    thumb:  { x: 170, y: 300, a: -50, L: [60, 48, 38], w: [22, 19, 16], c: [0, -4, -7] },
-    index:  { x: 268, y: 212, a: -9,  L: [70, 46, 36], w: [21, 18, 15], c: [0, 1, 3] },
-    middle: { x: 352, y: 202, a: -1,  L: [78, 52, 40], w: [22, 19, 16], c: [0, 0, 2] },
-    ring:   { x: 434, y: 210, a: 7,   L: [70, 46, 36], w: [21, 18, 15], c: [0, -1, -3] },
-    pinky:  { x: 508, y: 230, a: 16,  L: [54, 36, 30], w: [18, 15, 13], c: [0, -1, -3] }
-  };
-
-  function buildHand() {
-    var gOf = {};
-    GROUPS.forEach(function (g) { gOf[g.finger] = g; });
-    var s = '<svg viewBox="0 0 ' + VW + ' ' + VH + '" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">' +
-      '<g class="hg"><g transform="translate(' + OX + ' 0)">';
-    s += '<path class="d pm" pathLength="1" style="--dl:.05s" d="M250 214L330 204L372 202L452 212L528 234L540 300L500 380L212 380L176 338L170 300L205 262Z"/>';
-    s += '<path class="d ln" pathLength="1" style="--dl:.3s" d="M268 212L352 202L434 210L508 230"/>';
-    [[268, 212], [352, 202], [434, 210], [508, 230], [170, 300]].forEach(function (p, i) {
-      s += '<path class="d ln" pathLength="1" style="--dl:' + (.35 + i * .06).toFixed(2) + 's" d="M' + p[0] + ' ' + p[1] + 'L' + CORE.x + ' ' + CORE.y + '"/>';
-    });
-
-    Object.keys(FING).forEach(function (key, i) {
-      var f = FING[key], g = gOf[key];
-      var x = f.x, y = f.y, ang = f.a, o = '', cl = '', j, L, hw;
-      o += '<g transform="translate(' + f.x + ' ' + f.y + ') rotate(' + f.a + ')">'; cl = '</g>';
-      for (j = 0; j < 3; j++) {
-        L = f.L[j]; hw = f.w[j] / 2;
-        var dl = (.25 + i * .13 + j * .12).toFixed(2);
-        if (j > 0) {
-          o += '<g transform="translate(0 ' + (-f.L[j - 1]) + ') rotate(' + f.c[j] + ')">'; cl += '</g>';
-          ang += f.c[j];
-        }
-        o += '<path class="d seg" pathLength="1" style="--dl:' + dl + 's" d="M' + (-hw) + ' 0V' + (-L + hw) + 'A' + hw + ' ' + hw + ' 0 0 1 ' + hw + ' ' + (-L + hw) + 'V0A' + hw + ' ' + hw + ' 0 0 1 ' + (-hw) + ' 0Z"/>';
-        o += '<path class="d ln" pathLength="1" style="--dl:' + dl + 's" d="M0 ' + (-hw) + 'V' + (-(L - hw)) + '"/>';
-        o += '<circle class="jt" style="--ld:' + (.9 + i * .13 + j * .1).toFixed(2) + 's" r="' + (hw * .45).toFixed(1) + '"/>';
-        var r = ang * Math.PI / 180, adv = (j === 2) ? (L - hw) : L;
-        x += Math.sin(r) * adv; y -= Math.cos(r) * adv;
-      }
-      if (g) {
-        var ld = (1.2 + i * .18).toFixed(2), cy = -(L - hw);
-        o += '<circle class="halo" style="--ld:' + ld + 's" cx="0" cy="' + cy + '" r="14"/>';
-        o += '<circle class="tn" data-g="' + esc(g.id) + '" style="--ld:' + ld + 's" cx="0" cy="' + cy + '" r="7"/>';
-        g.fx = (x + OX) / VW; g.fy = y / VH; g.ld = ld;
-      }
-      s += o + cl;
-    });
-
-    s += '<g class="core" transform="translate(' + CORE.x + ' ' + CORE.y + ')">' +
-      '<circle class="halo" style="--ld:1.5s" r="40"/>' +
-      '<path class="d" pathLength="1" style="--dl:.7s" d="M-34 0A34 34 0 1 1 34 0A34 34 0 1 1 -34 0Z"/>' +
-      '<path class="d" pathLength="1" style="--dl:.8s" d="M22 0L11 19.05L-11 19.05L-22 0L-11 -19.05L11 -19.05Z"/>' +
-      '<text y="1">MCU</text></g>';
-    s += '</g></g><rect class="scan" x="0" y="0" width="' + VW + '" height="2"/></svg>';
-    art.innerHTML = s;
-  }
-
-  /* ───────── fingertip buttons, phone chips, legend ───────── */
-  var layers = 8;
-  function buildTips() {
-    var rr = rng(99);
-    tipsEl.innerHTML = GROUPS.map(function (g) {
-      var n = g.items.length, st = '', k;
-      for (k = 0; k < Math.min(n, layers); k++) {
-        st += '<i class="ms r-' + g.rarity + '" style="--k:' + k + ';--rr:' + ((rr() - .5) * 8).toFixed(1) + 'deg"></i>';
-      }
-      return '<button type="button" class="tip" data-g="' + esc(g.id) + '" style="left:' + (g.fx * 100).toFixed(2) + '%;top:' + (g.fy * 100).toFixed(2) + '%;--ld:' + g.ld + 's"' +
-        ' aria-label="' + esc(g.label) + ', ' + n + (n === 1 ? ' card' : ' cards') + '. Open stack" aria-expanded="false" aria-controls="deck">' +
-        '<span class="tp-lab">' + esc(g.short) + '<b>' + pad(n) + '</b></span>' +
-        '<span class="tp-stack" aria-hidden="true">' + st + '</span><span class="tp-hit" aria-hidden="true"></span></button>';
+  function buildRoster() {
+    var host = $('#tm-roster-body');
+    if (!host) return;
+    host.innerHTML = CATS.map(function (c, i) {
+      return '<div class="tm-block">' +
+        '<div class="tm-block-head"><h3>' + esc(c.label) + '</h3>' +
+          '<span>' + pad(i + 1) + ' / ' + pad(CATS.length) + ' · ' + c.members.length + ' members</span></div>' +
+        '<div class="tm-cards">' + c.members.map(function (p, k) { return cardHTML(p, k, c.royal); }).join('') + '</div>' +
+      '</div>';
     }).join('');
-    chipsEl.innerHTML = GROUPS.map(function (g) {
-      return '<button type="button" class="chip" data-g="' + esc(g.id) + '" aria-pressed="false" aria-label="' + esc(g.label) + ', ' + g.items.length + ' cards">' +
-        esc(g.short) + '<b>' + pad(g.items.length) + '</b></button>';
-    }).join('');
-    g_each_tip();
-  }
-  var tipBtns = {}, chipBtns = {};
-  function g_each_tip() {
-    $$('.tip', tipsEl).forEach(function (b) { tipBtns[b.getAttribute('data-g')] = b; });
-    $$('.chip', chipsEl).forEach(function (b) { chipBtns[b.getAttribute('data-g')] = b; });
-  }
-  function buildLegend() {
-    var order = ['foil', 'holo', 'chrome', 'etched'], out = '';
-    order.forEach(function (r) {
-      var gs = GROUPS.filter(function (g) { return g.rarity === r; });
-      if (!gs.length) return;
-      out += '<li class="r-' + r + '"><i class="ms r-' + r + '" style="position:static;transform:none"></i><b>' + RAR[r] + '</b>' +
-        esc(gs.map(function (g) { return g.short; }).join(', ')) + '</li>';
-    });
-    legend.innerHTML = out;
   }
 
-  /* ───────── cards ───────── */
-  var cards = [];
-  TEAM.forEach(function (p, i) {
-    var g = p.grp; if (!g) return;
-    var role = p.f || p.r, r = rng(i * 7919 + 13), url = safeUrl(p.li);
-    var nf = Math.min(12, 84 / (p.n.length * .43)).toFixed(2);
-    var rf = Math.min(5.2, 84 / (role.length * .54)).toFixed(2);
-    var el = doc.createElement('div');
-    el.className = 'pc r-' + g.rarity;
-    el.hidden = true;
-    el.setAttribute('role', 'group');
-    el.setAttribute('aria-label', p.n + ', ' + role);
-    el.innerHTML =
-      '<div class="pc-tilt"><div class="pc-in">' +
-        '<div class="pf pfr"><div class="ph"><span class="ini" aria-hidden="true">' + esc(initials(p.n)) + '</span>' +
-          '<span class="rt mono">' + RAR[g.rarity] + '</span>' + (p.fresh ? '<span class="nw mono">NEW</span>' : '') + '</div>' +
-          '<div class="pn"><span class="nm" style="font-size:calc(' + nf + ' * var(--u))">' + esc(p.n) + '</span>' +
-          '<span class="rl" style="font-size:calc(' + rf + ' * var(--u))">' + esc(role) + '</span>' +
-          '<span class="ft mono"><i>No. ' + pad(p.no) + ' / ' + pad(total) + '</i><i>' + esc(SERIES) + '</i></span></div>' +
-          '<span class="sh" aria-hidden="true"></span></div>' +
-        '<div class="pf pb" inert><div class="bk-h"><span class="bk-nm">' + esc(p.n) + '</span><span class="bk-rl">' + esc(role) + '</span></div>' +
-          (p.port ? '<div class="bk-pt mono">PORTFOLIO<b>' + esc(p.port) + '</b></div>' : '') +
-          (p.b ? '<p class="pc-bio" tabindex="0">' + esc(p.b) + '</p>' : '<div class="pc-bio"></div>') +
-          (url ? '<a class="pc-li" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a>' : '') + '</div>' +
-      '</div></div>' +
-      '<button type="button" class="pc-hit" aria-label="' + esc(p.n + ', ' + role + '. Card ' + p.no + ' of ' + total + '. Open card') + '"></button>';
+  var canvas = $('#tm-canvas');
+  var ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    var ph = $('.ph', el);
-    if (p.p) {
-      var im = doc.createElement('img');
-      im.alt = p.n + ', ' + role;
-      im.loading = 'lazy'; im.decoding = 'async';
-      im.addEventListener('load', function () { ph.classList.add('has'); });
-      im.addEventListener('error', function () { im.remove(); });
-      im.src = IMG + p.p;
-      ph.insertBefore(im, $('.rt', ph));
-    }
-    var c = {
-      p: p, g: g, el: el, tilt: $('.pc-tilt', el), sh: $('.sh', el), hit: $('.pc-hit', el), back: $('.pb', el), bio: $('.pc-bio', el),
-      x: 0, y: 0, s: .2, r: 0, ry: 0, o: 0, z: 1, t: null,
-      rot0: (r() - .5) * 16, jx: r() * 2 - 1, jy: r() * 2 - 1, jr: (r() - .5) * 40,
-      flipped: false, inL: false
+  /* Anyone who can't get the tunnel still gets the whole team. */
+  if (!ctx || reduce.matches) { buildRoster(); return; }
+
+  document.body.classList.add('tunnel-on');
+
+  var section = $('#tunnel');
+  var stage = $('#tm-stage');
+  var sectorEl = $('#tm-sector');
+  var depthEl = $('#tm-depth');
+  var introEl = $('#tm-intro');
+  var wallcapEl = $('#tm-wallcap');
+  var wallcapP = $('#tm-wallcap-p');
+  var railEl = $('#tm-rail');
+
+  /* ───────── world ───────── */
+  var HALF_W = 620, HALF_H = 430;   /* tunnel cross-section, world units */
+  var Z0 = 1250;                    /* first frame depth */
+  var GAP = 760;                    /* frame spacing */
+  var Z_END = Z0 + (CATS.length - 1) * GAP + 780;
+  var TRAVEL = Z_END - 380;         /* camera stops just short of the wall */
+
+  var W = 0, H = 0, DPR = 1, F = 900, CX = 0, CY = 0, s0 = 1;
+  var camZ = 0, camTarget = 0, p = 0;
+  var raf = 0, visible = true, hover = null, wallRect = null, modalOpen = false, narrowMode = false;
+
+  var frames = CATS.map(function (c, i) {
+    return {
+      cat: c, i: i,
+      z: Z0 + i * GAP,
+      x: 0, y: 26, w: 340, h: 238,
+      side: i % 2 ? 1 : -1,
+      rect: null, art: null
     };
-    p.card = c;
-    cards.push(c);
-    deck.appendChild(el);
-    bindCard(c);
   });
 
-  /* ───────── state and layout ───────── */
-  var S = {
-    g: null, port: 'All', list: [], ring: [], pile: [], focus: null,
-    ang: 0, angT: null, vel: 0, spin: 1, pos: 0, posT: 0,
-    hv: false, fcs: false, drag: false, t0: 0, packed: false,
-    raf: 0, last: 0, vis: true, mode: 'orbit', mob: false
-  };
-  var L = { W: 0, H: 0, cw: 200, ch: 280, cx: 0, cy: 0, Rx: 0, Ry: 0, fx: 0, fy: 0, f: 1, gap: 0, tipS: .15 };
+  var teamImg = new Image();
+  teamImg.src = IMG + 'team.mcu.jpg';
 
+  /* ───────── frame artwork (drawn once per sector) ───────── */
+  function makeArt(cat, idx) {
+    var AW = 640, AH = 448;
+    var c = document.createElement('canvas');
+    c.width = AW; c.height = AH;
+    var g = c.getContext('2d');
+
+    g.fillStyle = '#0f0809';
+    g.fillRect(0, 0, AW, AH);
+
+    var wash = g.createLinearGradient(0, 0, AW, AH);
+    wash.addColorStop(0, 'rgba(227,27,35,0.18)');
+    wash.addColorStop(0.55, 'rgba(227,27,35,0.03)');
+    wash.addColorStop(1, 'rgba(0,0,0,0.35)');
+    g.fillStyle = wash;
+    g.fillRect(0, 0, AW, AH);
+
+    /* border */
+    g.strokeStyle = cat.royal ? 'rgba(255,255,255,0.82)' : 'rgba(227,27,35,0.85)';
+    g.lineWidth = 7;
+    g.strokeRect(3.5, 3.5, AW - 7, AH - 7);
+    g.strokeStyle = 'rgba(255,255,255,0.14)';
+    g.lineWidth = 2;
+    g.strokeRect(19, 19, AW - 38, AH - 38);
+
+    /* corner ticks */
+    g.strokeStyle = 'rgba(227,27,35,0.95)';
+    g.lineWidth = 4;
+    var t = 26;
+    [[19, 19, 1, 1], [AW - 19, 19, -1, 1], [19, AH - 19, 1, -1], [AW - 19, AH - 19, -1, -1]].forEach(function (k) {
+      g.beginPath();
+      g.moveTo(k[0] + t * k[2], k[1]);
+      g.lineTo(k[0], k[1]);
+      g.lineTo(k[0], k[1] + t * k[3]);
+      g.stroke();
+    });
+
+    g.fillStyle = 'rgba(255,255,255,0.45)';
+    g.font = '400 15px "Share Tech Mono", monospace';
+    g.textAlign = 'left';
+    g.fillText('SECTOR ' + pad(idx + 1), 34, 52);
+
+    /* label */
+    g.fillStyle = '#ffffff';
+    g.textAlign = 'center';
+    g.font = '400 ' + (cat.label.length > 12 ? 58 : 80) + 'px "Bebas Neue", Impact, sans-serif';
+    g.fillText(cat.label, AW / 2, AH / 2 + 6);
+
+    /* subtitle */
+    g.fillStyle = 'rgba(255,255,255,0.52)';
+    g.font = '400 17px Barlow, Helvetica, sans-serif';
+    g.fillText(cat.sub || '', AW / 2, AH / 2 + 42, AW - 90);
+
+    /* plaque */
+    g.fillStyle = 'rgba(0,0,0,0.55)';
+    g.fillRect(19, AH - 92, AW - 38, 73);
+    g.fillStyle = 'rgba(227,27,35,0.95)';
+    g.fillRect(19, AH - 92, 4, 73);
+    g.textAlign = 'left';
+    g.fillStyle = 'rgba(255,255,255,0.92)';
+    g.font = '700 18px "Barlow Condensed", Arial, sans-serif';
+    g.fillText(cat.members.length + ' MEMBERS', 38, AH - 60);
+    g.fillStyle = 'rgba(255,255,255,0.45)';
+    g.font = '400 14px "Share Tech Mono", monospace';
+    g.fillText('CLICK TO OPEN', 38, AH - 36);
+    g.textAlign = 'right';
+    g.fillText('MCU 2026-27', AW - 38, AH - 36);
+
+    return c;
+  }
+
+  function buildArt() {
+    frames.forEach(function (f) { f.art = makeArt(f.cat, f.i); });
+  }
+
+  /* ───────── sizing ───────── */
   function layout() {
-    var sr = stage.getBoundingClientRect();
-    L.W = sr.width; L.H = sr.height;
-    var mob = mqM.matches, prevMode = S.mode;
-    S.mob = mob;
-    S.mode = isFlow() ? 'flow' : 'orbit';
-    var hbw = art.offsetWidth, hbh = art.offsetHeight, hbl = art.offsetLeft, hbt = art.offsetTop;
-    GROUPS.forEach(function (g) { g.tx = hbl + g.fx * hbw; g.ty = hbt + g.fy * hbh; });
+    var r = stage.getBoundingClientRect();
+    W = Math.max(320, Math.round(r.width || window.innerWidth));
+    H = Math.max(320, Math.round(r.height || window.innerHeight));
 
-    if (mob) {
-      var cb = hbt + hbh + 8;
-      chipsEl.style.top = cb + 'px';
-      var top0 = cb + 52 + 10, av = L.H - top0 - 96;
-      L.cw = Math.max(130, Math.min(L.W * .6, av * .8 / 1.4));
-      L.cx = L.W / 2; L.cy = top0 + av * .46;
-      L.fx = L.cx; L.fy = top0 + av / 2;
-      L.f = Math.min(L.W * .94 / L.cw, av * .98 / (L.cw * 1.4));
-      intro.style.top = top0 + 'px';
-      stage.style.removeProperty('--hy');
-    } else {
-      chipsEl.style.top = '';
-      intro.style.top = '';
-      L.cw = Math.max(150, Math.min(300, L.H * .34, L.W * .3));
-      L.cx = L.W / 2; L.cy = L.H * .27;
-      L.fx = L.cx; L.fy = L.H * .4;
-      L.f = Math.min(L.H * .72 / (L.cw * 1.4), L.W * .92 / L.cw);
-      stage.style.setProperty('--hy', (L.H * .2).toFixed(0) + 'px');
-    }
-    L.ch = L.cw * 1.4;
-    L.Rx = Math.max(120, Math.min(L.W * .36, L.W / 2 - L.cw * .42 - 12, 440));
-    L.Ry = L.H * .05;
-    L.gap = L.cw * (mob ? .58 : .62);
-    L.tipS = 34 / L.cw;
-    stage.style.setProperty('--cw', L.cw.toFixed(1) + 'px');
-    if (S.g && prevMode !== S.mode) { buildLists(); }
-    kick();
-  }
+    var narrow = W < 760;
+    DPR = Math.min(window.devicePixelRatio || 1, narrow ? 1.5 : 1.75);
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-  /* ───────── targets ───────── */
-  function T(c, x, y, s, r, ry, o, z) { c.t = { x: x, y: y, s: s, r: r, ry: ry, o: o, z: z }; }
-  function toTip(c) {
-    var g = c.g;
-    T(c, g.tx, g.ty - (S.mob ? 0 : 56), L.tipS, c.rot0, 0, 0, 1);
-  }
+    CX = W / 2; CY = H / 2;
+    F = (H / 2) * Z0 / HALF_H;
+    s0 = F / Z0;
+    /* stop where the end wall exactly spans the viewport width, so the
+       team photo arrives full-bleed instead of a zoomed-in crop */
+    TRAVEL = Z_END - Math.min(1400, Math.max(600, F * (HALF_W * 2) / W));
+    narrowMode = narrow;
 
-  function aim(now) {
-    var flow = S.mode === 'flow', el = now - S.t0, n = S.list.length, open = !!S.g;
-    cards.forEach(function (c) { c.inL = false; });
-    if (open) S.list.forEach(function (c) { c.inL = true; });
-    cards.forEach(function (c) { if (!c.inL) toTip(c); });
-    if (!open) return;
+    var targetW = Math.min(W * (narrow ? 0.50 : 0.30), 440);
+    var wWorld = targetW / s0;
+    var maxX = Math.max(0, (W / 2 - targetW / 2 - 12) / s0);
 
-    if (n === 1) {
-      var one = S.list[0];
-      if (el < 0) toTip(one); else T(one, L.cx, L.cy + (flow ? 0 : L.Ry * 1.4), .9, 0, 0, 1, 80);
-    } else if (flow) {
-      S.ring.forEach(function (c, i) {
-        if (el < i * 25) { toTip(c); return; }
-        var d = i - S.pos, ad = Math.abs(d), sg = d < 0 ? -1 : 1;
-        var x = L.cx + sg * (Math.min(ad, 1) * L.gap + Math.max(0, ad - 1) * L.gap * .45);
-        T(c, x, L.cy, .86 - .14 * Math.min(ad, 2), 0, -clamp(d, -1.5, 1.5) * 26, ad > 3.2 ? 0 : 1 - .2 * Math.min(ad, 3), 200 - Math.round(ad * 20));
-      });
-    } else {
-      var m = S.ring.length, step = 360 / m, mid = (m - 1) / 2;
-      S.ring.forEach(function (c, k) {
-        if (el < k * 40) { toTip(c); return; }
-        if (el < 700) {
-          var d = k - mid, gp = Math.min(L.cw * .5, (L.W * .82) / m);
-          T(c, L.cx + d * gp, L.cy + L.Ry + d * d * L.cw * .012, .78, d * 6, 0, 1, 60 + k);
-          return;
-        }
-        var th = (S.ang + k * step) * Math.PI / 180, sn = Math.sin(th), cs = Math.cos(th), dp = (cs + 1) / 2;
-        T(c, L.cx + sn * L.Rx, L.cy + cs * L.Ry, .5 + .3 * dp, sn * 3, -sn * 24, .35 + .65 * Math.pow(dp, .8), 50 + Math.round(dp * 100));
-      });
-      S.pile.forEach(function (c, k) {
-        if (el < (m + k) * 30) { toTip(c); return; }
-        T(c, L.cx + c.jx * L.cw * .55, L.cy + L.Ry * .2 + c.jy * L.cw * .22, .5, c.jr, 0, .96, 100);
-      });
-    }
-
-    if (S.focus && S.focus.t) {
-      S.list.forEach(function (c) { if (c !== S.focus && c.t) c.t.o = Math.min(c.t.o, .2); });
-      T(S.focus, L.fx, L.fy, L.f, 0, 0, 1, 500);
-    }
-  }
-
-  function put(c) {
-    c.el.style.transform = 'translate3d(' + (c.x - L.cw / 2).toFixed(1) + 'px,' + (c.y - L.ch / 2).toFixed(1) + 'px,0) rotateY(' + c.ry.toFixed(1) +
-      'deg) rotate(' + c.r.toFixed(1) + 'deg) scale(' + c.s.toFixed(3) + ')';
-    c.el.style.opacity = c.o.toFixed(2);
-    c.el.style.zIndex = c.z | 0;
-    var vis = c.o >= .05;
-    c.el.style.pointerEvents = vis ? 'auto' : 'none';
-    c.hit.tabIndex = vis ? 0 : -1;
-  }
-
-  function step(dt) {
-    var k = reduce.matches ? 1 : 1 - Math.exp(-dt * 9), moving = false;
-    cards.forEach(function (c) {
-      if (c.el.hidden || !c.t) return;
-      var t = c.t;
-      c.x += (t.x - c.x) * k; c.y += (t.y - c.y) * k; c.s += (t.s - c.s) * k;
-      c.r += (t.r - c.r) * k; c.ry += (t.ry - c.ry) * k; c.o += (t.o - c.o) * k;
-      c.z = t.z;
-      var dif = Math.abs(t.x - c.x) + Math.abs(t.y - c.y) + Math.abs(t.s - c.s) * 100 + Math.abs(t.o - c.o) * 100 + Math.abs(t.r - c.r) + Math.abs(t.ry - c.ry);
-      if (dif > .4) moving = true;
-      else { c.x = t.x; c.y = t.y; c.s = t.s; c.r = t.r; c.ry = t.ry; c.o = t.o; }
-      put(c);
-      if (!c.inL && t.o === 0 && c.o < .02) c.el.hidden = true;
+    frames.forEach(function (f) {
+      f.w = wWorld;
+      f.h = wWorld * 0.70;
+      f.x = narrow ? f.side * (W * 0.25 / s0) : f.side * Math.min(560, maxX);
+      f.y = 26;
     });
-    return moving;
+
+    section.style.height = ((CATS.length * (narrow ? 56 : 70)) + 100) + 'vh';
+    readScroll(true);
   }
 
-  function tick(now) {
-    S.raf = 0;
-    if (doc.hidden || !S.vis) return;
-    var dt = Math.min(.05, (now - S.last) / 1000);
-    S.last = now;
-    var run = false;
+  function readScroll(immediate) {
+    if (modalOpen) return;
+    var total = Math.max(1, section.offsetHeight - window.innerHeight);
+    p = clamp((window.scrollY - section.offsetTop) / total, 0, 1);
+    camTarget = p * TRAVEL;
+    if (immediate) camZ = camTarget;
+  }
 
-    if (S.g && S.mode === 'orbit' && S.list.length > 1) {
-      var paused = S.hv || S.fcs || S.focus || S.drag || S.angT != null || (now - S.t0) < 750;
-      var want = paused ? 0 : 1;
-      S.spin += (want - S.spin) * (1 - Math.exp(-dt * 4));
-      if (want === 0 && S.spin < .004) S.spin = 0;
-      S.ang += S.spin * SPEED * dt + S.vel * dt;
-      S.vel *= Math.exp(-dt * 3);
-      if (Math.abs(S.vel) < .5) S.vel = 0;
-      if (S.angT != null) {
-        var dd = wrap180(S.angT - S.ang);
-        S.ang += dd * (1 - Math.exp(-dt * 6));
-        if (Math.abs(dd) < .15) { S.ang = S.angT; S.angT = null; }
+  /* ───────── drawing ───────── */
+  function drawCover(img, x, y, w, h, alpha) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if (!iw || !ih) return;
+    var s = Math.max(w / iw, h / ih);
+    var sw = w / s, sh = h / s;
+    var sx = (iw - sw) / 2, sy = (ih - sh) / 2;
+    ctx.globalAlpha = alpha == null ? 1 : alpha;
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawWall() {
+    var dz = Z_END - camZ;
+    wallRect = null;
+    if (dz < 120) return;
+    var s = F / dz;
+    var w = HALF_W * 2 * s, h = HALF_H * 2 * s;
+    var l = CX - HALF_W * s, t = CY - HALF_H * s;
+    wallRect = { l: l, t: t, w: w, h: h };
+
+    ctx.fillStyle = '#08050a';
+    ctx.fillRect(l, t, w, h);
+
+    if (teamImg.complete && teamImg.naturalWidth) {
+      if (narrowMode) {
+        /* phones: show the whole team photo uncropped instead of a cover crop */
+        var bw = Math.min(w, W), bh = Math.min(h, H);
+        var ar = teamImg.naturalWidth / teamImg.naturalHeight;
+        var pw = Math.min(bw, bh * ar), ph = pw / ar;
+        ctx.drawImage(teamImg, CX - pw / 2, CY - ph / 2, pw, ph);
+      } else {
+        drawCover(teamImg, l, t, w, h, 1);
       }
-      if (want === 1 || S.spin > 0 || S.vel !== 0 || S.angT != null) run = true;
+      ctx.fillStyle = 'rgba(6,3,4,0.18)';
+      ctx.fillRect(l, t, w, h);
     }
-    if (S.g && S.mode === 'flow' && !S.drag) {
-      var df = S.posT - S.pos;
-      if (Math.abs(df) < .003) S.pos = S.posT;
-      else { S.pos += df * (reduce.matches ? 1 : 1 - Math.exp(-dt * 8)); run = true; }
+
+    ctx.strokeStyle = 'rgba(227,27,35,0.9)';
+    ctx.lineWidth = Math.max(1.5, 5 * s);
+    ctx.strokeRect(l, t, w, h);
+    ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+    ctx.lineWidth = Math.max(1, 1.6 * s);
+    ctx.strokeRect(l + 9 * s, t + 9 * s, Math.max(1, w - 18 * s), Math.max(1, h - 18 * s));
+  }
+
+  function drawGrid() {
+    var near = camZ + 130;
+    var far = Math.min(camZ + 5400, Z_END - 10);
+    if (far <= near + 40) return;
+
+    var lite = document.documentElement.classList.contains('lite');
+    var step = (W < 760 ? 210 : 170) * (lite ? 2 : 1);
+
+    for (var z = Math.ceil(near / step) * step; z < far; z += step) {
+      var dz = z - camZ;
+      var a = clamp(1 - (dz - 220) / 5200, 0, 1) * 0.32;
+      if (a <= 0.012) continue;
+      var s = F / dz;
+      var hw = HALF_W * s, hh = HALF_H * s;
+      ctx.strokeStyle = 'rgba(227,27,35,' + a.toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(CX - hw, CY - hh, hw * 2, hh * 2);
     }
-    if (S.g && now - S.t0 < 800) run = true;
 
-    aim(now);
-    if (step(dt)) run = true;
-    if (run) S.raf = requestAnimationFrame(tick);
-  }
-  function kick() {
-    if (S.raf || doc.hidden || !S.vis) return;
-    S.last = performance.now();
-    S.raf = requestAnimationFrame(tick);
-  }
+    var sn = F / (near - camZ);
+    var sf = F / (far - camZ);
+    ctx.strokeStyle = 'rgba(227,27,35,0.10)';
+    ctx.lineWidth = 1;
 
-  /* ───────── open, close, lists ───────── */
-  function showCard(c) {
-    if (!c.el.hidden) return;
-    c.el.hidden = false;
-    var g = c.g;
-    c.x = g.tx; c.y = g.ty - (S.mob ? 0 : 56); c.s = L.tipS; c.o = 0; c.r = c.rot0; c.ry = 0;
-    put(c);
-  }
-
-  function buildLists() {
-    var g = S.g;
-    S.list = g.items.filter(function (p) { return S.port === 'All' || p.port === S.port; }).map(function (p) { return p.card; });
-    var cap = S.mode === 'flow' ? 9999 : CAP;
-    S.ring = S.list.slice(0, cap);
-    S.pile = S.list.slice(cap);
-    S.pos = 0; S.posT = 0; S.angT = null;
-    S.list.forEach(showCard);
-  }
-
-  function announce(t) { live.textContent = t; }
-
-  function setActive(g) {
-    Object.keys(tipBtns).forEach(function (id) {
-      var on = g && g.id === id;
-      tipBtns[id].classList.toggle('act', !!on);
-      tipBtns[id].setAttribute('aria-expanded', on ? 'true' : 'false');
-      if (chipBtns[id]) { chipBtns[id].classList.toggle('act', !!on); chipBtns[id].setAttribute('aria-pressed', on ? 'true' : 'false'); }
-    });
-    $$('.tn', art).forEach(function (n) { n.classList.toggle('act', !!g && n.getAttribute('data-g') === g.id); });
-  }
-
-  function openG(g) {
-    if (S.g === g) return;
-    var prev = S.g;
-    if (S.focus) { setFlip(S.focus, false); S.focus = null; stage.classList.remove('focus'); }
-    S.g = g; S.port = 'All'; S.hv = false; S.fcs = false; S.vel = 0;
-    stage.classList.add('open');
-    setActive(g);
-    if (prev && tipBtns[prev.id]) { var pb = tipBtns[prev.id]; setTimeout(function () { if (S.g !== prev) pb.classList.remove('emp'); }, 400); }
-    tipBtns[g.id].classList.add('emp');
-
-    var fancy = !S.packed && !S.mob && !reduce.matches && !lite() && !prev;
-    S.packed = true;
-    S.t0 = performance.now() + (fancy ? 480 : 0);
-    if (reduce.matches) S.t0 = performance.now() - 2000;
-    buildLists();
-    buildFilter();
-    hudRefresh();
-    if (fancy) pack(g);
-
-    var n = g.items.length;
-    announce(g.label + ' stack open, ' + n + (n === 1 ? ' card' : ' cards') + '. ' +
-      (n > 1 ? 'Use the left and right arrow keys to move through the cards. ' : '') + 'Press Escape to close.');
-    kick();
-    setTimeout(function () {
-      var c = S.focus || S.ring[0] || S.list[0];
-      if (c && S.g === g) c.hit.focus({ preventScroll: true });
-    }, 80);
-  }
-
-  function closeStack() {
-    var g = S.g; if (!g) return;
-    if (S.focus) { setFlip(S.focus, false); S.focus = null; }
-    var inside = doc.activeElement && (deck.contains(doc.activeElement) || hud.contains(doc.activeElement));
-    S.g = null; S.hv = false; S.fcs = false; S.drag = false;
-    stage.classList.remove('open', 'focus', 'drag');
-    setActive(null);
-    var b = tipBtns[g.id];
-    setTimeout(function () { if (!S.g) b.classList.remove('emp'); }, 450);
-    hud.hidden = true;
-    announce(g.label + ' stack closed.');
-    if (inside) {
-      var t = (S.mob ? chipBtns[g.id] : b);
-      if (t) t.focus({ preventScroll: true });
-    }
-    kick();
-  }
-
-  function pack(g) {
-    var p = doc.createElement('div');
-    p.className = 'pack';
-    p.style.left = g.tx + 'px'; p.style.top = (g.ty - 56) + 'px';
-    p.innerHTML = '<span class="pk-b"></span><span class="pk-t"></span><span class="pk-fl"></span>';
-    deck.appendChild(p);
-    setTimeout(function () { p.classList.add('go'); }, 260);
-    setTimeout(function () { p.remove(); }, 900);
-  }
-
-  /* ───────── routing (hash: #vps, #president, ...) ───────── */
-  function route() {
-    var id = location.hash.slice(1), g = GM[id];
-    if (g && g.items.length) openG(g); else if (S.g) closeStack();
-  }
-  function back() {
-    try { history.pushState(null, '', location.pathname + location.search); } catch (e) { location.hash = ''; }
-    route();
-  }
-  window.addEventListener('hashchange', route);
-
-  function choose(g) {
-    if (S.g === g) { back(); return; }
-    if (location.hash.slice(1) !== g.id) location.hash = g.id; else route();
-  }
-  tipsEl.addEventListener('click', function (e) {
-    var b = e.target.closest('.tip'); if (b) choose(GM[b.getAttribute('data-g')]);
-  });
-  chipsEl.addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (b) choose(GM[b.getAttribute('data-g')]);
-  });
-
-  /* ───────── HUD and portfolio filter ───────── */
-  function hudRefresh() {
-    if (!S.g) { hud.hidden = true; return; }
-    hud.hidden = false;
-    var n = S.list.length, parts = [S.g.short.toUpperCase()];
-    if (S.port !== 'All') parts.push(S.port.toUpperCase());
-    parts.push(n + (n === 1 ? ' CARD' : ' CARDS'));
-    if (n > 1) parts.push(S.mode === 'orbit' ? 'ORBIT ' + (PERIOD < 100 ? '0' : '') + PERIOD + ' S' : 'SWIPE');
-    hudT.textContent = parts.join(' / ');
-    bkBtn.textContent = S.focus ? 'Back to deck' : 'Close stack';
-    flBtn.hidden = !S.focus;
-  }
-  function buildFilter() {
-    var g = S.g, cnt = {}, order = [];
-    g.items.forEach(function (p) {
-      if (!p.port) return;
-      if (!cnt[p.port]) { cnt[p.port] = 0; order.push(p.port); }
-      cnt[p.port]++;
-    });
-    var useful = order.some(function (k) { return cnt[k] > 1; });
-    flt.hidden = !useful;
-    if (!useful) { flt.innerHTML = ''; return; }
-    flt.innerHTML = ['All'].concat(order).map(function (k) {
-      return '<button type="button" data-p="' + esc(k) + '" aria-pressed="' + (k === S.port) + '">' + esc(k) + (k === 'All' ? '' : ' ' + cnt[k]) + '</button>';
-    }).join('');
-  }
-  flt.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b || !S.g) return;
-    if (S.focus) unfocus(true);
-    S.port = b.getAttribute('data-p');
-    S.t0 = performance.now() - 1000;
-    buildLists();
-    $$('button', flt).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-    hudRefresh();
-    announce(S.list.length + ' cards shown' + (S.port === 'All' ? '.' : ' for ' + S.port + '.'));
-    kick();
-  });
-  bkBtn.addEventListener('click', function () { if (S.focus) unfocus(); else back(); });
-  flBtn.addEventListener('click', function () { if (S.focus) setFlip(S.focus, !S.focus.flipped); });
-
-  /* ───────── card interactions ───────── */
-  function setFlip(c, on) {
-    c.flipped = on;
-    c.el.classList.toggle('fl', on);
-    c.back.inert = !on;
-    c.hit.inert = on;
-  }
-  function focusCard(c) {
-    if (S.focus && S.focus !== c) setFlip(S.focus, false);
-    S.focus = c;
-    setFlip(c, true);
-    stage.classList.add('focus');
-    if (S.mode === 'flow') { var i = S.list.indexOf(c); if (i > -1) S.posT = i; }
-    hudRefresh();
-    announce(c.p.n + ', ' + (c.p.f || c.p.r) + '. Card turned over. Press Escape to go back.');
-    kick();
-    if (c.bio && c.bio.tabIndex === 0) c.bio.focus({ preventScroll: true });
-  }
-  function unfocus(quiet) {
-    var c = S.focus; if (!c) return;
-    setFlip(c, false);
-    S.focus = null;
-    stage.classList.remove('focus');
-    hudRefresh();
-    kick();
-    if (!quiet) c.hit.focus({ preventScroll: true });
-  }
-  function stepFocus(d) {
-    var n = S.list.length; if (n < 2) return;
-    var i = S.list.indexOf(S.focus);
-    focusCard(S.list[(i + d + n) % n]);
-  }
-  function rotate(d) {
-    if (S.mode === 'flow') { S.posT = clamp(Math.round(S.posT) + d, 0, S.list.length - 1); }
-    else {
-      var m = S.ring.length; if (m < 2) return;
-      S.angT = (S.angT != null ? S.angT : S.ang) - d * 360 / m;
-    }
-    kick();
-  }
-  function drawPile(c) {
-    var m = S.ring.length, step = 360 / m, ri = 0, low = 2, k;
-    for (k = 0; k < m; k++) {
-      var cs = Math.cos((S.ang + k * step) * Math.PI / 180);
-      if (cs < low) { low = cs; ri = k; }
-    }
-    var out = S.ring[ri];
-    S.ring[ri] = c;
-    S.pile[S.pile.indexOf(c)] = out;
-    S.angT = -ri * step;
-    kick();
-  }
-  function onCard(c) {
-    if (S.noClick) return;
-    if (S.focus === c) { setFlip(c, !c.flipped); return; }
-    if (S.focus) { focusCard(c); return; }
-    if (S.list.length === 1) { focusCard(c); return; }
-    if (S.mode === 'flow') {
-      var i = S.list.indexOf(c);
-      if (i === Math.round(S.posT)) focusCard(c); else { S.posT = i; kick(); }
-      return;
-    }
-    if (S.pile.indexOf(c) > -1) { drawPile(c); return; }
-    focusCard(c);
-  }
-
-  function bindCard(c) {
-    var rect = null, raf = 0, ev = null, tm = 0;
-    c.hit.addEventListener('click', function () { onCard(c); });
-    c.hit.addEventListener('focus', function () {
-      if (c.hit.matches(':focus-visible')) { S.fcs = true; }
-    });
-    c.hit.addEventListener('blur', function () { S.fcs = false; kick(); });
-    c.el.addEventListener('pointerenter', function (e) {
-      if (e.pointerType !== 'mouse' || reduce.matches || lite()) return;
-      S.hv = true;
-      rect = c.el.getBoundingClientRect();
-      clearTimeout(tm);
-      tm = setTimeout(function () { if (S.hv) rect = c.el.getBoundingClientRect(); }, 380);
-    });
-    c.el.addEventListener('pointermove', function (e) {
-      if (!rect || e.pointerType !== 'mouse') return;
-      ev = e;
-      if (raf) return;
-      raf = requestAnimationFrame(function () {
-        raf = 0;
-        if (!rect || !ev) return;
-        var nx = clamp((ev.clientX - rect.left) / rect.width, 0, 1), ny = clamp((ev.clientY - rect.top) / rect.height, 0, 1);
-        c.tilt.style.transform = 'perspective(800px) rotateX(' + ((.5 - ny) * 12).toFixed(2) + 'deg) rotateY(' + ((nx - .5) * 16).toFixed(2) + 'deg)';
-        c.sh.style.transform = 'translate3d(' + ((.5 - nx) * 66).toFixed(1) + '%,0,0)';
+    [-HALF_W, -HALF_W / 2, 0, HALF_W / 2, HALF_W].forEach(function (x) {
+      [-HALF_H, HALF_H].forEach(function (y) {
+        ctx.beginPath();
+        ctx.moveTo(CX + x * sn, CY - y * sn);
+        ctx.lineTo(CX + x * sf, CY - y * sf);
+        ctx.stroke();
       });
     });
-    c.el.addEventListener('pointerleave', function () {
-      S.hv = false; rect = null; clearTimeout(tm);
-      c.tilt.style.transform = ''; c.sh.style.transform = '';
-      kick();
+    [-HALF_H, 0, HALF_H].forEach(function (y) {
+      [-HALF_W, HALF_W].forEach(function (x) {
+        ctx.beginPath();
+        ctx.moveTo(CX + x * sn, CY - y * sn);
+        ctx.lineTo(CX + x * sf, CY - y * sf);
+        ctx.stroke();
+      });
     });
   }
 
-  /* keyboard: arrows rotate or step, Escape backs out */
-  doc.addEventListener('keydown', function (e) {
-    if (!S.g) return;
-    if (e.target && e.target.closest && e.target.closest('input,textarea')) return;
-    var k = e.key;
-    if (k === 'Escape') { e.preventDefault(); if (S.focus) unfocus(); else back(); }
-    else if (k === 'ArrowRight' || k === 'ArrowLeft') {
-      e.preventDefault();
-      var d = k === 'ArrowRight' ? 1 : -1;
-      if (S.focus) stepFocus(d); else rotate(d);
+  function drawFrameBody(f, l, t, w, h) {
+    if (f.art) {
+      ctx.drawImage(f.art, l, t, w, h);
+    } else {
+      ctx.fillStyle = '#120c0c';
+      ctx.fillRect(l, t, w, h);
     }
-  });
+    ctx.strokeStyle = f.cat.royal ? 'rgba(255,255,255,0.85)' : 'rgba(227,27,35,0.85)';
+    ctx.lineWidth = Math.max(1, h * 0.014);
+    ctx.strokeRect(l, t, w, h);
+  }
 
-  /* drag or swipe to rotate (touch-action: pan-y keeps page scroll working) */
-  var dr = null;
-  stage.addEventListener('pointerdown', function (e) {
-    if (!S.g || e.button > 0) return;
-    if (e.target.closest('.tip,.chip,.st-hud,.pc-bio,.pc-li,a,input')) return;
-    dr = { id: e.pointerId, x: e.clientX, lx: e.clientX, lt: performance.now(), moved: false };
-  });
-  stage.addEventListener('pointermove', function (e) {
-    if (!dr || e.pointerId !== dr.id) return;
-    if (!dr.moved) {
-      if (Math.abs(e.clientX - dr.x) < 6) return;
-      dr.moved = true; S.drag = true;
-      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
-      stage.classList.add('drag');
+  function drawOne(f) {
+    var dz = f.z - camZ;
+    f.rect = null;
+    if (dz < 110 || dz > 5200) return;
+
+    var s = F / dz;
+    var w = f.w * s, h = f.h * s;
+    var cxx = CX + f.x * s;
+    var cyy = CY - f.y * s;
+    var l = cxx - w / 2, t = cyy - h / 2;
+
+    var alpha = clamp((5200 - dz) / 1700, 0, 1) * clamp((dz - 700) / 420, 0, 1);
+    if (alpha <= 0.02) return;
+
+    f.rect = { l: l, t: t, w: w, h: h, alpha: alpha, dz: dz };
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    /* glow behind the frame */
+    var gl = ctx.createRadialGradient(cxx, cyy, h * 0.15, cxx, cyy, h * 1.15);
+    gl.addColorStop(0, f.cat.royal ? 'rgba(255,255,255,0.14)' : 'rgba(227,27,35,0.22)');
+    gl.addColorStop(1, 'rgba(227,27,35,0)');
+    ctx.fillStyle = gl;
+    ctx.fillRect(l - w * 0.28, t - h * 0.28, w * 1.56, h * 1.56);
+
+    /* floor reflection, clipped so it dies out away from the frame */
+    ctx.save();
+    ctx.translate(0, (t + h) * 2 + 8);
+    ctx.scale(1, -1);
+    ctx.beginPath();
+    ctx.rect(l, t, w, h * 0.55);
+    ctx.clip();
+    ctx.globalAlpha = alpha * 0.035;
+    drawFrameBody(f, l, t, w, h);
+    ctx.restore();
+
+    drawFrameBody(f, l, t, w, h);
+
+    if (hover === f) {
+      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+      ctx.lineWidth = Math.max(1, 2);
+      ctx.strokeRect(l - Math.max(4, w * 0.014), t - Math.max(4, w * 0.014), w + Math.max(8, w * 0.028), h + Math.max(8, w * 0.028));
     }
-    var now = performance.now(), dx = e.clientX - dr.lx, dt = Math.max(.008, (now - dr.lt) / 1000);
-    dr.lx = e.clientX; dr.lt = now;
-    if (S.focus || !S.g) return;
-    if (S.mode === 'flow') { S.pos = clamp(S.pos - dx / L.gap, 0, S.list.length - 1); S.posT = S.pos; }
-    else { S.ang += dx * .32; S.vel = clamp(dx * .32 / dt, -300, 300); S.angT = null; }
-    kick();
+    ctx.restore();
+  }
+
+  function drawFrames() {
+    for (var i = frames.length - 1; i >= 0; i--) drawOne(frames[i]);
+  }
+
+  function draw(t) {
+    camZ += (camTarget - camZ) * 0.16;
+    if (Math.abs(camTarget - camZ) < 0.4) camZ = camTarget;
+
+    CX = W / 2 + Math.sin(t * 0.00034) * 7;
+    CY = H / 2 + Math.cos(t * 0.00027) * 5;
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.fillStyle = '#060304';
+    ctx.fillRect(0, 0, W, H);
+
+    /* red haze at the vanishing point */
+    var g = ctx.createRadialGradient(CX, CY, 0, CX, CY, Math.max(W, H) * 0.5);
+    g.addColorStop(0, 'rgba(227,27,35,0.14)');
+    g.addColorStop(0.45, 'rgba(227,27,35,0.05)');
+    g.addColorStop(1, 'rgba(227,27,35,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    drawWall();
+    drawGrid();
+    drawFrames();
+    syncHUD();
+  }
+
+  /* ───────── HUD ───────── */
+  var lastSector = -1;
+  function syncHUD() {
+    var idx = clamp(Math.round((camZ + 430 - Z0) / GAP), 0, CATS.length - 1);
+    if (idx !== lastSector) {
+      lastSector = idx;
+      if (sectorEl) sectorEl.textContent = 'SECTOR ' + pad(idx + 1) + ' / ' + pad(CATS.length) + ' · ' + CATS[idx].label;
+      if (railEl) {
+        [].forEach.call(railEl.children, function (b, i) { b.classList.toggle('on', i === idx); });
+      }
+    }
+    if (depthEl) depthEl.textContent = 'DEPTH ' + pad4(camZ);
+
+    if (introEl) {
+      var o = clamp(1 - p * 22, 0, 1);
+      introEl.style.opacity = o.toFixed(3);
+      introEl.style.transform = 'translate(-50%, calc(-50% - ' + (p * 120).toFixed(1) + 'px))';
+    }
+    if (wallcapEl) wallcapEl.style.opacity = clamp((p - 0.84) / 0.11, 0, 1).toFixed(3);
+  }
+
+  /* ───────── loop ───────── */
+  function loop(t) {
+    if (!visible || document.hidden) { raf = 0; return; }
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  function start() { if (!raf) raf = requestAnimationFrame(loop); }
+
+  /* ───────── interaction ───────── */
+  function pick(x, y) {
+    for (var i = 0; i < frames.length; i++) {
+      var f = frames[i];
+      if (!f.rect || f.rect.alpha < 0.45) continue;
+      var r = f.rect;
+      if (x >= r.l && x <= r.l + r.w && y >= r.t && y <= r.t + r.h) return f;
+    }
+    return null;
+  }
+  function overWall(x, y) {
+    if (!wallRect || p < 0.55) return false;
+    return x >= wallRect.l && x <= wallRect.l + wallRect.w && y >= wallRect.t && y <= wallRect.t + wallRect.h;
+  }
+
+  canvas.addEventListener('pointermove', function (e) {
+    var r = canvas.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    var f = pick(x, y);
+    if (f !== hover) hover = f;
+    canvas.style.cursor = (f || overWall(x, y)) ? 'pointer' : 'default';
   });
-  function endDrag(e) {
-    if (!dr || e.pointerId !== dr.id) return;
-    var moved = dr.moved; dr = null;
-    if (!moved) return;
-    S.drag = false;
-    stage.classList.remove('drag');
-    S.noClick = true; setTimeout(function () { S.noClick = false; }, 60);
-    if (S.mode === 'flow') S.posT = clamp(Math.round(S.pos), 0, Math.max(0, S.list.length - 1));
-    kick();
-  }
-  stage.addEventListener('pointerup', endDrag);
-  stage.addEventListener('pointercancel', endDrag);
-  /* a click on empty stage while a card is open turns it back */
-  stage.addEventListener('click', function (e) {
-    if (S.noClick) { e.stopPropagation(); e.preventDefault(); return; }
-    if (S.focus && !e.target.closest('.pc,.tip,.chip,.st-hud')) unfocus();
-  }, true);
+  canvas.addEventListener('pointerleave', function () { hover = null; canvas.style.cursor = 'default'; });
 
-  /* ───────── page lifecycle ───────── */
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      S.vis = es[0].isIntersecting;
-      stage.classList.toggle('off', !S.vis);
-      if (S.vis) kick();
-    }).observe(stage);
-  }
-  doc.addEventListener('visibilitychange', function () { if (!doc.hidden) kick(); });
-  var rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 120); }, { passive: true });
-  doc.addEventListener('mcu:perfchange', function () { layout(); hudRefresh(); });
-  if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(layout);
+  canvas.addEventListener('click', function (e) {
+    if (modalOpen) return;
+    var r = canvas.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    var f = pick(x, y);
+    if (f) { openCat(f.i); return; }
+    if (overWall(x, y)) openPhoto();
+  });
 
-  /* ───────── start ───────── */
-  buildHand();
-  buildTips();
-  buildLegend();
-  hint.textContent = total + ' cards · ' + GROUPS.length + ' stacks · pick a finger';
+  /* ───────── modal ───────── */
+  var modal = $('#tm-modal');
+  var modalGrid = $('#tm-modal-grid');
+  var modalTitle = $('#tm-modal-title');
+  var modalSub = $('#tm-modal-sub');
+  var lightbox = $('#tm-lightbox');
+  var lightboxImg = $('#tm-lightbox-img');
+  var lastFocus = null;
+  var lockedY = 0;
+
+  function lockScroll(on) {
+    modalOpen = !!on;
+    if (on) {
+      lockedY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = (-lockedY) + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, lockedY);
+      readScroll(true);
+    }
+  }
+
+  function openCat(i) {
+    var c = CATS[i];
+    if (!c || !modal) return;
+    lastFocus = document.activeElement;
+    modalTitle.textContent = c.label;
+    modalSub.textContent = 'SECTOR ' + pad(i + 1) + ' / ' + pad(CATS.length) + ' · ' + c.members.length + ' MEMBERS';
+    modalGrid.innerHTML = '<div class="tm-cards">' + c.members.map(function (p, k) {
+      return cardHTML(p, k, c.royal);
+    }).join('') + '</div>';
+    modal.hidden = false;
+    lockScroll(true);
+    var x = modal.querySelector('.tm-modal-x');
+    if (x) x.focus();
+  }
+
+  function closeModal() {
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    modalGrid.innerHTML = '';
+    lockScroll(false);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function openPhoto() {
+    if (!lightbox || !lightboxImg) return;
+    lightboxImg.src = IMG + 'team.mcu.jpg';
+    lastFocus = document.activeElement;
+    lightbox.hidden = false;
+    lockScroll(true);
+    var b = lightbox.querySelector('.tm-lightbox-close');
+    if (b) b.focus();
+  }
+  function closePhoto() {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.hidden = true;
+    lockScroll(false);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-close]');
+    if (!t) return;
+    if (!modal.hidden) closeModal();
+    if (!lightbox.hidden) closePhoto();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!lightbox.hidden) { closePhoto(); return; }
+    if (!modal.hidden) closeModal();
+  });
+
+  /* ───────── sector rail ───────── */
+  function goStation(i) {
+    var z = Z0 + i * GAP - 430;
+    var prog = clamp(z / TRAVEL, 0, 1);
+    var total = Math.max(1, section.offsetHeight - window.innerHeight);
+    window.scrollTo({
+      top: section.offsetTop + prog * total,
+      behavior: reduce.matches ? 'auto' : 'smooth'
+    });
+  }
+
+  function buildRail() {
+    if (!railEl) return;
+    railEl.innerHTML = CATS.map(function (c, i) {
+      return '<button type="button" class="tm-tick" data-i="' + i + '" aria-label="Jump to ' + esc(c.label) + '">' +
+        '<i aria-hidden="true"></i><span>' + esc(c.label) + '</span></button>';
+    }).join('');
+    railEl.addEventListener('click', function (e) {
+      var b = e.target.closest('.tm-tick');
+      if (!b) return;
+      goStation(+b.dataset.i);
+    });
+  }
+
+  /* ───────── boot ───────── */
+  if (wallcapP) wallcapP.textContent = TEAM.length + ' people · MCU 2026–27';
+
+  buildRail();
+  buildArt();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { buildArt(); });
+  }
   layout();
-  if (reduce.matches || lite()) stage.classList.add('instant');
-  requestAnimationFrame(function () { requestAnimationFrame(function () { stage.classList.add('on'); }); });
-  route();
 
-  /* ───────── team photo (hidden until the file loads) ───────── */
-  (function () {
-    var sec = $('#tm-crew'), frame = $('#tpFrame'), im = $('#tpImg');
-    if (!sec || !frame || !im) return;
-    $('#tpCount').textContent = SERIES + ' · ' + total + ' members';
-    var shown = false;
-    function ready() {
-      if (shown) return; shown = true;
-      sec.hidden = false;
-      if (!('IntersectionObserver' in window) || reduce.matches) { frame.classList.add('in'); return; }
-      var o = new IntersectionObserver(function (es) {
-        if (es[0].isIntersecting) { frame.classList.add('in'); o.disconnect(); }
-      }, { threshold: 0.2 });
-      o.observe(frame);
-    }
-    im.addEventListener('load', ready);
-    im.addEventListener('error', function () { sec.hidden = true; });
-    im.src = IMG + 'team.mcu.jpg';
-    if (im.complete && im.naturalWidth) ready();
-  })();
+  window.addEventListener('scroll', function () { readScroll(false); }, { passive: true });
+  window.addEventListener('resize', function () { layout(); }, { passive: true });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) start();
+  });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+      if (visible) start();
+    }, { threshold: 0.01 }).observe(stage);
+  }
+  start();
 })();

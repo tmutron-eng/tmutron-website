@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Team | MCU | Mechatronics Course Union · TMU</title>
-<meta name="description" content="Meet the people behind the Mechatronics Course Union at Toronto Metropolitan University. Open a finger of the hand to pull up a stack of team cards." />
+<meta name="description" content="Meet the people behind the Mechatronics Course Union at Toronto Metropolitan University. Walk the tunnel, open a frame, meet the team." />
 <meta name="theme-color" content="#0b0506" />
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -16,36 +16,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/team.css" />
-<script>document.documentElement.classList.add('js')</script>
 
 <!-- ═══════════════════════════════════════════════════════════
-     TEAM DATA. This is the only place you edit to add or change people.
-     Layout code never changes.
+     TEAM DATA — the only place you edit to add or change people.
 
-     TO ADD A NEW HIRE: copy one line inside MCU_TEAM, change the fields,
-     and put it where you want it in the order. The card number
-     ("No. 07 / 24") is the position in this list, counted automatically.
-
-     FIELDS (people)
-       g      which stack: "president", "vps", "directors", "fyr" or "webmaster"
+     FIELDS
+       g      stack: "president", "vps", "directors", "fyr", "webmaster"
        n      full name
        r      short role label
-       f      optional longer role title (shown on the card when present)
-       port   optional portfolio, used by the filter inside the Directors stack
-              and shown on the back of the card. Keep spelling identical
-              between people so the filter groups them.
-       p      photo file name inside assets/images/ (case sensitive).
-              The initials monogram shows if the file is missing.
-       li     optional LinkedIn URL (adds a LinkedIn button on the card back)
-       b      bio text. Backticks let you use apostrophes and quotes freely.
-       fresh  optional true, adds a NEW ribbon to the card
-
-     FIELDS (groups)
-       id        used in the URL hash, e.g. team.html#vps
-       finger    which finger holds the stack: thumb, index, middle, ring, pinky
-       label     full name of the group
-       short     short name shown on the fingertip
-       rarity    card finish: "foil", "holo", "chrome" or "etched"
+       port   portfolio: Academics, Operations, Events, Comms,
+              Corporate, Finance, Engagement. Drives which tunnel
+              frame a person appears in.
+       p      photo file inside assets/images/ (case sensitive).
+              Initials show if the file is missing.
+       b      bio text.
      ═══════════════════════════════════════════════════════════ -->
 <script>
 window.MCU_SERIES = "MCU 2026-27";
@@ -72,11 +56,11 @@ window.MCU_TEAM = [
   { g: "vps", n: "Hassan Iqbal", r: "VP Finance", port: "Finance", p: "hassan.mcu.png",
     b: `Hi everyone, I'm Hassan, and I'm excited to be returning to the MCU executive team as your Vice President Finance this year. I'm proud of what we've accomplished so far and look forward to building on that momentum in the year ahead. As VP Finance, I'll be responsible for managing MCU's finances, supporting our teams, and helping turn ideas into impactful initiatives for Mechatronics students. Looking forward to working with the team and making this another successful year for our community.` },
   { g: "vps", n: "Muhammad Prince", r: "VP Comms", f: "VP Communications", port: "Comms", p: "prince.mcu.jpeg",
-    b: `Hey everyone! My name is Muhammad and I'm thrilled to be your MCU VP Comms for the year! The MCU  team set a massive precedent last year, and I'm here to make sure our messaging, branding, and outreach are louder and better than ever. My main focuses for the year will be keeping you all perfectly in the loop, leveling up our social media presence, and making sure our Mechatronics community feels more connected than ever.` },
+    b: `Hey everyone! My name is Muhammad and I'm thrilled to be your MCU VP Comms for the year! The MCU team set a massive precedent last year, and I'm here to make sure our messaging, branding, and outreach are louder and better than ever. My main focuses for the year will be keeping you all perfectly in the loop, leveling up our social media presence, and making sure our Mechatronics community feels more connected than ever.` },
   { g: "vps", n: "Angelo Koukopoulos", r: "VP Events", port: "Events", p: "angelo.mcu.jpeg",
     b: `Good morning, afternoon, evening! I am Angelo, the VP Events for MCU's 26-27 term. You'll often find me at events, not just the MCU ones, as I enjoy meeting new people and discovering new things. As VP Events, I work alongside my team to organise and plan social and technical events for Tron students and the engineering community. My goal is to make this year memorable by collaborating with many student groups, giving students a taste of everything engineering has to offer.` },
   { g: "vps", n: "Mohammed Dar", r: "VP Corps", port: "Corporate", p: "dar.mcu.png",
-    b: `Wassup everyone! I’m Mohammed Dar, returning as MCU’s Vice President Of Corporate Relations. I’m excited to keep building industry connections, bringing you new opportunities, and making this another great year for our mechatronics community. See you around campus!` },
+    b: `Wassup everyone! I'm Mohammed Dar, returning as MCU's Vice President Of Corporate Relations. I'm excited to keep building industry connections, bringing you new opportunities, and making this another great year for our mechatronics community. See you around campus!` },
 
   /* ───────── Directors ───────── */
   { g: "directors", n: "Ahesha Saseenthiran", r: "Dir. Media / Comms", f: "Director of Media / Comms Engagement", port: "Comms", p: "ahesha.mcu.jpg",
@@ -90,21 +74,21 @@ window.MCU_TEAM = [
   { g: "directors", n: "Aashir Ahmed", r: "Dir. Finance", f: "Director of Finance", port: "Finance", p: "aashir.mcu.jpeg",
     b: `Hi everyone! I'm Aashir, returning as Finance Director for this year's MCU! I'll be continuing to assist with all financial responsibilities and making sure our team is well-equipped to run the greatest events all year round!` },
   { g: "directors", n: "Phelix Tang", r: "Dir. Finance", f: "Director of Finance", port: "Finance", p: "phelix.mcu.jpg",
-    b: `Hey y’all, I’m Phelix. I’m entering my third year of mechatronics engineering and I will be your second finance director. As a member of finance my job is to make sure that we get the funding that we need for the year.` },
+    b: `Hey y'all, I'm Phelix. I'm entering my third year of mechatronics engineering and I will be your second finance director. As a member of finance my job is to make sure that we get the funding that we need for the year.` },
   { g: "directors", n: "Brandon Penafiel-Velez", r: "Dir. Academics", f: "Director of Academics", port: "Academics", p: "brandon.mcu.png",
     b: `Hello! My name is Brandon, and I am a 4th year mechatronics student. As a newly elected Director of Academics, I will be representing tron students and ensuring all of our voices and concerns regarding these new courses are heard and worked on. I'm excited to showcase all of the things we have planned soon, but until then, good luck on your studies!` },
   { g: "directors", n: "Yasir Saeed", r: "Dir. Sponsors", f: "Director of Sponsors", port: "Corporate", p: "yasir.mcu.jpg",
     b: `Hi I'm Yasir, I'm a 4th year tron student and will be serving as the Director of Sponsorships this year. I'll be working alongside the corporate relations team to secure sponsorships and external funding and resources to support our exciting events and initiatives this year. Looking forward to another great year for the MCU!` },
   { g: "directors", n: "Alvina Usmani", r: "Dir. Events", f: "Director of Events", port: "Events", p: "alvina.mcu.jpeg",
-    b: `Heyo! I’m Alvina and I'm thrilled to be one of your Directors of Events this year! My goal is to put together events that match what you want to see and give everyone a chance to relax when the semester starts... semester things… I hope our events can be something you look forward to throughout the year. I also love talking to new people, so if you ever spot me on campus, come say hi! It could end up as a fun little sidequest!!` },
+    b: `Heyo! I'm Alvina and I'm thrilled to be one of your Directors of Events this year! My goal is to put together events that match what you want to see and give everyone a chance to relax when the semester starts... semester things… I hope our events can be something you look forward to throughout the year. I also love talking to new people, so if you ever spot me on campus, come say hi! It could end up as a fun little sidequest!!` },
   { g: "directors", n: "Avishan Ketheswaran", r: "Dir. Events", f: "Director of Events", port: "Events", p: "avishan.mcu.jpg",
     b: `I am too nonchalant to write this.` },
   { g: "directors", n: "Alliyah Davy", r: "Dir. Events", f: "Director of Events", port: "Events", p: "alliyah.mcu.jpg",
     b: `Hi everyone, my name is Alliyah. I'm entering into my 3rd year of Tron, and I'm excited to be one of your Directors of Events for this year. I will be dedicated to putting together unforgettable events and workshops throughout the year to bring the Eng community together outside of the classroom. I look forward to meeting and working with all of you to create an amazing experience for all students this coming year.` },
   { g: "directors", n: "Manavjeet Singh", r: "Dir. Events", f: "Director of Events", port: "Events", p: "manav.mcu.jpg",
-    b: `Hello everyone! My name is Manavjeet, you can call me Manav and I am happy to be one of the director of events for the Mechatronics Course Union! I help out more with the technical stuff for workshops/events but I still help with other stuff as well. I can’t wait to see all of you have fun and learn new things at the events happening throughout these years. Don’t worry, we’re going to make sure every event is amazing!` },
+    b: `Hello everyone! My name is Manavjeet, you can call me Manav and I am happy to be one of the director of events for the Mechatronics Course Union! I help out more with the technical stuff for workshops/events but I still help with other stuff as well. I can't wait to see all of you have fun and learn new things at the events happening throughout these years. Don't worry, we're going to make sure every event is amazing!` },
   { g: "directors", n: "Smit Shah", r: "Dir. Engagement", f: "Director of Engagement", port: "Engagement", p: "smit.mcu.jpg",
-    b: `Hi there. I’m Smit! For the 2026-2027 academic year, I’ll be serving as the Director of Engagement for the Mechatronics Course Union (MCU). I’m excited to help build a welcoming and engaging community for Mechatronics students, whether through events, initiatives, or simply creating more opportunities for students to connect with one another. I’m looking forward to making this year a memorable one and getting to know more of the MCU community.` },
+    b: `Hi there. I'm Smit! For the 2026-2027 academic year, I'll be serving as the Director of Engagement for the Mechatronics Course Union (MCU). I'm excited to help build a welcoming and engaging community for Mechatronics students, whether through events, initiatives, or simply creating more opportunities for students to connect with one another. I'm looking forward to making this year a memorable one and getting to know more of the MCU community.` },
   { g: "directors", n: "Patrick", r: "Dir. Academics", f: "Director of Academics", port: "Academics", p: "patrick.mcu.png",
     b: `I am too nonchalant to write this.` },
   { g: "directors", n: "Suling He", r: "Dir. Logistics", f: "Director of Logistics", port: "Operations", p: "suling.mcu.jpg",
@@ -118,11 +102,24 @@ window.MCU_TEAM = [
   { g: "webmaster", n: "Dwij Joshi", r: "Webmaster", port: "Web", p: "dwij.mcu.jpg",
     b: `Hola folks, I am the person behind what you're seeing right now. I just recently transferred from Computer to Mechatronics Engineering, because I finally realized what true peak is. I joined MCU because I like the color red and cool things, and would you look at that...MCU has both of them!! #ShockEmoji.` }
 ];
+
+/* Tunnel frames, in the order you walk past them.
+   A person lands in a frame if their group OR portfolio matches. */
+window.MCU_TUNNEL = [
+  { id: "execs",      label: "EXECS",          sub: "President & Vice Presidents", note: "Royal frame", royal: true,
+    g: ["president", "vps"], port: ["Presidency"] },
+  { id: "operations", label: "OPERATIONS",     sub: "Logistics, planning, the works", g: [], port: ["Operations"] },
+  { id: "events",     label: "EVENTS",         sub: "Socials, workshops & engagement", g: [], port: ["Events", "Engagement"] },
+  { id: "comms",      label: "COMMUNICATIONS", sub: "Media, branding & outreach", g: [], port: ["Comms"] },
+  { id: "academics",  label: "ACADEMICS",      sub: "Course support & advocacy", g: [], port: ["Academics"] },
+  { id: "corporate",  label: "CORPORATIONS",   sub: "Sponsors & industry", g: [], port: ["Corporate"] },
+  { id: "finance",    label: "FINANCE",        sub: "Budget, funding & the books", g: [], port: ["Finance"] },
+  { id: "fyr",        label: "FIRST YEAR",     sub: "First Year Representative", g: ["fyr"], port: [] },
+  { id: "webmaster",  label: "WEBMASTER",      sub: "The person who built this page", g: ["webmaster"], port: [] }
+];
 </script>
 </head>
 <body>
-
-<div class="tm-bg" aria-hidden="true"></div>
 
 <nav id="nav">
   <div class="nav-inner">
@@ -149,55 +146,54 @@ window.MCU_TEAM = [
   </div>
 </nav>
 
-<main>
+<main class="tm-page">
 
-  <!-- THE HAND: a robotic hand holding five stacks of team cards -->
-  <section id="roster" class="stage" aria-label="MCU team roster">
-    <div class="st-intro" id="intro">
-      <h1>The people behind MCU.</h1>
-      <p>Every one of us is a Mechatronics student first. This is the 2026-27 team behind the study halls, workshops and socials.</p>
-      <p class="st-hint mono" id="st-hint"></p>
-    </div>
+  <!-- ═══════════════ THE TUNNEL ═══════════════ -->
+  <section id="tunnel" class="tm-tunnel" aria-label="MCU team tunnel. Scroll to walk past each team frame.">
+    <div class="tm-stage" id="tm-stage">
+      <canvas id="tm-canvas" aria-hidden="true"></canvas>
+      <div class="tm-grade" aria-hidden="true"></div>
 
-    <div class="hb hand-art" id="hand-art"></div>
-
-    <div class="deck" id="deck"></div>
-
-    <div class="hb hand-tips" id="hand-tips"></div>
-
-    <div class="chips" id="chips" role="group" aria-label="Team groups"></div>
-
-    <div class="st-hud" id="hud" hidden>
-      <div class="hud-box mono" id="hud-t"></div>
-      <div class="hud-flt" id="flt" role="group" aria-label="Filter by portfolio" hidden></div>
-      <div class="hud-act">
-        <button type="button" class="btn-ghost btn-sm" id="hud-bk">Close stack</button>
-        <button type="button" class="btn-ghost btn-sm" id="hud-fl" hidden>Flip card</button>
+      <div class="tm-hud">
+        <div class="tm-hud-left">
+          <span class="tm-live" aria-hidden="true"></span>
+          <span class="mono" id="tm-sector">SECTOR 01 / 09 · EXECS</span>
+        </div>
+        <div class="tm-hud-right mono" id="tm-depth">DEPTH 0000</div>
       </div>
+
+      <div class="tm-intro" id="tm-intro">
+        <p class="tm-kicker mono">MCU 2026–27</p>
+        <h1>The people<br>behind <em>MCU</em>.</h1>
+        <p class="tm-intro-p">Twenty-four students run the study halls, workshops and socials. Walk the tunnel, open a frame to meet them.</p>
+        <span class="tm-cue mono">▼ SCROLL TO DESCEND</span>
+      </div>
+
+      <div class="tm-wallcap" id="tm-wallcap">
+        <p class="mono">END OF TUNNEL</p>
+        <h2>The whole crew.</h2>
+        <p class="tm-wallcap-p" id="tm-wallcap-p"></p>
+      </div>
+
+      <div class="tm-rail" id="tm-rail" role="group" aria-label="Jump to a team sector"></div>
+
+      <p class="tm-a11y mono">Frames open with a click or with the sector buttons above.</p>
     </div>
-
-    <ul class="legend" id="legend" aria-label="Card finishes"></ul>
-
-    <div class="sr-only" id="live" aria-live="polite"></div>
-    <noscript><p class="ns">The team roster needs JavaScript. You can reach us at tmutron@torontomu.ca.</p></noscript>
   </section>
 
-  <!-- TEAM PHOTO: stays hidden until assets/images/team.mcu.jpg loads -->
-  <section class="tm-crew" id="tm-crew" hidden aria-label="Team photo">
+  <!-- ═══════════════ FALLBACK / PLAIN ROSTER ═══════════════ -->
+  <section class="tm-roster" id="tm-roster" aria-label="Full team roster">
     <div class="container">
-      <figure class="tp-frame" id="tpFrame">
-        <img id="tpImg" alt="The MCU 2026-27 team together" decoding="async" />
-        <span class="evf-corner evf-tl"></span><span class="evf-corner evf-tr"></span>
-        <span class="evf-corner evf-bl"></span><span class="evf-corner evf-br"></span>
-        <figcaption>
-          <span class="tp-t">The whole crew</span>
-          <span class="tp-k mono" id="tpCount"></span>
-        </figcaption>
-      </figure>
+      <div class="tm-roster-head">
+        <p class="tm-kicker mono">MCU 2026–27</p>
+        <h2>The people behind MCU.</h2>
+      </div>
+      <div id="tm-roster-body"></div>
+      <noscript><p class="tm-ns">The roster needs JavaScript. The full team is also on our Instagram and Discord, or email tmutron@torontomu.ca.</p></noscript>
     </div>
   </section>
 
-  <!-- RECRUITMENT STATUS -->
+  <!-- ═══════════════ APPLICATIONS ═══════════════ -->
   <section class="tm-open" id="open-roles">
     <div class="container">
       <div class="tm-open-box">
@@ -209,7 +205,7 @@ window.MCU_TEAM = [
             Follow on Instagram
           </a>
           <a href="https://discord.gg/zHs7e9KayC" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
             Join the Discord
           </a>
         </div>
@@ -241,11 +237,36 @@ window.MCU_TEAM = [
         <p class="footer-address">EPH 117, Eric Palin Hall<br/>Toronto Metropolitan University</p></div>
     </div>
     <div class="footer-bottom">
-      <span class="mono footer-copy">© <span id="footer-year">2025</span> Mechatronics Course Union, TMU. All rights reserved.</span>
+      <span class="mono footer-copy">© <span id="footer-year"></span> Mechatronics Course Union, TMU. All rights reserved.</span>
       <span class="mono footer-built">Built by MCU Web Team</span>
     </div>
   </div>
 </footer>
+
+<!-- ═══════════════ MEMBER MODAL ═══════════════ -->
+<div class="tm-modal" id="tm-modal" hidden>
+  <div class="tm-modal-veil" data-close></div>
+  <div class="tm-modal-panel" role="dialog" aria-modal="true" aria-labelledby="tm-modal-title">
+    <header class="tm-modal-head">
+      <div>
+        <p class="tm-modal-sub mono" id="tm-modal-sub">SECTOR</p>
+        <h2 class="tm-modal-title" id="tm-modal-title">EXECS</h2>
+      </div>
+      <button type="button" class="tm-modal-x" data-close aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div class="tm-modal-grid" id="tm-modal-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TEAM PHOTO LIGHTBOX ═══════════════ -->
+<div class="tm-lightbox" id="tm-lightbox" hidden>
+  <button type="button" class="tm-lightbox-close" data-close aria-label="Close photo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <img id="tm-lightbox-img" alt="The MCU 2026-27 team together" />
+</div>
 
 <script src="js/main.js"></script>
 <script src="js/team.js"></script>
