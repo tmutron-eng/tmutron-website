@@ -148,36 +148,55 @@ window.MCU_TUNNEL = [
 
 <main class="tm-page">
 
-  <!-- ═══════════════ THE TUNNEL ═══════════════ -->
-  <section id="tunnel" class="tm-tunnel" aria-label="MCU team tunnel. Scroll to walk past each team frame.">
+  <!-- ═══════════════ THE HALL ═══════════════ -->
+  <section id="tunnel" class="tm-tunnel" aria-label="MCU team hall. Scroll down the hall to pass every sector, or open one from the dock.">
     <div class="tm-stage" id="tm-stage">
       <canvas id="tm-canvas" aria-hidden="true"></canvas>
+
+      <button type="button" class="tm-wall" id="tm-wall" aria-label="Open the full team photo">
+        <img src="assets/images/team.mcu.jpg" alt="The MCU 2026-27 team together" />
+        <span class="tm-wall-plaque mono"><i aria-hidden="true"></i>The whole crew · click for full size</span>
+      </button>
+
+      <div class="tm-frames" id="tm-frames" aria-hidden="true"></div>
       <div class="tm-grade" aria-hidden="true"></div>
 
       <div class="tm-hud">
         <div class="tm-hud-left">
           <span class="tm-live" aria-hidden="true"></span>
-          <span class="mono" id="tm-sector">SECTOR 01 / 09 · EXECS</span>
+          <span class="mono" id="tm-sector-label">SECTOR 01 / 09 · EXECS</span>
         </div>
         <div class="tm-hud-right mono" id="tm-depth">DEPTH 0000</div>
       </div>
 
       <div class="tm-intro" id="tm-intro">
-        <p class="tm-kicker mono">MCU 2026–27</p>
-        <h1>The people<br>behind <em>MCU</em>.</h1>
-        <p class="tm-intro-p">Twenty-four students run the study halls, workshops and socials. Walk the tunnel, open a frame to meet them.</p>
-        <span class="tm-cue mono">▼ SCROLL TO DESCEND</span>
+        <p class="tm-intro-kicker"><i aria-hidden="true"></i><span class="mono">MCU 2026–27 · Team Directory</span><i aria-hidden="true"></i></p>
+        <h1><span>The People</span><span>Behind <em>MCU</em></span></h1>
+        <p class="tm-intro-p" id="tm-intro-p">Walk the hall to meet the 24 members behind MCU this year.</p>
+        <div class="tm-intro-meta mono">
+          <span><b data-sector-count>09</b> sectors</span><i aria-hidden="true"></i>
+          <span><b data-team-count>24</b> members</span><i aria-hidden="true"></i>
+          <span><b>2026–27</b> term</span>
+        </div>
+        <span class="tm-cue mono"><span class="tm-cue-line" aria-hidden="true"></span>Scroll to enter the hall</span>
       </div>
 
       <div class="tm-wallcap" id="tm-wallcap">
-        <p class="mono">END OF TUNNEL</p>
+        <p class="mono">End of the hall · MCU 2026–27</p>
         <h2>The whole crew.</h2>
         <p class="tm-wallcap-p" id="tm-wallcap-p"></p>
+        <button type="button" class="tm-wallcap-btn" id="tm-wallcap-btn">
+          View the full photo
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </button>
       </div>
 
-      <div class="tm-rail" id="tm-rail" role="group" aria-label="Jump to a team sector"></div>
+      <div class="tm-dock">
+        <div class="tm-rail" id="tm-rail" role="group" aria-label="Open a team sector"></div>
+        <div class="tm-dock-progress" aria-hidden="true"><i id="tm-progress"></i></div>
+      </div>
 
-      <p class="tm-a11y mono">Frames open with a click or with the sector buttons above.</p>
+      <p class="tm-a11y mono">Sectors open with a click on a frame, or from the dock below.</p>
     </div>
   </section>
 
@@ -194,11 +213,20 @@ window.MCU_TUNNEL = [
   </section>
 
   <!-- ═══════════════ APPLICATIONS ═══════════════ -->
-  <section class="tm-open" id="open-roles">
+  <section class="tm-open" id="open-roles" aria-labelledby="tm-open-title">
     <div class="container">
-      <div class="tm-open-box">
-        <h2>Applications closed.</h2>
-        <p>Our 2026-27 team is full and applications are closed. Roles open up again next year, so follow us on Instagram and Discord to catch it.</p>
+      <div class="tm-open-head">
+        <div>
+          <p class="tm-open-kicker mono">Recruitment · 2027–28</p>
+          <h2 id="tm-open-title">Want in <em>next year?</em></h2>
+        </div>
+        <span class="tm-open-now mono"><i aria-hidden="true"></i>Applications closed</span>
+      </div>
+
+      <div class="tm-open-panel">
+        <div class="tm-open-copy">
+          <p>Our <strong>2026–27</strong> team is full. Every seat was filled this term, so applications are closed for now.</p>
+          <p>Roles open again next year. Follow along and you’ll hear about hiring, events and workshops before anyone else.</p>
         <div class="tm-open-acts">
           <a href="https://instagram.com/tmutron" target="_blank" rel="noopener noreferrer" class="btn-ghost">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -208,6 +236,21 @@ window.MCU_TUNNEL = [
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.055a19.926 19.926 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
             Join the Discord
           </a>
+          <a href="mailto:tmutron@torontomu.ca" class="btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email the team
+          </a>
+        </div>
+        </div>
+        <div class="tm-open-side">
+          <span class="tm-open-status-label mono">Status</span>
+          <p class="tm-open-status">CLOSED<span>.</span></p>
+          <div class="tm-open-facts">
+            <div class="tm-open-fact"><span>Seats filled</span><b data-team-count>24</b></div>
+            <div class="tm-open-fact"><span>Sectors</span><b data-sector-count>09</b></div>
+            <div class="tm-open-fact"><span>Next intake</span><b>2027–28</b></div>
+          </div>
+          <p class="tm-open-note">Watch Instagram and Discord — that’s where roles are posted first.</p>
         </div>
       </div>
     </div>
@@ -243,20 +286,35 @@ window.MCU_TUNNEL = [
   </div>
 </footer>
 
-<!-- ═══════════════ MEMBER MODAL ═══════════════ -->
-<div class="tm-modal" id="tm-modal" hidden>
-  <div class="tm-modal-veil" data-close></div>
-  <div class="tm-modal-panel" role="dialog" aria-modal="true" aria-labelledby="tm-modal-title">
-    <header class="tm-modal-head">
-      <div>
-        <p class="tm-modal-sub mono" id="tm-modal-sub">SECTOR</p>
-        <h2 class="tm-modal-title" id="tm-modal-title">EXECS</h2>
-      </div>
-      <button type="button" class="tm-modal-x" data-close aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+<!-- ═══════════════ SECTOR OVERLAY ═══════════════ -->
+<div class="tm-sector" id="tm-sector" hidden>
+  <div class="tm-sector-veil" aria-hidden="true"></div>
+  <div class="tm-sector-haze" aria-hidden="true"></div>
+  <div class="tm-sector-panel" role="dialog" aria-modal="true" aria-labelledby="tm-sector-title">
+    <header class="tm-sector-bar">
+      <button type="button" class="tm-sector-back" id="tm-sector-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span class="tm-back-long">Back to the hall</span>
+        <span class="tm-back-short">Hall</span>
       </button>
+      <div class="tm-sector-id">
+        <span class="tm-sector-index mono" id="tm-sector-index">Sector 01 / 09</span>
+        <h2 class="tm-sector-title" id="tm-sector-title">Execs</h2>
+      </div>
+      <div class="tm-sector-side">
+        <span class="tm-sector-count mono" id="tm-sector-count">7 members</span>
+        <span class="tm-sector-hint mono">Esc to exit</span>
+      </div>
     </header>
-    <div class="tm-modal-grid" id="tm-modal-grid"></div>
+
+    <div class="tm-cast" id="tm-cast"></div>
+
+    <footer class="tm-sector-foot mono">
+      <span id="tm-sector-sub"></span>
+      <span>Click a card for the bio · MCU 2026–27</span>
+    </footer>
+
+    <div class="tm-detail" id="tm-detail" hidden></div>
   </div>
 </div>
 
