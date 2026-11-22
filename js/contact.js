@@ -221,11 +221,9 @@
     target = pos + d; touched = true; vel = 0;
   }
 
-  function autoStep() {
-    if (stacked || touched || hovering || dragging || reduce || lite() || !inView || !modalHidden()) return;
-    target = Math.round(pos) + 1;
-  }
-  if (!reduce) setInterval(autoStep, 7000);
+  /* No timed auto-rotation: a card that moves on its own can slide away
+     between mousedown and mouseup, which swallows the click. The deck still
+     moves by drag, arrows, dots and keyboard. */
 
   /* drag the deck; a drag must never fire the link */
   stage.addEventListener('pointerdown', function (e) {
@@ -235,10 +233,12 @@
     dragging = true; touched = true; vel = 0;
     moved = 0; startX = e.clientX; startPos = pos; lastX = e.clientX; lastT = performance.now();
     stage.classList.add('dragging');
-    try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+    /* No setPointerCapture here: capturing on the stage retargets the click
+       to the stage, which silently kills the card's link. Window listeners
+       handle the drag instead, so a plain left click still opens the card. */
   });
 
-  stage.addEventListener('pointermove', function (e) {
+  window.addEventListener('pointermove', function (e) {
     if (!dragging) return;
     var dx = e.clientX - startX;
     moved = Math.max(moved, Math.abs(dx));
@@ -246,7 +246,7 @@
     var now = performance.now(), dt = now - lastT;
     if (dt > 0) vel = -(e.clientX - lastX) / spacing / dt * 16;
     lastX = e.clientX; lastT = now;
-  });
+  }, { passive: true });
 
   function endDrag() {
     if (!dragging) return;
@@ -254,6 +254,10 @@
     stage.classList.remove('dragging');
     if (Math.abs(vel) < 0.02) vel = 0;
     target = Math.abs(vel) > 0.02 ? pos + vel * 2.2 : Math.round(pos);
+    /* let the click that ends a drag be swallowed, then clear the flag so the
+       next click (or keyboard activation) is never blocked */
+    var wasDrag = moved > 8;
+    if (wasDrag) setTimeout(function () { moved = 0; }, 300);
   }
   stage.addEventListener('pointerup', endDrag);
   stage.addEventListener('pointercancel', endDrag);
